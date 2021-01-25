@@ -4,6 +4,7 @@ build
 *~
 .cache
 compile_commands.json
+libsdl2/gen/
 libsdl2/Makefile
 libsdl2/Makefile.rules
 libsdl2/config.log
@@ -14,3 +15,4 @@ libsdl2/sdl2-config
 libsdl2/sdl2-config-version.cmake
 libsdl2/sdl2-config.cmake
 libsdl2/sdl2.pc
+wolf3d_editor
