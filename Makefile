@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/01/26 21:42:04 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/01/26 22:48:10 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ libsdl2_ldflags = `$(build_dir)libsdl2/bin/sdl2-config --libs`
 libsdl2_net_makefile = libsdl2_net/Makefile
 libsdl2_net_lib = $(build_dir)libsdl2_net/lib/libSDL2_net.a
 libsdl2_net_cflags = -I $(build_dir)libsdl2/include -D_REENTRANT
-libsdl2_net_ldflags = -L $(build_dir)/libsdl2_net/lib -pthread -lSDL2_net -lSDL2
+libsdl2_net_ldflags = -L $(build_dir)libsdl2_net/lib -pthread -lSDL2_net -lSDL2
 
 client_src_files = $(addprefix $(src_dir), \
 	wc_main.c \
@@ -94,12 +94,14 @@ $(libsdl2_makefile):
 $(libsdl2_lib): $(libsdl2_makefile)
 	$(MAKE) --directory=libsdl2 install
 
+# 2021-01-26 todo: horrible hack, AUTOMAKE=:, to fix build on linux
+# errors out with weird complaint about: "automake-1.13 not found"
 $(libsdl2_net_makefile): $(libsdl2_lib)
 	cd libsdl2_net && ./configure --prefix=$(abspath $(build_dir)libsdl2_net) --with-sdl-prefix=$(abspath $(build_dir)libsdl2) --disable-shared
-	$(MAKE) --directory=libsdl2_net
+	$(MAKE) AUTOMAKE=: --directory=libsdl2_net
 
 $(libsdl2_net_lib): $(libsdl2_net_makefile)
-	$(MAKE) --directory=libsdl2_net install
+	$(MAKE) AUTOMAKE=: --directory=libsdl2_net install
 
 clean:
 	if test -f $(libsdl2_makefile); then $(MAKE) --directory=libsdl2 clean; fi
