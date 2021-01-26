@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/01/26 13:29:30 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/01/26 14:50:32 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ $(libsdl2_lib): $(libsdl2_makefile)
 	$(MAKE) --directory=libsdl2 install
 
 clean:
-	if test -f $(libsdl2_lib); $(MAKE) --directory=libsdl2 clean; fi
+	if test -f $(libsdl2_lib); then $(MAKE) --directory=libsdl2 clean; fi
 	rm -rf $(build_dir)
 
 fclean:
