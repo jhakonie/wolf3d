@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/01/26 12:17:38 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/01/26 13:29:30 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ $(build_dir)%.json: $(src_dir)%.c
 	echo "        \"file\": \"$(<)\"" >> $(@)
 	echo "    }," >> $(@)
 
-$(compile_commands_json): $(compile_commands_files)
+$(compile_commands_json): $(build_dir) $(compile_commands_files)
 	echo "[" > $(@).tmp
 	cat $(compile_commands_files) >> $(@).tmp
 	sed '$$d' < $(@).tmp > $(@)
