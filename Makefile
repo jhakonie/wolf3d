@@ -6,16 +6,22 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/01/26 20:03:14 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/01/26 21:42:04 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 src_dir = src/
 build_dir = build/
+
 libsdl2_makefile = libsdl2/Makefile
 libsdl2_lib = $(build_dir)libsdl2/lib/libSDL2.a
+libsdl2_cflags = `$(build_dir)libsdl2/bin/sdl2-config --cflags`
+libsdl2_ldflags = `$(build_dir)libsdl2/bin/sdl2-config --libs`
+
 libsdl2_net_makefile = libsdl2_net/Makefile
 libsdl2_net_lib = $(build_dir)libsdl2_net/lib/libSDL2_net.a
+libsdl2_net_cflags = -I $(build_dir)libsdl2/include -D_REENTRANT
+libsdl2_net_ldflags = -L $(build_dir)/libsdl2_net/lib -pthread -lSDL2_net -lSDL2
 
 client_src_files = $(addprefix $(src_dir), \
 	wc_main.c \
@@ -42,9 +48,9 @@ compile_commands_files = \
 compile_commands_json = compile_commands.json
 
 LD = gcc
-LDFLAGS = -pthread -l m -l dl -L $(build_dir)libsdl2/lib -l SDL2 -L $(build_dir)libsdl2_net/lib -l SDL2_net
+LDFLAGS = $(libsdl2_ldflags) $(libsdl2_net_ldflags)
 CC = gcc
-CFLAGS = -c -Wall -Werror -Wextra -I $(build_dir)libsdl2/include
+CFLAGS = -c -Wall -Werror -Wextra $(libsdl2_cflags) $(libsdl2_net_cflags)
 CPPFLAGS = -D_REENTRANT
 
 all: $(client_exe) $(editor_exe) $(server_exe)
