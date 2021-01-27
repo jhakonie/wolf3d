@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_main.c                                          :+:      :+:    :+:   */
+/*   wc_client_on_resize.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:34:00 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/01/27 11:47:19 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/01/27 11:38:12 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/01/27 11:41:49 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wc_client.h"
-#include "wx_types.h"
 
-int	main(void)
+void	wc_client_on_resize(t_client *c, t_s32 width, t_s32 height)
 {
-	t_client	c;
-
-	if (!wc_client_new(&c, 800, 450))
+	free(c->frame_buffer.data);
+	c->frame_buffer.data = 0;
+	c->frame_buffer.data_size = width * height * 4;
+	if (!(c->frame_buffer.data = (t_u8 *)malloc(c->frame_buffer.data_size)))
 	{
-		return (-1);
+		c->run = wx_false;
 	}
-	if (!wc_client_run(&c))
-	{
-		wc_client_del(&c);
-		return (-1);
-	}
-	wc_client_del(&c);
-	return (0);
+	wx_buffer_set(c->frame_buffer.data, c->frame_buffer.data_size, 0);
 }

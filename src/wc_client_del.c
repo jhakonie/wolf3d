@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_main.c                                          :+:      :+:    :+:   */
+/*   wc_client_del.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:34:00 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/01/27 11:47:19 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/01/27 11:18:20 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/01/27 11:46:38 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "stdlib.h"
+
 #include "wc_client.h"
-#include "wx_types.h"
 
-int	main(void)
+void	wc_client_del(t_client *c)
 {
-	t_client	c;
-
-	if (!wc_client_new(&c, 800, 450))
-	{
-		return (-1);
-	}
-	if (!wc_client_run(&c))
-	{
-		wc_client_del(&c);
-		return (-1);
-	}
-	wc_client_del(&c);
-	return (0);
+	free(c->frame_buffer.data);
+	SDL_DestroyTexture(c->texture);
+	SDL_DestroyRenderer(c->renderer);
+	SDL_DestroyWindow(c->window);
+	SDL_Quit();
 }

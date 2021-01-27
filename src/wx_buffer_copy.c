@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_main.c                                          :+:      :+:    :+:   */
+/*   wx_buffer_copy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:34:00 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/01/27 11:47:19 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/01/27 11:35:57 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/01/27 11:36:16 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_client.h"
 #include "wx_types.h"
 
-int	main(void)
+void	wx_buffer_copy(void *xs, void const *ys, t_u64 size)
 {
-	t_client	c;
+	t_u64	i;
 
-	if (!wc_client_new(&c, 800, 450))
+	i = 0;
+	while (i < size)
 	{
-		return (-1);
+		((t_u8 *)xs)[i] = ((t_u8 *)ys)[i];
+		++i;
 	}
-	if (!wc_client_run(&c))
-	{
-		wc_client_del(&c);
-		return (-1);
-	}
-	wc_client_del(&c);
-	return (0);
 }

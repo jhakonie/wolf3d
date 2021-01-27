@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_main.c                                          :+:      :+:    :+:   */
+/*   wx_frame_buffer_new.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:34:00 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/01/27 11:47:19 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/01/27 10:56:17 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/01/27 11:03:26 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_client.h"
-#include "wx_types.h"
+#include "stdlib.h"
 
-int	main(void)
+#include "wx_frame_buffer.h"
+
+t_bool	wx_frame_buffer_new(t_frame_buffer *fb, t_u32 image_width,
+	t_u32 image_height)
 {
-	t_client	c;
-
-	if (!wc_client_new(&c, 800, 450))
-	{
-		return (-1);
-	}
-	if (!wc_client_run(&c))
-	{
-		wc_client_del(&c);
-		return (-1);
-	}
-	wc_client_del(&c);
-	return (0);
+	fb->data_size = image_width * image_height * 4;
+	if (!(fb->data = (t_u8 *)malloc(fb->data_size)))
+		return (wx_false);
+	wx_buffer_set(fb->data, fb->data_size, 0);
+	fb->width = image_width;
+	fb->height = image_height;
+	return (wx_true);
 }

@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/01/26 22:48:10 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/01/27 11:50:40 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,16 @@ libsdl2_net_cflags = -I $(build_dir)libsdl2/include -D_REENTRANT
 libsdl2_net_ldflags = -L $(build_dir)libsdl2_net/lib -pthread -lSDL2_net -lSDL2
 
 client_src_files = $(addprefix $(src_dir), \
+	wc_client_del.c \
+	wc_client_new.c \
+	wc_client_on_expose.c \
+	wc_client_on_resize.c \
+	wc_client_run.c \
 	wc_main.c \
+	wx_buffer_copy.c \
+	wx_buffer_set.c \
+	wx_frame_buffer_del.c \
+	wx_frame_buffer_new.c \
 )
 client_obj_files = $(subst $(src_dir), $(build_dir), $(client_src_files:.c=.o))
 client_exe = wolf3d
@@ -104,16 +113,16 @@ $(libsdl2_net_lib): $(libsdl2_net_makefile)
 	$(MAKE) AUTOMAKE=: --directory=libsdl2_net install
 
 clean:
-	if test -f $(libsdl2_makefile); then $(MAKE) --directory=libsdl2 clean; fi
-	if test -f $(libsdl2_net_makefile); then $(MAKE) --directory=libsdl2_net clean; fi
+	if test -f $(libsdl2_makefile); then $(MAKE) AUTOMAKE=: --directory=libsdl2 clean; fi
+	if test -f $(libsdl2_net_makefile); then $(MAKE) AUTOMAKE=: --directory=libsdl2_net clean; fi
 	rm -rf $(build_dir)
 
 fclean:
 	rm -f $(client_exe)
 	rm -f $(editor_exe)
 	rm -f $(server_exe)
-	if test -f $(libsdl2_makefile); then $(MAKE) --directory=libsdl2 distclean; fi
-	if test -f $(libsdl2_net_makefile); then $(MAKE) --directory=libsdl2_net clean; fi
+	if test -f $(libsdl2_makefile); then $(MAKE) AUTOMAKE=: --directory=libsdl2 distclean; fi
+	if test -f $(libsdl2_net_makefile); then $(MAKE) AUTOMAKE=: --directory=libsdl2_net clean; fi
 	rm -rf $(build_dir)
 
 re: fclean all
