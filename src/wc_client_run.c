@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:27:18 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/01/27 11:40:06 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/01/27 13:07:30 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,24 @@ static void		zz_on_windowevent(t_client *c)
 	}
 }
 
-t_bool			wc_client_run(t_client *g)
+t_bool			wc_client_run(t_client *c)
 {
-	while (g->run)
+	while (c->run)
 	{
-		while (SDL_PollEvent(&g->event))
+		while (SDL_PollEvent(&c->event))
 		{
-			if (g->event.type == SDL_QUIT)
+			if (c->event.type == SDL_QUIT)
 			{
-				g->run = wx_false;
+				c->run = wx_false;
 				break ;
 			}
-			else if (g->event.type == SDL_KEYDOWN)
-				zz_on_keydown(g);
-			else if (g->event.type == SDL_WINDOWEVENT)
-				zz_on_windowevent(g);
+			else if (c->event.type == SDL_KEYDOWN)
+				zz_on_keydown(c);
+			else if (c->event.type == SDL_WINDOWEVENT)
+				zz_on_windowevent(c);
 		}
-		if (g->run && g->draw)
-			zz_draw(g);
+		if (c->run && c->draw)
+			zz_draw(c);
 	}
 	return (wx_true);
 }
