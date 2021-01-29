@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ws_main.c                                          :+:      :+:    :+:   */
+/*   ws_server_del.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:44:53 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/01/28 10:46:59 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/01/28 04:43:41 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/01/28 11:59:47 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ws_server.h"
 
-int	main(void)
+void	ws_server_del(t_server *s)
 {
-	t_server	s;
-
-	if (!ws_server_new(&s))
-	{
-		return (-1);
-	}
-	while (s.run)
-	{
-	}
-	ws_server_del(&s);
-	return (0);
+	(void)s;
 }

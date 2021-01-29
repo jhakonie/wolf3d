@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:17:11 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/01/27 11:47:04 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/01/28 05:00:30 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 static t_bool	zz_on_error(t_client *c, t_u8 i)
 {
-	if (i > 4)
-	{
-		free(c->frame_buffer.data);
-	}
 	if (i > 3)
 	{
 		SDL_DestroyTexture(c->texture);

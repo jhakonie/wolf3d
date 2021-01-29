@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ws_main.c                                          :+:      :+:    :+:   */
+/*   ws_server.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:44:53 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/01/28 10:46:59 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/01/27 23:54:46 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/01/28 05:15:41 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ws_server.h"
+#ifndef WS_SERVER_H
+# define WS_SERVER_H
 
-int	main(void)
+# include "wx_types.h"
+
+struct	s_server
 {
-	t_server	s;
+	t_bool		run;
+};
+typedef struct s_server	t_server;
 
-	if (!ws_server_new(&s))
-	{
-		return (-1);
-	}
-	while (s.run)
-	{
-	}
-	ws_server_del(&s);
-	return (0);
-}
+t_bool	ws_server_new(t_server *s);
+void	ws_server_del(t_server *s);
+
+#endif
