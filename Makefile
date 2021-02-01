@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/01/29 17:05:03 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/02/01 14:01:56 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,21 +63,27 @@ dependency_flags = -MT $(@) -MMD -MP -MF $(build_dir)$(*).dep
 LD = gcc
 LDFLAGS = $(libsdl2_ldflags)
 CC = gcc
-CFLAGS = -c -Wall -Werror -Wextra $(libsdl2_cflags)
+CFLAGS = -c -Wall -Werror -Wextra $(libsdl2_cflags) -I build/libsdl2/include
 CPPFLAGS = -D_REENTRANT
 
 all: $(client_exe) $(editor_exe) $(server_exe) $(compile_commands_json)
 
 $(NAME):
 
-$(client_exe): $(libsdl2_lib) $(client_obj_files)
+$(client_exe): $(client_obj_files)
 	$(LD) $(client_obj_files) $(LDFLAGS) -o $(@)
 
-$(editor_exe): $(libsdl2_lib) $(editor_obj_files)
+$(client_obj_files): $(libsdl2_lib)
+
+$(editor_exe): $(editor_obj_files)
 	$(LD) $(editor_obj_files) $(LDFLAGS) -o $(@)
 
-$(server_exe): $(libsdl2_lib) $(server_obj_files)
+$(editor_obj_files): $(libsdl2_lib)
+
+$(server_exe): $(server_obj_files)
 	$(LD) $(server_obj_files) $(LDFLAGS) -o $(@)
+
+$(server_obj_files): $(libsdl2_lib)
 
 $(build_dir):
 	mkdir $(@)
@@ -96,7 +102,7 @@ $(build_dir)%.json: $(src_dir)%.c | $(build_dir)
 $(compile_commands_json): $(compile_commands_files)
 	echo "[" > $(build_dir)$(@)
 	cat $(compile_commands_files) >> $(build_dir)$(@)
-	sed --in-place '$$d' $(build_dir)$(@)
+	sed -i "" '$$d' $(build_dir)$(@)
 	echo "    }" >> $(build_dir)$(@)
 	echo "]" >> $(build_dir)$(@)
 	cp $(build_dir)$(@) $(@)
