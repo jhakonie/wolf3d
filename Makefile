@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/02/01 14:01:56 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/02/01 17:00:45 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,9 +100,9 @@ $(build_dir)%.json: $(src_dir)%.c | $(build_dir)
 	echo "    }," >> $(@)
 
 $(compile_commands_json): $(compile_commands_files)
-	echo "[" > $(build_dir)$(@)
-	cat $(compile_commands_files) >> $(build_dir)$(@)
-	sed -i "" '$$d' $(build_dir)$(@)
+	echo "[" > $(build_dir)$(@).tmp
+	cat $(^) >> $(build_dir)$(@).tmp
+	sed '$$d' < $(build_dir)$(@).tmp > $(build_dir)$(@)
 	echo "    }" >> $(build_dir)$(@)
 	echo "]" >> $(build_dir)$(@)
 	cp $(build_dir)$(@) $(@)
@@ -121,6 +121,7 @@ clean:
 	rm -rf $(build_dir)
 
 fclean:
+	rm -f $(compile_commands_json)
 	rm -f $(client_exe)
 	rm -f $(editor_exe)
 	rm -f $(server_exe)
