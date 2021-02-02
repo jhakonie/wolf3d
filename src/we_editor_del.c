@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_main.c                                          :+:      :+:    :+:   */
+/*   we_editor_del.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/25 14:00:01 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/02 21:42:56 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/02/02 17:49:37 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/02/02 21:43:44 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "SDL2/SDL.h"
-#include "wx_frame_buffer.h"
-#include "wx_types.h"
+#include "stdlib.h"
 #include "we_editor.h"
 
-int				main(void)
+void	we_editor_del(t_editor *e)
 {
-	t_editor	e;
-
-	e.quit = wx_false;
-	if (!(we_editor_new(&e, WIN_W, WIN_H)))
-		return (-1);
-	if (!(we_editor_run(&e)))
-	{
-		we_editor_del(&e);
-		return (-1);
-	}
-	we_editor_del(&e);
-	return (0);
+	free(e->frame_buffer.data);
+	SDL_DestroyRenderer(e->renderer);
+	SDL_DestroyWindow(e->window);
+	SDL_Quit();
 }

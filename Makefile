@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/02/01 17:00:45 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/02/02 22:55:23 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,14 @@ client_exe = wolf3d
 
 editor_src_files = $(addprefix $(src_dir), \
 	we_main.c \
+	we_editor_new.c \
+	we_editor_run.c \
+	we_editor_del.c \
+	we_editor_on_resize.c \
+	wx_buffer_copy.c \
+	wx_buffer_set.c \
+	wx_frame_buffer_del.c \
+	wx_frame_buffer_new.c \
 )
 editor_obj_files = $(subst $(src_dir), $(build_dir), $(editor_src_files:.c=.o))
 editor_exe = wolf3d_editor
