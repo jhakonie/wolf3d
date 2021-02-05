@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_client_del.c                                    :+:      :+:    :+:   */
+/*   wx_net_read.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/27 11:18:20 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/05 19:07:44 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/05 13:48:48 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/05 17:13:27 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdlib.h"
+#include "wx_net.h"
 
-#include "wc_client.h"
-
-void	wc_client_del(t_client *c)
+t_bool	wx_net_read(int socket, t_packet *p)
 {
-	wc_remote_server_del(&c->remote_server);
-	free(c->frame_buffer.data);
-	SDL_DestroyTexture(c->texture);
-	SDL_DestroyRenderer(c->renderer);
-	SDL_DestroyWindow(c->window);
-	SDL_Quit();
+	ssize_t					status;
+
+	p->addr_size = sizeof(p->addr);
+	if ((status = recvfrom(socket, p->buffer, WX_PACKET_BUFFER_SIZE - 1, 0,
+		&p->addr, &p->addr_size)) == -1)
+	{
+		return (wx_false);
+	}
+	p->buffer[status] = '\0';
+	p->size = status;
+	return (wx_true);
 }

@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_client_del.c                                    :+:      :+:    :+:   */
+/*   wx_net_write.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/27 11:18:20 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/05 19:07:44 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/05 13:50:47 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/05 13:51:44 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdlib.h"
+#include "wx_net.h"
 
-#include "wc_client.h"
-
-void	wc_client_del(t_client *c)
+t_bool			wx_net_write(int socket, t_packet const *p)
 {
-	wc_remote_server_del(&c->remote_server);
-	free(c->frame_buffer.data);
-	SDL_DestroyTexture(c->texture);
-	SDL_DestroyRenderer(c->renderer);
-	SDL_DestroyWindow(c->window);
-	SDL_Quit();
+	t_u64	sent_size;
+	ssize_t	status;
+
+	sent_size = 0;
+	while (sent_size != p->size)
+	{
+		status = sendto(socket, p->buffer + sent_size, p->size - sent_size, 0,
+			&p->addr, p->addr_size);
+		if (status == -1)
+		{
+			return (wx_false);
+		}
+		sent_size += status;
+	}
+	return (wx_true);
 }

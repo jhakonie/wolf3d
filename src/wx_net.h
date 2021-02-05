@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_client_del.c                                    :+:      :+:    :+:   */
+/*   wx_net.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/27 11:18:20 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/05 19:07:44 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/01/29 17:23:06 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/05 14:06:49 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdlib.h"
+#ifndef WX_NET_H
+# define WX_NET_H
 
-#include "wc_client.h"
+# include "sys/socket.h"
 
-void	wc_client_del(t_client *c)
+# include "wx_types.h"
+
+# define WX_PACKET_BUFFER_SIZE (1024)
+
+struct	s_packet
 {
-	wc_remote_server_del(&c->remote_server);
-	free(c->frame_buffer.data);
-	SDL_DestroyTexture(c->texture);
-	SDL_DestroyRenderer(c->renderer);
-	SDL_DestroyWindow(c->window);
-	SDL_Quit();
-}
+	struct sockaddr		addr;
+	socklen_t			addr_size;
+	t_u8				buffer[WX_PACKET_BUFFER_SIZE];
+	t_u64				size;
+};
+typedef struct s_packet	t_packet;
+
+t_bool	wx_net_read(int socket, t_packet *p);
+t_bool	wx_net_write(int socket, t_packet const *p);
+
+#endif

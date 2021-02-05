@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/02/02 22:55:23 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/02/05 18:35:37 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,16 +19,19 @@ libsdl2_cflags = `$(build_dir)libsdl2/bin/sdl2-config --cflags`
 libsdl2_ldflags = `$(build_dir)libsdl2/bin/sdl2-config --libs`
 
 client_src_files = $(addprefix $(src_dir), \
-	wx_buffer_copy.c \
-	wx_buffer_set.c \
 	wc_client_del.c \
 	wc_client_new.c \
 	wc_client_on_expose.c \
 	wc_client_on_resize.c \
 	wc_client_run.c \
+	wc_remote_server_new.c \
+	wc_remote_server_del.c \
 	wc_main.c \
+	wx_buffer_copy.c \
+	wx_buffer_set.c \
 	wx_frame_buffer_del.c \
 	wx_frame_buffer_new.c \
+	wx_net_write.c \
 )
 client_obj_files = $(subst $(src_dir), $(build_dir), $(client_src_files:.c=.o))
 client_exe = wolf3d
@@ -48,10 +51,11 @@ editor_obj_files = $(subst $(src_dir), $(build_dir), $(editor_src_files:.c=.o))
 editor_exe = wolf3d_editor
 
 server_src_files = $(addprefix $(src_dir), \
-	wx_buffer_set.c \
 	ws_main.c \
 	ws_server_del.c \
 	ws_server_new.c \
+	wx_buffer_set.c \
+	wx_net_read.c \
 )
 server_obj_files = $(subst $(src_dir), $(build_dir), $(server_src_files:.c=.o))
 server_exe = wolf3d_server
@@ -71,7 +75,7 @@ dependency_flags = -MT $(@) -MMD -MP -MF $(build_dir)$(*).dep
 LD = gcc
 LDFLAGS = $(libsdl2_ldflags)
 CC = gcc
-CFLAGS = -c -Wall -Werror -Wextra $(libsdl2_cflags) -I build/libsdl2/include
+CFLAGS = -c -g -Wall -Werror -Wextra $(libsdl2_cflags) -I build/libsdl2/include
 CPPFLAGS = -D_REENTRANT
 
 all: $(client_exe) $(editor_exe) $(server_exe) $(compile_commands_json)

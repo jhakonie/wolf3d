@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_client_del.c                                    :+:      :+:    :+:   */
+/*   wc_remote_server_del.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/27 11:18:20 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/05 19:07:44 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/05 18:34:19 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/05 18:35:02 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdlib.h"
+#include "unistd.h"
 
 #include "wc_client.h"
 
-void	wc_client_del(t_client *c)
+void	wc_remote_server_del(t_remote_server *rs)
 {
-	wc_remote_server_del(&c->remote_server);
-	free(c->frame_buffer.data);
-	SDL_DestroyTexture(c->texture);
-	SDL_DestroyRenderer(c->renderer);
-	SDL_DestroyWindow(c->window);
-	SDL_Quit();
+	wx_buffer_set(&rs->address, sizeof(rs->address), 0);
+	rs->address_size = 0;
+	close(rs->fd);
+	rs->fd = -1;
 }

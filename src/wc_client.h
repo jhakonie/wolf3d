@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:11:35 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/01/27 11:40:51 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/02/05 19:05:40 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,29 @@
 # define WC_CLIENT_H
 
 # include "SDL2/SDL.h"
+# include "sys/socket.h"
 
 # include "wx_frame_buffer.h"
 # include "wx_types.h"
+
+struct	s_remote_server
+{
+	struct sockaddr address;
+	socklen_t		address_size;
+	int				fd;
+};
+typedef struct s_remote_server	t_remote_server;
+
+t_bool	wc_remote_server_new(t_remote_server *rs, char const *hostname,
+	char const *port);
+void	wc_remote_server_del(t_remote_server *rs);
 
 struct	s_client
 {
 	t_bool			draw;
 	SDL_Event		event;
 	t_frame_buffer	frame_buffer;
+	t_remote_server	remote_server;
 	SDL_Renderer	*renderer;
 	t_bool			run;
 	SDL_Texture		*texture;

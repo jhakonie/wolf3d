@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:17:11 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/01/28 05:00:30 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/02/05 19:07:18 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 static t_bool	zz_on_error(t_client *c, t_u8 i)
 {
+	if (i > 4)
+	{
+		wx_frame_buffer_del(&c->frame_buffer);
+	}
 	if (i > 3)
 	{
 		SDL_DestroyTexture(c->texture);
@@ -49,6 +53,8 @@ t_bool			wc_client_new(t_client *c, t_u32 window_width,
 		return (zz_on_error(c, 3));
 	if (!wx_frame_buffer_new(&c->frame_buffer, window_width, window_height))
 		return (zz_on_error(c, 4));
+	if (!wc_remote_server_new(&c->remote_server, "localhost", "12345"))
+		return (zz_on_error(c, 5));
 	c->draw = wx_true;
 	c->run = wx_true;
 	return (wx_true);
