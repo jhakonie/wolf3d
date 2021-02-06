@@ -6,13 +6,10 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:14:34 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/02 22:56:38 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/06 13:34:54 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "SDL2/SDL.h"
-#include "wx_frame_buffer.h"
-#include "wx_types.h"
 #include "we_editor.h"
 
 static t_bool	zz_on_error(t_editor *e, t_u8 i)
@@ -36,6 +33,20 @@ static t_bool	zz_on_error(t_editor *e, t_u8 i)
 	return (wx_false);
 }
 
+void			zz_init_tool(t_tool *t, t_u32 win_width, t_u32 win_height)
+{
+	t->pre_selected = wx_false;
+	t->selected = wx_false;
+	t->button.start.x = win_width / 8;
+	t->button.start.y = win_height / 8;
+	t->button.end.x = t->button.start.x + WE_BTN_W;
+	t->button.end.y = t->button.start.y + WE_BTN_H;
+	we_u32_to_rgba(&t->button.color[0], 0xFFFFFF);
+	we_u32_to_rgba(&t->button.color[1], 0x00FF00);
+	we_u32_to_rgba(&t->button.color[2], 0xFF0000);
+	we_u32_to_rgba(&t->button.color[3], 0x0000FF);
+}
+
 t_bool			we_editor_new(t_editor *e, t_u32 window_width,\
 t_u32 window_height)
 {
@@ -54,5 +65,8 @@ t_u32 window_height)
 	if (!wx_frame_buffer_new(&e->frame_buffer, window_width, window_height))
 		return (zz_on_error(e, 4));
 	e->quit = wx_false;
+	e->draw = wx_true;
+	wx_buffer_set(&e->tool, sizeof(e->tool), 0);
+	zz_init_tool(&e->tool, window_width, window_width);
 	return (wx_true);
 }

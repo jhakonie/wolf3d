@@ -42,6 +42,10 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_editor_run.c \
 	we_editor_del.c \
 	we_editor_on_resize.c \
+	we_draw_pixel.c \
+	we_draw_rec.c \
+	we_draw_line.c \
+	we_draw_button.c \
 	wx_buffer_copy.c \
 	wx_buffer_set.c \
 	wx_frame_buffer_del.c \

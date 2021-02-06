@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_main.c                                          :+:      :+:    :+:   */
+/*   we_draw_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/25 14:00:01 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/06 13:35:51 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/02/01 17:09:11 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/02/03 21:50:49 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "SDL2/SDL.h"
-#include "wx_frame_buffer.h"
-#include "wx_types.h"
 #include "we_editor.h"
 
-int				main(void)
+void		we_draw_line(t_point start, t_point end, t_u8 *data, t_rgba color)
 {
-	t_editor	e;
+	float	dx;
+	float	dy;
+	float	s;
+	float	i;
 
-	e.quit = wx_false;
-	if (!(we_editor_new(&e, WE_WIN_W, WE_WIN_H)))
-		return (-1);
-	if (!(we_editor_run(&e)))
+	i = 0;
+	dx = end.x - start.x;
+	dy = end.y - start.y;
+	if (fabsf(dx) >= fabsf(dy))
+		s = fabsf(dx);
+	else
+		s = fabsf(dy);
+	if (s == 0)
+		return ;
+	dx = dx / s;
+	dy = dy / s;
+	while (i < s)
 	{
-		we_editor_del(&e);
-		return (-1);
+		we_draw_pixel(start, data, color);
+		start.x += dx;
+		start.y += dy;
+		i++;
 	}
-	we_editor_del(&e);
-	return (0);
 }
