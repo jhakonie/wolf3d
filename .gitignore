@@ -36,3 +36,4 @@ libsdl2_net/libSDL2_net.la
 libsdl2_net/libtool
 libsdl2_net/showinterfaces
 libsdl2_net/showinterfaces.o
+.vscode

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/06 13:34:58 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/08 12:24:31 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,12 @@ struct		s_button
 typedef struct s_button	t_button;
 
 void		we_u32_to_rgba(t_rgba *color, t_u32 color_int);
-void		we_draw_pixel(t_point point, t_u8 *data, t_rgba color);
-void		we_draw_line(t_point start, t_point end, t_u8 *data, t_rgba color);
-void		we_draw_rec_full(t_point start, t_point end, t_u8 *data, t_rgba c);
-void		we_draw_rec_frame(t_point start, t_point end, t_u8 *data, t_rgba c);
+void		we_draw_pixel(t_point point, t_frame_buffer *fb, t_rgba color);
+void		we_draw_line(t_point start, t_point end, t_frame_buffer *fb,
+				t_rgba color);
+void		we_draw_rec_full(t_point start, t_point end, t_frame_buffer *fb,
+				t_rgba c);
+void		we_draw_rec_frame(t_point start, t_point end, t_frame_buffer *fb,
+				t_rgba c);
 
 #endif

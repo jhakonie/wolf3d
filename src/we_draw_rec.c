@@ -6,13 +6,14 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 12:44:05 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/06 13:30:23 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/08 12:26:04 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-void		we_draw_rec_frame(t_point start, t_point end, t_u8 *data, t_rgba c)
+void		we_draw_rec_frame(t_point start, t_point end, t_frame_buffer *fb,
+				t_rgba c)
 {
 	t_point up;
 	t_point down;
@@ -21,13 +22,14 @@ void		we_draw_rec_frame(t_point start, t_point end, t_u8 *data, t_rgba c)
 	up.y = start.y;
 	down.x = start.x;
 	down.y = end.y;
-	we_draw_line(start, up, data, c);
-	we_draw_line(start, down, data, c);
-	we_draw_line(up, end, data, c);
-	we_draw_line(down, end, data, c);
+	we_draw_line(start, up, fb, c);
+	we_draw_line(start, down, fb, c);
+	we_draw_line(up, end, fb, c);
+	we_draw_line(down, end, fb, c);
 }
 
-void		we_draw_rec_full(t_point start, t_point end, t_u8 *data, t_rgba c)
+void		we_draw_rec_full(t_point start, t_point end, t_frame_buffer *fb,
+				t_rgba c)
 {
 	t_u32	temp_x;
 
@@ -37,7 +39,7 @@ void		we_draw_rec_full(t_point start, t_point end, t_u8 *data, t_rgba c)
 		start.x = temp_x;
 		while (start.x < end.x)
 		{
-			we_draw_pixel(start, data, c);
+			we_draw_pixel(start, fb, c);
 			start.x++;
 		}
 		start.y++;
