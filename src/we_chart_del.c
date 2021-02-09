@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_main.c                                          :+:      :+:    :+:   */
+/*   we_chart_del.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/25 14:00:01 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/07 02:04:59 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/02/08 21:41:57 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/02/08 21:48:31 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "SDL2/SDL.h"
-#include "wx_frame_buffer.h"
-#include "wx_types.h"
 #include "we_editor.h"
+#include "stdlib.h"
 
-int				main(void)
+void	we_chart_del(t_item *c)
 {
-	t_editor	e;
-
-	e.quit = wx_false;
-	if (!(we_editor_new(&e, WE_WIN_W, WE_WIN_H)))
-		return (-1);
-	if (!(we_editor_run(&e)))
-	{
-		we_editor_del(&e);
-		return (-1);
-	}
-	we_editor_del(&e);
-	return (0);
+	free(c);
+	c = WX_NULL;
 }

@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_main.c                                          :+:      :+:    :+:   */
+/*   we_draw_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/25 14:00:01 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/07 02:04:59 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/02/08 21:52:54 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/02/09 15:32:00 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "SDL2/SDL.h"
-#include "wx_frame_buffer.h"
-#include "wx_types.h"
 #include "we_editor.h"
 
-int				main(void)
+void		we_draw_map(t_editor *e)
 {
-	t_editor	e;
+	t_u32	i;
 
-	e.quit = wx_false;
-	if (!(we_editor_new(&e, WE_WIN_W, WE_WIN_H)))
-		return (-1);
-	if (!(we_editor_run(&e)))
+	i = 0;
+	while (i < e->map.block_count - 1)
 	{
-		we_editor_del(&e);
-		return (-1);
+		if (e->map.chart[i].id != WE_ID_INIT)
+		{
+			e->map.old_block.x = e->tools.start.x + e->map.grid.part.x *
+				e->map.chart[i].loc.x;
+			e->map.old_block.y = e->map.grid.part.y * e->map.chart[i].loc.y;
+			we_draw_block(e, e->map.chart[i].id);
+		}
+		i++;
 	}
-	we_editor_del(&e);
-	return (0);
+	e->map.old_block_draw = wx_false;
 }

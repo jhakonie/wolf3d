@@ -6,24 +6,23 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 22:59:59 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/08 12:28:29 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/08 17:18:13 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-void	we_draw_button(t_editor *e)
+void	we_draw_button(t_tool *t, t_frame_buffer *fb)
 {
-	if (!e->tool.pre_selected && !e->tool.selected)
-		we_draw_rec_full(e->tool.button.start, e->tool.button.end,
-		&e->frame_buffer, e->tool.button.color[0]);
-	else if (e->tool.pre_selected && !e->tool.selected)
-		we_draw_rec_full(e->tool.button.start, e->tool.button.end,
-		&e->frame_buffer, e->tool.button.color[1]);
-	else if (e->tool.selected)
-		we_draw_rec_full(e->tool.button.start, e->tool.button.end,
-		&e->frame_buffer, e->tool.button.color[2]);
-	we_draw_rec_frame(e->tool.button.start, e->tool.button.end,
-		&e->frame_buffer, e->tool.button.color[3]);
-	e->draw = wx_false;
+	if (!t->pre_selected && !t->selected)
+		we_draw_rec_full(t->button.start, t->button.end,
+		fb, t->button.color[0]);
+	else if (t->pre_selected && !t->selected)
+		we_draw_rec_full(t->button.start, t->button.end,
+		fb, t->button.color[1]);
+	else if (t->selected)
+		we_draw_rec_full(t->button.start, t->button.end,
+		fb, t->button.color[2]);
+	we_draw_rec_frame(t->button.start, t->button.end,
+		fb, t->button.color[3]);
 }

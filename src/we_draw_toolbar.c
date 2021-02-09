@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_main.c                                          :+:      :+:    :+:   */
+/*   we_draw_toolbar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/25 14:00:01 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/07 02:04:59 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/02/07 00:21:04 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/02/08 17:16:58 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "SDL2/SDL.h"
-#include "wx_frame_buffer.h"
-#include "wx_types.h"
 #include "we_editor.h"
 
-int				main(void)
+void	we_draw_toolbar(t_editor *e)
 {
-	t_editor	e;
+	t_u32 i;
 
-	e.quit = wx_false;
-	if (!(we_editor_new(&e, WE_WIN_W, WE_WIN_H)))
-		return (-1);
-	if (!(we_editor_run(&e)))
+	i = 0;
+	we_draw_rec_full(e->tools.start, e->tools.end, &e->frame_buffer,
+	e->tools.color[0]);
+	we_draw_rec_frame(e->tools.start, e->tools.end, &e->frame_buffer,
+	e->tools.color[1]);
+	while (i < 3)
 	{
-		we_editor_del(&e);
-		return (-1);
+		we_draw_button(&e->tools.tool[i], &e->frame_buffer);
+		i++;
 	}
-	we_editor_del(&e);
-	return (0);
+	e->draw = wx_false;
 }

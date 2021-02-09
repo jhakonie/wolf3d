@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/02/05 18:35:37 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/02/08 23:56:43 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,10 +41,21 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_editor_new.c \
 	we_editor_run.c \
 	we_editor_del.c \
+	we_chart_new.c \
+	we_chart_del.c \
+	we_init_toolbar.c \
+	we_init_map.c \
+	we_init_chart.c \
 	we_editor_on_resize.c \
+	we_position_check.c \
+	we_draw.c \
 	we_draw_pixel.c \
-	we_draw_rec.c \
 	we_draw_line.c \
+	we_draw_rec.c \
+	we_draw_block.c \
+	we_draw_grid.c \
+	we_draw_map.c \
+	we_draw_toolbar.c \
 	we_draw_button.c \
 	wx_buffer_copy.c \
 	wx_buffer_set.c \

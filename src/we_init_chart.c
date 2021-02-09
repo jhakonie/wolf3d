@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_main.c                                          :+:      :+:    :+:   */
+/*   we_init_chart.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/25 14:00:01 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/07 02:04:59 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/02/08 22:38:50 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/02/09 02:18:43 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "SDL2/SDL.h"
-#include "wx_frame_buffer.h"
-#include "wx_types.h"
 #include "we_editor.h"
 
-int				main(void)
+void	we_init_chart(t_map *m)
 {
-	t_editor	e;
+	t_u32 i;
 
-	e.quit = wx_false;
-	if (!(we_editor_new(&e, WE_WIN_W, WE_WIN_H)))
-		return (-1);
-	if (!(we_editor_run(&e)))
+	i = 0;
+	while (i < m->block_count)
 	{
-		we_editor_del(&e);
-		return (-1);
+		m->chart[i].id = WE_ID_INIT;
+		i++;
 	}
-	we_editor_del(&e);
-	return (0);
 }

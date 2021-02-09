@@ -6,46 +6,37 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:50:59 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/08 13:26:09 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/09 02:24:20 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-static void		zz_mouse_move(t_editor *e, t_s32 x, t_s32 y)
+static void		zz_mouse_move(t_editor *e, t_u32 x, t_u32 y)
 {
-	if (x >= e->tool.button.start.x && x <= e->tool.button.end.x &&
-	y >= e->tool.button.start.y && y <= e->tool.button.end.y)
+	t_u32		i;
+
+	i = 0;
+	if (x < e->map.grid.start.x)
 	{
-		e->tool.pre_selected = wx_true;
-		e->draw = wx_true;
+		while (i < 3)
+		{
+			we_pos_mouse_tool(&e->tools.tool[i], &e->draw, x, y);
+			i++;
+		}
 	}
-	if (x <= e->tool.button.start.x || x >= e->tool.button.end.x ||
-	y <= e->tool.button.start.y || y >= e->tool.button.end.y)
-	{
-		e->tool.pre_selected = wx_false;
-		e->draw = wx_true;
-	}
+	else
+		we_pos_mouse_grid(&e->map, &e->draw, x, y);
 }
 
-static void		zz_mouse_button(t_editor *e, t_u32 x, t_u32 y)
+static void		zz_mouse_click(t_editor *e, t_u32 x, t_u32 y)
 {
 	if (e->event.button.button == SDL_BUTTON_LEFT)
 	{
-		if (e->tool.pre_selected && !e->tool.selected)
-		{
-			e->tool.selected = wx_true;
-			e->tool.pre_selected = wx_false;
-			e->draw = wx_true;
-		}
-		else if (e->tool.selected && x >= e->tool.button.start.x &&
-		x <= e->tool.button.end.x && y >= e->tool.button.start.y &&
-		y <= e->tool.button.end.y)
-		{
-			e->tool.selected = wx_false;
-			e->tool.pre_selected = wx_true;
-			e->draw = wx_true;
-		}
+		if (x < e->map.grid.start.x)
+			we_position_on_click_tool(e, x, y);
+		else if (e->tools.id != WE_ID_INIT)
+			we_pos_on_click_grid(&e->map, &e->draw, x, y);
 	}
 }
 
@@ -68,7 +59,7 @@ static t_bool	zz_events(t_editor *e)
 		else if (e->event.type == SDL_MOUSEMOTION)
 			zz_mouse_move(e, e->event.motion.x, e->event.motion.y);
 		else if (e->event.type == SDL_MOUSEBUTTONDOWN)
-			zz_mouse_button(e, e->event.button.x, e->event.button.y);
+			zz_mouse_click(e, e->event.button.x, e->event.button.y);
 	}
 	return (wx_false);
 }
@@ -82,7 +73,7 @@ t_bool			we_editor_run(t_editor *e)
 	{
 		if (e->draw)
 		{
-			we_draw_button(e);
+			we_draw(e);
 			if (SDL_LockTexture(e->texture, WX_NULL, (void **)&texture_data,
 								&texture_pitch) < 0)
 			{

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 12:44:05 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/08 12:26:04 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/09 15:27:10 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void		we_draw_rec_full(t_point start, t_point end, t_frame_buffer *fb,
 	t_u32	temp_x;
 
 	temp_x = start.x;
-	while (start.y < end.y)
+	while (start.y <= end.y)
 	{
 		start.x = temp_x;
-		while (start.x < end.x)
+		while (start.x <= end.x)
 		{
 			we_draw_pixel(start, fb, c);
 			start.x++;

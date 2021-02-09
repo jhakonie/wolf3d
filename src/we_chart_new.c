@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_main.c                                          :+:      :+:    :+:   */
+/*   we_chart_new.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/25 14:00:01 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/07 02:04:59 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/02/08 21:18:09 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/02/09 00:12:08 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "SDL2/SDL.h"
-#include "wx_frame_buffer.h"
-#include "wx_types.h"
 #include "we_editor.h"
 
-int				main(void)
+t_bool	we_chart_new(t_map *m)
 {
-	t_editor	e;
+	t_u32 size;
 
-	e.quit = wx_false;
-	if (!(we_editor_new(&e, WE_WIN_W, WE_WIN_H)))
-		return (-1);
-	if (!(we_editor_run(&e)))
-	{
-		we_editor_del(&e);
-		return (-1);
-	}
-	we_editor_del(&e);
-	return (0);
+	size = WE_GRID_DIVIDE * WE_GRID_DIVIDE;
+	if (!(m->chart = (t_item *)malloc(sizeof(t_item) * size)))
+		return (wx_false);
+	wx_buffer_set(m->chart, size * sizeof(t_item), 0);
+	return (wx_true);
 }
