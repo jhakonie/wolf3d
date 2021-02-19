@@ -6,14 +6,16 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 04:42:55 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/05 11:30:54 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/02/16 20:45:55 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "fcntl.h"
 #include "netdb.h"
 #include "unistd.h"
 
 #include "ws_server.h"
+#include "wx_time.h"
 
 static t_bool	zz_socket_bind(int *s, struct addrinfo *interfaces)
 {
@@ -22,14 +24,14 @@ static t_bool	zz_socket_bind(int *s, struct addrinfo *interfaces)
 	i = interfaces;
 	while (i)
 	{
-		if ((*s = socket(i->ai_family, i->ai_socktype, i->ai_protocol)) == -1)
-			continue ;
-		if (bind(*s, i->ai_addr, i->ai_addrlen) == -1)
+		if (((*s = socket(i->ai_family, i->ai_socktype,
+			i->ai_protocol)) != -1) &&
+			((bind(*s, i->ai_addr, i->ai_addrlen) != -1)) &&
+			(fcntl(*s, F_SETFL, O_NONBLOCK) != -1))
 		{
-			close(*s);
-			continue ;
+			break ;
 		}
-		break ;
+		close(*s);
 		i = i->ai_next;
 	}
 	if (!i)
@@ -63,10 +65,14 @@ static t_bool	zz_socket_new(int *s, char const *port)
 t_bool			ws_server_new(t_server *s)
 {
 	wx_buffer_set(s, sizeof(*s), 0);
-	if (!zz_socket_new(&s->socket, "12345"))
+	s->remote_clients_size = WX_SERVER_REMOTE_CLIENTS_SIZE;
+	s->remote_client_timeout_s = 3.0;
+	if (!zz_socket_new(&s->socket, WX_SERVER_DEFAULT_SOCKET))
 	{
 		return (wx_false);
 	}
 	s->run = wx_true;
+	s->sim_time_s = wx_time_s();
+	s->sim_time_step_s = 1.0 / 30.0;
 	return (wx_true);
 }

@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 17:23:06 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/05 14:06:49 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/02/18 22:37:52 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,49 @@
 
 # include "sys/socket.h"
 
+# include "wx_math.h"
 # include "wx_types.h"
 
 # define WX_PACKET_BUFFER_SIZE (1024)
+# define WX_SERVER_REMOTE_CLIENTS_SIZE (4)
+# define WX_SERVER_DEFAULT_SOCKET ("12345")
+
+struct	s_client_input
+{
+	t_bool	move_up;
+	t_bool	move_down;
+	t_bool	move_left;
+	t_bool	move_right;
+};
+typedef struct s_client_input	t_client_input;
 
 struct	s_packet
 {
-	struct sockaddr		addr;
-	socklen_t			addr_size;
+	struct sockaddr		address;
+	socklen_t			address_size;
 	t_u8				buffer[WX_PACKET_BUFFER_SIZE];
 	t_u64				size;
 };
 typedef struct s_packet	t_packet;
 
-t_bool	wx_net_read(int socket, t_packet *p);
-t_bool	wx_net_write(int socket, t_packet const *p);
+void	wx_packet_read_f32(t_packet *p, t_u64 *i, t_f32 *x);
+void	wx_packet_read_u8(t_packet *p, t_u64 *i, t_u8 *x);
+void	wx_packet_read_v2(t_packet *p, t_u64 *i, t_v2 *x);
+void	wx_packet_write_f32(t_packet *p, t_f32 x);
+void	wx_packet_write_u8(t_packet *p, t_u8 x);
+void	wx_packet_write_v2(t_packet *p, t_v2 const *x);
+
+struct	s_server_update
+{
+	t_v2	client_position;
+	t_v2	other_positions[WX_SERVER_REMOTE_CLIENTS_SIZE - 1];
+	t_u8	other_positions_size;
+};
+typedef struct s_server_update	t_server_update;
+
+t_bool	wx_address_equal(struct sockaddr const *a0, socklen_t a0_size,
+	struct sockaddr const *a1, socklen_t a1_size);
+t_bool	wx_socket_read(int socket, t_packet *p);
+t_bool	wx_socket_write(int socket, t_packet const *p);
 
 #endif

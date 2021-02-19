@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ws_main.c                                          :+:      :+:    :+:   */
+/*   wx_address_equal.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:44:53 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/16 20:39:55 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/17 10:34:27 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/17 10:37:14 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ws_server.h"
+#include "wx_net.h"
 
-int			main(void)
+t_bool	wx_address_equal(struct sockaddr const *a0, socklen_t a0_size,
+	struct sockaddr const *a1, socklen_t a1_size)
 {
-	t_server	s;
+	t_u64	i;
 
-	if (!ws_server_new(&s))
+	if (a0_size != a1_size)
 	{
-		return (-1);
+		return (wx_false);
 	}
-	if (!ws_server_run(&s))
+	if (a0->sa_family != a1->sa_family)
 	{
-		ws_server_del(&s);
-		return (-1);
+		return (wx_false);
 	}
-	ws_server_del(&s);
-	return (0);
+	i = 0;
+	while (i < a0_size)
+	{
+		if (a0->sa_data[i] != a1->sa_data[i])
+		{
+			return (wx_false);
+		}
+		++i;
+	}
+	return (wx_true);
 }

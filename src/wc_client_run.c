@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:27:18 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/05 19:12:41 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/02/19 11:56:42 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,69 +15,90 @@
 #include "unistd.h"
 
 #include "wc_client.h"
+#include "wc_draw.h"
 #include "wx_net.h"
+#include "wx_time.h"
 
-static void	zz_draw(t_client *c)
+static void		zz_draw(t_client *c)
 {
-	(void)c;
-	c->draw = wx_false;
-}
+	t_u8		i;
+	t_rectangle	r;
 
-static void	zz_on_keydown(t_client *c)
-{
-	if (c->event.key.keysym.sym == SDLK_ESCAPE)
-		c->run = wx_false;
-}
-
-static void	zz_on_windowevent(t_client *c)
-{
-	if (c->event.window.event == SDL_WINDOWEVENT_EXPOSED)
+	wc_draw_clear(&c->frame_buffer);
+	r.p0.x = c->player_position.x - 20;
+	r.p0.y = c->player_position.y - 20;
+	r.p1.x = c->player_position.x + 20;
+	r.p1.y = c->player_position.y + 20;
+	wc_draw_rectangle_solid(&c->frame_buffer, r);
+	i = 0;
+	while (i < c->other_positions_size)
 	{
-		wc_client_on_expose(c);
-		c->draw = wx_true;
+		r.p0.x = c->other_positions[i].x - 20;
+		r.p0.y = c->other_positions[i].y - 20;
+		r.p1.x = c->other_positions[i].x + 20;
+		r.p1.y = c->other_positions[i].y + 20;
+		wc_draw_rectangle_outline(&c->frame_buffer, r);
+		++i;
 	}
-	else if (c->event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+	wc_draw_copy(c, &c->frame_buffer);
+}
+
+/*
+** 2021-02-17 todo: when running two instances of wolf3d and hitting esc the
+** event gets reported to both windows if they are one after the other in the
+** windows mru. resulting in both windows closing! would be nice to fix this.
+** happens on different wm? happens on macos?
+*/
+
+static void		zz_integrate(t_client *c)
+{
+	if (c->sim_time_accumulator_s >= c->sim_time_step_s)
 	{
-		wc_client_on_resize(c, c->event.window.data1,
-			c->event.window.data2);
-		c->draw = wx_true;
+		c->sim_time_s += c->sim_time_step_s;
+		c->sim_time_accumulator_s -= c->sim_time_step_s;
 	}
 }
 
-static void	zz_send_packet(t_client *c)
+static void		zz_network(t_client *c)
 {
-	t_packet		packet;
+	t_u8		i;
+	t_u64		p_offset;
+	t_packet	p;
 
-	packet.addr = c->remote_server.address;
-	packet.addr_size = c->remote_server.address_size;
-	wx_buffer_copy(packet.buffer, "abc", 3);
-	packet.size = 3;
-	if (!wx_net_write(c->remote_server.fd, &packet))
+	wc_remote_server_write(&c->remote_server, &c->input);
+	if (wc_remote_server_read(&c->remote_server, &p))
 	{
-		c->run = wx_false;
+		p_offset = 0;
+		wx_packet_read_v2(&p, &p_offset, &c->player_position);
+		wx_packet_read_u8(&p, &p_offset, &c->other_positions_size);
+		i = 0;
+		while (i < c->other_positions_size)
+		{
+			wx_packet_read_v2(&p, &p_offset, &c->other_positions[i]);
+			++i;
+		}
 	}
 }
 
-t_bool		wc_client_run(t_client *c)
+t_bool			wc_client_run(t_client *c)
 {
+	t_f64		delta_s;
+	t_f64		real_time0_s;
+	t_f64		real_time1_s;
+
+	real_time0_s = c->sim_time_s;
 	while (c->run)
 	{
-		zz_send_packet(c);
-		while (SDL_PollEvent(&c->event))
-		{
-			if (c->event.type == SDL_QUIT)
-			{
-				c->run = wx_false;
-				break ;
-			}
-			else if (c->event.type == SDL_KEYDOWN)
-				zz_on_keydown(c);
-			else if (c->event.type == SDL_WINDOWEVENT)
-				zz_on_windowevent(c);
-		}
-		if (c->run && c->draw)
-			zz_draw(c);
-		SDL_Delay(1000);
+		real_time1_s = wx_time_s();
+		delta_s = real_time1_s - real_time0_s;
+		if (delta_s > 2.0 * c->sim_time_step_s)
+			delta_s = c->sim_time_step_s;
+		real_time0_s = real_time1_s;
+		c->sim_time_accumulator_s += delta_s;
+		wc_client_dispatch_events(c);
+		zz_network(c);
+		zz_integrate(c);
+		zz_draw(c);
 	}
 	return (wx_true);
 }

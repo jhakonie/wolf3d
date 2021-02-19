@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ws_main.c                                          :+:      :+:    :+:   */
+/*   wx_time.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:44:53 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/16 20:39:55 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/06 20:28:13 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/16 20:40:38 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ws_server.h"
+#ifndef WX_TIME_H
+# define WX_TIME_H
 
-int			main(void)
-{
-	t_server	s;
+# include "wx_types.h"
 
-	if (!ws_server_new(&s))
-	{
-		return (-1);
-	}
-	if (!ws_server_run(&s))
-	{
-		ws_server_del(&s);
-		return (-1);
-	}
-	ws_server_del(&s);
-	return (0);
-}
+t_f64	wx_time_s(void);
+void	wx_sleep_s(t_f64 duration_s);
+
+#endif

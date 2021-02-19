@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ws_main.c                                          :+:      :+:    :+:   */
+/*   wc_remote_server_read.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:44:53 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/16 20:39:55 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/09 15:54:18 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/17 10:42:01 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ws_server.h"
+#include "wc_client.h"
 
-int			main(void)
+t_bool			wc_remote_server_read(t_remote_server *rs, t_packet *p)
 {
-	t_server	s;
-
-	if (!ws_server_new(&s))
+	if (!wx_socket_read(rs->socket, p))
 	{
-		return (-1);
+		return (wx_false);
 	}
-	if (!ws_server_run(&s))
+	if (!p->size)
 	{
-		ws_server_del(&s);
-		return (-1);
+		return (wx_false);
 	}
-	ws_server_del(&s);
-	return (0);
+	if (!wx_address_equal(&rs->address, rs->address_size, &p->address,
+		p->address_size))
+	{
+		return (wx_false);
+	}
+	return (wx_true);
 }

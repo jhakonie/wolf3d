@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 10:52:07 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/01/27 11:37:57 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:23:47 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@ enum	e_bool
 	wx_true = 1
 };
 typedef enum e_bool	t_bool;
+
+typedef float	t_f32;
+
+t_f32	wx_f32_max(t_f32 x0, t_f32 x1);
+t_f32	wx_f32_min(t_f32 x0, t_f32 x1);
+
+typedef double	t_f64;
+
+t_f64	wx_f64_min(t_f64 x0, t_f64 x1);
 
 typedef int	t_s32;
 

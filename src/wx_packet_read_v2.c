@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ws_main.c                                          :+:      :+:    :+:   */
+/*   wx_packet_read_v2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:44:53 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/16 20:39:55 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/18 22:32:59 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/18 22:34:47 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ws_server.h"
+#include "wx_net.h"
 
-int			main(void)
+void	wx_packet_read_v2(t_packet *p, t_u64 *i, t_v2 *x)
 {
-	t_server	s;
-
-	if (!ws_server_new(&s))
-	{
-		return (-1);
-	}
-	if (!ws_server_run(&s))
-	{
-		ws_server_del(&s);
-		return (-1);
-	}
-	ws_server_del(&s);
-	return (0);
+	wx_packet_read_f32(p, i, &x->x);
+	wx_packet_read_f32(p, i, &x->y);
 }

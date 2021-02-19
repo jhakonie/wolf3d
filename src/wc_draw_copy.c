@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_client_on_expose.c                              :+:      :+:    :+:   */
+/*   wc_draw_copy.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/27 11:33:22 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/01/27 13:08:21 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/17 16:41:07 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/17 16:43:09 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wc_client.h"
+#include "wc_draw.h"
 
 /*
-** 2021-01-27 todo: should copy in blocks if texture_pitch happens to be
+** 2021-02-17 todo: should copy in blocks if texture_pitch happens to be
 ** something unexpected
 */
 
-void	wc_client_on_expose(t_client *c)
+void	wc_draw_copy(t_client *c, t_frame_buffer const *fb)
 {
 	t_u8	*texture_data;
 	t_s32	texture_pitch;
@@ -27,8 +28,7 @@ void	wc_client_on_expose(t_client *c)
 	{
 		c->run = wx_false;
 	}
-	wx_buffer_copy(texture_data, c->frame_buffer.data,
-		c->frame_buffer.data_size);
+	wx_buffer_copy(texture_data, fb->data, fb->data_size);
 	SDL_UnlockTexture(c->texture);
 	if (SDL_RenderCopy(c->renderer, c->texture, WX_NULL, WX_NULL) < 0)
 	{

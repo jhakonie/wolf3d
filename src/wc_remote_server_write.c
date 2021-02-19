@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_remote_server_del.c                             :+:      :+:    :+:   */
+/*   wc_remote_server_write.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/05 18:34:19 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/06 12:47:50 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/09 19:17:29 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/17 10:30:42 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "unistd.h"
-
 #include "wc_client.h"
 
-void	wc_remote_server_del(t_remote_server *rs)
+t_bool	wc_remote_server_write(t_remote_server *rs, t_client_input const *ci)
 {
-	wx_buffer_set(&rs->address, sizeof(rs->address), 0);
-	rs->address_size = 0;
-	close(rs->socket);
-	rs->socket = -1;
+	t_packet	p;
+
+	p.address = rs->address;
+	p.address_size = rs->address_size;
+	p.size = 0;
+	wx_packet_write_u8(&p, ci->move_up);
+	wx_packet_write_u8(&p, ci->move_down);
+	wx_packet_write_u8(&p, ci->move_left);
+	wx_packet_write_u8(&p, ci->move_right);
+	if (!wx_socket_write(rs->socket, &p))
+	{
+		return (wx_false);
+	}
+	return (wx_true);
 }

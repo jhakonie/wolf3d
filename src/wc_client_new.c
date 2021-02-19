@@ -6,11 +6,13 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:17:11 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/05 19:07:18 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/02/17 16:51:25 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wc_client.h"
+#include "wx_net.h"
+#include "wx_time.h"
 
 static t_bool	zz_on_error(t_client *c, t_u8 i)
 {
@@ -53,9 +55,11 @@ t_bool			wc_client_new(t_client *c, t_u32 window_width,
 		return (zz_on_error(c, 3));
 	if (!wx_frame_buffer_new(&c->frame_buffer, window_width, window_height))
 		return (zz_on_error(c, 4));
-	if (!wc_remote_server_new(&c->remote_server, "localhost", "12345"))
+	if (!wc_remote_server_new(&c->remote_server, "localhost",
+		WX_SERVER_DEFAULT_SOCKET))
 		return (zz_on_error(c, 5));
-	c->draw = wx_true;
+	c->sim_time_s = wx_time_s();
+	c->sim_time_step_s = 1.0 / 30.0;
 	c->run = wx_true;
 	return (wx_true);
 }

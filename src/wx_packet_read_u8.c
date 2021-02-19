@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ws_main.c                                          :+:      :+:    :+:   */
+/*   wx_packet_read_u8.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:44:53 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/16 20:39:55 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/07 19:41:25 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/16 22:01:55 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ws_server.h"
+#include "wx_net.h"
 
-int			main(void)
+void	wx_packet_read_u8(t_packet *p, t_u64 *i, t_u8 *x)
 {
-	t_server	s;
-
-	if (!ws_server_new(&s))
-	{
-		return (-1);
-	}
-	if (!ws_server_run(&s))
-	{
-		ws_server_del(&s);
-		return (-1);
-	}
-	ws_server_del(&s);
-	return (0);
+	*x = *(t_u8 *)(p->buffer + *i);
+	++(*i);
 }

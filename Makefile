@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/02/08 23:56:43 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/02/19 12:30:54 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,19 +19,35 @@ libsdl2_cflags = `$(build_dir)libsdl2/bin/sdl2-config --cflags`
 libsdl2_ldflags = `$(build_dir)libsdl2/bin/sdl2-config --libs`
 
 client_src_files = $(addprefix $(src_dir), \
+	wc_client_dispatch_events.c \
 	wc_client_del.c \
 	wc_client_new.c \
-	wc_client_on_expose.c \
-	wc_client_on_resize.c \
 	wc_client_run.c \
+	wc_draw_clear.c \
+	wc_draw_copy.c \
+	wc_draw_pixel.c \
+	wc_draw_rectangle_solid.c \
+	wc_draw_rectangle_outline.c \
 	wc_remote_server_new.c \
 	wc_remote_server_del.c \
+	wc_remote_server_read.c \
+	wc_remote_server_write.c \
 	wc_main.c \
+	wx_address_equal.c \
 	wx_buffer_copy.c \
 	wx_buffer_set.c \
+	wx_f32_max.c \
+	wx_f32_min.c \
 	wx_frame_buffer_del.c \
 	wx_frame_buffer_new.c \
-	wx_net_write.c \
+	wx_socket_read.c \
+	wx_socket_write.c \
+	wx_packet_read_f32.c \
+	wx_packet_read_u8.c \
+	wx_packet_read_v2.c \
+	wx_packet_write_u8.c \
+	wx_sleep_s.c \
+	wx_time_s.c \
 )
 client_obj_files = $(subst $(src_dir), $(build_dir), $(client_src_files:.c=.o))
 client_exe = wolf3d
@@ -68,9 +84,23 @@ editor_exe = wolf3d_editor
 server_src_files = $(addprefix $(src_dir), \
 	ws_main.c \
 	ws_server_del.c \
+	ws_server_network_read.c \
+	ws_server_network_write.c \
 	ws_server_new.c \
+	ws_server_run.c \
+	wx_address_equal.c \
+	wx_buffer_copy.c \
 	wx_buffer_set.c \
-	wx_net_read.c \
+	wx_f64_min.c \
+	wx_socket_read.c \
+	wx_socket_write.c \
+	wx_packet_read_f32.c \
+	wx_packet_read_u8.c \
+	wx_packet_write_f32.c \
+	wx_packet_write_u8.c \
+	wx_packet_write_v2.c \
+	wx_sleep_s.c \
+	wx_time_s.c \
 )
 server_obj_files = $(subst $(src_dir), $(build_dir), $(server_src_files:.c=.o))
 server_exe = wolf3d_server

@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ws_main.c                                          :+:      :+:    :+:   */
+/*   wx_f32_min.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:44:53 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/16 20:39:55 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/18 00:40:36 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/18 00:41:05 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ws_server.h"
+#include "wx_types.h"
 
-int			main(void)
+t_f32	wx_f32_min(t_f32 x0, t_f32 x1)
 {
-	t_server	s;
-
-	if (!ws_server_new(&s))
+	if (x0 < x1)
 	{
-		return (-1);
+		return (x0);
 	}
-	if (!ws_server_run(&s))
-	{
-		ws_server_del(&s);
-		return (-1);
-	}
-	ws_server_del(&s);
-	return (0);
+	return (x1);
 }

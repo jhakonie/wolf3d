@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ws_main.c                                          :+:      :+:    :+:   */
+/*   wx_sleep_s.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:44:53 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/16 20:39:55 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/06 21:12:58 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/16 20:41:38 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ws_server.h"
+#include "time.h"
 
-int			main(void)
+#include "wx_time.h"
+
+void	wx_sleep_s(t_f64 duration_s)
 {
-	t_server	s;
+	struct timespec	ts;
 
-	if (!ws_server_new(&s))
-	{
-		return (-1);
-	}
-	if (!ws_server_run(&s))
-	{
-		ws_server_del(&s);
-		return (-1);
-	}
-	ws_server_del(&s);
-	return (0);
+	ts.tv_sec = (t_u64)duration_s;
+	ts.tv_nsec = (duration_s - (t_u64)duration_s) * 1000000000.0;
+	clock_nanosleep(CLOCK_REALTIME, 0, &ts, WX_NULL);
 }

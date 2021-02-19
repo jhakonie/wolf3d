@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ws_main.c                                          :+:      :+:    :+:   */
+/*   wc_draw_pixel.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 13:44:53 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/16 20:39:55 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/18 00:43:30 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/18 21:59:18 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ws_server.h"
+#include "wc_draw.h"
 
-int			main(void)
+void	wc_draw_pixel(t_frame_buffer *fb, t_f32 x, t_f32 y, t_u32 abgr)
 {
-	t_server	s;
+	t_u64	i;
 
-	if (!ws_server_new(&s))
-	{
-		return (-1);
-	}
-	if (!ws_server_run(&s))
-	{
-		ws_server_del(&s);
-		return (-1);
-	}
-	ws_server_del(&s);
-	return (0);
+	i = 4 * ((t_u32)y * fb->width + (t_u32)x);
+	fb->data[i + 0] = (abgr >> 24) & 0xff;
+	fb->data[i + 1] = (abgr >> 16) & 0xff;
+	fb->data[i + 2] = (abgr >> 8) & 0xff;
+	fb->data[i + 3] = (abgr >> 0) & 0xff;
 }

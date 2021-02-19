@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wx_net_read.c                                      :+:      :+:    :+:   */
+/*   wx_packet_write_u8.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/05 13:48:48 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/05 17:13:27 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/07 19:44:28 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/02/07 19:49:47 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wx_net.h"
 
-t_bool	wx_net_read(int socket, t_packet *p)
+void	wx_packet_write_u8(t_packet *p, t_u8 x)
 {
-	ssize_t					status;
-
-	p->addr_size = sizeof(p->addr);
-	if ((status = recvfrom(socket, p->buffer, WX_PACKET_BUFFER_SIZE - 1, 0,
-		&p->addr, &p->addr_size)) == -1)
-	{
-		return (wx_false);
-	}
-	p->buffer[status] = '\0';
-	p->size = status;
-	return (wx_true);
+	p->buffer[p->size] = x;
+	p->size += sizeof(x);
 }
