@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/02/19 12:30:54 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/02/21 16:47:45 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,6 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_packet_read_u8.c \
 	wx_packet_read_v2.c \
 	wx_packet_write_u8.c \
-	wx_sleep_s.c \
 	wx_time_s.c \
 )
 client_obj_files = $(subst $(src_dir), $(build_dir), $(client_src_files:.c=.o))
@@ -99,7 +98,6 @@ server_src_files = $(addprefix $(src_dir), \
 	wx_packet_write_f32.c \
 	wx_packet_write_u8.c \
 	wx_packet_write_v2.c \
-	wx_sleep_s.c \
 	wx_time_s.c \
 )
 server_obj_files = $(subst $(src_dir), $(build_dir), $(server_src_files:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 20:28:13 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/16 20:40:38 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/02/21 16:48:03 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,5 @@
 # include "wx_types.h"
 
 t_f64	wx_time_s(void);
-void	wx_sleep_s(t_f64 duration_s);
 
 #endif
