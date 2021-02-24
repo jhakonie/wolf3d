@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:50:59 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/09 02:24:20 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/24 21:10:31 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static void		zz_mouse_move(t_editor *e, t_u32 x, t_u32 y)
 {
 	t_u32		i;
 
-	i = 0;
+	i = 1;
 	if (x < e->map.grid.start.x)
 	{
-		while (i < 3)
+		while (i < 4)
 		{
 			we_pos_mouse_tool(&e->tools.tool[i], &e->draw, x, y);
 			i++;
@@ -34,13 +34,13 @@ static void		zz_mouse_click(t_editor *e, t_u32 x, t_u32 y)
 	if (e->event.button.button == SDL_BUTTON_LEFT)
 	{
 		if (x < e->map.grid.start.x)
-			we_position_on_click_tool(e, x, y);
+			we_pos_on_click_tool(e, x, y);
 		else if (e->tools.id != WE_ID_INIT)
-			we_pos_on_click_grid(&e->map, &e->draw, x, y);
+			we_pos_on_click_grid(e, x, y);
 	}
 }
 
-static t_bool	zz_events(t_editor *e)
+static t_bool	zz_wait_event(t_editor *e)
 {
 	if (SDL_WaitEvent(&e->event) != 0)
 	{
@@ -88,7 +88,7 @@ t_bool			we_editor_run(t_editor *e)
 			}
 			SDL_RenderPresent(e->renderer);
 		}
-		e->quit = zz_events(e);
+		e->quit = zz_wait_event(e);
 	}
 	return (wx_true);
 }

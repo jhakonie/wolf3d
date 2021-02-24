@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 21:25:21 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/09 18:54:57 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/02/23 11:31:52 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ void		we_u32_to_rgba(t_rgba *color, t_u32 color_int)
 	color->r = (color_int >> 16) & 0xFF;
 }
 
-void		we_draw_pixel(t_point point, t_frame_buffer *fb, t_rgba color)
+void		we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_rgba color)
 {
-	if (point.x < fb->width && point.y < fb->height)
+	if (point.x >= 0 && point.x < fb->width &&
+		point.y < fb->height && point.y >= 0)
 	{
 		fb->data[0 + ((int)point.x + fb->width * (int)point.y) * 4] = color.a;
 		fb->data[1 + ((int)point.x + fb->width * (int)point.y) * 4] = color.b;

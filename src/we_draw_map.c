@@ -6,27 +6,30 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 21:52:54 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/09 15:32:00 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/24 21:04:38 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
+#include "wc_draw.h"
 
 void		we_draw_map(t_editor *e)
 {
 	t_u32	i;
+	t_p2	start;
+	t_p2	end;
 
 	i = 0;
-	while (i < e->map.block_count - 1)
+	while (i < e->map.block_count)
 	{
 		if (e->map.chart[i].id != WE_ID_INIT)
 		{
-			e->map.old_block.x = e->tools.start.x + e->map.grid.part.x *
-				e->map.chart[i].loc.x;
-			e->map.old_block.y = e->map.grid.part.y * e->map.chart[i].loc.y;
-			we_draw_block(e, e->map.chart[i].id);
+			start = we_from_map_to_win(e->map.chart[i].block, e);
+			end.x = start.x + e->map.grid.part.x;
+			end.y = start.y + e->map.grid.part.y;
+			we_draw_rec_full(start, end, &e->frame_buffer,
+				e->tools.tool[e->map.chart[i].id].button.color[0]);
 		}
 		i++;
 	}
-	e->map.old_block_draw = wx_false;
 }

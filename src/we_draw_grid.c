@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:26:29 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/08 17:16:03 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/18 22:27:23 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void		zz_draw_vertical(t_grid *g, t_frame_buffer *fb)
 {
-	t_point start;
-	t_point end;
+	t_p2	start;
+	t_p2	end;
 	t_u32	i;
 
 	i = 0;
@@ -34,14 +34,14 @@ void		zz_draw_vertical(t_grid *g, t_frame_buffer *fb)
 
 void		zz_draw_horisontal(t_grid *g, t_frame_buffer *fb)
 {
-	t_point start;
-	t_point end;
+	t_p2	start;
+	t_p2	end;
 	t_u32	i;
 
 	i = 1;
 	start.x = g->start.x;
 	start.y = g->part.y;
-	end.x = fb->width;
+	end.x = fb->width - 1;
 	end.y = g->part.y;
 	while (i < g->divide)
 	{

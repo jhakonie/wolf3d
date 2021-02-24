@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 22:51:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/09 14:40:01 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/23 19:08:41 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,4 @@ void	we_editor_on_resize(t_editor *e, t_s32 width, t_s32 height)
 	we_init_map(&e->map, width, height);
 	we_init_tools(&e->tools, width, height);
 	e->draw = wx_true;
-	e->map.old_block_draw = wx_true;
 }

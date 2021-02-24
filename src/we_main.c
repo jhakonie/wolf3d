@@ -6,11 +6,10 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 14:00:01 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/07 02:04:59 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/24 20:54:38 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "SDL2/SDL.h"
 #include "wx_frame_buffer.h"
 #include "wx_types.h"
 #include "we_editor.h"

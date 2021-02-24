@@ -6,19 +6,19 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:09:11 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/09 02:23:34 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/23 01:40:35 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-void		we_draw_line(t_point start, t_point end, t_frame_buffer *fb,
+void		we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb,
 	t_rgba color)
 {
-	float	dx;
-	float	dy;
-	float	s;
-	float	i;
+	t_f32	dx;
+	t_f32	dy;
+	t_f32	s;
+	t_f32	i;
 
 	i = 0;
 	dx = end.x - start.x;
@@ -31,7 +31,7 @@ void		we_draw_line(t_point start, t_point end, t_frame_buffer *fb,
 		return ;
 	dx = dx / s;
 	dy = dy / s;
-	while (i < s)
+	while (i <= s)
 	{
 		we_draw_pixel(start, fb, color);
 		start.x += dx;

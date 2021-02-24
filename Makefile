@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/02/21 16:47:45 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/02/24 21:09:14 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,13 +61,16 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_init_toolbar.c \
 	we_init_map.c \
 	we_init_chart.c \
+	we_from_win_to_map.c \
+	we_from_map_to_win.c \
+	we_save_win_to_map.c \
 	we_editor_on_resize.c \
 	we_position_check.c \
+	wc_draw_rectangle_solid.c \
 	we_draw.c \
 	we_draw_pixel.c \
 	we_draw_line.c \
-	we_draw_rec.c \
-	we_draw_block.c \
+	we_draw_rectangle.c \
 	we_draw_grid.c \
 	we_draw_map.c \
 	we_draw_toolbar.c \
@@ -76,6 +79,10 @@ editor_src_files = $(addprefix $(src_dir), \
 	wx_buffer_set.c \
 	wx_frame_buffer_del.c \
 	wx_frame_buffer_new.c \
+	wx_f32_max.c \
+	wx_f32_min.c \
+	wx_f64_min.c \
+	wc_draw_pixel.c \
 )
 editor_obj_files = $(subst $(src_dir), $(build_dir), $(editor_src_files:.c=.o))
 editor_exe = wolf3d_editor

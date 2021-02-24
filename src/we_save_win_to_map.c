@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wx_time_s.c                                        :+:      :+:    :+:   */
+/*   we_save_win_to_map.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/06 20:30:26 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/24 21:13:01 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/02/15 18:11:52 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/02/24 21:03:12 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "time.h"
+#include "we_editor.h"
 
-#include "wx_time.h"
-
-t_f64	wx_time_s(void)
+void		we_save_win_to_map(t_p2 win, t_editor *e)
 {
-	struct timespec	ts;
+	t_u32	block_num;
+	t_p2	map;
 
-	clock_gettime(CLOCK_REALTIME, &ts);
-	return ((t_f64)ts.tv_sec + ((t_f64)ts.tv_nsec / 1000000000.0));
+	map = we_from_win_to_map(win, e);
+	block_num = (int)map.x + WE_GRID_DIVIDE * (int)map.y;
+	e->map.chart[block_num].block.x = map.x;
+	e->map.chart[block_num].block.y = map.y;
+	e->map.chart[block_num].id = e->tools.id;
 }

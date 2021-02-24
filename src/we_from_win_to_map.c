@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wx_time_s.c                                        :+:      :+:    :+:   */
+/*   we_from_win_to_map.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/06 20:30:26 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/24 21:13:01 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/02/24 21:12:26 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/02/24 21:12:29 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "time.h"
+#include "we_editor.h"
 
-#include "wx_time.h"
-
-t_f64	wx_time_s(void)
+t_p2		we_from_win_to_map(t_p2 win, t_editor *e)
 {
-	struct timespec	ts;
+	t_p2	map;
+	t_p2	low;
 
-	clock_gettime(CLOCK_REALTIME, &ts);
-	return ((t_f64)ts.tv_sec + ((t_f64)ts.tv_nsec / 1000000000.0));
+	low.x = e->tools.end.x;
+	low.y = 0.0;
+	while (low.x < win.x)
+		low.x += e->map.grid.part.x;
+	low.x -= e->map.grid.part.x;
+	map.x = (low.x - e->tools.end.x) / e->map.grid.part.x;
+	while (low.y < win.y)
+		low.y += e->map.grid.part.y;
+	low.y -= e->map.grid.part.y;
+	map.y = low.y / e->map.grid.part.y;
+	return (map);
 }
