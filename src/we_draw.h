@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/24 19:24:26 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/27 13:17:22 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@
 
 # define WE_WIN_H 512
 # define WE_WIN_W 512
-# define WE_GRID_DIVIDE 64
 
 struct		s_p2
 {
-	t_f32	x;
-	t_f32	y;
+	t_u32	x;
+	t_u32	y;
 };
 typedef struct s_p2	t_p2;
 

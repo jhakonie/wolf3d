@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:44:57 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/24 20:45:41 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/26 19:12:49 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ void		zz_color_ptr(t_editor *e)
 
 void		we_draw(t_editor *e)
 {
-	if (e->map.ptr_clear || (e->map.ptr_draw && e->tools.id != WE_ID_INIT))
+	if (e->map.ptr_clear || (e->map.ptr_draw && e->tools.id != WE_ID_INIT
+		&& e->tools.id != WE_TOOL_COUNT - 1))
 	{
 		wx_buffer_set(e->frame_buffer.data, e->frame_buffer.data_size, 0);
 		we_draw_map(e);
-		zz_color_ptr(e);
+		if (e->map.ptr_draw == wx_true)
+			zz_color_ptr(e);
 		e->map.ptr_clear = wx_false;
 	}
 	else

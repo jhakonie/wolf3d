@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/02/24 21:09:14 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/02/27 13:30:12 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,8 +64,10 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_from_win_to_map.c \
 	we_from_map_to_win.c \
 	we_save_win_to_map.c \
+	we_save_map_to_file.c \
 	we_editor_on_resize.c \
-	we_position_check.c \
+	we_pos_mouse.c \
+	we_pos_on_click.c \
 	wc_draw_rectangle_solid.c \
 	we_draw.c \
 	we_draw_pixel.c \
@@ -123,9 +125,9 @@ dependency_files = \
 dependency_flags = -MT $(@) -MMD -MP -MF $(build_dir)$(*).dep
 
 LD = gcc
-LDFLAGS = $(libsdl2_ldflags)
+LDFLAGS = $(libsdl2_ldflags) -fsanitize=address
 CC = gcc
-CFLAGS = -c -g -Wall -Werror -Wextra $(libsdl2_cflags) -I build/libsdl2/include
+CFLAGS = -c -g -Wall -Werror -Wextra $(libsdl2_cflags) -I build/libsdl2/include -fsanitize=address
 CPPFLAGS = -D_REENTRANT
 
 all: $(client_exe) $(editor_exe) $(server_exe) $(compile_commands_json)

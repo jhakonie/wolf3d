@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:14:34 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/09 00:15:30 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/27 00:40:39 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ static t_bool	zz_on_error(t_editor *e, t_u8 i)
 }
 
 t_bool			we_editor_new(t_editor *e, t_u32 window_width,\
-t_u32 window_height)
+	t_u32 window_height)
 {
-	wx_buffer_set(e, sizeof(*e), 0);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		return (zz_on_error(e, 0));
 	if (!(e->window = SDL_CreateWindow("wolf3d_editor", SDL_WINDOWPOS_UNDEFINED,

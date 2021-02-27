@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:50:59 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/24 21:10:31 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/26 22:47:53 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void		zz_mouse_move(t_editor *e, t_u32 x, t_u32 y)
 	i = 1;
 	if (x < e->map.grid.start.x)
 	{
-		while (i < 4)
+		while (i < WE_TOOL_COUNT)
 		{
 			we_pos_mouse_tool(&e->tools.tool[i], &e->draw, x, y);
 			i++;

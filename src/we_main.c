@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 14:00:01 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/24 20:54:38 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/27 13:37:02 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,25 @@
 #include "wx_types.h"
 #include "we_editor.h"
 
-int				main(void)
+static void		zz_arguments_check(t_editor *e, int ac, char **av)
+{
+	if (ac == 1)
+		e->map.file = WX_NULL;
+	else if (ac == 2)
+		e->map.file = av[1];
+	else
+	{
+		write(1, "wrong args\n", 11);
+		exit(0);
+	}
+}
+
+int				main(int ac, char **av)
 {
 	t_editor	e;
 
-	e.quit = wx_false;
+	wx_buffer_set(&e, sizeof(e), 0);
+	zz_arguments_check(&e, ac, av);
 	if (!(we_editor_new(&e, WE_WIN_W, WE_WIN_H)))
 		return (-1);
 	if (!(we_editor_run(&e)))

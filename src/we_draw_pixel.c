@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 21:25:21 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/23 11:31:52 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/27 13:25:14 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@ void		we_u32_to_rgba(t_rgba *color, t_u32 color_int)
 
 void		we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_rgba color)
 {
-	if (point.x >= 0 && point.x < fb->width &&
-		point.y < fb->height && point.y >= 0)
+	if (point.x < fb->width && point.y < fb->height)
 	{
-		fb->data[0 + ((int)point.x + fb->width * (int)point.y) * 4] = color.a;
-		fb->data[1 + ((int)point.x + fb->width * (int)point.y) * 4] = color.b;
-		fb->data[2 + ((int)point.x + fb->width * (int)point.y) * 4] = color.g;
-		fb->data[3 + ((int)point.x + fb->width * (int)point.y) * 4] = color.r;
+		fb->data[0 + (point.x + fb->width * point.y) * 4] = color.a;
+		fb->data[1 + (point.x + fb->width * point.y) * 4] = color.b;
+		fb->data[2 + (point.x + fb->width * point.y) * 4] = color.g;
+		fb->data[3 + (point.x + fb->width * point.y) * 4] = color.r;
 	}
 }

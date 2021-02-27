@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/24 21:03:55 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/02/27 13:33:42 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@
 # include "we_draw.h"
 # include "wx_frame_buffer.h"
 # include <stdio.h>
-# define WIN_H 512
-# define WIN_W 512
+# include <unistd.h>
+# define WE_WIN_H 512
+# define WE_WIN_W 512
 # define WE_ID_INIT 0
+# define WE_TOOL_COUNT 5
+# define WE_GRID_DIVIDE 64
 
 struct				s_tool
 {
@@ -36,7 +39,7 @@ struct				s_tools
 	t_p2			end;
 	t_rgba			color[2];
 	t_u32			id;
-	t_tool			tool[4];
+	t_tool			tool[5];
 };
 typedef struct s_tools	t_tools;
 
@@ -49,6 +52,7 @@ typedef struct s_item	t_item;
 
 struct				s_map
 {
+	char			*file;
 	t_grid			grid;
 	t_item			*chart;
 	t_u32			block_count;
@@ -83,11 +87,13 @@ void				we_init_tools(t_tools *t, t_u32 win_w, t_u32 win_h);
 void				we_init_wall(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_floor(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_door(t_tool *t, t_u32 win_w, t_u32 win_h);
+void				we_init_save(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_map(t_map *m, t_u32 win_w, t_u32 win_h);
 void				we_init_chart(t_map *m);
 t_p2				we_from_win_to_map(t_p2 win, t_editor *e);
 t_p2				we_from_map_to_win(t_p2 map, t_editor *e);
 void				we_save_win_to_map(t_p2 win, t_editor *e);
+void				we_save_map_to_file(t_editor *e);
 t_bool				we_pos_mouse_tool(t_tool *t, t_u32 *draw, t_u32 x, t_u32 y);
 void				we_pos_mouse_grid(t_map *m, t_u32 *draw, t_u32 x, t_u32 y);
 void				we_pos_on_click_tool(t_editor *e, t_u32 x, t_u32 y);
