@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_draw_clear.c                                    :+:      :+:    :+:   */
+/*   wx_packet_write_p2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/17 16:30:21 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/05 12:48:53 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/18 22:35:50 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/03/01 12:15:53 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_draw.h"
+#include "wx_net.h"
 
-void	wc_draw_clear(t_frame_buffer *fb)
+void	wx_packet_write_p2(t_packet *p, t_p2 const *x)
 {
-	wx_buffer_set(fb->data, fb->data_size, 0);
+	wx_packet_write_f32(p, x->x);
+	wx_packet_write_f32(p, x->y);
 }

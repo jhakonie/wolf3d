@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wx_packet_write_v2.c                               :+:      :+:    :+:   */
+/*   wx_packet_read_p2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/18 22:35:50 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/19 12:07:30 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/02/18 22:32:59 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/03/01 12:15:37 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wx_net.h"
 
-void	wx_packet_write_v2(t_packet *p, t_v2 const *x)
+void	wx_packet_read_p2(t_packet *p, t_u64 *i, t_p2 *x)
 {
-	wx_packet_write_f32(p, x->x);
-	wx_packet_write_f32(p, x->y);
+	wx_packet_read_f32(p, i, &x->x);
+	wx_packet_read_f32(p, i, &x->y);
 }

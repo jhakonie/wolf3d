@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_draw_clear.c                                    :+:      :+:    :+:   */
+/*   wx_to_radians.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/17 16:30:21 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/05 12:48:53 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/03/03 16:29:14 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/03/03 16:29:25 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_draw.h"
+#include "wx_math.h"
 
-void	wc_draw_clear(t_frame_buffer *fb)
+t_f32	wx_to_radians(t_f32 deg)
 {
-	wx_buffer_set(fb->data, fb->data_size, 0);
+	return (deg * (WX_PI / 180.0f));
 }

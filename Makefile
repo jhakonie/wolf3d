@@ -6,11 +6,12 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/02/27 13:30:12 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/03/05 18:46:19 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 src_dir = src/
+include_dirs = src/ build/libsdl2/include/
 build_dir = build/
 
 libsdl2_makefile = libsdl2/Makefile
@@ -23,6 +24,7 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_client_del.c \
 	wc_client_new.c \
 	wc_client_run.c \
+	wc_draw.c \
 	wc_draw_clear.c \
 	wc_draw_copy.c \
 	wc_draw_pixel.c \
@@ -38,13 +40,21 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_buffer_set.c \
 	wx_f32_max.c \
 	wx_f32_min.c \
+	wx_f64_min.c \
 	wx_frame_buffer_del.c \
 	wx_frame_buffer_new.c \
+	wx_m44_mul_p3.c \
+	wx_m44_mul_p4.c \
+	wx_m44_new_inverse_q4_p3.c \
+	wx_m44_new_perspective.c \
+	wx_m44_new_q4_p3.c \
+	wx_q4_new_v3_f32.c \
 	wx_socket_read.c \
 	wx_socket_write.c \
+	wx_to_radians.c \
 	wx_packet_read_f32.c \
 	wx_packet_read_u8.c \
-	wx_packet_read_v2.c \
+	wx_packet_read_p2.c \
 	wx_packet_write_u8.c \
 	wx_time_s.c \
 )
@@ -106,7 +116,7 @@ server_src_files = $(addprefix $(src_dir), \
 	wx_packet_read_u8.c \
 	wx_packet_write_f32.c \
 	wx_packet_write_u8.c \
-	wx_packet_write_v2.c \
+	wx_packet_write_p2.c \
 	wx_time_s.c \
 )
 server_obj_files = $(subst $(src_dir), $(build_dir), $(server_src_files:.c=.o))
@@ -127,7 +137,7 @@ dependency_flags = -MT $(@) -MMD -MP -MF $(build_dir)$(*).dep
 LD = gcc
 LDFLAGS = $(libsdl2_ldflags) -fsanitize=address
 CC = gcc
-CFLAGS = -c -g -Wall -Werror -Wextra $(libsdl2_cflags) -I build/libsdl2/include -fsanitize=address
+CFLAGS = -c -g -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) -fsanitize=address
 CPPFLAGS = -D_REENTRANT
 
 all: $(client_exe) $(editor_exe) $(server_exe) $(compile_commands_json)

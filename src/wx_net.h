@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 17:23:06 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/18 22:37:52 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/01 12:16:42 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ struct	s_packet
 typedef struct s_packet	t_packet;
 
 void	wx_packet_read_f32(t_packet *p, t_u64 *i, t_f32 *x);
+void	wx_packet_read_p2(t_packet *p, t_u64 *i, t_p2 *x);
 void	wx_packet_read_u8(t_packet *p, t_u64 *i, t_u8 *x);
-void	wx_packet_read_v2(t_packet *p, t_u64 *i, t_v2 *x);
 void	wx_packet_write_f32(t_packet *p, t_f32 x);
+void	wx_packet_write_p2(t_packet *p, t_p2 const *x);
 void	wx_packet_write_u8(t_packet *p, t_u8 x);
-void	wx_packet_write_v2(t_packet *p, t_v2 const *x);
 
 struct	s_server_update
 {
-	t_v2	client_position;
-	t_v2	other_positions[WX_SERVER_REMOTE_CLIENTS_SIZE - 1];
+	t_p2	client_position;
+	t_p2	other_positions[WX_SERVER_REMOTE_CLIENTS_SIZE - 1];
 	t_u8	other_positions_size;
 };
 typedef struct s_server_update	t_server_update;

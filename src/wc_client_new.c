@@ -6,13 +6,28 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:17:11 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/17 16:51:25 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/05 20:15:13 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wc_client.h"
 #include "wx_net.h"
 #include "wx_time.h"
+
+static void		zz_camera(t_client *c, t_f32 width, t_f32 height)
+{
+	t_f32	angle_rad;
+	t_v3	axis;
+
+	axis = (t_v3){0.0f, 1.0f, 0.0f};
+	angle_rad = wx_to_radians(180.0f);
+	c->camera.orientation = wx_q4_new_v3_f32(&axis, angle_rad);
+	c->camera.position = (t_p3){0.0f, 0.0f, 10.0f};
+	c->camera.hfov_rad = wx_to_radians(90.0f);
+	c->camera.aspect_ratio = width / height;
+	c->camera.near = 0.1f;
+	c->camera.far = 1000.0f;
+}
 
 static t_bool	zz_on_error(t_client *c, t_u8 i)
 {
@@ -58,6 +73,7 @@ t_bool			wc_client_new(t_client *c, t_u32 window_width,
 	if (!wc_remote_server_new(&c->remote_server, "localhost",
 		WX_SERVER_DEFAULT_SOCKET))
 		return (zz_on_error(c, 5));
+	zz_camera(c, window_width, window_height);
 	c->sim_time_s = wx_time_s();
 	c->sim_time_step_s = 1.0 / 30.0;
 	c->run = wx_true;

@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:11:35 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/19 11:56:16 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/05 11:40:58 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "SDL2/SDL.h"
 # include "sys/socket.h"
 
+# include "wc_draw.h"
 # include "wx_frame_buffer.h"
 # include "wx_net.h"
 # include "wx_types.h"
@@ -36,10 +37,11 @@ t_bool	wc_remote_server_write(t_remote_server *rs, t_client_input const *ci);
 
 struct	s_client
 {
+	t_camera		camera;
 	t_frame_buffer	frame_buffer;
 	t_client_input	input;
-	t_v2			player_position;
-	t_v2			other_positions[WX_SERVER_REMOTE_CLIENTS_SIZE - 1];
+	t_p2			player_position;
+	t_p2			other_positions[WX_SERVER_REMOTE_CLIENTS_SIZE - 1];
 	t_u8			other_positions_size;
 	t_remote_server	remote_server;
 	SDL_Renderer	*renderer;

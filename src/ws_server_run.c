@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 23:46:11 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/19 18:33:16 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/05 19:03:55 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ static void				zz_integrate_simulation(t_remote_client *rcs,
 			continue ;
 		}
 		if (rc->input.move_up)
-			rc->position.y += 200 * time_step_s;
+			rc->position.y += 10 * time_step_s;
 		if (rc->input.move_down)
-			rc->position.y -= 200 * time_step_s;
+			rc->position.y -= 10 * time_step_s;
 		if (rc->input.move_left)
-			rc->position.x -= 200 * time_step_s;
+			rc->position.x -= 10 * time_step_s;
 		if (rc->input.move_right)
-			rc->position.x += 200 * time_step_s;
+			rc->position.x += 10 * time_step_s;
 		++i;
 	}
 	(void)time_s;

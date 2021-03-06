@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 12:11:36 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/19 12:21:18 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/01 12:10:32 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_remote_client	*zz_remote_clients_insert(t_server *s,
 		rc->address = p->address;
 		rc->address_size = p->address_size;
 		rc->packet_time_s = 0.0f;
-		rc->position = (t_v2){0.0f, 0.0f};
+		rc->position = (t_p2){0.0f, 0.0f};
 		++s->remote_clients_connected_count;
 		return (rc);
 		++i;

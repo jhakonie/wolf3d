@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wx_packet_read_v2.c                                :+:      :+:    :+:   */
+/*   wx_q4_new_v3_f32.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/18 22:32:59 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/18 22:34:47 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/03/04 11:13:02 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/03/04 11:15:36 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wx_net.h"
+#include "math.h"
 
-void	wx_packet_read_v2(t_packet *p, t_u64 *i, t_v2 *x)
+#include "wx_math.h"
+
+t_q4	wx_q4_new_v3_f32(t_v3 const *axis, t_f32 rad)
 {
-	wx_packet_read_f32(p, i, &x->x);
-	wx_packet_read_f32(p, i, &x->y);
+	t_q4	q;
+	t_f32	sin2;
+
+	sin2 = sinf(0.5f * rad);
+	q.x = sin2 * axis->x;
+	q.y = sin2 * axis->y;
+	q.z = sin2 * axis->z;
+	q.w = cosf(0.5f * rad);
+	return (q);
 }

@@ -1,0 +1,166 @@
+#include "math.h"
+#include "stdio.h"
+
+#include "../src/wc_draw.h"
+#include "../src/wx_math.h"
+
+
+void	m44_print(t_m44 const *m, char const * n)
+{
+	printf("%s:\n", n);
+	printf("\t%f\t%f\t%f\t%f\n", m->xs[0], m->xs[4], m->xs[8], m->xs[12]);
+	printf("\t%f\t%f\t%f\t%f\n", m->xs[1], m->xs[5], m->xs[9], m->xs[13]);
+	printf("\t%f\t%f\t%f\t%f\n", m->xs[2], m->xs[6], m->xs[10], m->xs[14]);
+	printf("\t%f\t%f\t%f\t%f\n", m->xs[3], m->xs[7], m->xs[11], m->xs[15]);
+}
+
+
+void	p3_print(t_p3 p, char const *n)
+{
+	printf("%s: [%f, %f, %f]\n", n, p.x, p.y, p.z);
+}
+
+
+void	p4_print(t_p4 p, char const *n)
+{
+	printf("%s: [%f, %f, %f, %f]\n", n, p.x, p.y, p.z, p.w);
+}
+
+
+void	q4_print(t_q4 q, char const *n)
+{
+	printf("%s: [%f, %f, %f, %f]\n", n, q.x, q.y, q.z, q.w);
+}
+
+
+void	v3_print(t_v3 v, char const *n)
+{
+	printf("%s: [%f, %f, %f]\n", n, v.x, v.y, v.z);
+}
+
+
+static void	pipeline_print(t_q4 co, t_p3 cp, t_p3 p)
+{
+	p3_print(p, "p");
+	printf("\n---\n");
+	t_f32	window_w = 800.0f;
+	t_f32	window_h = 800.0f;
+	t_camera	c;
+	c.orientation = co;
+	c.position = cp;
+	c.hfov_rad = wx_to_radians(90.0f);
+	c.aspect_ratio = window_w / window_h;
+	c.near = 1.0f;
+	c.far = 9.0f;
+	printf("camera:\n");
+	q4_print(c.orientation, "c.orientation");
+	p3_print(c.position, "c.position");
+	t_m44	c_m = wx_m44_new_q4_p3(&c.orientation, &c.position);
+	m44_print(&c_m, "c_m");
+	t_m44	c_m_inv = wx_m44_new_inverse_q4_p3(&c.orientation, &c.position);
+	m44_print(&c_m_inv, "c_m_inv");
+	printf("near: %f\n", c.near);
+	printf("far: %f\n", c.far);
+
+	/* printf("\n---\n"); */
+	/* t_p3 c_xxx = {1.0f, 0.0f, 0.0f}; */
+	/* p3_print(c_xxx, "c_xxx"); */
+	/* t_p3 c_xxx_world = wx_m44_mul_p3(&c_m, &c_xxx); */
+	/* p3_print(c_xxx_world, "c_xxx_world"); */
+
+	printf("\n---\n");
+	t_q4	o_orientation = {0.0f, 0.0f, 0.0f, 1.0f};
+	t_p3	o_position = {0.0f, 0.0f, 0.0f};
+	printf("object:\n");
+	q4_print(o_orientation, "o_orientation");
+	p3_print(o_position, "o_position");
+
+	printf("\n---\n");
+	printf("pipeline transform:\n");
+	t_m44	world_from_object = wx_m44_new_q4_p3(&o_orientation, &o_position);
+	t_p3	v_object = p;
+	p3_print(v_object, "v_object");
+	t_p3	v_world = wx_m44_mul_p3(&world_from_object, &v_object);
+	p3_print(v_world, "v_world");
+	t_m44	view_from_world = wx_m44_new_inverse_q4_p3(&c.orientation, &c.position);
+	t_p3	v_view = wx_m44_mul_p3(&view_from_world, &v_world);
+	p3_print(v_view, "v_view");
+	/* t_p3	v_view = (t_p3){-1.0f, 0.0f, 2.0f}; */
+	/* p3_print(v_view, "v_view"); */
+	t_m44	clip_from_view = wx_m44_new_perspective(c.hfov_rad, c.aspect_ratio, c.near, c.far);
+	t_p4	v4_view = {v_view.x, v_view.y, v_view.z, 1.0f};
+	t_p4	v4_clip = wx_m44_mul_p4(&clip_from_view, &v4_view);
+	p4_print(v4_clip, "v4_clip");
+	t_p3	v_ndc = {v4_clip.x / v4_clip.w, v4_clip.y / v4_clip.w, v4_clip.z / v4_clip.w};
+	p3_print(v_ndc, "v_ndc");
+	// 2021-03-04 todo: find out why v_ndc.x apparently requires to be negated in order to
+	// produce the image right way around. math is a big lie
+	t_p3	v_window = {(-v_ndc.x + 1.0f) * (0.5f * window_w),
+		(-v_ndc.y + 1.0f) * (0.5f * window_h), v_ndc.z
+	};
+	p3_print(v_window, "v_window");
+}
+
+
+static void	rotation_print()
+{
+	{
+		printf("rotation around x axis, looking from +x to -x counter clockwise 90\n");
+		t_v3	axis = {1.0f, 0.0f, 0.0f};
+		v3_print(axis, "axis");
+		t_f32	angle_deg = 90;
+		printf("angle_deg: %f\n", angle_deg);
+		t_q4	q = wx_q4_new_v3_f32(&axis, wx_to_radians(angle_deg));
+		t_p3	p3 = {0.0f, 0.0f, 0.0f};
+		t_m44	m = wx_m44_new_q4_p3(&q, &p3);
+		t_p3	x = {0.0f, 1.0f, 0.0f};
+		p3_print(x, "x");
+		t_p3	x_rot = wx_m44_mul_p3(&m, &x);
+		p3_print(x_rot, "x_rot");
+	}
+	{
+		printf("\n---\n");
+		printf("rotation around y axis, looking from +y to -y counter clockwise 90\n");
+		t_v3	axis = {0.0f, 1.0f, 0.0f};
+		v3_print(axis, "axis");
+		t_f32	angle_deg = 90;
+		printf("angle_deg: %f\n", angle_deg);
+		t_q4	q = wx_q4_new_v3_f32(&axis, wx_to_radians(angle_deg));
+		t_p3	p3 = {0.0f, 0.0f, 0.0f};
+		t_m44	m = wx_m44_new_q4_p3(&q, &p3);
+		t_p3	x = {0.0f, 0.0f, 1.0f};
+		p3_print(x, "x");
+		t_p3	x_rot = wx_m44_mul_p3(&m, &x);
+		p3_print(x_rot, "x_rot");
+	}
+	{
+		printf("\n---\n");
+		printf("rotation around z axis, looking from +z to -z counter clockwise 90\n");
+		t_v3	axis = {0.0f, 0.0f, 1.0f};
+		v3_print(axis, "axis");
+		t_f32	angle_deg = 90;
+		printf("angle_deg: %f\n", angle_deg);
+		t_q4	q = wx_q4_new_v3_f32(&axis, wx_to_radians(angle_deg));
+		t_p3	p3 = {0.0f, 0.0f, 0.0f};
+		t_m44	m = wx_m44_new_q4_p3(&q, &p3);
+		t_p3	x = {1.0f, 0.0f, 0.0f};
+		p3_print(x, "x");
+		t_p3	x_rot = wx_m44_mul_p3(&m, &x);
+		p3_print(x_rot, "x_rot");
+	}
+}
+
+
+int main(void)
+{
+	{
+		rotation_print();
+	}
+	printf("\n---\n");
+	{
+		t_v3	axis = {0.0f, 1.0f, 0.0f};
+		pipeline_print(wx_q4_new_v3_f32(&axis, wx_to_radians(180.0f)),
+			(t_p3){0.0f, 0.0f, 1.0f}, (t_p3){-1.0f, 0.0f, -1.0f});
+	}
+	return (0);
+}

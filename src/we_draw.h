@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/27 13:17:22 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/05 09:09:30 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,12 @@
 # define WE_DRAW_H
 
 # include "we_editor.h"
+# include "wx_math.h"
 # include "wx_types.h"
 # include "wx_frame_buffer.h"
 
 # define WE_WIN_H 512
 # define WE_WIN_W 512
-
-struct		s_p2
-{
-	t_u32	x;
-	t_u32	y;
-};
-typedef struct s_p2	t_p2;
 
 struct		s_rgba
 {

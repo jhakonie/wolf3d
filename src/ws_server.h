@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 23:54:46 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/19 18:30:01 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/01 12:10:25 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ struct	s_remote_client
 	socklen_t				address_size;
 	t_client_input			input;
 	t_f64					packet_time_s;
-	t_v2					position;
+	t_p2					position;
 };
 typedef struct s_remote_client	t_remote_client;
 
