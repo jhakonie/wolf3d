@@ -1,0 +1,26 @@
+#include "fcntl.h"
+#include "stdlib.h"
+#include "stdio.h"
+#include "unistd.h"
+
+#include "../src/wc_darray.h"
+#include "../src/wc_draw.h"
+
+
+int main(void)
+{
+	char const	*filename = "data/unit_cube.obj";
+	t_mesh		m;
+
+	if (!wc_mesh_new(&m, filename))
+	{
+		printf("%s@%d: %s\n", __PRETTY_FUNCTION__, __LINE__, "!zz_mesh_new()");
+		return (-1);
+	}
+	printf("filename: %s\n", filename);
+	printf("face count: %lu\n", m.faces.size / m.faces.element_size);
+	printf("normal count: %lu\n", m.normals.size / m.normals.element_size);
+	printf("position count: %lu\n", m.positions.size / m.positions.element_size);
+	printf("uvcoord count: %lu\n", m.uvcoords.size / m.uvcoords.element_size);
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 10:52:07 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/19 12:23:47 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/07 18:42:17 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ typedef double	t_f64;
 
 t_f64	wx_f64_min(t_f64 x0, t_f64 x1);
 
-typedef int	t_s32;
+typedef char	t_s8;
+typedef int		t_s32;
 
 typedef unsigned char	t_u8;
+typedef unsigned short	t_u16;
 typedef unsigned int	t_u32;
 typedef unsigned long int	t_u64;
 

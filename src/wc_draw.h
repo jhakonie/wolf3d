@@ -6,13 +6,14 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 23:38:47 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/06 14:51:18 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/07 22:04:48 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WC_DRAW_H
 # define WC_DRAW_H
 
+# include "wc_darray.h"
 # include "wx_frame_buffer.h"
 # include "wx_math.h"
 
@@ -29,12 +30,24 @@ struct	s_camera
 };
 typedef struct s_camera	t_camera;
 
-struct	s_rectangle
+struct	s_face
 {
-	t_p2	p0;
-	t_p2	p1;
+	t_u16	normal[3];
+	t_u16	position[3];
+	t_u16	uvcoord[3];
 };
-typedef struct s_rectangle	t_rectangle;
+typedef struct s_face	t_face;
+
+struct	s_mesh
+{
+	t_darray	faces;
+	t_darray	normals;
+	t_darray	positions;
+	t_darray	uvcoords;
+};
+typedef struct s_mesh	t_mesh;
+
+t_bool	wc_mesh_new(t_mesh *m, char const *filename);
 
 struct	s_draw_context
 {
@@ -47,6 +60,13 @@ struct	s_draw_context
 	t_m44	world_from_object;
 };
 typedef struct s_draw_context	t_draw_context;
+
+struct	s_rectangle
+{
+	t_p2	p0;
+	t_p2	p1;
+};
+typedef struct s_rectangle	t_rectangle;
 
 void	wc_draw(t_client *c);
 void	wc_draw_clear(t_frame_buffer *fb);
