@@ -13,6 +13,14 @@
 #ifndef WX_TYPES_H
 # define WX_TYPES_H
 
+/*
+** 2021-03-11 todo: this could be against the norm if someone bothers to check.
+** decide whether it would be alright to just use INFINITY from math.h instead
+** or if there's some truly compile-time constant way of doing this
+*/
+
+# define WX_F32_INF (1.0f / 0.0f)
+
 # define WX_NULL ((void *)0)
 
 enum	e_bool

@@ -7,6 +7,15 @@ if [ ! -d "test/build" ]; then
 fi
 
 
+test_2d_raycast() {
+    local test_name=test_2d_raycast
+    rm -f test/build/${test_name}
+    gcc -g -Wall -Wextra -l m -o test/build/${test_name} \
+	-x c test/${test_name}.c.test
+    ./test/build/${test_name}
+}
+
+
 test_3d_mesh_read() {
     local test_name=test_3d_mesh_read
     rm -f test/build/${test_name}
@@ -57,8 +66,9 @@ test_3d_pipeline_transform() {
 
 
 declare -a tests
-tests[0]="test_3d_mesh_read"
-tests[1]="test_3d_pipeline_transform"
+tests[0]="test_2d_raycast"
+tests[1]="test_3d_mesh_read"
+tests[2]="test_3d_pipeline_transform"
 
 
 main() {

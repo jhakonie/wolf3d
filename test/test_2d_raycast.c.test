@@ -1,0 +1,233 @@
+#include "math.h"
+#include "stdio.h"
+
+#include "../src/wx_math.h"
+#include "../src/wx_types.h"
+
+
+#define ZZ_MAP_TILE_SIZE (2)
+#define ZZ_MAP_SIZE (5)
+#define ZZ_WINDOW_WIDTH (5)
+#define ZZ_WINDOW_HEIGHT (5)
+
+
+struct	s_map
+{
+	t_s8	xs[ZZ_MAP_SIZE * ZZ_MAP_SIZE];
+};
+typedef struct s_map	t_map;
+
+
+struct	s_n2
+{
+	t_f32	x;
+	t_f32	y;
+};
+typedef struct s_n2	t_n2;
+
+
+struct	s_ray
+{
+	t_n2	direction;
+	t_p2	position;
+};
+typedef struct s_ray	t_ray;
+
+
+t_ray	zz_ray_world_from_view(t_ray const *view, t_p2 position, t_f32 angle_deg)
+{
+	t_ray	world;
+	t_f32	angle_rad;
+
+	angle_rad = -angle_deg * (WX_PI / 180.0f);
+	world.direction.x = cosf(angle_rad) * view->direction.x + sinf(angle_rad) * view->direction.y;
+	world.direction.y = sinf(angle_rad) * view->direction.x + cosf(angle_rad) * view->direction.y;
+	/* world.direction.x *= -1.0f; */
+	world.direction.y *= -1.0f;
+	world.position = position;
+	return (world);
+}
+
+
+struct	s_raycast_context
+{
+	t_f32	t;
+	t_f32	x_k;
+	t_f32	x_length;
+	t_f32	x_step;
+	t_s32	x_tile;
+	t_f32	y_k;
+	t_f32	y_length;
+	t_f32	y_step;
+	t_s32	y_tile;
+};
+typedef struct s_raycast_context	t_raycast_context;
+
+
+void	zz_raycast_context_new(t_raycast_context *rc, t_ray const *r)
+{
+	t_f32	x_pre_step;
+	t_f32	y_pre_step;
+
+	rc->t = 0.0f;
+	rc->x_k = r->direction.x < 0.0f ? -1.0f : 1.0f;
+	rc->x_tile = (t_s32)(r->position.x / ZZ_MAP_TILE_SIZE);
+	rc->x_step = sqrtf(1 + ((r->direction.y / r->direction.x) *
+		(r->direction.y / r->direction.x))) * ZZ_MAP_TILE_SIZE;
+	x_pre_step = rc->x_k < 0.0f ?
+		r->position.x - (rc->x_tile * ZZ_MAP_TILE_SIZE) :
+		ZZ_MAP_TILE_SIZE - (r->position.x - (rc->x_tile * ZZ_MAP_TILE_SIZE));
+	rc->x_length = (x_pre_step / ZZ_MAP_TILE_SIZE) * rc->x_step;
+	rc->y_k = r->direction.y < 0.0f ? -1.0f : 1.0f;
+	rc->y_tile = (t_s32)(r->position.y / ZZ_MAP_TILE_SIZE);
+	rc->y_step = sqrtf(1 + ((r->direction.x / r->direction.y) *
+		(r->direction.x / r->direction.y))) * ZZ_MAP_TILE_SIZE;
+	y_pre_step = rc->y_k < 0.0f ?
+		r->position.y - (rc->y_tile * ZZ_MAP_TILE_SIZE) :
+		ZZ_MAP_TILE_SIZE - (r->position.y - (rc->y_tile * ZZ_MAP_TILE_SIZE));
+	rc->y_length = (y_pre_step / ZZ_MAP_TILE_SIZE) * rc->y_step;
+}
+
+
+t_f32	zz_raycast(t_map const *m, t_ray const *r, t_f32 t_max)
+{
+	t_raycast_context	rc;
+
+	zz_raycast_context_new(&rc, r);
+	printf("---\n");
+	printf("pre-iteration\n");
+	printf("r.position: [%f, %f]\n", r->position.x, r->position.y);
+	printf("rc.x_length: %f, rc.y_length: %f\n", rc.x_length, rc.y_length);
+	printf("tile: [%d, %d]\n", rc.x_tile, rc.y_tile);
+	while (rc.t < t_max)
+	{
+		if (rc.x_length < rc.y_length)
+		{
+			rc.x_tile += rc.x_k;
+			rc.t = rc.x_length;
+			rc.x_length += rc.x_step;
+		}
+		else
+		{
+			rc.y_tile += rc.y_k;
+			rc.t = rc.y_length;
+			rc.y_length += rc.y_step;
+		}
+		printf("---\n");
+		printf("rc.x_length: %f, rc.y_length: %f\n", rc.x_length, rc.y_length);
+		printf("tile: [%d, %d]\n", rc.x_tile, rc.y_tile);
+		if (rc.x_tile >= 0 && rc.x_tile < ZZ_MAP_SIZE &&
+			rc.y_tile >= 0 && rc.y_tile < ZZ_MAP_SIZE &&
+			m->xs[rc.y_tile * ZZ_MAP_SIZE + rc.x_tile] == '#')
+			break ;
+	}
+	return (rc.t < t_max ? rc.t : WX_F32_INF);
+}
+
+
+int main(void)
+{
+	t_f32	distance;
+	t_u32	x;
+	t_f32	k;
+	t_map	map;
+	t_ray	ray;
+	t_f32	view_hfov_rad;
+	t_f32	view_projection_distance;
+
+	map = (t_map)
+	{
+		{
+			'.', '.', '.', '.', '.',
+			'.', '.', '.', '.', '.',
+			'.', '.', '#', '.', '.',
+			'.', '.', '.', '.', '.',
+			'.', '.', '.', '.', '.',
+		}
+	};
+	view_hfov_rad = 90.0f * (WX_PI / 180.0f);
+	view_projection_distance = 1.0f;
+	/*0*/ {
+		printf("---\n");
+		printf("+0 deg turn:\n");
+		/*ray*/ {
+			ray.direction.x = ((view_projection_distance * tanf(0.5f * view_hfov_rad)) * ((t_f32)(ZZ_WINDOW_WIDTH / 2) + 0.5f)) - (0.5f * ZZ_WINDOW_WIDTH);
+			ray.direction.y = view_projection_distance;
+			k = 1.0f / sqrtf(ray.direction.x * ray.direction.x + ray.direction.y * ray.direction.y);
+			ray.direction = (t_n2){k * ray.direction.x, k * ray.direction.y};
+			ray.position = (t_p2){0.0f, 0.0f};
+		}
+		printf("view d: [%f, %f], p: [%f, %f]\n", ray.direction.x, ray.direction.y, ray.position.x, ray.position.y);
+		ray = zz_ray_world_from_view(&ray, (t_p2){3.0f, 3.0f}, 0.0f);
+		printf("world d: [%f, %f], p: [%f, %f]\n", ray.direction.x, ray.direction.y, ray.position.x, ray.position.y);
+		if (ray.direction.y != -1.0f)
+		{
+			printf("ray.direction.y != -1.0f\n");
+			return (-1);
+		}
+	}
+	/*+90*/ {
+		printf("---\n");
+		printf("+90 deg turn:\n");
+		/*ray*/ {
+			ray.direction.x = ((view_projection_distance * tanf(0.5f * view_hfov_rad)) * ((t_f32)(ZZ_WINDOW_WIDTH / 2) + 0.5f)) - (0.5f * ZZ_WINDOW_WIDTH);
+			ray.direction.y = view_projection_distance;
+			k = 1.0f / sqrtf(ray.direction.x * ray.direction.x + ray.direction.y * ray.direction.y);
+			ray.direction = (t_n2){k * ray.direction.x, k * ray.direction.y};
+			ray.position = (t_p2){0.0f, 0.0f};
+		}
+		printf("view d: [%f, %f], p: [%f, %f]\n", ray.direction.x, ray.direction.y, ray.position.x, ray.position.y);
+		ray = zz_ray_world_from_view(&ray, (t_p2){3.0f, 3.0f}, 90.0f);
+		printf("world d: [%f, %f], p: [%f, %f]\n", ray.direction.x, ray.direction.y, ray.position.x, ray.position.y);
+		if (ray.direction.x != -1.0f)
+		{
+			printf("ray.direction.x != -1.0f\n");
+			return (-1);
+		}
+	}
+	/*+180*/ {
+		printf("---\n");
+		printf("+180 deg turn:\n");
+		/*ray*/ {
+			ray.direction.x = ((view_projection_distance * tanf(0.5f * view_hfov_rad)) * ((t_f32)(ZZ_WINDOW_WIDTH / 2) + 0.5f)) - (0.5f * ZZ_WINDOW_WIDTH);
+			ray.direction.y = view_projection_distance;
+			k = 1.0f / sqrtf(ray.direction.x * ray.direction.x + ray.direction.y * ray.direction.y);
+			ray.direction = (t_n2){k * ray.direction.x, k * ray.direction.y};
+			ray.position = (t_p2){0.0f, 0.0f};
+		}
+		printf("view d: [%f, %f], p: [%f, %f]\n", ray.direction.x, ray.direction.y, ray.position.x, ray.position.y);
+		ray = zz_ray_world_from_view(&ray, (t_p2){3.0f, 3.0f}, 180.0f);
+		printf("world d: [%f, %f], p: [%f, %f]\n", ray.direction.x, ray.direction.y, ray.position.x, ray.position.y);
+		if (ray.direction.y != 1.0f)
+		{
+			printf("ray.direction.y != 1.0f\n");
+			return (-1);
+		}
+	}
+	printf("---\n");
+	x = 0;
+	while (x < ZZ_WINDOW_WIDTH)
+	{
+		/*ray*/ {
+			ray.direction.x = ((view_projection_distance * tanf(0.5f * view_hfov_rad)) * (x + 0.5f)) - (0.5f * ZZ_WINDOW_WIDTH);
+			ray.direction.y = view_projection_distance;
+			k = 1.0f / sqrtf(ray.direction.x * ray.direction.x + ray.direction.y * ray.direction.y);
+			ray.direction = (t_n2){k * ray.direction.x, k * ray.direction.y};
+			ray.position = (t_p2){0.0f, 0.0f};
+		}
+		if (x == 2)
+		{
+			printf("view d: [%f, %f], p: [%f, %f]\n", ray.direction.x, ray.direction.y, ray.position.x, ray.position.y);
+			ray = zz_ray_world_from_view(&ray, (t_p2){5.0f, 9.0f}, 0.0f);
+			/* ray = zz_ray_world_from_view(&ray, (t_p2){5.0f, 1.0f}, 180.0f); */
+			/* ray = zz_ray_world_from_view(&ray, (t_p2){1.0f, 5.0f}, -90.0f); */
+			/* ray = zz_ray_world_from_view(&ray, (t_p2){9.0f, 5.0f}, 90.0f); */
+			/* ray = zz_ray_world_from_view(&ray, (t_p2){1.0f, 9.0f}, -45.0f); */
+			printf("world d: [%f, %f], p: [%f, %f]\n", ray.direction.x, ray.direction.y, ray.position.x, ray.position.y);
+			distance = zz_raycast(&map, &ray, 20.0f);
+			printf("distance: %f\n", distance);
+		}
+		++x;
+	}
+	return (0);
+}
