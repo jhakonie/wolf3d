@@ -65,11 +65,21 @@ test_3d_pipeline_transform() {
 }
 
 
+test_wx_types_h() {
+    local test_name=test_wx_types_h
+    rm -f test/build/${test_name}
+    gcc -g -Wall -Wextra -l m -o test/build/${test_name} \
+	src/wx_buffer_set.c \
+	-x c test/${test_name}.c.test
+    ./test/build/${test_name}
+}
+
+
 declare -a tests
 tests[0]="test_2d_raycast"
 tests[1]="test_3d_mesh_read"
 tests[2]="test_3d_pipeline_transform"
-
+tests[3]="test_wx_types_h"
 
 main() {
     echo "================================================================================"

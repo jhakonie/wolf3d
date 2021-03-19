@@ -1,0 +1,36 @@
+#include "limits.h"
+#include "math.h"
+#include "stdio.h"
+
+#include "../src/wx_types.h"
+
+
+#define WX_TEST(x)\
+	do {\
+		if (!(x))\
+		{\
+			printf("%s@%d: \"!%s\"\n", __PRETTY_FUNCTION__, __LINE__, #x);\
+			return (-1);\
+		}\
+	} while(0)
+
+
+int main(void)
+{
+	WX_TEST(CHAR_BIT == 8);
+	WX_TEST(sizeof(t_f32) == 4);
+	WX_TEST(sizeof(t_f64) == 8);
+	WX_TEST(sizeof(t_s32) == 4);
+	WX_TEST(sizeof(t_u16) == 2);
+	WX_TEST(sizeof(t_u32) == 4);
+	WX_TEST(sizeof(t_u64) == 8);
+	WX_TEST(WX_F32_INF == INFINITY);
+	WX_TEST(WX_NULL == NULL);
+	{
+		int*	p;
+
+		wx_buffer_set(&p, sizeof(p), 0);
+		WX_TEST(p == NULL);
+	}
+	return (0);
+}
