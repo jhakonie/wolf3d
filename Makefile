@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/03/20 06:56:39 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/03/20 08:01:31 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,11 +63,13 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_f64_min.c \
 	wx_frame_buffer_del.c \
 	wx_frame_buffer_new.c \
+	wx_frustum_new.c \
 	wx_m44_mul_p3.c \
 	wx_m44_mul_p4.c \
 	wx_m44_new_inverse_q4_p3.c \
 	wx_m44_new_perspective.c \
 	wx_m44_new_q4_p3.c \
+	wx_plane_new.c \
 	wx_q4_new_v3_f32.c \
 	wx_socket_read.c \
 	wx_socket_write.c \

@@ -16,6 +16,20 @@ test_2d_raycast() {
 }
 
 
+test_3d_frustum() {
+    local test_name=test_3d_frustum
+    rm -f test/build/${test_name}
+    gcc -g -Wall -Wextra -l m -o test/build/${test_name} \
+	src/wx_buffer_set.c \
+	src/wx_frustum_new.c \
+	src/wx_m44_new_perspective.c \
+	src/wx_plane_new.c \
+	src/wx_plane_signed_distance_p3.c \
+	src/wx_to_radians.c \
+	-x c test/${test_name}.c.test
+    ./test/build/${test_name}
+}
+
 test_3d_mesh_read() {
     local test_name=test_3d_mesh_read
     rm -f test/build/${test_name}
@@ -79,9 +93,10 @@ test_wx_types_h() {
 
 declare -a tests
 tests[0]="test_2d_raycast"
-tests[1]="test_3d_mesh_read"
-tests[2]="test_3d_pipeline_transform"
-tests[3]="test_wx_types_h"
+tests[1]="test_3d_frustum"
+tests[2]="test_3d_mesh_read"
+tests[3]="test_3d_pipeline_transform"
+tests[4]="test_wx_types_h"
 
 
 main() {

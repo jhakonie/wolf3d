@@ -1,0 +1,158 @@
+#include "math.h"
+#include "stdio.h"
+
+#include "../src/wc_draw.h"
+#include "../src/wx_math.h"
+
+
+void	n3_print(t_n3 n, char const *n_)
+{
+	printf("%s: [%f, %f, %f]\n", n_, n.x, n.y, n.z);
+}
+
+
+void	p3_print(t_p3 p, char const *n)
+{
+	printf("%s: [%f, %f, %f]\n", n, p.x, p.y, p.z);
+}
+
+
+void	plane_print(t_plane p, char const *n)
+{
+	printf("%s: d: %f, n: [%f, %f, %f]\n", n, p.d, p.n.x, p.n.y, p.n.z);
+}
+
+
+void	q4_print(t_q4 q, char const *n)
+{
+	printf("%s: [%f, %f, %f, %f]\n", n, q.x, q.y, q.z, q.w);
+}
+
+
+static t_plane  zz_plane_new(t_p3 p, t_n3 n)
+{
+		t_plane pl;
+
+		pl.n = n;
+		pl.d = -n.x * p.x + -n.y * p.y + -n.z * p.z;
+		return (pl);
+}
+
+
+int main(void)
+{
+	/*test negative*/
+	{
+		printf("---\n");
+		printf("point on negative side\n");
+		t_plane	pl = zz_plane_new((t_p3){0.0f, 0.0f, 3.0f}, (t_n3){0.0f, 0.0f, 1.0f});
+		t_p3	p3 = {0.0f, 0.0f, -1.0f};
+		plane_print(pl, "pl");
+		p3_print(p3, "p3");
+		t_f32	sd = wx_plane_signed_distance_p3(&pl, &p3);
+		printf("test: %f\n", sd);
+		if (sd >= 0)
+		{
+			return (-1);
+		}
+	}
+	/*test positive*/
+	{
+		printf("---\n");
+		printf("point on positive side\n");
+		t_plane	pl = zz_plane_new((t_p3){-1.0f, 0.0f, -1.0f}, (t_n3){0.707f, 0.0f, 0.707f});
+		t_p3	p3 = {2.0f, 2.0f, 0.0f};
+		plane_print(pl, "pl");
+		p3_print(p3, "p3");
+		t_f32	sd = wx_plane_signed_distance_p3(&pl, &p3);
+		printf("test: %f\n", sd);
+		if (sd <= 0)
+		{
+			return (-1);
+		}
+	}
+	/*test xxx*/
+	{
+		printf("---\n");
+		printf("point xxx\n");
+		t_plane	pl = zz_plane_new((t_p3){0.0f, 0.0f, 3.0f}, (t_n3){0.0f, 0.0f, 1.0f});
+		t_p3	p3 = {0.0f, 0.0f, 4.0f};
+		plane_print(pl, "pl");
+		p3_print(p3, "p3");
+		t_f32	sd = wx_plane_signed_distance_p3(&pl, &p3);
+		printf("test: %f\n", sd);
+		if (sd != 1)
+		{
+			return (-1);
+		}
+	}
+	/*test yyy*/
+	{
+		printf("---\n");
+		printf("point yyy\n");
+		t_plane	pl = zz_plane_new((t_p3){0.0f, 0.0f, 3.0f}, (t_n3){0.0f, 0.0f, -1.0f});
+		t_p3	p3 = {0.0f, 0.0f, 2.0f};
+		plane_print(pl, "pl");
+		p3_print(p3, "p3");
+		t_f32	sd = wx_plane_signed_distance_p3(&pl, &p3);
+		printf("test: %f\n", sd);
+		if (sd != 1)
+		{
+			return (-1);
+		}
+	}
+	/*box fully inside*/
+	{
+		printf("---\n");
+		printf("box fully inside\n");
+		t_m44	clip_from_view = wx_m44_new_perspective(wx_to_radians(90.0f), 16.0f / 9.0f, 1, 1000);
+		t_f32	aspect_ratio = clip_from_view.xs[5] / clip_from_view.xs[0];
+		printf("recovered aspect_ratio: %f\n", aspect_ratio);
+		t_f32	hfov_deg = 2 * atanf(1.0 / clip_from_view.xs[0]) * (180.0f / WX_PI);
+		printf("recoverd hfov_deg: %f\n", hfov_deg);
+		t_frustum frustum = wx_frustum_new(&clip_from_view);
+		t_p3	box_points[8] = {
+			{-0.5, -0.5, 0.5},
+			{0.5, -0.5, 0.5},
+			{0.5, 0.5, 0.5},
+			{-0.5, 0.5, 0.5},
+			{0.5, -0.5, -0.5},
+			{-0.5, -0.5, -0.5},
+			{-0.5, 0.5, -0.5},
+			{0.5, 0.5, -0.5},
+		};
+		t_p3	box_position = {0.0f, 0.0f, 5.0f};
+		char const *frustum_plane_names[6] = {
+			"left", "right", "bottom", "top", "near", "far"
+		};
+		t_u64	i = 0;
+		while (i < 6)
+		{
+			plane_print(frustum.planes[i], frustum_plane_names[i]);
+			++i;
+		}
+		t_bool	all_in = wx_true;
+		i = 0;
+		while (i < 6)
+		{
+			printf("---\n");
+			plane_print(frustum.planes[i], frustum_plane_names[i]);
+			t_u64	j = 0;
+			while (j < 8)
+			{
+				p3_print(box_points[j], "point");
+				t_p3	bp = {box_points[j].x + box_position.x, box_points[j].y + box_position.y, box_points[j].z + box_position.z};
+				t_f32	sd = wx_plane_signed_distance_p3(frustum.planes + i, &bp);
+				printf("sd: %f\n", sd);
+				if (sd <= 0.0f)
+				{
+					all_in = wx_false;
+				}
+				++j;
+			}
+			++i;
+		}
+		printf("all_in: %d\n", all_in);
+	}
+	return (0);
+}
