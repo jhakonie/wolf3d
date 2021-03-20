@@ -21,6 +21,7 @@ int main(void)
 	printf("face count: %lu\n", m.faces.size / m.faces.element_size);
 	printf("normal count: %lu\n", m.normals.size / m.normals.element_size);
 	printf("position count: %lu\n", m.positions.size / m.positions.element_size);
-	printf("uvcoord count: %lu\n", m.uvcoords.size / m.uvcoords.element_size);
+	printf("uv count: %lu\n", m.uvs.size / m.uvs.element_size);
+	wc_mesh_del(&m);
 	return (0);
 }

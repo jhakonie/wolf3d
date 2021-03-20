@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 16:48:48 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 22:06:10 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/20 06:53:26 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static t_bool	zz_parse_vertex_indices(t_parse_context *pc, t_face *f, t_u8 i)
 {
-	if (!wc_parse_u16(pc, &f->position[i]))
+	if (!wc_parse_u16(pc, &f->positions[i]))
 	{
 		return (wx_false);
 	}
@@ -23,7 +23,7 @@ static t_bool	zz_parse_vertex_indices(t_parse_context *pc, t_face *f, t_u8 i)
 	{
 		return (wx_false);
 	}
-	if (!wc_parse_u16(pc, &f->uvcoord[i]))
+	if (!wc_parse_u16(pc, &f->uvs[i]))
 	{
 		return (wx_false);
 	}
@@ -31,7 +31,7 @@ static t_bool	zz_parse_vertex_indices(t_parse_context *pc, t_face *f, t_u8 i)
 	{
 		return (wx_false);
 	}
-	if (!wc_parse_u16(pc, &f->normal[i]))
+	if (!wc_parse_u16(pc, &f->normals[i]))
 	{
 		return (wx_false);
 	}

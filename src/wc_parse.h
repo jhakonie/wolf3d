@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:56:03 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 22:14:09 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/20 06:56:06 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_bool	wc_parse_position(t_parse_context *pc, t_mesh *m);
 t_bool	wc_parse_smoothing(t_parse_context *pc);
 t_bool	wc_parse_u16(t_parse_context *pc, t_u16 *n);
 t_bool	wc_parse_u32(t_parse_context *pc, t_u32 *n);
-t_bool	wc_parse_uvcoord(t_parse_context *pc, t_mesh *m);
+t_bool	wc_parse_uv(t_parse_context *pc, t_mesh *m);
 t_bool	wc_parse_whitespace(t_parse_context *pc);
 
 #endif

@@ -3,7 +3,7 @@ set -eu
 
 
 if [ ! -d "test/build" ]; then
-    mkdir -f test/build
+    mkdir test/build
 fi
 
 
@@ -25,6 +25,7 @@ test_3d_mesh_read() {
 	src/wc_darray_del.c \
 	src/wc_darray_new.c \
 	src/wc_darray_new_file.c \
+	src/wc_mesh_del.c \
 	src/wc_mesh_new.c \
 	src/wc_parse_comment.c \
 	src/wc_parse_face.c \
@@ -37,8 +38,7 @@ test_3d_mesh_read() {
 	src/wc_parse_smoothing.c \
 	src/wc_parse_position.c \
 	src/wc_parse_u16.c \
-	src/wc_parse_u32.c \
-	src/wc_parse_uvcoord.c \
+	src/wc_parse_uv.c \
 	src/wc_parse_whitespace.c \
 	src/wx_buffer_copy.c \
 	src/wx_buffer_set.c \
@@ -80,6 +80,7 @@ tests[0]="test_2d_raycast"
 tests[1]="test_3d_mesh_read"
 tests[2]="test_3d_pipeline_transform"
 tests[3]="test_wx_types_h"
+
 
 main() {
     echo "================================================================================"

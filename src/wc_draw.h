@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 23:38:47 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 22:04:48 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/20 06:53:16 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ typedef struct s_camera	t_camera;
 
 struct	s_face
 {
-	t_u16	normal[3];
-	t_u16	position[3];
-	t_u16	uvcoord[3];
+	t_u16	normals[3];
+	t_u16	positions[3];
+	t_u16	uvs[3];
 };
 typedef struct s_face	t_face;
 
@@ -43,11 +43,12 @@ struct	s_mesh
 	t_darray	faces;
 	t_darray	normals;
 	t_darray	positions;
-	t_darray	uvcoords;
+	t_darray	uvs;
 };
 typedef struct s_mesh	t_mesh;
 
 t_bool	wc_mesh_new(t_mesh *m, char const *filename);
+void	wc_mesh_del(t_mesh *m);
 
 struct	s_draw_context
 {

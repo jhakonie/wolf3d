@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_parse_uvcoord.c                                 :+:      :+:    :+:   */
+/*   wc_parse_uv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 16:31:16 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 22:06:59 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/20 06:55:56 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_bool	zz_on_error(t_parse_context *pc, t_s8 *b)
 	return (wx_false);
 }
 
-t_bool			wc_parse_uvcoord(t_parse_context *pc, t_mesh *m)
+t_bool			wc_parse_uv(t_parse_context *pc, t_mesh *m)
 {
 	t_s8	*b;
 	t_u64	i;
@@ -37,7 +37,7 @@ t_bool			wc_parse_uvcoord(t_parse_context *pc, t_mesh *m)
 			return (zz_on_error(pc, b));
 		++i;
 	}
-	if (!wc_darray_add_back(&m->uvcoords, &uvcoord))
+	if (!wc_darray_add_back(&m->uvs, &uvcoord))
 		return (zz_on_error(pc, b));
 	return (wx_true);
 }

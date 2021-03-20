@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 22:02:38 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 22:08:41 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/20 06:56:25 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_bool	zz_parse_mesh(t_parse_context *pc, t_mesh *m)
 	{
 		if (!wc_parse_whitespace(pc) && !wc_parse_comment(pc) &&
 			!wc_parse_position(pc, m) && !wc_parse_material_filename(pc) &&
-			!wc_parse_object_name(pc) && !wc_parse_uvcoord(pc, m) &&
+			!wc_parse_object_name(pc) && !wc_parse_uv(pc, m) &&
 			!wc_parse_normal(pc, m) && !wc_parse_material_name(pc) &&
 			!wc_parse_smoothing(pc) && !wc_parse_face(pc, m))
 		{
@@ -37,7 +37,7 @@ static t_bool	zz_on_error(t_darray *fb, t_mesh *m, t_u8 i)
 {
 	if (i > 4)
 	{
-		wc_darray_del(&m->uvcoords);
+		wc_darray_del(&m->uvs);
 	}
 	if (i > 3)
 	{
@@ -71,7 +71,7 @@ t_bool			wc_mesh_new(t_mesh *m, char const *filename)
 		return (zz_on_error(&fb, m, 2));
 	if (!wc_darray_new(&m->positions, 0, sizeof(t_v3)))
 		return (zz_on_error(&fb, m, 3));
-	if (!wc_darray_new(&m->uvcoords, 0, sizeof(t_p2)))
+	if (!wc_darray_new(&m->uvs, 0, sizeof(t_p2)))
 		return (zz_on_error(&fb, m, 4));
 	pc.p = (char const *)fb.buffer;
 	pc.e = (char const *)(fb.buffer + fb.size);

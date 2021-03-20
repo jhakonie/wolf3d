@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/03/05 18:46:19 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/03/20 06:56:39 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,12 +24,32 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_client_del.c \
 	wc_client_new.c \
 	wc_client_run.c \
+	wc_darray_add_back.c \
+	wc_darray_add_back_be.c \
+	wc_darray_del.c \
+	wc_darray_new.c \
+	wc_darray_new_file.c \
 	wc_draw.c \
 	wc_draw_clear.c \
 	wc_draw_copy.c \
 	wc_draw_pixel.c \
 	wc_draw_rectangle_solid.c \
 	wc_draw_rectangle_outline.c \
+	wc_mesh_del.c \
+	wc_mesh_new.c \
+	wc_parse_comment.c \
+	wc_parse_f32.c \
+	wc_parse_face.c \
+	wc_parse_keyword.c \
+	wc_parse_material_filename.c \
+	wc_parse_material_name.c \
+	wc_parse_normal.c \
+	wc_parse_object_name.c \
+	wc_parse_position.c \
+	wc_parse_smoothing.c \
+	wc_parse_u16.c \
+	wc_parse_uv.c \
+	wc_parse_whitespace.c \
 	wc_remote_server_new.c \
 	wc_remote_server_del.c \
 	wc_remote_server_read.c \
