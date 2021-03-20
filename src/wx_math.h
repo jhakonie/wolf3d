@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:41:28 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/06 14:47:27 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/20 07:25:39 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,24 @@
 ** 2021-03-04 todo: could n3, p2, p3, p4, q4 and v3 parameters be by-value?
 */
 
-typedef struct s_p3	t_p3;
 typedef struct s_p4	t_p4;
 typedef struct s_q4	t_q4;
 typedef struct s_v3	t_v3;
+
+struct	s_p3
+{
+	t_f32	x;
+	t_f32	y;
+	t_f32	z;
+};
+typedef struct s_p3	t_p3;
+
+struct	s_aabb
+{
+	t_p3	max;
+	t_p3	min;
+};
+typedef struct s_aabb	t_aabb;
 
 struct	s_m44
 {
@@ -64,13 +78,6 @@ struct	s_p2
 	t_f32	y;
 };
 typedef struct s_p2	t_p2;
-
-struct	s_p3
-{
-	t_f32	x;
-	t_f32	y;
-	t_f32	z;
-};
 
 struct	s_p4
 {

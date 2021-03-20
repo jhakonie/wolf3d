@@ -7,6 +7,14 @@
 #include "../src/wc_draw.h"
 
 
+void	aabb_print(t_aabb const *aabb, char const *n)
+{
+	printf("%s: min: [%f, %f, %f], max: [%f, %f, %f]\n", n,
+		aabb->min.x, aabb->min.y, aabb->min.z,
+		aabb->max.x, aabb->max.y, aabb->max.z);
+}
+
+
 int main(void)
 {
 	char const	*filename = "data/unit_cube.obj";
@@ -22,6 +30,7 @@ int main(void)
 	printf("normal count: %lu\n", m.normals.size / m.normals.element_size);
 	printf("position count: %lu\n", m.positions.size / m.positions.element_size);
 	printf("uv count: %lu\n", m.uvs.size / m.uvs.element_size);
+	aabb_print(&m.aabb, "aabb");
 	wc_mesh_del(&m);
 	return (0);
 }

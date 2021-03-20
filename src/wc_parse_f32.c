@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 10:00:13 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 16:04:32 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/10 18:06:05 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,19 @@ static t_bool	zz_parse_f32_fractional(t_parse_context *pc, t_f32 *n)
 ** 2021-03-07 todo: what to do about leading 0s?
 */
 
-static t_bool	zz_parse_f32_integer(t_parse_context *pc, t_f32 *n)
+static t_bool	zz_parse_f32_sign_integer(t_parse_context *pc, t_f32 *s,
+	t_f32 *n)
 {
 	char const	*b;
 	t_u32		integer;
-	t_s32		sign;
 
 	b = pc->p;
 	*n = 0.0f;
-	sign = 1;
+	*s = 1.0f;
 	if (pc->p < pc->e && *pc->p == '-')
 	{
 		++pc->p;
-		sign = -1;
+		*s = -1.0f;
 	}
 	integer = 0;
 	while (pc->p < pc->e && *pc->p >= '0' && *pc->p <= '9')
@@ -60,12 +60,12 @@ static t_bool	zz_parse_f32_integer(t_parse_context *pc, t_f32 *n)
 		integer = 10 * integer + (*pc->p - '0');
 		++pc->p;
 	}
-	if (pc->p == b || (pc->p == (b + 1) && sign < 0))
+	if (pc->p == b || (pc->p == (b + 1) && *s < 0))
 	{
 		pc->p = b;
 		return (wx_false);
 	}
-	*n = (t_f32)sign * (t_f32)integer;
+	*n = (t_f32)integer;
 	return (wx_true);
 }
 
@@ -79,22 +79,23 @@ static t_bool	zz_parse_f32_integer(t_parse_context *pc, t_f32 *n)
 ** exactly represented by floating point numbers
 */
 
-t_bool			wc_parse_f32(t_parse_context *pmc, t_f32 *n)
+t_bool			wc_parse_f32(t_parse_context *pc, t_f32 *n)
 {
-	t_f32		fractional;
-	t_f32		integer;
+	t_f32	fractional;
+	t_f32	integer;
+	t_f32	sign;
 
 	*n = 0.0f;
-	if (!zz_parse_f32_integer(pmc, &integer))
+	if (!zz_parse_f32_sign_integer(pc, &sign, &integer))
 	{
 		return (wx_false);
 	}
 	fractional = 0.0f;
-	if (pmc->p < pmc->e && *pmc->p == '.')
+	if (pc->p < pc->e && *pc->p == '.')
 	{
-		++pmc->p;
-		zz_parse_f32_fractional(pmc, &fractional);
+		++pc->p;
+		zz_parse_f32_fractional(pc, &fractional);
 	}
-	*n = integer + fractional;
+	*n = sign * (integer + fractional);
 	return (wx_true);
 }

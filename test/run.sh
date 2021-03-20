@@ -42,6 +42,8 @@ test_3d_mesh_read() {
 	src/wc_parse_whitespace.c \
 	src/wx_buffer_copy.c \
 	src/wx_buffer_set.c \
+	src/wx_f32_max.c \
+	src/wx_f32_min.c \
 	-x c test/${test_name}.c.test
     ./test/build/${test_name}
 }

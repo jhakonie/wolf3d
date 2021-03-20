@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 23:38:47 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/20 06:53:16 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/20 07:26:12 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_face	t_face;
 
 struct	s_mesh
 {
+	t_aabb		aabb;
 	t_darray	faces;
 	t_darray	normals;
 	t_darray	positions;

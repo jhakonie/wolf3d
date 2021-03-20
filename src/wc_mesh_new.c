@@ -6,12 +6,35 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 22:02:38 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/20 06:56:25 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/20 07:39:13 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wc_draw.h"
 #include "wc_parse.h"
+
+static void		zz_aabb(t_mesh *m)
+{
+	t_u64		i;
+	t_p3 const	*ps;
+	t_u64		ps_size;
+
+	m->aabb.max = (t_p3){-WX_F32_INF, -WX_F32_INF, -WX_F32_INF};
+	m->aabb.min = (t_p3){WX_F32_INF, WX_F32_INF, WX_F32_INF};
+	ps = (t_p3 const *)m->positions.buffer;
+	ps_size = m->positions.size / m->positions.element_size;
+	i = 0;
+	while (i < ps_size)
+	{
+		m->aabb.max.x = wx_f32_max(ps[i].x, m->aabb.max.x);
+		m->aabb.max.y = wx_f32_max(ps[i].y, m->aabb.max.y);
+		m->aabb.max.z = wx_f32_max(ps[i].z, m->aabb.max.z);
+		m->aabb.min.x = wx_f32_min(ps[i].x, m->aabb.min.x);
+		m->aabb.min.y = wx_f32_min(ps[i].y, m->aabb.min.y);
+		m->aabb.min.z = wx_f32_min(ps[i].z, m->aabb.min.z);
+		++i;
+	}
+}
 
 static t_bool	zz_parse_mesh(t_parse_context *pc, t_mesh *m)
 {
@@ -80,5 +103,6 @@ t_bool			wc_mesh_new(t_mesh *m, char const *filename)
 		return (zz_on_error(&fb, m, 5));
 	}
 	wc_darray_del(&fb);
+	zz_aabb(m);
 	return (wx_true);
 }
