@@ -60,6 +60,7 @@ struct		s_plane
 typedef struct s_plane	t_plane;
 
 t_plane		wx_plane_new(t_f32 a, t_f32 b, t_f32 c, t_f32 d);
+t_f32		wx_plane_signed_distance_n3(t_plane const *p, t_n3	const *n);
 t_f32		wx_plane_signed_distance_p3(t_plane const *pl, t_p3 const *p);
 
 /*
@@ -73,6 +74,8 @@ struct		s_frustum
 typedef struct s_frustum	t_frustum;
 
 t_frustum	wx_frustum_new(t_m44 const *m);
+t_bool		wx_frustum_aabb_test(t_frustum const *f, t_aabb const *object_aabb,
+	t_m44 const *view_from_object);
 
 struct		s_m44
 {
@@ -86,6 +89,16 @@ t_m44		wx_m44_new_q4_p3(t_q4 const *q, t_p3 const *p);
 t_m44		wx_m44_mul_m44(t_m44 const *l, t_m44 const *r);
 t_p3		wx_m44_mul_p3(t_m44 const *l, t_p3 const *r);
 t_p4		wx_m44_mul_p4(t_m44 const *l, t_p4 const *r);
+
+struct		s_obb
+{
+	t_p3	center;
+	t_f32	extents2[3];
+	t_n3	axes[3];
+};
+typedef struct s_obb	t_obb;
+
+t_obb		wx_obb_new(t_aabb const *aabb, t_m44 const *b_from_a);
 
 /*
 ** 2021-03-01 note: it's not strictly necessary or particularly error-prone not
