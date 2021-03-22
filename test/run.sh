@@ -113,4 +113,11 @@ main() {
 	done
     fi
 }
-main "${@}"
+
+
+if [ ${#} -gt 0 ]; then
+    main "${@}"
+else
+    main
+fi
+
