@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_draw_rec.c                                      :+:      :+:    :+:   */
+/*   we_draw_rectangle.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 12:44:05 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/24 20:25:28 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/19 20:33:42 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
 void		we_draw_rec_frame(t_p2 start, t_p2 end, t_frame_buffer *fb,
-				t_rgba c)
+				t_u32 c)
 {
 	t_p2 up;
 	t_p2 down;
@@ -29,7 +29,7 @@ void		we_draw_rec_frame(t_p2 start, t_p2 end, t_frame_buffer *fb,
 }
 
 void		we_draw_rec_full(t_p2 start, t_p2 end, t_frame_buffer *fb,
-				t_rgba c)
+				t_u32 c)
 {
 	t_f32	temp_x;
 

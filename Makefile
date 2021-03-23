@@ -93,15 +93,23 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_init_toolbar.c \
 	we_init_map.c \
 	we_init_chart.c \
+	we_init_player.c \
+	we_init_buttons.c \
 	we_from_win_to_map.c \
 	we_from_map_to_win.c \
 	we_save_win_to_map.c \
 	we_save_map_to_file.c \
 	we_editor_on_resize.c \
-	we_pos_mouse.c \
-	we_pos_on_click.c \
-	wc_draw_rectangle_solid.c \
+	we_mouse_pos.c \
+	we_mouse_pos_on_click.c \
+	we_mouse_button_up.c \
+	we_key_event.c \
+	we_player_move.c \
+	we_to_rad.c \
+	we_ray_cast.c \
+	we_ray_cast_check_map.c \
 	we_draw.c \
+	we_draw_3d.c \
 	we_draw_pixel.c \
 	we_draw_line.c \
 	we_draw_rectangle.c \
@@ -109,10 +117,13 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_draw_map.c \
 	we_draw_toolbar.c \
 	we_draw_button.c \
+	we_draw_player.c \
+	we_draw_rays.c \
 	wx_buffer_copy.c \
 	wx_buffer_set.c \
 	wx_frame_buffer_del.c \
 	wx_frame_buffer_new.c \
+	wx_to_radians.c \
 	wx_f32_max.c \
 	wx_f32_min.c \
 	wx_f64_min.c \

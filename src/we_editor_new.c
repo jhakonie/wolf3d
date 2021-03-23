@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:14:34 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/27 00:40:39 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/07 00:57:00 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ t_bool			we_editor_new(t_editor *e, t_u32 window_width,\
 	we_init_map(&e->map, window_width, window_height);
 	we_init_tools(&e->tools, window_width, window_height);
 	we_init_chart(&e->map);
+	we_init_player(&e->player, &e->map);
 	e->quit = wx_false;
 	e->draw = wx_true;
+	e->draw_3d = wx_false;
 	return (wx_true);
 }

@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_draw_pixel.c                                    :+:      :+:    :+:   */
+/*   we_mouse_button_up.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/03 21:25:21 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/19 20:33:36 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/03/03 23:54:33 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/03/04 00:46:51 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-void		we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color)
+void	we_mouse_button_up(t_bool *ptr_hold, int event)
 {
-	t_u32	i;
-
-	i = ((int)point.x + fb->width * (int)point.y) * 4;
-	if (point.x < fb->width && point.y < fb->height &&
-			point.x >= 0 && point.y >= 0)
-	{
-		fb->data[0 + i] = (color >> 24);
-		fb->data[1 + i] = (color) & 0xFF;
-		fb->data[2 + i] = (color >> 8) & 0xFF;
-		fb->data[3 + i] = (color >> 16) & 0xFF;
-	}
+	if (event == SDL_BUTTON_LEFT)
+		*ptr_hold = wx_false;
 }

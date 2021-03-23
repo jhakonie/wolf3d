@@ -6,14 +6,14 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:09:11 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/23 01:40:35 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/19 20:33:32 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
 void		we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb,
-	t_rgba color)
+	t_u32 color)
 {
 	t_f32	dx;
 	t_f32	dy;
@@ -33,6 +33,8 @@ void		we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb,
 	dy = dy / s;
 	while (i <= s)
 	{
+		start.x = start.x;
+		start.y = start.y;
 		we_draw_pixel(start, fb, color);
 		start.x += dx;
 		start.y += dy;

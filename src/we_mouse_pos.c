@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_position_mouse.c                                :+:      :+:    :+:   */
+/*   we_mouse_pos.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 13:28:24 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/27 13:29:28 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/23 13:35:56 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,15 @@ t_bool			we_pos_mouse_tool(t_tool *t, t_u32 *draw, t_u32 x, t_u32 y)
 	return (wx_true);
 }
 
-void			we_pos_mouse_grid(t_map *m, t_u32 *draw, t_u32 x, t_u32 y)
+void			we_pos_mouse_grid(t_editor *e, t_u32 x, t_u32 y)
 {
-	m->ptr.x = x;
-	m->ptr.y = y;
-	m->ptr_draw = wx_true;
-	*draw = wx_true;
+	e->map.ptr.x = x;
+	e->map.ptr.y = y;
+	if (e->map.ptr_hold)
+	{
+		we_save_win_to_map(e->map.ptr, e);
+	}
+	if (e->tools.id != WE_TOOL_COUNT - 1)
+		e->map.ptr_draw = wx_true;
+	e->draw = wx_true;
 }

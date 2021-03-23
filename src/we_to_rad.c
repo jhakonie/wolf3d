@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_draw_pixel.c                                    :+:      :+:    :+:   */
+/*   we_deg_to_rad.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/03 21:25:21 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/19 20:33:36 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/03/06 20:58:38 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/03/16 21:33:02 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-void		we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color)
+t_f32	we_to_rad(t_f32 deg)
 {
-	t_u32	i;
+	t_f32 rad;
 
-	i = ((int)point.x + fb->width * (int)point.y) * 4;
-	if (point.x < fb->width && point.y < fb->height &&
-			point.x >= 0 && point.y >= 0)
-	{
-		fb->data[0 + i] = (color >> 24);
-		fb->data[1 + i] = (color) & 0xFF;
-		fb->data[2 + i] = (color >> 8) & 0xFF;
-		fb->data[3 + i] = (color >> 16) & 0xFF;
-	}
+	rad = deg * PI / 180;
+	return (rad);
 }

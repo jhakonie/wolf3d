@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:34:33 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/27 03:52:07 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/06 18:15:23 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ void	we_init_map(t_map *m, t_u32 win_w, t_u32 win_h)
 	m->ptr_clear = wx_false;
 	m->ptr.x = 0;
 	m->ptr.y = 0;
-	we_u32_to_rgba(&m->grid.color[0], 0xFFFFFF);
-	we_u32_to_rgba(&m->grid.color[1], 0x0000FF);
+	m->grid.color[0] = 0xAAB0AF;
+	m->grid.color[1] = 0x0000FF;
 }

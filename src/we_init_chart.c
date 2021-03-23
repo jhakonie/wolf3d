@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 22:38:50 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/27 13:37:18 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/08 19:36:59 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ static t_bool	zz_buf_to_chart(t_map *m, char *buf, t_u32 ret)
 	return (wx_true);
 }
 
+/*
+** todo: add size to file name if already exists and is wrong size,
+** add path to folder
+*/
+
 static t_bool	zz_save_file_to_chart(t_map *m)
 {
 	t_s32		fd;
@@ -74,7 +79,7 @@ static t_bool	zz_save_file_to_chart(t_map *m)
 		write(1, "read failed\n", 13);
 		return (wx_false);
 	}
-	if (ret != WE_GRID_DIVIDE * WE_GRID_DIVIDE * 2)
+	if (ret != WE_GRID_DIVIDE * WE_GRID_DIVIDE * 2 && ret > 0)
 	{
 		write(1, "wrong map size or no existing file\n", 36);
 		return (wx_false);
