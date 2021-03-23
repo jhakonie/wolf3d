@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 23:36:54 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 14:05:51 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/23 18:36:36 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void			zz_draw_rays_2d(t_u32 key, t_editor *e)
 void			we_key_event(t_u32 key, t_editor *e)
 {
 	if (key == SDLK_SPACE)
-		zz_change_view(&e->draw_3d);
+		zz_change_view(&e->map.draw_3d);
 	else if (key == SDLK_LEFT || key == SDLK_RIGHT)
 		zz_player_rotation(key, &e->player.direction_d);
 	else if (key == SDLK_w || key == SDLK_s || key == SDLK_a || key == SDLK_d)

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 00:24:00 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 13:35:32 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/23 18:57:04 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static t_bool	zz_player_position(t_p2 win, t_editor *e)
 	t_u32	index;
 	t_u32	id;
 
-	player_pos = we_from_win_to_map(win, e);
+	player_pos = we_from_win_to_map(win, e->map);
 	index = player_pos.x + player_pos.y * WE_GRID_DIVIDE;
 	if (e->map.chart[index].id == 0 || e->map.chart[index].id == 2)
 	{

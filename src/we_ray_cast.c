@@ -6,48 +6,72 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 17:25:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 16:51:06 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/23 20:52:53 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_editor.h"
+#include "we_draw.h"
 
 static t_bool		zz_is_wall(t_item *chart, t_ray *ray,
-						t_p2 intersection, t_u32 line)
+						t_p2 intersection, t_side line)
 {
 	t_u32	block_y;
 	t_u32	block_x;
 	t_u32	block_count;
 	t_u32	index;
 
-	ray->end = intersection;
+	ray->wall.end = intersection;
 	block_count = WE_GRID_DIVIDE * WE_GRID_DIVIDE;
 	block_y = intersection.y / WE_BLOCK_W;
 	block_x = intersection.x / WE_BLOCK_W;
 	index = block_x + block_y * WE_GRID_DIVIDE;
 	if (block_x >= WE_GRID_DIVIDE || block_y >= WE_GRID_DIVIDE)
 		return (wx_false);
-	if (ray->angle_d <= 180 && ray->angle_d >= 0 && line == WE_HORIZONTAL)
+	if (ray->angle_d <= 180 && ray->angle_d >= 0 && line == we_horisontal)
 		index -= WE_GRID_DIVIDE;
-	else if (ray->angle_d >= 90 && ray->angle_d <= 270 && line == WE_VERTICAL)
+	else if (ray->angle_d >= 90 && ray->angle_d <= 270 && line == we_vertical)
 		index -= 1;
 	if (index < block_count - 1)
 	{
-		if ((we_ray_cast_check_map(chart, ray, line, index)))
+		if (chart[index].id == 1 || chart[index].id == 2)
+		{
+			ray->wall.chart_index = index;
 			return (wx_true);
+		}
 	}
 	return (wx_false);
 }
 
-t_f32				zz_distance_to_wall(t_p2 start, t_p2 end)
+static t_found		zz_wall_values(t_ray *ray, t_item *chart, t_side side)
 {
-	t_f32	distance;
-
-	distance = sqrt(pow((end.x - start.x), 2.0) + pow((end.y - start.y), 2.0));
-	return (distance);
+	if (side == we_no_wall)
+	{
+		wx_buffer_set(&ray->wall, sizeof(ray->wall), 0);
+		return (ray->wall);
+	}
+	ray->wall.side = side;
+	ray->wall.chart_id = chart[ray->wall.chart_index].id;
+	ray->wall.distance =
+			sqrt(pow((ray->wall.end.x - ray->start.x), 2.0) +
+			pow((ray->wall.end.y - ray->start.y), 2.0));
+	if (side == we_horisontal)
+	{
+		if (ray->angle_d > 180)
+			ray->wall.compass = we_south;
+		else
+			ray->wall.compass = we_north;
+	}
+	else
+	{
+		if (ray->angle_d > 90 && ray->angle_d < 270)
+			ray->wall.compass = we_west;
+		else
+			ray->wall.compass = we_east;
+	}
+	return (ray->wall);
 }
 
-static t_f32		zz_dist_horizontal_wall(t_ray *ray, t_item *chart)
+static t_found		zz_dist_horizontal_wall(t_ray *ray, t_item *chart)
 {
 	t_p2	intersection;
 	t_u32	block_y;
@@ -66,17 +90,17 @@ static t_f32		zz_dist_horizontal_wall(t_ray *ray, t_item *chart)
 			(ray->angle_d == 180 || ray->angle_d == 0 || ray->angle_d == 360) ||
 			block_y >= WE_GRID_DIVIDE)
 			break ;
-		if ((zz_is_wall(chart, ray, intersection, WE_HORIZONTAL)))
-			return (zz_distance_to_wall(ray->start, intersection));
+		if ((zz_is_wall(chart, ray, intersection, we_horisontal)))
+			return (zz_wall_values(ray, chart, we_horisontal));
 		if (ray->angle_d < 180 && ray->angle_d > 0)
 			intersection.y -= WE_BLOCK_W;
 		else
 			intersection.y += WE_BLOCK_W;
 	}
-	return (0);
+	return (zz_wall_values(ray, chart, we_no_wall));
 }
 
-static t_f32		zz_dist_vertical_wall(t_ray *ray, t_item *chart)
+static t_found		zz_dist_vertical_wall(t_ray *ray, t_item *chart)
 {
 	t_p2	intersection;
 	t_u32	block_x;
@@ -95,37 +119,35 @@ static t_f32		zz_dist_vertical_wall(t_ray *ray, t_item *chart)
 			(ray->angle_d == 90 || ray->angle_d == 270) ||
 			block_x >= WE_GRID_DIVIDE)
 			break ;
-		if ((zz_is_wall(chart, ray, intersection, WE_VERTICAL)))
-			return (zz_distance_to_wall(ray->start, intersection));
+		if ((zz_is_wall(chart, ray, intersection, we_vertical)))
+			return (zz_wall_values(ray, chart, we_vertical));
 		if (ray->angle_d > 90 && ray->angle_d < 270)
 			intersection.x -= WE_BLOCK_W;
 		else
 			intersection.x += WE_BLOCK_W;
 	}
-	return (0);
+	return (zz_wall_values(ray, chart, we_no_wall));
 }
 
 void				we_ray_cast(t_ray *ray, t_item *chart)
 {
-	t_f32	vertical;
-	t_f32	horizontal;
+	t_found	vertical;
+	t_found	horizontal;
 
-	vertical = 0;
-	horizontal = 0;
 	horizontal = zz_dist_horizontal_wall(ray, chart);
 	vertical = zz_dist_vertical_wall(ray, chart);
-	horizontal *= cos(wx_to_radians(ray->angle_to_player_d));
-	vertical *= cos(wx_to_radians(ray->angle_to_player_d));
-	if (vertical < horizontal)
+	horizontal.distance *= cos(wx_to_radians(ray->angle_to_player_d));
+	vertical.distance *= cos(wx_to_radians(ray->angle_to_player_d));
+	if (vertical.distance < horizontal.distance)
 	{
-		ray->dist_to_wall = vertical;
-		if (vertical == 0)
-			ray->dist_to_wall = horizontal;
+		ray->wall = vertical;
+		if (vertical.distance == 0)
+			ray->wall = horizontal;
 	}
 	else
 	{
-		ray->dist_to_wall = horizontal;
-		if (horizontal == 0)
-			ray->dist_to_wall = vertical;
+		ray->wall = horizontal;
+		if (horizontal.distance == 0)
+			ray->wall = vertical;
 	}
 }

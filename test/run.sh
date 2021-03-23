@@ -106,15 +106,6 @@ test_3d_pipeline_transform() {
     ./test/build/${test_name}
 }
 
-test_ray_cast() {
-    local test_name=test_ray_cast
-    rm -f test/build/${test_name}
-    gcc -g -Wall -l m -o test/build/${test_name} \
-	src/wx_to_radians.c \
-	-x c test/${test_name}.c.test
-    ./test/build/${test_name}
-}
-
 test_wx_types_h() {
     local test_name=${FUNCNAME}
     rm -f test/build/${test_name}
@@ -132,7 +123,6 @@ tests[2]="test_3d_frustum_aabb"
 tests[3]="test_3d_mesh_read"
 tests[4]="test_3d_pipeline_transform"
 tests[5]="test_wx_types_h"
-tests[6]="test_ray_cast"
 
 
 main() {

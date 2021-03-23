@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/03/20 08:01:31 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/03/23 20:55:00 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,7 +107,8 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_player_move.c \
 	we_to_rad.c \
 	we_ray_cast.c \
-	we_ray_cast_check_map.c \
+	we_ray_init.c \
+	we_ray_calculate.c \
 	we_draw.c \
 	we_draw_3d.c \
 	we_draw_pixel.c \

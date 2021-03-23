@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:44:57 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 13:29:26 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/23 18:55:25 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void		zz_color_ptr(t_editor *e)
 	t_p2	low;
 	t_u32	color;
 
-	temp = we_from_win_to_map(e->map.ptr, e);
-	low = we_from_map_to_win(temp, e);
+	temp = we_from_win_to_map(e->map.ptr, e->map);
+	low = we_from_map_to_win(temp, e->map);
 	top.x = low.x + e->map.grid.part.x;
 	top.y = low.y + e->map.grid.part.y;
 	if (e->tools.id != WE_ID_INIT)
@@ -45,6 +45,6 @@ void		we_draw(t_editor *e)
 	we_draw_player(e);
 	we_draw_toolbar(e);
 	we_draw_grid(&e->map.grid, &e->frame_buffer);
-	we_draw_3d(e);
+	we_draw_3d(&e->frame_buffer, e->player, e->map);
 	e->draw = wx_false;
 }

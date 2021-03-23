@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 14:07:14 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/23 18:55:43 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,9 @@
 # include "wx_types.h"
 # include "we_draw.h"
 # include "wx_frame_buffer.h"
-# include <unistd.h>
+# include "unistd.h"
 # define WE_WIN_H 512
 # define WE_WIN_W 512
-# define WE_ID_INIT 0
-# define WE_TOOL_COUNT 6
-# define WE_GRID_DIVIDE 11
-# define WE_BLOCK_W 100
-
-# define PI 3.14159265359
-# define WE_TO_RAD 0.017453292519944
-
-struct				s_player
-{
-	t_p2			position;
-	t_f32			direction_d;
-	t_f32			fov_d;
-	t_p2			w_start;
-	t_p2			w_end;
-	t_u32			w_block_count;
-	t_u32			w_step;
-};
-typedef struct s_player	t_player;
 
 struct				s_tool
 {
@@ -69,8 +50,9 @@ struct				s_map
 	t_u32			player_pos_old_id;
 	t_p2			ptr;
 	t_bool			ptr_draw;
-	t_bool			ptr_hold;
 	t_bool			ptr_clear;
+	t_bool			ptr_hold;
+	t_bool			draw_3d;
 	t_bool			draw_rays;
 	t_bool			draw_rays_wall;
 	t_bool			draw_rays_no_wall;
@@ -86,8 +68,6 @@ struct				s_editor
 	t_frame_buffer	frame_buffer;
 	t_bool			quit;
 	t_bool			draw;
-	t_bool			draw_3d;
-	t_bool			draw_rays;
 	t_tools			tools;
 	t_map			map;
 	t_player		player;
@@ -111,8 +91,8 @@ void				we_init_save(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_map(t_map *m, t_u32 win_w, t_u32 win_h);
 void				we_init_chart(t_map *m);
 void				we_init_player(t_player *p, t_map *m);
-t_p2				we_from_win_to_map(t_p2 win, t_editor *e);
-t_p2				we_from_map_to_win(t_p2 map, t_editor *e);
+t_p2				we_from_win_to_map(t_p2 win, t_map m);
+t_p2				we_from_map_to_win(t_p2 map, t_map m);
 void				we_save_win_to_map(t_p2 win, t_editor *e);
 void				we_save_map_to_file(t_editor *e);
 t_bool				we_pos_mouse_tool(t_tool *t, t_u32 *draw, t_u32 x, t_u32 y);
@@ -128,8 +108,9 @@ void				we_draw_grid(t_grid *g, t_frame_buffer *data);
 void				we_draw_block(t_editor *e, t_u32 id);
 void				we_draw_map(t_editor *e);
 void				we_draw_player(t_editor *e);
-void				we_draw_3d(t_editor *e);
-void				we_draw_rays(t_ray ray, t_editor *e);
+void				we_draw_rays(t_ray ray, t_map map, t_frame_buffer *fb);
+void				we_draw_3d(t_frame_buffer *frame_buffer, t_player player,
+							t_map map);
 t_f32				we_to_rad(t_f32 deg);
 void				we_player_move(t_u32 key, t_editor *e);
 

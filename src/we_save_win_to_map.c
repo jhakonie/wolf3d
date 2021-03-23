@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 18:11:52 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/19 20:33:58 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/23 18:58:01 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		we_save_win_to_map(t_p2 win, t_editor *e)
 	t_u32	block_num;
 	t_p2	map;
 
-	map = we_from_win_to_map(win, e);
+	map = we_from_win_to_map(win, e->map);
 	if (map.x < WE_GRID_DIVIDE && map.y < WE_GRID_DIVIDE)
 	{
 		block_num = (int)map.x + WE_GRID_DIVIDE * (int)map.y;
