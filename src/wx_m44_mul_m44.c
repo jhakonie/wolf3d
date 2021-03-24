@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 16:49:05 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/06 14:50:43 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:49:25 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	zz_multiply(t_f32 *m, t_f32 const *l, t_f32 const *r)
 	m[15] = l[3] * r[12] + l[7] * r[13] + l[11] * r[14] + l[15] * r[15];
 }
 
-t_m44		wx_m44_mul_m44(t_m44 const *l, t_m44 const *r)
+t_m44	wx_m44_mul_m44(t_m44 const *l, t_m44 const *r)
 {
 	t_m44	m;
 

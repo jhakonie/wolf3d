@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 12:27:49 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/01 12:28:28 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:44:27 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	zz_packet_write_others(t_packet *p, t_remote_client *rcs,
 	}
 }
 
-void		ws_server_network_write(t_server *s)
+void	ws_server_network_write(t_server *s)
 {
 	t_u64			i;
 	t_packet		p;

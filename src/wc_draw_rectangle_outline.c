@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 00:22:54 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/06 12:30:27 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:47:30 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ static void	zz_draw_vertical_line(t_frame_buffer *fb, t_rectangle const *r,
 	}
 }
 
-void		wc_draw_rectangle_outline(t_frame_buffer *fb, t_p3 p, t_f32 width,
+void	wc_draw_rectangle_outline(t_frame_buffer *fb, t_p3 p, t_f32 width,
 	t_u32 abgr)
 {
-	t_rectangle r;
+	t_rectangle	r;
 	t_f32		w2;
 
 	w2 = 0.5 * width;

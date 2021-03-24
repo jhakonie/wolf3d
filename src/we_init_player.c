@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 21:24:00 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/21 21:04:23 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:27:28 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	zz_player_pos(t_map *m, t_player *p, t_u32 i)
 
 void	we_init_player(t_player *p, t_map *m)
 {
-	t_u32 i;
+	t_u32	i;
 
 	i = 0;
 	p->direction_d = 0;

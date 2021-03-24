@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 18:55:43 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:12:17 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void				we_draw_map(t_editor *e);
 void				we_draw_player(t_editor *e);
 void				we_draw_rays(t_ray ray, t_map map, t_frame_buffer *fb);
 void				we_draw_3d(t_frame_buffer *frame_buffer, t_player player,
-							t_map map);
+						t_map map);
 t_f32				we_to_rad(t_f32 deg);
 void				we_player_move(t_u32 key, t_editor *e);
 

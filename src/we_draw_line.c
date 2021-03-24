@@ -6,14 +6,13 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:09:11 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/19 20:33:32 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:08:48 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-void		we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb,
-	t_u32 color)
+void	we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 color)
 {
 	t_f32	dx;
 	t_f32	dy;

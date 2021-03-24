@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:50:23 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 15:59:36 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:39:49 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_darray	t_darray;
 
 t_bool	wc_darray_new(t_darray *d, t_u64 reserved_elements, t_u64 element_size);
 t_bool	wc_darray_new_file(t_darray *d, char const *filename,
-	t_u64 element_size);
+			t_u64 element_size);
 void	wc_darray_del(t_darray *d);
 t_bool	wc_darray_add_back(t_darray *d, void const *x);
 t_bool	wc_darray_add_back_be(t_darray *d, void const *b, void const *e);

@@ -6,13 +6,13 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 13:44:53 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/16 20:39:55 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:41:40 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ws_server.h"
 
-int			main(void)
+int	main(void)
 {
 	t_server	s;
 

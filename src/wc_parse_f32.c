@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 10:00:13 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/10 18:06:05 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:49:56 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static t_bool	zz_parse_f32_sign_integer(t_parse_context *pc, t_f32 *s,
 ** exactly represented by floating point numbers
 */
 
-t_bool			wc_parse_f32(t_parse_context *pc, t_f32 *n)
+t_bool	wc_parse_f32(t_parse_context *pc, t_f32 *n)
 {
 	t_f32	fractional;
 	t_f32	integer;

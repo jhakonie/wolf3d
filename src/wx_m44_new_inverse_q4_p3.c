@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 20:59:57 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/06 14:51:36 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:49:52 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	zz_p3_negate(t_m44 *m)
 	m->xs[14] = -m->xs[14];
 }
 
-t_m44		wx_m44_new_inverse_q4_p3(t_q4 const *q, t_p3 const *p)
+t_m44	wx_m44_new_inverse_q4_p3(t_q4 const *q, t_p3 const *p)
 {
 	t_m44	m;
 

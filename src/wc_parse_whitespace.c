@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 10:04:10 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 16:05:08 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:54:49 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static t_bool	zz_is_whitespace(char c)
 {
-	if (c != ' ' && c != '\f' && c != '\n' && c != '\r' && c != '\t' &&
-		c != '\t')
+	if (c != ' ' && c != '\f' && c != '\n' && c != '\r' && c != '\t'
+		&& c != '\t')
 	{
 		return (wx_false);
 	}
@@ -26,7 +26,7 @@ static t_bool	zz_is_whitespace(char c)
 ** example:
 */
 
-t_bool			wc_parse_whitespace(t_parse_context *pc)
+t_bool	wc_parse_whitespace(t_parse_context *pc)
 {
 	char const	*b;
 

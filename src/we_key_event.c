@@ -6,13 +6,13 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 23:36:54 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 18:36:36 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:28:03 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-static void		zz_change_view(t_bool *draw_3d)
+static void	zz_change_view(t_bool *draw_3d)
 {
 	if (!*draw_3d)
 		*draw_3d = wx_true;
@@ -20,7 +20,7 @@ static void		zz_change_view(t_bool *draw_3d)
 		*draw_3d = wx_false;
 }
 
-static void		zz_player_rotation(t_u32 key, t_f32 *player_direction_d)
+static void	zz_player_rotation(t_u32 key, t_f32 *player_direction_d)
 {
 	if (key == SDLK_LEFT)
 	{
@@ -36,7 +36,7 @@ static void		zz_player_rotation(t_u32 key, t_f32 *player_direction_d)
 	}
 }
 
-void			zz_draw_rays_2d(t_u32 key, t_editor *e)
+static void	zz_draw_rays_2d(t_u32 key, t_editor *e)
 {
 	if (key == SDLK_r)
 	{
@@ -61,7 +61,7 @@ void			zz_draw_rays_2d(t_u32 key, t_editor *e)
 	}
 }
 
-void			we_key_event(t_u32 key, t_editor *e)
+void	we_key_event(t_u32 key, t_editor *e)
 {
 	if (key == SDLK_SPACE)
 		zz_change_view(&e->map.draw_3d);

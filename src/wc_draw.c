@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 12:50:55 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/06 14:48:34 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:43:47 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	zz_draw_others(t_client *c, t_draw_context *dc)
 		dc->object_position = (t_p3){c->other_positions[i].x,
 			c->other_positions[i].y, 0.0f};
 		dc->world_from_object = wx_m44_new_q4_p3(&dc->object_orientation,
-			&dc->object_position);
+				&dc->object_position);
 		p = wx_m44_mul_p3(&dc->world_from_object, &p);
 		p = wx_m44_mul_p3(&dc->view_from_world, &p);
 		hp = (t_p4){p.x, p.y, p.z, 1.0f};
@@ -51,11 +51,11 @@ static void	zz_draw_player(t_client *c, t_draw_context *dc)
 	dc->object_position = (t_p3){c->player_position.x, c->player_position.y,
 		0.0f};
 	dc->world_from_object = wx_m44_new_q4_p3(&dc->object_orientation,
-		&dc->object_position);
+			&dc->object_position);
 	dc->view_from_world = wx_m44_new_inverse_q4_p3(&c->camera.orientation,
-		&c->camera.position);
+			&c->camera.position);
 	dc->clip_from_view = wx_m44_new_perspective(c->camera.hfov_rad,
-		c->camera.aspect_ratio, c->camera.near, c->camera.far);
+			c->camera.aspect_ratio, c->camera.near, c->camera.far);
 	p = (t_p3){0.0f, 0.0f, 0.0f};
 	p = wx_m44_mul_p3(&dc->world_from_object, &p);
 	p = wx_m44_mul_p3(&dc->view_from_world, &p);
@@ -67,14 +67,14 @@ static void	zz_draw_player(t_client *c, t_draw_context *dc)
 	wc_draw_rectangle_solid(&c->frame_buffer, p, 20, 0xff00aaff);
 }
 
-void		wc_draw(t_client *c)
+void	wc_draw(t_client *c)
 {
 	t_draw_context	dc;
 
 	dc.view_from_world = wx_m44_new_inverse_q4_p3(&c->camera.orientation,
-		&c->camera.position);
+			&c->camera.position);
 	dc.clip_from_view = wx_m44_new_perspective(c->camera.hfov_rad,
-		c->camera.aspect_ratio, c->camera.near, c->camera.far);
+			c->camera.aspect_ratio, c->camera.near, c->camera.far);
 	wc_draw_clear(&c->frame_buffer);
 	zz_draw_player(c, &dc);
 	zz_draw_others(c, &dc);

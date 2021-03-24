@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 16:41:07 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/17 16:43:09 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:46:56 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	wc_draw_copy(t_client *c, t_frame_buffer const *fb)
 	t_s32	texture_pitch;
 
 	if (SDL_LockTexture(c->texture, WX_NULL, (void **)&texture_data,
-		&texture_pitch) < 0)
+			&texture_pitch) < 0)
 	{
 		c->run = wx_false;
 	}

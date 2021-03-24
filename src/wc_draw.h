@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 23:38:47 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/20 07:26:12 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:46:35 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "wx_frame_buffer.h"
 # include "wx_math.h"
 
-typedef struct s_client	t_client;
+typedef struct s_client			t_client;
 
 struct	s_camera
 {
@@ -28,7 +28,7 @@ struct	s_camera
 	t_f32	near;
 	t_f32	far;
 };
-typedef struct s_camera	t_camera;
+typedef struct s_camera			t_camera;
 
 struct	s_face
 {
@@ -36,7 +36,7 @@ struct	s_face
 	t_u16	positions[3];
 	t_u16	uvs[3];
 };
-typedef struct s_face	t_face;
+typedef struct s_face			t_face;
 
 struct	s_mesh
 {
@@ -46,7 +46,7 @@ struct	s_mesh
 	t_darray	positions;
 	t_darray	uvs;
 };
-typedef struct s_mesh	t_mesh;
+typedef struct s_mesh			t_mesh;
 
 t_bool	wc_mesh_new(t_mesh *m, char const *filename);
 void	wc_mesh_del(t_mesh *m);
@@ -68,15 +68,15 @@ struct	s_rectangle
 	t_p2	p0;
 	t_p2	p1;
 };
-typedef struct s_rectangle	t_rectangle;
+typedef struct s_rectangle		t_rectangle;
 
 void	wc_draw(t_client *c);
 void	wc_draw_clear(t_frame_buffer *fb);
 void	wc_draw_copy(t_client *c, t_frame_buffer const *fb);
 void	wc_draw_pixel(t_frame_buffer *fb, t_f32 x, t_f32 y, t_u32 abgr);
 void	wc_draw_rectangle_outline(t_frame_buffer *fb, t_p3 p, t_f32 width,
-	t_u32 abgr);
+			t_u32 abgr);
 void	wc_draw_rectangle_solid(t_frame_buffer *fb, t_p3 p, t_f32 width,
-	t_u32 abgr);
+			t_u32 abgr);
 
 #endif

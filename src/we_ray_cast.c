@@ -6,14 +6,14 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 17:25:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 20:52:53 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:38:54 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_draw.h"
 
-static t_bool		zz_is_wall(t_item *chart, t_ray *ray,
-						t_p2 intersection, t_side line)
+static t_bool	zz_is_wall(t_item *chart, t_ray *ray, t_p2 intersection,
+	t_side line)
 {
 	t_u32	block_y;
 	t_u32	block_x;
@@ -42,7 +42,7 @@ static t_bool		zz_is_wall(t_item *chart, t_ray *ray,
 	return (wx_false);
 }
 
-static t_found		zz_wall_values(t_ray *ray, t_item *chart, t_side side)
+static t_found	zz_wall_values(t_ray *ray, t_item *chart, t_side side)
 {
 	if (side == we_no_wall)
 	{
@@ -51,9 +51,8 @@ static t_found		zz_wall_values(t_ray *ray, t_item *chart, t_side side)
 	}
 	ray->wall.side = side;
 	ray->wall.chart_id = chart[ray->wall.chart_index].id;
-	ray->wall.distance =
-			sqrt(pow((ray->wall.end.x - ray->start.x), 2.0) +
-			pow((ray->wall.end.y - ray->start.y), 2.0));
+	ray->wall.distance = sqrt(pow((ray->wall.end.x - ray->start.x), 2.0)
+			+ pow((ray->wall.end.y - ray->start.y), 2.0));
 	if (side == we_horisontal)
 	{
 		if (ray->angle_d > 180)
@@ -71,7 +70,7 @@ static t_found		zz_wall_values(t_ray *ray, t_item *chart, t_side side)
 	return (ray->wall);
 }
 
-static t_found		zz_dist_horizontal_wall(t_ray *ray, t_item *chart)
+static t_found	zz_dist_horizontal_wall(t_ray *ray, t_item *chart)
 {
 	t_p2	intersection;
 	t_u32	block_y;
@@ -86,9 +85,9 @@ static t_found		zz_dist_horizontal_wall(t_ray *ray, t_item *chart)
 	{
 		block_y = intersection.y / WE_BLOCK_W;
 		intersection.x = (intersection.y - ray->b) / ray->k;
-		if (intersection.x < 0 || intersection.x >= world_end_x ||
-			(ray->angle_d == 180 || ray->angle_d == 0 || ray->angle_d == 360) ||
-			block_y >= WE_GRID_DIVIDE)
+		if (intersection.x < 0 || intersection.x >= world_end_x
+			|| (ray->angle_d == 180 || ray->angle_d == 0 || ray->angle_d == 360)
+			|| block_y >= WE_GRID_DIVIDE)
 			break ;
 		if ((zz_is_wall(chart, ray, intersection, we_horisontal)))
 			return (zz_wall_values(ray, chart, we_horisontal));
@@ -100,7 +99,7 @@ static t_found		zz_dist_horizontal_wall(t_ray *ray, t_item *chart)
 	return (zz_wall_values(ray, chart, we_no_wall));
 }
 
-static t_found		zz_dist_vertical_wall(t_ray *ray, t_item *chart)
+static t_found	zz_dist_vertical_wall(t_ray *ray, t_item *chart)
 {
 	t_p2	intersection;
 	t_u32	block_x;
@@ -115,9 +114,9 @@ static t_found		zz_dist_vertical_wall(t_ray *ray, t_item *chart)
 	{
 		block_x = intersection.x / WE_BLOCK_W;
 		intersection.y = ray->k * intersection.x + ray->b;
-		if (intersection.y < 0 || intersection.y >= world_end_y ||
-			(ray->angle_d == 90 || ray->angle_d == 270) ||
-			block_x >= WE_GRID_DIVIDE)
+		if (intersection.y < 0 || intersection.y >= world_end_y
+			|| (ray->angle_d == 90 || ray->angle_d == 270)
+			|| block_x >= WE_GRID_DIVIDE)
 			break ;
 		if ((zz_is_wall(chart, ray, intersection, we_vertical)))
 			return (zz_wall_values(ray, chart, we_vertical));
@@ -129,7 +128,7 @@ static t_found		zz_dist_vertical_wall(t_ray *ray, t_item *chart)
 	return (zz_wall_values(ray, chart, we_no_wall));
 }
 
-void				we_ray_cast(t_ray *ray, t_item *chart)
+void	we_ray_cast(t_ray *ray, t_item *chart)
 {
 	t_found	vertical;
 	t_found	horizontal;

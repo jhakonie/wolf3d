@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 20:57:01 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 16:05:29 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 # define WE_ID_INIT 0
 # define WE_TOOL_COUNT 6
 # define WE_GRID_DIVIDE 11
+/*
+** 2021-03-24 todo: this is a temporary hack until something better. new
+** norminette complains about any arithmetic operation in a define. this should
+** be: WE_GRID_DIVIDE * WE_GRID_DIVIDE * 2
+*/
+# define WE_SAVE_FILE_TO_CHART_BUFFER_SIZE (242)
 # define WE_BLOCK_W 100
 
 # define PI 3.14159265359
@@ -32,7 +38,7 @@ enum			e_side
 	we_horisontal,
 	we_vertical
 };
-typedef enum e_side	t_side;
+typedef enum e_side		t_side;
 
 enum			e_compass
 {
@@ -108,18 +114,15 @@ struct			s_grid
 };
 typedef struct s_grid	t_grid;
 
-void			we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color);
-void			we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb,
-					t_u32 color);
-void			we_draw_rec_full(t_p2 start, t_p2 end, t_frame_buffer *fb,
-					t_u32 c);
-void			we_draw_grid(t_grid *g, t_frame_buffer *fb);
-void			we_draw_rec_frame(t_p2 start, t_p2 end, t_frame_buffer *fb,
-					t_u32 c);
-void			we_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
-						t_p2 player_position);
-void			we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
-								t_f32 player_direction_d);
-void			we_ray_cast(t_ray *ray, t_item *chart);
+void	we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color);
+void	we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 color);
+void	we_draw_rec_full(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 c);
+void	we_draw_grid(t_grid *g, t_frame_buffer *fb);
+void	we_draw_rec_frame(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 c);
+void	we_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
+			t_p2 player_position);
+void	we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
+			t_f32 player_direction_d);
+void	we_ray_cast(t_ray *ray, t_item *chart);
 
 #endif

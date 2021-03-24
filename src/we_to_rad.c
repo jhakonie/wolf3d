@@ -6,15 +6,19 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 20:58:38 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/16 21:33:02 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:41:28 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
+/*
+** 2021-03-24 todo: remove? wx_to_radians() exists
+*/
+
 t_f32	we_to_rad(t_f32 deg)
 {
-	t_f32 rad;
+	t_f32	rad;
 
 	rad = deg * PI / 180;
 	return (rad);

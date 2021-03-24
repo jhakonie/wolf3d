@@ -6,14 +6,14 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 21:52:54 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 18:38:06 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:09:00 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 #include "wc_draw.h"
 
-void		we_draw_map(t_editor *e)
+void	we_draw_map(t_editor *e)
 {
 	t_u32	i;
 	t_p2	start;

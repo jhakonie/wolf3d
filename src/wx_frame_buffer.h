@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 10:54:39 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/01/27 11:06:17 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:47:12 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ struct	s_frame_buffer
 typedef struct s_frame_buffer	t_frame_buffer;
 
 t_bool	wx_frame_buffer_new(t_frame_buffer *fb, t_u32 image_width,
-	t_u32 image_height);
+			t_u32 image_height);
 void	wx_frame_buffer_del(t_frame_buffer *fb);
 
 #endif

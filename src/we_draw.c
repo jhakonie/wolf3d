@@ -6,13 +6,13 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:44:57 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 18:55:25 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:04:50 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-void		zz_color_ptr(t_editor *e)
+static void	zz_color_ptr(t_editor *e)
 {
 	t_p2	top;
 	t_p2	temp;
@@ -30,7 +30,7 @@ void		zz_color_ptr(t_editor *e)
 	we_draw_rec_full(low, top, &e->frame_buffer, color);
 }
 
-void		we_draw(t_editor *e)
+void	we_draw(t_editor *e)
 {
 	wx_buffer_set(e->frame_buffer.data, e->frame_buffer.data_size, 0);
 	if (e->map.ptr_clear || (e->map.ptr_draw))

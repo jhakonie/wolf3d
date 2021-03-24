@@ -6,13 +6,13 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:26:29 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/19 20:33:27 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:08:38 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-void		zz_draw_vertical(t_grid *g, t_frame_buffer *fb)
+static void	zz_draw_vertical(t_grid *g, t_frame_buffer *fb)
 {
 	t_p2	start;
 	t_p2	end;
@@ -32,7 +32,7 @@ void		zz_draw_vertical(t_grid *g, t_frame_buffer *fb)
 	}
 }
 
-void		zz_draw_horisontal(t_grid *g, t_frame_buffer *fb)
+static void	zz_draw_horisontal(t_grid *g, t_frame_buffer *fb)
 {
 	t_p2	start;
 	t_p2	end;
@@ -52,7 +52,7 @@ void		zz_draw_horisontal(t_grid *g, t_frame_buffer *fb)
 	}
 }
 
-void		we_draw_grid(t_grid *g, t_frame_buffer *fb)
+void	we_draw_grid(t_grid *g, t_frame_buffer *fb)
 {
 	zz_draw_horisontal(g, fb);
 	zz_draw_vertical(g, fb);

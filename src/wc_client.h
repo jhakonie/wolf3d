@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:11:35 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/05 11:40:58 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:29:18 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@
 
 struct	s_remote_server
 {
-	struct sockaddr address;
+	struct sockaddr	address;
 	socklen_t		address_size;
 	int				socket;
 };
 typedef struct s_remote_server	t_remote_server;
 
 t_bool	wc_remote_server_new(t_remote_server *rs, char const *hostname,
-	char const *port);
+			char const *port);
 void	wc_remote_server_del(t_remote_server *rs);
 t_bool	wc_remote_server_read(t_remote_server *rs, t_packet *p);
 t_bool	wc_remote_server_write(t_remote_server *rs, t_client_input const *ci);
@@ -52,7 +52,7 @@ struct	s_client
 	SDL_Texture		*texture;
 	SDL_Window		*window;
 };
-typedef struct s_client	t_client;
+typedef struct s_client			t_client;
 
 t_bool	wc_client_new(t_client *c, t_u32 window_width, t_u32 window_height);
 void	wc_client_del(t_client *c);

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 17:18:30 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 21:18:25 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:35:50 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,19 @@
 ** TODO: check if ray->angle_d - notes are correct (also from ray_init)
 */
 
-void		we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
-								t_f32 player_direction_d)
+void	we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
+	t_f32 player_direction_d)
 {
-	t_f32 ray_length;
+	t_f32	ray_length;
 
 	ray->angle_to_player_d = fabsf(ray->half_fov_d - ang_ray_start_d);
-	ray->angle_d = player_direction_d + ray->half_fov_d
-							- ang_ray_start_d;
+	ray->angle_d = player_direction_d + ray->half_fov_d - ang_ray_start_d;
 	if (ray->angle_d < 0)
 		ray->angle_d += 360;
 	else if (ray->angle_d > 360)
 		ray->angle_d -= 360;
-	ray_length = ray->dist_to_screen /
-		cos(wx_to_radians(ray->angle_to_player_d));
+	ray_length = ray->dist_to_screen
+		/ cos(wx_to_radians(ray->angle_to_player_d));
 	ray->delta.x = fabs(cos(wx_to_radians(ray->angle_d))) * ray_length;
 	ray->delta.y = fabs(sin(wx_to_radians(ray->angle_d))) * ray_length;
 	if (ray->angle_d < 180)

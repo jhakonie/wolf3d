@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 16:10:32 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/22 16:10:32 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:48:31 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,14 @@ t_bool	wx_frustum_aabb_test(t_frustum const *f, t_aabb const *object_aabb,
 		j = 0;
 		while (j < 3)
 		{
-			projected_size += obb.extents2[j] *
-				fabsf(wx_plane_signed_distance_n3(f->planes + i, obb.axes + j));
+			projected_size += obb.extents2[j]
+				* fabsf(wx_plane_signed_distance_n3(f->planes + i, obb.axes
+						+ j));
 			++j;
 		}
-		if (wx_plane_signed_distance_p3(f->planes + i, &obb.center) <
-			-projected_size)
-		{
+		if (wx_plane_signed_distance_p3(f->planes + i, &obb.center)
+			< -projected_size)
 			return (wx_false);
-		}
 		++i;
 	}
 	return (wx_true);

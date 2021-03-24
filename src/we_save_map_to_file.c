@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 15:53:52 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/03 23:49:15 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:40:23 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-void		we_save_map_to_file(t_editor *e)
+void	we_save_map_to_file(t_editor *e)
 {
 	t_u32	i;
 	t_s32	fd;
@@ -24,7 +24,8 @@ void		we_save_map_to_file(t_editor *e)
 	i = 0;
 	if (!e->map.file)
 		e->map.file = "map.txt";
-	if ((fd = open(e->map.file, O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
+	fd = open(e->map.file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
 		write(1, "open failed\n", 13);
 	while (i < e->map.block_count)
 	{

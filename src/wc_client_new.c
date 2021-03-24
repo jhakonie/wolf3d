@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:17:11 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/05 20:15:13 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:38:02 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "wx_net.h"
 #include "wx_time.h"
 
-static void		zz_camera(t_client *c, t_f32 width, t_f32 height)
+static void	zz_camera(t_client *c, t_f32 width, t_f32 height)
 {
 	t_f32	angle_rad;
 	t_v3	axis;
@@ -54,24 +54,26 @@ static t_bool	zz_on_error(t_client *c, t_u8 i)
 	return (wx_false);
 }
 
-t_bool			wc_client_new(t_client *c, t_u32 window_width,
-	t_u32 window_height)
+t_bool	wc_client_new(t_client *c, t_u32 window_width, t_u32 window_height)
 {
 	wx_buffer_set(c, sizeof(*c), 0);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		return (zz_on_error(c, 0));
-	if (!(c->window = SDL_CreateWindow("wolf3d_client", SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED, window_width, window_height, 0)))
+	c->window = SDL_CreateWindow("wolf3d_client", SDL_WINDOWPOS_UNDEFINED,
+			SDL_WINDOWPOS_UNDEFINED, window_width, window_height, 0);
+	if (!c->window)
 		return (zz_on_error(c, 1));
-	if (!(c->renderer = SDL_CreateRenderer(c->window, -1, 0)))
+	c->renderer = SDL_CreateRenderer(c->window, -1, 0);
+	if (!c->renderer)
 		return (zz_on_error(c, 2));
-	if (!(c->texture = SDL_CreateTexture(c->renderer, SDL_PIXELFORMAT_RGBA8888,
-		SDL_TEXTUREACCESS_STREAMING, window_width, window_height)))
+	c->texture = SDL_CreateTexture(c->renderer, SDL_PIXELFORMAT_RGBA8888,
+			SDL_TEXTUREACCESS_STREAMING, window_width, window_height);
+	if (!c->texture)
 		return (zz_on_error(c, 3));
 	if (!wx_frame_buffer_new(&c->frame_buffer, window_width, window_height))
 		return (zz_on_error(c, 4));
 	if (!wc_remote_server_new(&c->remote_server, "localhost",
-		WX_SERVER_DEFAULT_SOCKET))
+			WX_SERVER_DEFAULT_SOCKET))
 		return (zz_on_error(c, 5));
 	zz_camera(c, window_width, window_height);
 	c->sim_time_s = wx_time_s();

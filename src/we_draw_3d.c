@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 17:10:51 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 20:58:09 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:06:35 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_u32	zz_wall_color(t_ray ray)
 {
-	t_u32 color;
+	t_u32	color;
 
 	color = 0;
 	if (ray.wall.compass == we_north)
@@ -28,7 +28,7 @@ static t_u32	zz_wall_color(t_ray ray)
 	return (color);
 }
 
-static void		zz_draw_wall_to_buffer(t_ray ray, t_frame_buffer *fb)
+static void	zz_draw_wall_to_buffer(t_ray ray, t_frame_buffer *fb)
 {
 	t_f32	projected_height;
 	t_u32	i;
@@ -39,8 +39,8 @@ static void		zz_draw_wall_to_buffer(t_ray ray, t_frame_buffer *fb)
 	color = 0;
 	color = zz_wall_color(ray);
 	if (ray.wall.distance > 0)
-		projected_height = (ray.dist_to_screen /
-			ray.wall.distance) * WE_BLOCK_W;
+		projected_height = (ray.dist_to_screen / ray.wall.distance)
+			* WE_BLOCK_W;
 	else
 		return ;
 	draw_start.y = 0.5 * fb->height - 0.5 * projected_height;
@@ -55,8 +55,8 @@ static void		zz_draw_wall_to_buffer(t_ray ray, t_frame_buffer *fb)
 	}
 }
 
-void			we_draw_3d(t_frame_buffer *frame_buffer, t_player player,
-							t_map map)
+void	we_draw_3d(t_frame_buffer *frame_buffer, t_player player,
+	t_map map)
 {
 	t_f32	angle_d;
 	t_ray	ray;
@@ -64,8 +64,7 @@ void			we_draw_3d(t_frame_buffer *frame_buffer, t_player player,
 	angle_d = 0;
 	if (map.draw_3d == wx_true)
 		wx_buffer_set(frame_buffer->data, frame_buffer->data_size, 0);
-	we_ray_init(&ray, player.fov_d, frame_buffer->width,
-				player.position);
+	we_ray_init(&ray, player.fov_d, frame_buffer->width, player.position);
 	while (ray.nb < frame_buffer->width)
 	{
 		we_ray_calculate(&ray, angle_d, player.direction_d);

@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 07:59:01 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/20 08:00:17 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:54:06 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "wx_math.h"
 
-t_plane		wx_plane_new(t_f32 a, t_f32 b, t_f32 c, t_f32 d)
+t_plane	wx_plane_new(t_f32 a, t_f32 b, t_f32 c, t_f32 d)
 {
 	t_f32	k;
 	t_plane	pl;

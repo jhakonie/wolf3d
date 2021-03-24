@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:53:50 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/19 12:16:16 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:34:28 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,22 @@ static void	zz_on_key(t_client *c, SDL_KeyboardEvent *k, t_bool down)
 static void	zz_on_resize(t_client *c, t_s32 width, t_s32 height)
 {
 	SDL_DestroyRenderer(c->renderer);
-	if (!(c->renderer = SDL_CreateRenderer(c->window, -1, 0)))
+	c->renderer = SDL_CreateRenderer(c->window, -1, 0);
+	if (!c->renderer)
 	{
 		c->run = wx_false;
 	}
-	if (!(c->texture = SDL_CreateTexture(c->renderer, SDL_PIXELFORMAT_RGBA8888,
-		SDL_TEXTUREACCESS_STREAMING, width, height)))
+	c->texture = SDL_CreateTexture(c->renderer, SDL_PIXELFORMAT_RGBA8888,
+			SDL_TEXTUREACCESS_STREAMING, width, height);
+	if (!c->texture)
 	{
 		c->run = wx_false;
 	}
 	free(c->frame_buffer.data);
 	c->frame_buffer.data = WX_NULL;
 	c->frame_buffer.data_size = width * height * 4;
-	if (!(c->frame_buffer.data = (t_u8 *)malloc(c->frame_buffer.data_size)))
+	c->frame_buffer.data = (t_u8 *)malloc(c->frame_buffer.data_size);
+	if (!c->frame_buffer.data)
 	{
 		c->run = wx_false;
 	}
@@ -83,7 +86,7 @@ static void	zz_on_windowevent(t_client *c, SDL_WindowEvent *w)
 ** stuck here by somehow generating infinitely many events
 */
 
-void		wc_client_dispatch_events(t_client *c)
+void	wc_client_dispatch_events(t_client *c)
 {
 	SDL_Event	e;
 

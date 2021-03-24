@@ -6,17 +6,16 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 12:44:05 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/19 20:33:42 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:11:32 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-void		we_draw_rec_frame(t_p2 start, t_p2 end, t_frame_buffer *fb,
-				t_u32 c)
+void	we_draw_rec_frame(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 c)
 {
-	t_p2 up;
-	t_p2 down;
+	t_p2	up;
+	t_p2	down;
 
 	up.x = end.x;
 	up.y = start.y;
@@ -28,8 +27,7 @@ void		we_draw_rec_frame(t_p2 start, t_p2 end, t_frame_buffer *fb,
 	we_draw_line(down, end, fb, c);
 }
 
-void		we_draw_rec_full(t_p2 start, t_p2 end, t_frame_buffer *fb,
-				t_u32 c)
+void	we_draw_rec_full(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 c)
 {
 	t_f32	temp_x;
 

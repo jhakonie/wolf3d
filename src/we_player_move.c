@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 12:38:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 14:16:49 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:34:36 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,23 @@ static void	zz_move_sideways(t_u32 key, t_editor *e, t_u32 s)
 {
 	if (key == SDLK_a)
 	{
-		e->player.position.x +=
-			(cos((90 + e->player.direction_d) * WE_TO_RAD) * s);
-		e->player.position.y +=
-			-(sin((90 + e->player.direction_d) * WE_TO_RAD) * s);
+		e->player.position.x += cos((90 + e->player.direction_d) * WE_TO_RAD)
+			* s;
+		e->player.position.y += -sin((90 + e->player.direction_d) * WE_TO_RAD)
+			* s;
 	}
 	else if (key == SDLK_d)
 	{
-		e->player.position.x -=
-			(cos((90 + e->player.direction_d) * WE_TO_RAD) * s);
-		e->player.position.y -=
-			-(sin((90 + e->player.direction_d) * WE_TO_RAD) * s);
+		e->player.position.x -= cos((90 + e->player.direction_d) * WE_TO_RAD)
+			* s;
+		e->player.position.y -= -sin((90 + e->player.direction_d) * WE_TO_RAD)
+			* s;
 	}
 }
 
-void		we_player_move(t_u32 key, t_editor *e)
+void	we_player_move(t_u32 key, t_editor *e)
 {
-	t_u32 s;
+	t_u32	s;
 
 	s = e->player.w_step;
 	if (key == SDLK_w || key == SDLK_s)

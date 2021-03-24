@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:56:03 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/20 06:56:06 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:49:20 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "wx_types.h"
 
-typedef struct s_mesh	t_mesh;
+typedef struct s_mesh			t_mesh;
 
 struct	s_parse_context
 {

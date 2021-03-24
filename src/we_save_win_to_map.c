@@ -6,13 +6,13 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 18:11:52 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 18:58:01 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:40:41 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-void		we_save_win_to_map(t_p2 win, t_editor *e)
+void	we_save_win_to_map(t_p2 win, t_editor *e)
 {
 	t_u32	block_num;
 	t_p2	map;

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 22:51:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/08 19:35:06 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:19:50 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@
 void	we_editor_on_resize(t_editor *e, t_s32 width, t_s32 height)
 {
 	SDL_DestroyRenderer(e->renderer);
-	if (!(e->renderer = SDL_CreateRenderer(e->window, -1, 0)))
+	e->renderer = SDL_CreateRenderer(e->window, -1, 0);
+	if (!e->renderer)
 		e->quit = wx_true;
-	if (!(e->texture = SDL_CreateTexture(e->renderer, SDL_PIXELFORMAT_RGBA8888,
-		SDL_TEXTUREACCESS_STREAMING, width, height)))
+	e->texture = SDL_CreateTexture(e->renderer, SDL_PIXELFORMAT_RGBA8888,
+			SDL_TEXTUREACCESS_STREAMING, width, height);
+	if (!e->texture)
 		e->quit = wx_true;
 	free(e->frame_buffer.data);
 	e->frame_buffer.data = 0;
 	e->frame_buffer.data_size = width * height * 4;
-	if (!(e->frame_buffer.data = (t_u8 *)malloc(e->frame_buffer.data_size)))
+	e->frame_buffer.data = (t_u8 *)malloc(e->frame_buffer.data_size);
+	if (!e->frame_buffer.data)
 	{
 		e->quit = wx_true;
 	}

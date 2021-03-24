@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 17:23:06 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/01 12:16:42 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:53:08 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ struct	s_packet
 	t_u8				buffer[WX_PACKET_BUFFER_SIZE];
 	t_u64				size;
 };
-typedef struct s_packet	t_packet;
+typedef struct s_packet			t_packet;
 
 void	wx_packet_read_f32(t_packet *p, t_u64 *i, t_f32 *x);
 void	wx_packet_read_p2(t_packet *p, t_u64 *i, t_p2 *x);
@@ -56,7 +56,7 @@ struct	s_server_update
 typedef struct s_server_update	t_server_update;
 
 t_bool	wx_address_equal(struct sockaddr const *a0, socklen_t a0_size,
-	struct sockaddr const *a1, socklen_t a1_size);
+			struct sockaddr const *a1, socklen_t a1_size);
 t_bool	wx_socket_read(int socket, t_packet *p);
 t_bool	wx_socket_write(int socket, t_packet const *p);
 

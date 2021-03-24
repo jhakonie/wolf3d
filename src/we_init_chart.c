@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 22:38:50 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/08 19:36:59 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 16:06:16 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** todo: update zz buf to chart line 40 allowed numbers/chars
 */
 
-static void		zz_add_char(t_map *m, char *buf, t_u32 i, t_u32 j)
+static void	zz_add_char(t_map *m, char *buf, t_u32 i, t_u32 j)
 {
 	if (buf[i] == '.')
 		m->chart[j].id = 0;
@@ -65,7 +65,7 @@ static t_bool	zz_save_file_to_chart(t_map *m)
 {
 	t_s32		fd;
 	t_s32		ret;
-	char		buf[WE_GRID_DIVIDE * WE_GRID_DIVIDE * 2];
+	char		buf[WE_SAVE_FILE_TO_CHART_BUFFER_SIZE];
 
 	fd = open(m->file, O_RDONLY | O_CREAT, 0644);
 	if (fd < 0)
@@ -73,13 +73,13 @@ static t_bool	zz_save_file_to_chart(t_map *m)
 		write(1, "open failed\n", 13);
 		return (wx_false);
 	}
-	ret = read(fd, buf, WE_GRID_DIVIDE * WE_GRID_DIVIDE * 2);
+	ret = read(fd, buf, WE_SAVE_FILE_TO_CHART_BUFFER_SIZE);
 	if (ret < 0)
 	{
 		write(1, "read failed\n", 13);
 		return (wx_false);
 	}
-	if (ret != WE_GRID_DIVIDE * WE_GRID_DIVIDE * 2 && ret > 0)
+	if (ret != WE_SAVE_FILE_TO_CHART_BUFFER_SIZE && ret > 0)
 	{
 		write(1, "wrong map size or no existing file\n", 36);
 		return (wx_false);
@@ -88,7 +88,7 @@ static t_bool	zz_save_file_to_chart(t_map *m)
 	return (zz_buf_to_chart(m, buf, ret));
 }
 
-static void		zz_set_empty_chart(t_map *m)
+static void	zz_set_empty_chart(t_map *m)
 {
 	t_u32		i;
 	t_u32		x;
@@ -111,7 +111,7 @@ static void		zz_set_empty_chart(t_map *m)
 	}
 }
 
-void			we_init_chart(t_map *m)
+void	we_init_chart(t_map *m)
 {
 	zz_set_empty_chart(m);
 	if (m->file)

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:14:34 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/23 18:31:16 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:17:53 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,29 @@ static t_bool	zz_on_error(t_editor *e, t_u8 i)
 	return (wx_false);
 }
 
-t_bool			we_editor_new(t_editor *e, t_u32 window_width,\
-	t_u32 window_height)
+static t_bool	zz_sdl(t_editor *e, t_u32 window_width, t_u32 window_height)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		return (zz_on_error(e, 0));
-	if (!(e->window = SDL_CreateWindow("wolf3d_editor", SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED, window_width, window_height\
-		, SDL_WINDOW_RESIZABLE)))
+	e->window = SDL_CreateWindow("wolf3d_editor", SDL_WINDOWPOS_UNDEFINED,
+			SDL_WINDOWPOS_UNDEFINED, window_width, window_height,
+			SDL_WINDOW_RESIZABLE);
+	if (!e->window)
 		return (zz_on_error(e, 1));
-	if (!(e->renderer = SDL_CreateRenderer(e->window, -1, 0)))
+	e->renderer = SDL_CreateRenderer(e->window, -1, 0);
+	if (!(e->renderer))
 		return (zz_on_error(e, 2));
-	if (!(e->texture = SDL_CreateTexture(e->renderer, SDL_PIXELFORMAT_RGBA8888,
-		SDL_TEXTUREACCESS_STREAMING, window_width, window_height)))
+	e->texture = SDL_CreateTexture(e->renderer, SDL_PIXELFORMAT_RGBA8888,
+			SDL_TEXTUREACCESS_STREAMING, window_width, window_height);
+	if (!e->texture)
 		return (zz_on_error(e, 3));
+	return (wx_true);
+}
+
+t_bool	we_editor_new(t_editor *e, t_u32 window_width, t_u32 window_height)
+{
+	if (!zz_sdl(e, window_width, window_height))
+		return (wx_false);
 	if (!wx_frame_buffer_new(&e->frame_buffer, window_width, window_height))
 		return (zz_on_error(e, 4));
 	wx_buffer_set(&e->tools, sizeof(e->tools), 0);

@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 12:54:12 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 12:55:19 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:41:53 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_bool	zz_on_error(t_darray *x, int fd)
 	return (wx_false);
 }
 
-t_bool			wc_darray_new_file(t_darray *d, char const *filename,
+t_bool	wc_darray_new_file(t_darray *d, char const *filename,
 				size_t element_size)
 {
 	char		buffer[4096];
@@ -34,8 +34,13 @@ t_bool			wc_darray_new_file(t_darray *d, char const *filename,
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (zz_on_error(d, fd));
-	while ((read_size = read(fd, buffer, sizeof(buffer))) > 0)
+	while (wx_true)
 	{
+		read_size = read(fd, buffer, sizeof(buffer));
+		if (read_size <= 0)
+		{
+			break ;
+		}
 		if (!wc_darray_add_back_be(d, buffer, buffer + read_size))
 			return (zz_on_error(d, fd));
 	}

@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 04:42:55 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/02/16 20:45:55 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:45:34 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
 
 static t_bool	zz_socket_bind(int *s, struct addrinfo *interfaces)
 {
-	struct addrinfo			*i;
+	struct addrinfo	*i;
 
 	i = interfaces;
 	while (i)
 	{
-		if (((*s = socket(i->ai_family, i->ai_socktype,
-			i->ai_protocol)) != -1) &&
-			((bind(*s, i->ai_addr, i->ai_addrlen) != -1)) &&
-			(fcntl(*s, F_SETFL, O_NONBLOCK) != -1))
+		*s = socket(i->ai_family, i->ai_socktype, i->ai_protocol);
+		if ((*s != -1)
+			&& ((bind(*s, i->ai_addr, i->ai_addrlen) != -1))
+			&& (fcntl(*s, F_SETFL, O_NONBLOCK) != -1))
 		{
 			break ;
 		}
@@ -62,7 +62,7 @@ static t_bool	zz_socket_new(int *s, char const *port)
 	return (wx_true);
 }
 
-t_bool			ws_server_new(t_server *s)
+t_bool	ws_server_new(t_server *s)
 {
 	wx_buffer_set(s, sizeof(*s), 0);
 	s->remote_clients_size = WX_SERVER_REMOTE_CLIENTS_SIZE;

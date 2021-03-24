@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 15:41:53 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 22:06:48 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:52:10 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_bool	zz_on_error(t_parse_context *pc, t_s8 *b)
 	return (wx_false);
 }
 
-t_bool			wc_parse_position(t_parse_context *pc, t_mesh *m)
+t_bool	wc_parse_position(t_parse_context *pc, t_mesh *m)
 {
 	t_s8	*b;
 	t_u64	i;

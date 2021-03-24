@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 00:21:04 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/02/26 14:18:32 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:11:59 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	we_draw_toolbar(t_editor *e)
 {
-	t_u32 i;
+	t_u32	i;
 
 	i = 1;
 	we_draw_rec_full(e->tools.start, e->tools.end, &e->frame_buffer,
-	e->tools.color[0]);
+		e->tools.color[0]);
 	we_draw_rec_frame(e->tools.start, e->tools.end, &e->frame_buffer,
-	e->tools.color[1]);
+		e->tools.color[1]);
 	while (i < WE_TOOL_COUNT)
 	{
 		we_draw_button(&e->tools.tool[i], &e->frame_buffer);

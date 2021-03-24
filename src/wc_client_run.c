@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:27:18 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/05 12:52:37 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:39:17 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 ** happens on different wm? happens on macos?
 */
 
-static void		zz_integrate(t_client *c)
+static void	zz_integrate(t_client *c)
 {
 	if (c->sim_time_accumulator_s >= c->sim_time_step_s)
 	{
@@ -35,7 +35,7 @@ static void		zz_integrate(t_client *c)
 	}
 }
 
-static void		zz_network(t_client *c)
+static void	zz_network(t_client *c)
 {
 	t_u8		i;
 	t_u64		p_offset;
@@ -56,7 +56,7 @@ static void		zz_network(t_client *c)
 	}
 }
 
-t_bool			wc_client_run(t_client *c)
+t_bool	wc_client_run(t_client *c)
 {
 	t_f64		sim_delta_s;
 	t_f64		real_time0_s;
@@ -66,8 +66,8 @@ t_bool			wc_client_run(t_client *c)
 	while (c->run)
 	{
 		real_time1_s = wx_time_s();
-		sim_delta_s = wx_f64_min(real_time1_s - real_time0_s, 3.0 *
-			c->sim_time_step_s);
+		sim_delta_s = wx_f64_min(real_time1_s - real_time0_s, 3.0
+				* c->sim_time_step_s);
 		real_time0_s = real_time1_s;
 		c->sim_time_accumulator_s += sim_delta_s;
 		wc_client_dispatch_events(c);

@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 23:54:46 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/01 12:10:25 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:42:14 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ struct	s_remote_client
 	t_f64					packet_time_s;
 	t_p2					position;
 };
-typedef struct s_remote_client	t_remote_client;
+typedef struct s_remote_client		t_remote_client;
 
 struct	s_server
 {
@@ -49,7 +49,7 @@ struct	s_server
 	t_f64			sim_time_accumulator_s;
 	t_f64			sim_time_step_s;
 };
-typedef struct s_server	t_server;
+typedef struct s_server				t_server;
 
 t_bool	ws_server_new(t_server *s);
 void	ws_server_del(t_server *s);

@@ -6,14 +6,14 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 22:02:38 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/20 07:39:13 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:48:48 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wc_draw.h"
 #include "wc_parse.h"
 
-static void		zz_aabb(t_mesh *m)
+static void	zz_aabb(t_mesh *m)
 {
 	t_u64		i;
 	t_p3 const	*ps;
@@ -40,11 +40,11 @@ static t_bool	zz_parse_mesh(t_parse_context *pc, t_mesh *m)
 {
 	while (pc->p < pc->e)
 	{
-		if (!wc_parse_whitespace(pc) && !wc_parse_comment(pc) &&
-			!wc_parse_position(pc, m) && !wc_parse_material_filename(pc) &&
-			!wc_parse_object_name(pc) && !wc_parse_uv(pc, m) &&
-			!wc_parse_normal(pc, m) && !wc_parse_material_name(pc) &&
-			!wc_parse_smoothing(pc) && !wc_parse_face(pc, m))
+		if (!wc_parse_whitespace(pc) && !wc_parse_comment(pc)
+			&& !wc_parse_position(pc, m) && !wc_parse_material_filename(pc)
+			&& !wc_parse_object_name(pc) && !wc_parse_uv(pc, m)
+			&& !wc_parse_normal(pc, m) && !wc_parse_material_name(pc)
+			&& !wc_parse_smoothing(pc) && !wc_parse_face(pc, m))
 		{
 			break ;
 		}
@@ -81,7 +81,7 @@ static t_bool	zz_on_error(t_darray *fb, t_mesh *m, t_u8 i)
 	return (wx_false);
 }
 
-t_bool			wc_mesh_new(t_mesh *m, char const *filename)
+t_bool	wc_mesh_new(t_mesh *m, char const *filename)
 {
 	t_darray		fb;
 	t_parse_context	pc;

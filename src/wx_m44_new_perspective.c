@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 21:04:19 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/06 14:49:09 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:50:02 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static t_f32	zz_projection_plane_distance(t_f32 hfov_rad, t_f32 aspect_ratio)
 ** once they've gone through the perspective divide
 */
 
-t_m44			wx_m44_new_perspective(t_f32 hfov_rad, t_f32 aspect_ratio,
-	t_f32 near, t_f32 far)
+t_m44	wx_m44_new_perspective(t_f32 hfov_rad, t_f32 aspect_ratio, t_f32 near,
+	t_f32 far)
 {
 	t_f32	ppd;
 	t_m44	m;
