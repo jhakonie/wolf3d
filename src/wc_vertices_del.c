@@ -1,39 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_parse_smoothing.c                               :+:      :+:    :+:   */
+/*   wc_vertices_del.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/07 16:43:32 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 19:02:58 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/03/27 11:13:17 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/03/27 11:13:17 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_parse.h"
+#include "stdlib.h"
 
-/*
-** 2021-03-07 todo: find out what this is and implement it properly
-*/
+#include "wc_draw.h"
 
-t_bool	wc_parse_smoothing(t_parse_context *pc)
+void	wc_vertices_del(t_vertices *c)
 {
-	if (!wc_parse_keyword(pc, "s"))
-	{
-		return (wx_false);
-	}
-	if (!wc_parse_whitespace(pc))
-	{
-		return (wx_false);
-	}
-	while (pc->p < pc->e)
-	{
-		if (*(t_s8 *)pc->p == '\n')
-		{
-			++pc->p;
-			break ;
-		}
-		++pc->p;
-	}
-	return (wx_true);
+	free(c->buffer);
 }

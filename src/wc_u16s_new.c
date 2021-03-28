@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_parse_comment.c                                 :+:      :+:    :+:   */
+/*   wc_u16s_new.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/07 15:18:10 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 16:18:23 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/03/26 11:45:14 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/03/26 11:45:14 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_parse.h"
+#include "stdlib.h"
 
-t_bool	wc_parse_comment(t_parse_context *pc)
+#include "wc_draw.h"
+
+t_bool	wc_u16s_new(t_u16s *c, t_u64 buffer_size)
 {
-	if (!wc_parse_keyword(pc, "#"))
+	wx_buffer_set(c, sizeof(*c), 0);
+	if (buffer_size)
 	{
-		return (wx_false);
-	}
-	while (pc->p < pc->e)
-	{
-		if (*(t_s8 *)pc->p == '\n')
+		c->buffer = (t_u16 *)malloc(buffer_size * sizeof(t_u16));
+		if (!c->buffer)
 		{
-			++pc->p;
-			break ;
+			return (wx_false);
 		}
-		++pc->p;
+		c->buffer_size = buffer_size;
 	}
+	c->size = 0;
 	return (wx_true);
 }

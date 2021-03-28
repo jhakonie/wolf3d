@@ -1,42 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_darray_add_back_be.c                            :+:      :+:    :+:   */
+/*   wc_u16s_add_back.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/07 12:58:32 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 19:20:22 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/03/26 12:00:51 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/03/26 12:00:51 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stdlib.h"
 
-#include "wc_darray.h"
+#include "wc_draw.h"
 
-t_bool	wc_darray_add_back_be(t_darray *d, void const *b, void const *e)
+t_bool	wc_u16s_add_back(t_u16s *c, t_u16 const *v)
 {
-	void	*buffer;
+	t_u16	*new_buffer;
+	t_u64	new_buffer_size;
 	t_u64	new_size;
 
-	new_size = d->size + (e - b);
-	if (d->buffer_size < new_size)
+	new_size = c->size + 1;
+	if (new_size > c->buffer_size)
 	{
-		if (new_size < (2 * d->buffer_size))
-		{
-			new_size = 2 * d->buffer_size;
-		}
-		buffer = (void *)malloc(new_size);
-		if (!buffer)
+		new_buffer_size = 2 * c->buffer_size;
+		new_buffer = (t_u16 *)malloc(new_buffer_size * sizeof(t_u16));
+		if (!new_buffer)
 		{
 			return (wx_false);
 		}
-		wx_buffer_copy(buffer, d->buffer, d->buffer_size);
-		free(d->buffer);
-		d->buffer = buffer;
-		d->buffer_size = new_size;
+		wx_buffer_copy(new_buffer, c->buffer, c->buffer_size
+			* sizeof(t_u16));
+		free(c->buffer);
+		c->buffer = new_buffer;
+		c->buffer_size = new_buffer_size;
 	}
-	wx_buffer_copy(d->buffer + d->size, b, e - b);
-	d->size += e - b;
+	c->buffer[c->size] = *v;
+	++c->size;
 	return (wx_true);
 }

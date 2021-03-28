@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_parse_face.c                                    :+:      :+:    :+:   */
+/*   wc_parse_obj_face.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,44 +13,43 @@
 #include "wc_draw.h"
 #include "wc_parse.h"
 
-static t_bool	zz_parse_vertex_indices(t_parse_context *pc, t_face *f, t_u8 i)
+static t_bool	zz_parse_vertex_indices(t_parse_context *pc,
+	t_obj_vertices *ovs)
 {
-	if (!wc_parse_u16(pc, &f->positions[i]))
-	{
+	t_u16			i;
+	t_obj_vertex	ov;
+
+	ov.out_index = -1;
+	if (!wc_parse_u16(pc, &i))
 		return (wx_false);
-	}
+	ov.position = i - 1;
 	if (!wc_parse_keyword(pc, "/"))
-	{
 		return (wx_false);
-	}
-	if (!wc_parse_u16(pc, &f->uvs[i]))
-	{
+	if (!wc_parse_u16(pc, &i))
 		return (wx_false);
-	}
+	ov.uv = i - 1;
 	if (!wc_parse_keyword(pc, "/"))
-	{
 		return (wx_false);
-	}
-	if (!wc_parse_u16(pc, &f->normals[i]))
-	{
+	if (!wc_parse_u16(pc, &i))
 		return (wx_false);
-	}
+	ov.normal = i - 1;
+	if (!wc_obj_vertices_add_back(ovs, &ov))
+		return (wx_false);
 	return (wx_true);
 }
 
-static t_bool	zz_on_error(t_parse_context *pc, t_s8 *b)
+static t_bool	zz_on_error(t_parse_context *pc, t_c8 const *b)
 {
 	pc->p = b;
 	return (wx_false);
 }
 
-t_bool	wc_parse_face(t_parse_context *pc, t_mesh *m)
+t_bool	wc_parse_obj_face(t_parse_context *pc, t_obj_vertices *ovs)
 {
-	t_s8	*b;
-	t_u8	i;
-	t_face	f;
+	t_c8 const	*b;
+	t_u8		i;
 
-	b = (t_s8 *)pc->p;
+	b = pc->p;
 	if (!wc_parse_keyword(pc, "f"))
 	{
 		return (zz_on_error(pc, b));
@@ -59,15 +58,11 @@ t_bool	wc_parse_face(t_parse_context *pc, t_mesh *m)
 	while (i < 3)
 	{
 		wc_parse_whitespace(pc);
-		if (!zz_parse_vertex_indices(pc, &f, i))
+		if (!zz_parse_vertex_indices(pc, ovs))
 		{
 			return (zz_on_error(pc, b));
 		}
 		++i;
-	}
-	if (!wc_darray_add_back(&m->faces, &f))
-	{
-		return (zz_on_error(pc, b));
 	}
 	return (wx_true);
 }

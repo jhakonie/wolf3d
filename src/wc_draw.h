@@ -13,7 +13,6 @@
 #ifndef WC_DRAW_H
 # define WC_DRAW_H
 
-# include "wc_darray.h"
 # include "wx_frame_buffer.h"
 # include "wx_math.h"
 
@@ -30,21 +29,59 @@ struct	s_camera
 };
 typedef struct s_camera			t_camera;
 
-struct	s_face
+/*
+** 2021-04-26 note: sizes are in number of t_u16-sized elements. not in bytes
+*/
+struct	s_u16s
 {
-	t_u16	normals[3];
-	t_u16	positions[3];
-	t_u16	uvs[3];
+	t_u16	*buffer;
+	t_u64	buffer_size;
+	t_u64	size;
 };
-typedef struct s_face			t_face;
+typedef struct s_u16s			t_u16s;
 
+t_bool	wc_u16s_new(t_u16s *c, t_u64 buffer_size);
+void	wc_u16s_del(t_u16s *c);
+t_bool	wc_u16s_add_back(t_u16s *c, t_u16 const *v);
+
+struct	s_vertex
+{
+	t_p3	position;
+	t_n3	normal;
+	t_p2	uv;
+};
+typedef struct s_vertex			t_vertex;
+
+/*
+** 2021-04-26 note: sizes are in number of vertex-sized elements. not in bytes
+*/
+struct	s_vertices
+{
+	t_vertex	*buffer;
+	t_u64		buffer_size;
+	t_u64		size;
+};
+typedef struct s_vertices		t_vertices;
+t_bool	wc_vertices_new(t_vertices *c, t_u64 buffer_size);
+void	wc_vertices_del(t_vertices *c);
+t_bool	wc_vertices_add_back(t_vertices *c, t_vertex const *v);
+
+/*
+** 2021-04-26 note: a mesh contains a single index buffer used to index into the
+** vertex buffer. meaning that some file formats, such as obj for example where
+** there is an index buffer per-vertex-attribute, need be flattened and new
+** vertices inserted for every unique combination of vertex attributes.
+**
+** every three indices forms a triangular face of the mesh.
+**
+** for now an array-of-struct approach was chosen and investigating a
+** struct-of-arrays approach is left for another time
+*/
 struct	s_mesh
 {
 	t_aabb		aabb;
-	t_darray	faces;
-	t_darray	normals;
-	t_darray	positions;
-	t_darray	uvs;
+	t_u16s		indices;
+	t_vertices	vertices;
 };
 typedef struct s_mesh			t_mesh;
 

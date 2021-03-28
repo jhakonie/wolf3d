@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_mesh_del.c                                      :+:      :+:    :+:   */
+/*   wc_c8s_del.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/08 03:24:01 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/20 06:48:50 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/03/27 22:34:25 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/03/27 22:34:25 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_draw.h"
+#include "stdlib.h"
 
-void	wc_mesh_del(t_mesh *m)
+#include "wc_parse.h"
+
+void	wc_c8s_del(t_c8s *c)
 {
-	wc_vertices_del(&m->vertices);
-	wc_u16s_del(&m->indices);
+	free(c->buffer);
 }

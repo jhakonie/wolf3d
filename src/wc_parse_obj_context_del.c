@@ -1,35 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_parse_object_name.c                             :+:      :+:    :+:   */
+/*   wc_parse_obj_context_del.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/07 16:23:36 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 18:59:57 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/03/28 08:50:57 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/03/28 08:50:57 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wc_parse.h"
 
-t_bool	wc_parse_object_name(t_parse_context *pc)
+void	wc_parse_obj_context_del(t_parse_obj_context *poc)
 {
-	if (!wc_parse_keyword(pc, "o"))
-	{
-		return (wx_false);
-	}
-	if (!wc_parse_whitespace(pc))
-	{
-		return (wx_false);
-	}
-	while (pc->p < pc->e)
-	{
-		if (*(t_s8 *)pc->p == '\n')
-		{
-			++pc->p;
-			break ;
-		}
-		++pc->p;
-	}
-	return (wx_true);
+	wc_p2s_del(&poc->uvs);
+	wc_p3s_del(&poc->positions);
+	wc_n3s_del(&poc->normals);
+	wc_obj_vertices_del(&poc->vertices);
 }

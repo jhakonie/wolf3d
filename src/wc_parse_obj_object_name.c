@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_darray_del.c                                    :+:      :+:    :+:   */
+/*   wc_parse_obj_object_name.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/07 12:56:39 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 12:58:09 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/03/07 16:23:36 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/03/07 18:59:57 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdlib.h"
+#include "wc_parse.h"
 
-#include "wc_darray.h"
-
-/*
-** 2021-03-07 note: setting members to 0 so easy to recognize destroyed object.
-** it's unnecessary but may come in handy
-*/
-
-void	wc_darray_del(t_darray *d)
+t_bool	wc_parse_obj_object_name(t_parse_context *pc)
 {
-	free(d->buffer);
-	d->buffer = WX_NULL;
-	d->buffer_size = 0;
-	d->element_size = 0;
-	d->size = 0;
+	if (!wc_parse_keyword(pc, "o"))
+	{
+		return (wx_false);
+	}
+	if (!wc_parse_whitespace(pc))
+	{
+		return (wx_false);
+	}
+	while (pc->p < pc->e)
+	{
+		if (*(t_s8 *)pc->p == '\n')
+		{
+			++pc->p;
+			break ;
+		}
+		++pc->p;
+	}
+	return (wx_true);
 }

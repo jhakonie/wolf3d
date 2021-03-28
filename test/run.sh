@@ -60,26 +60,44 @@ test_3d_mesh_read() {
     local test_name=${FUNCNAME}
     rm -f test/build/${test_name}
     gcc -g -Wall -Wextra -l m -o test/build/${test_name} \
-	src/wc_darray_add_back.c \
-	src/wc_darray_add_back_be.c \
-	src/wc_darray_del.c \
-	src/wc_darray_new.c \
-	src/wc_darray_new_file.c \
+	src/wc_c8s_del.c \
+	src/wc_c8s_new_from_file.c \
 	src/wc_mesh_del.c \
 	src/wc_mesh_new.c \
-	src/wc_parse_comment.c \
-	src/wc_parse_face.c \
+	src/wc_n3s_add_back.c \
+	src/wc_n3s_del.c \
+	src/wc_n3s_new.c \
+	src/wc_obj_vertices_add_back.c \
+	src/wc_obj_vertices_del.c \
+	src/wc_obj_vertices_new.c \
+	src/wc_p2s_add_back.c \
+	src/wc_p2s_del.c \
+	src/wc_p2s_new.c \
+	src/wc_p3s_add_back.c \
+	src/wc_p3s_del.c \
+	src/wc_p3s_new.c \
 	src/wc_parse_f32.c \
 	src/wc_parse_keyword.c \
-	src/wc_parse_material_name.c \
-	src/wc_parse_material_filename.c \
-	src/wc_parse_normal.c \
-	src/wc_parse_object_name.c \
-	src/wc_parse_smoothing.c \
-	src/wc_parse_position.c \
+	src/wc_parse_obj.c \
+	src/wc_parse_obj_comment.c \
+	src/wc_parse_obj_context_del.c \
+	src/wc_parse_obj_context_new.c \
+	src/wc_parse_obj_face.c \
+	src/wc_parse_obj_material_filename.c \
+	src/wc_parse_obj_material_name.c \
+	src/wc_parse_obj_normal.c \
+	src/wc_parse_obj_object_name.c \
+	src/wc_parse_obj_position.c \
+	src/wc_parse_obj_smoothing.c \
+	src/wc_parse_obj_uv.c \
 	src/wc_parse_u16.c \
-	src/wc_parse_uv.c \
 	src/wc_parse_whitespace.c \
+	src/wc_vertices_add_back.c \
+	src/wc_vertices_del.c \
+	src/wc_vertices_new.c \
+	src/wc_u16s_add_back.c \
+	src/wc_u16s_del.c \
+	src/wc_u16s_new.c \
 	src/wx_buffer_copy.c \
 	src/wx_buffer_set.c \
 	src/wx_f32_max.c \

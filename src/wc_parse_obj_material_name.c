@@ -1,19 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_mesh_del.c                                      :+:      :+:    :+:   */
+/*   wc_parse_obj_material_name.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/08 03:24:01 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/20 06:48:50 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/03/07 16:41:38 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/03/07 19:00:56 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_draw.h"
+#include "wc_parse.h"
 
-void	wc_mesh_del(t_mesh *m)
+t_bool	wc_parse_obj_material_name(t_parse_context *pc)
 {
-	wc_vertices_del(&m->vertices);
-	wc_u16s_del(&m->indices);
+	if (!wc_parse_keyword(pc, "usemtl"))
+	{
+		return (wx_false);
+	}
+	if (!wc_parse_whitespace(pc))
+	{
+		return (wx_false);
+	}
+	while (pc->p < pc->e)
+	{
+		if (*(t_s8 *)pc->p == '\n')
+		{
+			++pc->p;
+			break ;
+		}
+		++pc->p;
+	}
+	return (wx_true);
 }

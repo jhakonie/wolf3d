@@ -16,10 +16,9 @@
 # include "math.h"
 
 /*
-** 2021-03-24 todo: since (1.0f / 0.0f) was against the norm for now alias
+** 2021-03-24 todo: since (1.0f / 0.0f) was against the norm 3 for now alias
 ** INFINITY from math.h for now. remove this in the future
 */
-
 # define WX_F32_INF INFINITY
 
 # define WX_NULL ((void *)0)
@@ -31,6 +30,8 @@ enum	e_bool
 };
 typedef enum e_bool			t_bool;
 
+typedef char				t_c8;
+
 typedef float				t_f32;
 
 t_f32	wx_f32_max(t_f32 x0, t_f32 x1);
@@ -40,7 +41,7 @@ typedef double				t_f64;
 
 t_f64	wx_f64_min(t_f64 x0, t_f64 x1);
 
-typedef char				t_s8;
+typedef signed char			t_s8;
 typedef int					t_s32;
 
 typedef unsigned char		t_u8;

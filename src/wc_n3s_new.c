@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_parse_material_name.c                           :+:      :+:    :+:   */
+/*   wc_n3s_new.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/07 16:41:38 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 19:00:56 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/03/26 11:41:52 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/03/26 11:41:52 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "stdlib.h"
+
 #include "wc_parse.h"
 
-t_bool	wc_parse_material_name(t_parse_context *pc)
+t_bool	wc_n3s_new(t_n3s *c, t_u64 buffer_size)
 {
-	if (!wc_parse_keyword(pc, "usemtl"))
+	wx_buffer_set(c, sizeof(*c), 0);
+	if (buffer_size)
 	{
-		return (wx_false);
-	}
-	if (!wc_parse_whitespace(pc))
-	{
-		return (wx_false);
-	}
-	while (pc->p < pc->e)
-	{
-		if (*(t_s8 *)pc->p == '\n')
+		c->buffer = (t_n3 *)malloc(buffer_size * sizeof(t_n3));
+		if (!c->buffer)
 		{
-			++pc->p;
-			break ;
+			return (wx_false);
 		}
-		++pc->p;
+		c->buffer_size = buffer_size;
 	}
+	c->size = 0;
 	return (wx_true);
 }

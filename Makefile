@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/03/23 20:55:00 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/03/28 08:54:39 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,41 +20,59 @@ libsdl2_cflags = `$(build_dir)libsdl2/bin/sdl2-config --cflags`
 libsdl2_ldflags = `$(build_dir)libsdl2/bin/sdl2-config --libs`
 
 client_src_files = $(addprefix $(src_dir), \
+	wc_c8s_del.c \
+	wc_c8s_new_from_file.c \
 	wc_client_dispatch_events.c \
 	wc_client_del.c \
 	wc_client_new.c \
 	wc_client_run.c \
-	wc_darray_add_back.c \
-	wc_darray_add_back_be.c \
-	wc_darray_del.c \
-	wc_darray_new.c \
-	wc_darray_new_file.c \
 	wc_draw.c \
 	wc_draw_clear.c \
 	wc_draw_copy.c \
 	wc_draw_pixel.c \
 	wc_draw_rectangle_solid.c \
 	wc_draw_rectangle_outline.c \
+	wc_main.c \
 	wc_mesh_del.c \
 	wc_mesh_new.c \
-	wc_parse_comment.c \
+	wc_n3s_add_back.c \
+	wc_n3s_del.c \
+	wc_n3s_new.c \
+	wc_obj_vertices_add_back.c \
+	wc_obj_vertices_del.c \
+	wc_obj_vertices_new.c \
+	wc_p2s_add_back.c \
+	wc_p2s_del.c \
+	wc_p2s_new.c \
+	wc_p3s_add_back.c \
+	wc_p3s_del.c \
+	wc_p3s_new.c \
 	wc_parse_f32.c \
-	wc_parse_face.c \
 	wc_parse_keyword.c \
-	wc_parse_material_filename.c \
-	wc_parse_material_name.c \
-	wc_parse_normal.c \
-	wc_parse_object_name.c \
-	wc_parse_position.c \
-	wc_parse_smoothing.c \
+	wc_parse_obj.c \
+	wc_parse_obj_comment.c \
+	wc_parse_obj_context_del.c \
+	wc_parse_obj_context_new.c \
+	wc_parse_obj_face.c \
+	wc_parse_obj_material_filename.c \
+	wc_parse_obj_material_name.c \
+	wc_parse_obj_normal.c \
+	wc_parse_obj_object_name.c \
+	wc_parse_obj_position.c \
+	wc_parse_obj_smoothing.c \
+	wc_parse_obj_uv.c \
 	wc_parse_u16.c \
-	wc_parse_uv.c \
 	wc_parse_whitespace.c \
 	wc_remote_server_new.c \
 	wc_remote_server_del.c \
 	wc_remote_server_read.c \
 	wc_remote_server_write.c \
-	wc_main.c \
+	wc_u16s_add_back.c \
+	wc_u16s_del.c \
+	wc_u16s_new.c \
+	wc_vertices_add_back.c \
+	wc_vertices_del.c \
+	wc_vertices_new.c \
 	wx_address_equal.c \
 	wx_buffer_copy.c \
 	wx_buffer_set.c \
