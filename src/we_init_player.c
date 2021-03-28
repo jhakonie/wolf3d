@@ -27,7 +27,7 @@ void	we_init_player(t_player *p, t_map *m)
 	t_u32	i;
 
 	i = 0;
-	p->direction_d = 0;
+	p->direction_d = 45;
 	p->w_start.x = 0;
 	p->w_start.y = 0;
 	p->w_end.x = WE_BLOCK_W * WE_GRID_DIVIDE;

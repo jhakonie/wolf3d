@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/03/28 08:54:39 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/03/28 18:46:57 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,8 +127,10 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_ray_cast.c \
 	we_ray_init.c \
 	we_ray_calculate.c \
+	we_wall_compass_direction.c \
 	we_draw.c \
 	we_draw_3d.c \
+	we_draw_texture.c \
 	we_draw_pixel.c \
 	we_draw_line.c \
 	we_draw_rectangle.c \

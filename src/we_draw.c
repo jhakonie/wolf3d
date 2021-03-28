@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:44:57 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/24 15:04:50 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/28 23:47:32 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	we_draw(t_editor *e)
 		we_draw_map(e);
 	we_draw_player(e);
 	we_draw_toolbar(e);
-	we_draw_grid(&e->map.grid, &e->frame_buffer);
 	we_draw_3d(&e->frame_buffer, e->player, e->map);
+	if (e->map.draw_3d == wx_false)
+		we_draw_grid(&e->map.grid, &e->frame_buffer);
 	e->draw = wx_false;
 }

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/24 16:05:29 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/29 00:23:34 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,21 @@ enum			e_compass
 };
 typedef enum e_compass	t_compass;
 
+typedef struct s_texture
+{
+	t_u32		height;
+	t_u32		width;
+	t_u32		texture[9];
+}	t_texture;
+
+typedef struct s_texture_index
+{
+	t_p2	coord;
+	t_f32	increment_y;
+	t_u32	index;
+
+}	t_texture_index;
+
 struct			s_item
 {
 	t_p2		block;
@@ -72,6 +87,7 @@ struct			s_found
 {
 	t_p2		end;
 	t_f32		distance;
+	t_f32		projected_height;
 	t_u32		chart_id;
 	t_u32		chart_index;
 	t_side		side;
@@ -114,15 +130,19 @@ struct			s_grid
 };
 typedef struct s_grid	t_grid;
 
-void	we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color);
-void	we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 color);
-void	we_draw_rec_full(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 c);
-void	we_draw_grid(t_grid *g, t_frame_buffer *fb);
-void	we_draw_rec_frame(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 c);
-void	we_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
-			t_p2 player_position);
-void	we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
-			t_f32 player_direction_d);
-void	we_ray_cast(t_ray *ray, t_item *chart);
+void		we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color);
+void		we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 color);
+void		we_draw_rec_full(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 c);
+void		we_draw_grid(t_grid *g, t_frame_buffer *fb);
+void		we_draw_rec_frame(t_p2 start, t_p2 end, t_frame_buffer *fb,
+				t_u32 c);
+void		we_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
+				t_p2 player_position);
+void		we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
+				t_f32 player_direction_d);
+void		we_ray_cast(t_ray *ray, t_item *chart);
+void		we_draw_texture(t_ray ray, t_p2 draw, t_frame_buffer *fb,
+				t_texture tex);
+t_compass	we_wall_compass_direction(t_f32 angle_ray_d, t_u32 side);
 
 #endif

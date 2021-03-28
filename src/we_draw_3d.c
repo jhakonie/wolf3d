@@ -6,53 +6,55 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 17:10:51 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/24 15:06:35 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/29 00:14:41 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-static t_u32	zz_wall_color(t_ray ray)
+static t_texture	zz_wall_texture(t_ray ray)
 {
-	t_u32	color;
-
-	color = 0;
 	if (ray.wall.compass == we_north)
-		color = 0x00ff00;
+		return ((t_texture){3, 3,
+			{0x0000ff, 0x0000ff, 0x0000ff,
+				0xffffff, 0xffffff, 0xffffff,
+				0xffffff, 0xffffff, 0xffffff},
+		});
 	else if (ray.wall.compass == we_west)
-		color = 0xfff000;
+		return ((t_texture){3, 3,
+			{0xffffff, 0xffffff, 0xffffff,
+				0x0000ff, 0x0000ff, 0x0000ff,
+				0xffffff, 0xffffff, 0xffffff},
+		});
 	else if (ray.wall.compass == we_south)
-		color = 0xff00ff;
-	else if (ray.wall.compass == we_east)
-		color = 0x00ffff;
-	return (color);
+		return ((t_texture){3, 3,
+			{0xffffff, 0xffffff, 0xffffff,
+				0xffffff, 0xffffff, 0xffffff,
+				0x0000ff, 0x0000ff, 0x0000ff},
+		});
+	return ((t_texture){3, 3,
+		{0x0000ff, 0x0000ff, 0x0000ff,
+			0xffffff, 0xffffff, 0xffffff,
+			0x0000ff, 0x0000ff, 0x0000ff},
+	});
 }
 
 static void	zz_draw_wall_to_buffer(t_ray ray, t_frame_buffer *fb)
 {
-	t_f32	projected_height;
-	t_u32	i;
-	t_p2	draw_start;
-	t_u32	color;
+	t_u32		i;
+	t_p2		draw_start;
+	t_texture	tex;
 
 	i = 0;
-	color = 0;
-	color = zz_wall_color(ray);
+	tex = zz_wall_texture(ray);
 	if (ray.wall.distance > 0)
-		projected_height = (ray.dist_to_screen / ray.wall.distance)
+		ray.wall.projected_height = (ray.dist_to_screen / ray.wall.distance)
 			* WE_BLOCK_W;
-	else
-		return ;
-	draw_start.y = 0.5 * fb->height - 0.5 * projected_height;
+	draw_start.y = 0.5 * fb->height - 0.5 * ray.wall.projected_height;
 	if ((int)draw_start.y < 0)
 		draw_start.y = 0;
 	draw_start.x = (t_f32)ray.nb;
-	while (i < (t_u32)projected_height)
-	{
-		we_draw_pixel(draw_start, fb, color);
-		draw_start.y++;
-		i++;
-	}
+	we_draw_texture(ray, draw_start, fb, tex);
 }
 
 void	we_draw_3d(t_frame_buffer *frame_buffer, t_player player,

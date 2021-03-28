@@ -1,40 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_draw_line.c                                     :+:      :+:    :+:   */
+/*   we_wall_compass_direction.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/01 17:09:11 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/25 02:27:00 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/03/28 23:56:28 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/03/29 00:23:50 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_editor.h"
+#include "we_draw.h"
 
-void	we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 color)
+t_compass	we_wall_compass_direction(t_f32 angle_ray_d, t_u32 side)
 {
-	t_f32	dx;
-	t_f32	dy;
-	t_f32	s;
-	t_f32	i;
+	t_compass	direction;
 
-	i = 0;
-	dx = end.x - start.x;
-	dy = end.y - start.y;
-	if (fabsf(dx) >= fabsf(dy))
-		s = fabsf(dx);
-	else
-		s = fabsf(dy);
-	if (s == 0)
-		return ;
-	dx = dx / s;
-	dy = dy / s;
-	while (i <= s)
+	if (side == we_horisontal)
 	{
-		we_draw_pixel(start, fb, color);
-		start.x += dx;
-		start.y += dy;
-		i++;
+		direction = we_north;
+		if (angle_ray_d > 180)
+			direction = we_south;
 	}
+	else
+	{
+		direction = we_east;
+		if (angle_ray_d > 90 && angle_ray_d < 270)
+			direction = we_west;
+	}
+	return (direction);
 }
