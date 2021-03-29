@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 17:10:51 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/29 00:14:41 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/03/29 14:12:08 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,9 @@ static t_texture	zz_wall_texture(t_ray ray)
 
 static void	zz_draw_wall_to_buffer(t_ray ray, t_frame_buffer *fb)
 {
-	t_u32		i;
 	t_p2		draw_start;
 	t_texture	tex;
 
-	i = 0;
 	tex = zz_wall_texture(ray);
 	if (ray.wall.distance > 0)
 		ray.wall.projected_height = (ray.dist_to_screen / ray.wall.distance)
