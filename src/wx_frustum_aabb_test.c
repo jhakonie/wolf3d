@@ -6,7 +6,7 @@
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 16:10:32 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/24 15:48:31 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/30 06:52:53 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,46 @@
 
 #include "wx_math.h"
 
-/*
-** 2021-03-22 note: this test implementation calculates effectively a boudning
-** sphere around the aabb per every tested plane. the radius of the sphere
-** varies based on the aabb's projection onto the plane's normal. this way an
-** overly tall/thin aabb causes fewer false positives. false positive meaning
-** aabb is marked visible (wx_true) when it is just slightly outside the frustum
-**
-** 2021-03-22 todo: implement a test that returns a clip_state indicating each
-** plane the aabb crossed. this can be used later on in the pipeline when
-** clipping triangles to reduce number of tests to perform
-*/
-
-t_bool	wx_frustum_aabb_test(t_frustum const *f, t_aabb const *object_aabb,
-	t_m44 const *view_from_object)
+static t_plane_obb	zz_plane_obb_test(t_obb const *obb, t_plane const *p)
 {
-	t_u64			i;
-	t_u64			j;
-	t_obb			obb;
-	t_f32			projected_size;
+	t_f32	e2;
+	t_f32	sd;
 
-	obb = wx_obb_new(object_aabb, view_from_object);
+	e2 = obb->extents2[0] * fabsf(p->n.x) + obb->extents2[1] * fabsf(p->n.y)
+		+ obb->extents2[2] * fabsf(p->n.z);
+	sd = wx_plane_signed_distance_p3(p, &obb->center);
+	if (sd + e2 < 0)
+	{
+		return (wx_plane_obb_out);
+	}
+	if (sd - e2 > 0)
+	{
+		return (wx_plane_obb_in);
+	}
+	return (wx_plane_obb_intersect);
+}
+
+t_frustum_aabb	wx_frustum_aabb_test(t_frustum const *f, t_aabb const *aabb,
+	t_m44 const *b_from_a)
+{
+	t_frustum_aabb	fa;
+	t_u64			i;
+	t_obb			obb;
+	t_plane_obb		po;
+
+	fa = wx_frustum_aabb_all_out;
+	obb = wx_obb_new(aabb, b_from_a);
 	i = 0;
 	while (i < 6)
 	{
-		projected_size = 0;
-		j = 0;
-		while (j < 3)
-		{
-			projected_size += obb.extents2[j]
-				* fabsf(wx_plane_signed_distance_n3(f->planes + i, obb.axes
-						+ j));
-			++j;
-		}
-		if (wx_plane_signed_distance_p3(f->planes + i, &obb.center)
-			< -projected_size)
-			return (wx_false);
+		po = zz_plane_obb_test(&obb, f->planes + i);
+		if (po == wx_plane_obb_out)
+			return (wx_frustum_aabb_all_out);
+		else if (po == wx_plane_obb_intersect)
+			fa |= 1 << i;
 		++i;
 	}
-	return (wx_true);
+	if (fa == wx_frustum_aabb_all_out)
+		return (wx_frustum_aabb_all_in);
+	return (fa);
 }

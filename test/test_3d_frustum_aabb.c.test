@@ -34,41 +34,21 @@ void	v3_print(t_v3 v, char const *n)
 }
 
 
-/*
-** 2021-03-18 todo: unify the naming of enumeration values across different
-** enums. should they be: "xx_full_name_value", "xx_fn_value" or "fn_value" for
-** example?
-*/
-
-enum	e_clip_status
+void	frustum_aabb_print(t_frustum_aabb cs)
 {
-	zz_clip_status_all_out,
-	zz_clip_status_left = 1 << 0,
-	zz_clip_status_right = 1 << 1,
-	zz_clip_status_bottom = 1 << 2,
-	zz_clip_status_top = 1 << 3,
-	zz_clip_status_near = 1 << 4,
-	zz_clip_status_far = 1 << 5,
-	zz_clip_status_all_in = 0xffffffff
-};
-typedef enum e_clip_status	t_clip_status;
-
-
-void	clip_status_print(t_clip_status cs)
-{
-	if (cs == zz_clip_status_all_out)
+	if (cs == wx_frustum_aabb_all_out)
 	{
 		printf("clip status: all out\n");
 	}
-	else if (cs == zz_clip_status_all_in)
+	else if (cs == wx_frustum_aabb_all_in)
 	{
 		printf("clip status: all in\n");
 	}
 	else
 	{
 		printf("clip status: left: %d, right: %d, bottom: %d, top: %d, near: %d, far: %d\n",
-			cs & zz_clip_status_left, cs & zz_clip_status_right, cs & zz_clip_status_bottom,
-			cs & zz_clip_status_top, cs & zz_clip_status_near, cs & zz_clip_status_far);
+			cs & wx_frustum_aabb_left, cs & wx_frustum_aabb_right, cs & wx_frustum_aabb_bottom,
+			cs & wx_frustum_aabb_top, cs & wx_frustum_aabb_near, cs & wx_frustum_aabb_far);
 	}
 }
 
@@ -77,7 +57,6 @@ void	clip_status_print(t_clip_status cs)
 ** 2021-03-19 todo: we're calculating an aabb of an aabb in view space which is
 ** sort of silly. should there be an obb type?
 */
-
 t_aabb	zz_aabb_new_transformed(t_aabb const *a, t_m44 const *b_from_a)
 {
 	t_p3	max;
@@ -109,10 +88,136 @@ void	obb_print(t_obb	const *o, char const *n)
 
 int main(void)
 {
-	/*box fully inside*/
+	/*box fully out*/
 	{
 		printf("---\n");
-		printf("box fully inside\n");
+		printf("box fully out:\n");
+		t_q4	camera_orientation = {0.0f, 0.0f, 0.0f, 1.0f};
+		t_p3	camera_position = {0.0f, 0.0f, 0.0f};
+		t_m44	view_from_world = wx_m44_new_inverse_q4_p3(&camera_orientation, &camera_position);
+		t_v3	object_axis = {0.0f, 1.0f, 0.0f};
+		t_q4	object_orientation = wx_q4_new_v3_f32(&object_axis, wx_to_radians(0.0f));
+		t_p3	object_position = {0.0f, 0.0f, 2000.0f};
+		t_aabb	aabb = {{0.5f, 0.5f, 0.5f}, {-0.5f, -0.5f, -0.5f}};
+		t_m44	world_from_object = wx_m44_new_q4_p3(&object_orientation, &object_position);
+		t_m44	view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);
+		t_m44	clip_from_view = wx_m44_new_perspective(wx_to_radians(90.0f), 16.0f / 9.0f, 1.0f, 1000.0f);
+		t_frustum	frustum = wx_frustum_new(&clip_from_view);
+		t_frustum_aabb cs = wx_frustum_aabb_test(&frustum, &aabb, &view_from_object);
+		frustum_aabb_print(cs);
+	}
+	/*box intersect left*/
+	{
+		printf("---\n");
+		printf("box intersect left:\n");
+		t_q4	camera_orientation = {0.0f, 0.0f, 0.0f, 1.0f};
+		t_p3	camera_position = {0.0f, 0.0f, 0.0f};
+		t_m44	view_from_world = wx_m44_new_inverse_q4_p3(&camera_orientation, &camera_position);
+		t_v3	object_axis = {0.0f, 1.0f, 0.0f};
+		t_q4	object_orientation = wx_q4_new_v3_f32(&object_axis, wx_to_radians(0.0f));
+		t_p3	object_position = {10.0f, 0.0f, 10.0f};
+		t_aabb	aabb = {{0.5f, 0.5f, 0.5f}, {-0.5f, -0.5f, -0.5f}};
+		t_m44	world_from_object = wx_m44_new_q4_p3(&object_orientation, &object_position);
+		t_m44	view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);
+		t_m44	clip_from_view = wx_m44_new_perspective(wx_to_radians(90.0f), 16.0f / 9.0f, 1.0f, 1000.0f);
+		t_frustum	frustum = wx_frustum_new(&clip_from_view);
+		t_frustum_aabb cs = wx_frustum_aabb_test(&frustum, &aabb, &view_from_object);
+		frustum_aabb_print(cs);
+	}
+	/*box intersect right*/
+	{
+		printf("---\n");
+		printf("box intersect right:\n");
+		t_q4	camera_orientation = {0.0f, 0.0f, 0.0f, 1.0f};
+		t_p3	camera_position = {0.0f, 0.0f, 0.0f};
+		t_m44	view_from_world = wx_m44_new_inverse_q4_p3(&camera_orientation, &camera_position);
+		t_v3	object_axis = {0.0f, 1.0f, 0.0f};
+		t_q4	object_orientation = wx_q4_new_v3_f32(&object_axis, wx_to_radians(0.0f));
+		t_p3	object_position = {-10.0f, 0.0f, 10.0f};
+		t_aabb	aabb = {{0.5f, 0.5f, 0.5f}, {-0.5f, -0.5f, -0.5f}};
+		t_m44	world_from_object = wx_m44_new_q4_p3(&object_orientation, &object_position);
+		t_m44	view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);
+		t_m44	clip_from_view = wx_m44_new_perspective(wx_to_radians(90.0f), 16.0f / 9.0f, 1.0f, 1000.0f);
+		t_frustum	frustum = wx_frustum_new(&clip_from_view);
+		t_frustum_aabb cs = wx_frustum_aabb_test(&frustum, &aabb, &view_from_object);
+		frustum_aabb_print(cs);
+	}
+	/*box intersect bottom*/
+	{
+		printf("---\n");
+		printf("box intersect bottom:\n");
+		t_q4	camera_orientation = {0.0f, 0.0f, 0.0f, 1.0f};
+		t_p3	camera_position = {0.0f, 0.0f, 0.0f};
+		t_m44	view_from_world = wx_m44_new_inverse_q4_p3(&camera_orientation, &camera_position);
+		t_v3	object_axis = {0.0f, 1.0f, 0.0f};
+		t_q4	object_orientation = wx_q4_new_v3_f32(&object_axis, wx_to_radians(0.0f));
+		t_p3	object_position = {0.0f, -10.0f / (16.0f / 9.0f), 10.0f};
+		t_aabb	aabb = {{0.5f, 0.5f, 0.5f}, {-0.5f, -0.5f, -0.5f}};
+		t_m44	world_from_object = wx_m44_new_q4_p3(&object_orientation, &object_position);
+		t_m44	view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);
+		t_m44	clip_from_view = wx_m44_new_perspective(wx_to_radians(90.0f), 16.0f / 9.0f, 1.0f, 1000.0f);
+		t_frustum	frustum = wx_frustum_new(&clip_from_view);
+		t_frustum_aabb cs = wx_frustum_aabb_test(&frustum, &aabb, &view_from_object);
+		frustum_aabb_print(cs);
+	}
+	/*box intersect top*/
+	{
+		printf("---\n");
+		printf("box intersect top:\n");
+		t_q4	camera_orientation = {0.0f, 0.0f, 0.0f, 1.0f};
+		t_p3	camera_position = {0.0f, 0.0f, 0.0f};
+		t_m44	view_from_world = wx_m44_new_inverse_q4_p3(&camera_orientation, &camera_position);
+		t_v3	object_axis = {0.0f, 1.0f, 0.0f};
+		t_q4	object_orientation = wx_q4_new_v3_f32(&object_axis, wx_to_radians(0.0f));
+		t_p3	object_position = {0.0f, 10.0f / (16.0f / 9.0f), 10.0f};
+		t_aabb	aabb = {{0.5f, 0.5f, 0.5f}, {-0.5f, -0.5f, -0.5f}};
+		t_m44	world_from_object = wx_m44_new_q4_p3(&object_orientation, &object_position);
+		t_m44	view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);
+		t_m44	clip_from_view = wx_m44_new_perspective(wx_to_radians(90.0f), 16.0f / 9.0f, 1.0f, 1000.0f);
+		t_frustum	frustum = wx_frustum_new(&clip_from_view);
+		t_frustum_aabb cs = wx_frustum_aabb_test(&frustum, &aabb, &view_from_object);
+		frustum_aabb_print(cs);
+	}
+	/*box intersect near*/
+	{
+		printf("---\n");
+		printf("box intersect near:\n");
+		t_q4	camera_orientation = {0.0f, 0.0f, 0.0f, 1.0f};
+		t_p3	camera_position = {0.0f, 0.0f, 0.0f};
+		t_m44	view_from_world = wx_m44_new_inverse_q4_p3(&camera_orientation, &camera_position);
+		t_v3	object_axis = {0.0f, 1.0f, 0.0f};
+		t_q4	object_orientation = wx_q4_new_v3_f32(&object_axis, wx_to_radians(0.0f));
+		t_p3	object_position = {0.0f, 0.0f, 1.0f};
+		t_aabb	aabb = {{0.1f, 0.1f, 0.1f}, {-0.1f, -0.1f, -0.1f}};
+		t_m44	world_from_object = wx_m44_new_q4_p3(&object_orientation, &object_position);
+		t_m44	view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);
+		t_m44	clip_from_view = wx_m44_new_perspective(wx_to_radians(90.0f), 16.0f / 9.0f, 1.0f, 1000.0f);
+		t_frustum	frustum = wx_frustum_new(&clip_from_view);
+		t_frustum_aabb cs = wx_frustum_aabb_test(&frustum, &aabb, &view_from_object);
+		frustum_aabb_print(cs);
+	}
+	/*box intersect far*/
+	{
+		printf("---\n");
+		printf("box intersect far:\n");
+		t_q4	camera_orientation = {0.0f, 0.0f, 0.0f, 1.0f};
+		t_p3	camera_position = {0.0f, 0.0f, 0.0f};
+		t_m44	view_from_world = wx_m44_new_inverse_q4_p3(&camera_orientation, &camera_position);
+		t_v3	object_axis = {0.0f, 1.0f, 0.0f};
+		t_q4	object_orientation = wx_q4_new_v3_f32(&object_axis, wx_to_radians(0.0f));
+		t_p3	object_position = {0.0f, 0.0f, 1000.0f};
+		t_aabb	aabb = {{0.5f, 0.5f, 0.5f}, {-0.5f, -0.5f, -0.5f}};
+		t_m44	world_from_object = wx_m44_new_q4_p3(&object_orientation, &object_position);
+		t_m44	view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);
+		t_m44	clip_from_view = wx_m44_new_perspective(wx_to_radians(90.0f), 16.0f / 9.0f, 1.0f, 1000.0f);
+		t_frustum	frustum = wx_frustum_new(&clip_from_view);
+		t_frustum_aabb cs = wx_frustum_aabb_test(&frustum, &aabb, &view_from_object);
+		frustum_aabb_print(cs);
+	}
+	/*box fully in*/
+	{
+		printf("---\n");
+		printf("box fully in:\n");
 		t_q4	camera_orientation = {0.0f, 0.0f, 0.0f, 1.0f};
 		t_p3	camera_position = {0.0f, 0.0f, 0.0f};
 		t_m44	view_from_world = wx_m44_new_inverse_q4_p3(&camera_orientation, &camera_position);
@@ -124,10 +229,8 @@ int main(void)
 		t_m44	view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);
 		t_m44	clip_from_view = wx_m44_new_perspective(wx_to_radians(90.0f), 16.0f / 9.0f, 1.0f, 1000.0f);
 		t_frustum	frustum = wx_frustum_new(&clip_from_view);
-		/* t_clip_status cs = zz_frustum_aabb_test(&frustum, &aabb, &view_from_object); */
-		/* clip_status_print(cs); */
-		t_bool in = wx_frustum_aabb_test(&frustum, &aabb, &view_from_object);
-		printf("in: %d\n", in);
+		t_frustum_aabb cs = wx_frustum_aabb_test(&frustum, &aabb, &view_from_object);
+		frustum_aabb_print(cs);
 	}
 	return (0);
 }

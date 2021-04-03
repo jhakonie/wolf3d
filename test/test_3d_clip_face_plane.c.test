@@ -1,0 +1,137 @@
+#include "stdio.h"
+
+#include "../src/wc_draw.h"
+
+
+void	p3_print(t_p3 p, char const *n)
+{
+	printf("%s: [%f, %f, %f]\n", n, p.x, p.y, p.z);
+}
+
+
+void	draw_context_print(t_draw_context const *dc, char const *n)
+{
+	t_u64	i;
+
+	printf("%s:\n", n);
+	i = 0;
+	while (i < dc->buffers->visible_indices_size)
+	{
+		printf("---\n");
+		p3_print(dc->buffers->view_positions[dc->buffers->visible_indices[i + 0]], "p");
+		p3_print(dc->buffers->view_positions[dc->buffers->visible_indices[i + 1]], "p");
+		p3_print(dc->buffers->view_positions[dc->buffers->visible_indices[i + 2]], "p");
+		i += 3;
+	}
+}
+
+
+void	zz_plane_line_print(t_plane_line pl, char const *n)
+{
+	if(pl == wx_plane_line_out)
+	{
+		printf("%s: out\n", n);
+	}
+	else if(pl == wx_plane_line_going_in)
+	{
+		printf("%s: going_in\n", n);
+	}
+	else if(pl == wx_plane_line_going_out)
+	{
+		printf("%s: going_out\n", n);
+	}
+	else if(pl == wx_plane_line_in)
+	{
+		printf("%s: in\n", n);
+	}
+}
+
+
+int main(void)
+{
+	/*all out*/ {
+		printf("---\n");
+		printf("all out:\n");
+		t_p3 view_positions[16] = {
+			{2.0f, 0.0f, -2.0f},
+			{0.0f, 0.0f, -4.0f},
+			{-2.0f, 0.0f, -2.0f}
+		};
+		t_u16	visible_indices[16] = {};
+		t_pipeline_buffers buffers = {};
+		t_draw_context	dc;
+		dc.buffers = &buffers;
+		dc.buffers->view_positions = view_positions;
+		dc.buffers->view_positions_size = 3;
+		dc.buffers->visible_indices = visible_indices;
+		dc.buffers->visible_indices_size = 0;
+		t_face	f = {{0, 1, 2}};
+		t_plane p = {-1.0f, {0.0f, 0.0f, 1.0f}};
+		wc_draw_clip(&dc, &f, &p);
+		draw_context_print(&dc, "dc");
+	}
+	/*1 out*/ {
+		printf("---\n");
+		printf("1 out:\n");
+		t_p3 view_positions[16] = {
+			{2.0f, 0.0f, 2.0f},
+			{0.0f, 0.0f, -2.0f},
+			{-2.0f, 0.0f, 2.0f}
+		};
+		t_u16	visible_indices[16] = {};
+		t_pipeline_buffers buffers = {};
+		t_draw_context	dc;
+		dc.buffers = &buffers;
+		dc.buffers->view_positions = view_positions;
+		dc.buffers->view_positions_size = 3;
+		dc.buffers->visible_indices = visible_indices;
+		dc.buffers->visible_indices_size = 0;
+		t_face	f = {{0, 1, 2}};
+		t_plane p = {-1.0f, {0.0f, 0.0f, 1.0f}};
+		wc_draw_clip(&dc, &f, &p);
+		draw_context_print(&dc, "dc");
+	}
+	/*2 out*/ {
+		printf("---\n");
+		printf("2 out:\n");
+		t_p3 view_positions[16] = {
+			{2.0f, 0.0f, -2.0f},
+			{0.0f, 0.0f, 2.0f},
+			{-2.0f, 0.0f, -2.0f}
+		};
+		t_u16	visible_indices[16] = {};
+		t_pipeline_buffers buffers = {};
+		t_draw_context	dc;
+		dc.buffers = &buffers;
+		dc.buffers->view_positions = view_positions;
+		dc.buffers->view_positions_size = 3;
+		dc.buffers->visible_indices = visible_indices;
+		dc.buffers->visible_indices_size = 0;
+		t_face	f = {{0, 1, 2}};
+		t_plane p = {-1.0f, {0.0f, 0.0f, 1.0f}};
+		wc_draw_clip(&dc, &f, &p);
+		draw_context_print(&dc, "dc");
+	}
+	/*all in*/ {
+		printf("---\n");
+		printf("all in:\n");
+		t_p3 view_positions[16] = {
+			{2.0f, 0.0f, 4.0f},
+			{0.0f, 0.0f, 2.0f},
+			{-2.0f, 0.0f, 4.0f}
+		};
+		t_u16	visible_indices[16] = {};
+		t_pipeline_buffers buffers = {};
+		t_draw_context	dc;
+		dc.buffers = &buffers;
+		dc.buffers->view_positions = view_positions;
+		dc.buffers->view_positions_size = 3;
+		dc.buffers->visible_indices = visible_indices;
+		dc.buffers->visible_indices_size = 0;
+		t_face	f = {{0, 1, 2}};
+		t_plane p = {-1.0f, {0.0f, 0.0f, 1.0f}};
+		wc_draw_clip(&dc, &f, &p);
+		draw_context_print(&dc, "dc");
+	}
+	return (0);
+}

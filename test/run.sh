@@ -16,6 +16,20 @@ test_2d_raycast() {
 }
 
 
+test_3d_clip_face_plane()
+{
+    local test_name=${FUNCNAME}
+    rm -f test/build/${test_name}
+    gcc -g -Wall -Wextra -l m -o test/build/${test_name} \
+	src/wc_draw_add_visible.c \
+	src/wc_draw_clip.c \
+	src/wx_plane_line_test.c \
+	src/wx_plane_signed_distance_p3.c \
+	-x c test/${test_name}.c.test
+    ./test/build/${test_name}
+}
+
+
 test_3d_frustum() {
     local test_name=${FUNCNAME}
     rm -f test/build/${test_name}
@@ -124,6 +138,7 @@ test_3d_pipeline_transform() {
     ./test/build/${test_name}
 }
 
+
 test_wx_types_h() {
     local test_name=${FUNCNAME}
     rm -f test/build/${test_name}
@@ -140,6 +155,7 @@ tests[1]="test_3d_frustum"
 tests[2]="test_3d_frustum_aabb"
 tests[3]="test_3d_mesh_read"
 tests[4]="test_3d_pipeline_transform"
+tests[4]="test_3d_clip_face_plane"
 tests[5]="test_wx_types_h"
 
 

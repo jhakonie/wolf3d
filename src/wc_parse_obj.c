@@ -98,6 +98,10 @@ static t_bool	zz_mesh(t_mesh *m, t_parse_obj_context *poc)
 	return (wx_true);
 }
 
+/*
+** 2021-04-02 todo: sanity check the amount of normals, positions, uvs and
+** vertices contains
+*/
 t_bool	wc_parse_obj(t_parse_context *pc, t_mesh *m)
 {
 	t_parse_obj_context	poc;

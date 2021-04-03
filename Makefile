@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/03/28 18:46:57 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/04/03 17:42:18 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,11 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_client_new.c \
 	wc_client_run.c \
 	wc_draw.c \
+	wc_draw_add_visible.c \
 	wc_draw_clear.c \
+	wc_draw_clip.c \
 	wc_draw_copy.c \
+	wc_draw_mesh.c \
 	wc_draw_pixel.c \
 	wc_draw_rectangle_solid.c \
 	wc_draw_rectangle_outline.c \
@@ -81,13 +84,20 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_f64_min.c \
 	wx_frame_buffer_del.c \
 	wx_frame_buffer_new.c \
+	wx_frustum_aabb_test.c \
 	wx_frustum_new.c \
+	wx_m44_mul_m44.c \
 	wx_m44_mul_p3.c \
+	wx_m44_mul_p3_f32.c \
 	wx_m44_mul_p4.c \
 	wx_m44_new_inverse_q4_p3.c \
 	wx_m44_new_perspective.c \
 	wx_m44_new_q4_p3.c \
+	wx_obb_new.c \
 	wx_plane_new.c \
+	wx_plane_line_test.c \
+	wx_plane_signed_distance_n3.c \
+	wx_plane_signed_distance_p3.c \
 	wx_q4_new_v3_f32.c \
 	wx_socket_read.c \
 	wx_socket_write.c \
