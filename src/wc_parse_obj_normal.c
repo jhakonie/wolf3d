@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "wc_draw.h"
-#include "wx_parse.h"
+#include "wc_parse.h"
 #include "wx_math.h"
+#include "wx_parse.h"
 
 static t_bool	zz_on_error(t_parse_context *pc, t_c8 const *b)
 {

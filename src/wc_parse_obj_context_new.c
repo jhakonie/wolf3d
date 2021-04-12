@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wx_parse.h"
+#include "wc_parse.h"
 
 static t_bool	zz_on_error(t_parse_obj_context *poc, t_u8 i)
 {

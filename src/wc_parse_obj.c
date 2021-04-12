@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "wc_parse.h"
 #include "wx_parse.h"
 
 static t_bool	zz_cache_find(t_obj_vertices *c, t_obj_vertex const *v,

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "wc_draw.h"
+#include "wc_parse.h"
 #include "wx_parse.h"
 
 static void	zz_aabb(t_mesh *m)

@@ -12,7 +12,7 @@
 
 #include "stdlib.h"
 
-#include "wx_parse.h"
+#include "wc_parse.h"
 
 t_bool	wc_obj_vertices_add_back(t_obj_vertices *c, t_obj_vertex const *v)
 {

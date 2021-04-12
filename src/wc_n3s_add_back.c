@@ -12,7 +12,7 @@
 
 #include "stdlib.h"
 
-#include "wx_parse.h"
+#include "wc_parse.h"
 
 t_bool	wc_n3s_add_back(t_n3s *c, t_n3 const *v)
 {

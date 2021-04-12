@@ -12,7 +12,7 @@
 
 #include "stdlib.h"
 
-#include "wx_parse.h"
+#include "wc_parse.h"
 
 t_bool	wc_p2s_new(t_p2s *c, t_u64 buffer_size)
 {

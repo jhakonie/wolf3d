@@ -12,7 +12,7 @@
 
 #include "stdlib.h"
 
-#include "wx_parse.h"
+#include "wc_parse.h"
 
 void	wc_p3s_del(t_p3s *c)
 {

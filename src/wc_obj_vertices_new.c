@@ -12,7 +12,7 @@
 
 #include "stdlib.h"
 
-#include "wx_parse.h"
+#include "wc_parse.h"
 
 t_bool	wc_obj_vertices_new(t_obj_vertices *c, t_u64 buffer_size)
 {

@@ -12,7 +12,7 @@
 
 #include "stdlib.h"
 
-#include "wx_parse.h"
+#include "wc_parse.h"
 
 void	wc_obj_vertices_del(t_obj_vertices *c)
 {

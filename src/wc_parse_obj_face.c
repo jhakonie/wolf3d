@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "wc_draw.h"
+#include "wc_parse.h"
 #include "wx_parse.h"
 
 static t_bool	zz_parse_vertex_indices(t_parse_context *pc,

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wx_parse.h"
+#include "wc_parse.h"
 
 void	wc_parse_obj_context_del(t_parse_obj_context *poc)
 {
