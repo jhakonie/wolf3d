@@ -74,8 +74,8 @@ test_3d_mesh_read() {
     local test_name=${FUNCNAME}
     rm -f test/build/${test_name}
     gcc -g -Wall -Wextra -l m -o test/build/${test_name} \
-	src/wc_c8s_del.c \
-	src/wc_c8s_new_from_file.c \
+	src/wx_c8s_del.c \
+	src/wx_c8s_new_from_file.c \
 	src/wc_mesh_del.c \
 	src/wc_mesh_new.c \
 	src/wc_n3s_add_back.c \
@@ -90,8 +90,8 @@ test_3d_mesh_read() {
 	src/wc_p3s_add_back.c \
 	src/wc_p3s_del.c \
 	src/wc_p3s_new.c \
-	src/wc_parse_f32.c \
-	src/wc_parse_keyword.c \
+	src/wx_parse_f32.c \
+	src/wx_parse_keyword.c \
 	src/wc_parse_obj.c \
 	src/wc_parse_obj_comment.c \
 	src/wc_parse_obj_context_del.c \
@@ -105,7 +105,7 @@ test_3d_mesh_read() {
 	src/wc_parse_obj_smoothing.c \
 	src/wc_parse_obj_uv.c \
 	src/wc_parse_u16.c \
-	src/wc_parse_whitespace.c \
+	src/wx_parse_whitespace.c \
 	src/wc_vertices_add_back.c \
 	src/wc_vertices_del.c \
 	src/wc_vertices_new.c \

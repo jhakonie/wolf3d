@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:14:34 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/24 15:17:53 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/10 18:59:07 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_bool	we_editor_new(t_editor *e, t_u32 window_width, t_u32 window_height)
 	if (!wx_frame_buffer_new(&e->frame_buffer, window_width, window_height))
 		return (zz_on_error(e, 4));
 	wx_buffer_set(&e->tools, sizeof(e->tools), 0);
-	if (!we_chart_new(&e->map))
+	if (!we_chart_new(&e->map) || !we_wall_type_new(e->map.wall_type))
 		return (zz_on_error(e, 5));
 	we_init_map(&e->map, window_width, window_height);
 	we_init_tools(&e->tools, window_width, window_height);

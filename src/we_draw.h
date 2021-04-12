@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/29 00:23:34 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/04/12 23:04:09 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,132 +17,97 @@
 # include "wx_math.h"
 # include "wx_types.h"
 # include "wx_frame_buffer.h"
+# include "we_fractal.h"
+# include "we_texture.h"
+# include "we_ray_cast.h"
+# include "we_parse_xpm.h"
+# include "stdlib.h"
+# include "unistd.h"
 
-# define WE_ID_INIT 0
-# define WE_TOOL_COUNT 6
-# define WE_GRID_DIVIDE 11
+# define WE_ID_INIT (0)
+# define WE_WALL_TYPE_COUNT (2)
+# define WE_TOOL_COUNT (6)
+# define WE_GRID_DIVIDE (50)
+
 /*
 ** 2021-03-24 todo: this is a temporary hack until something better. new
 ** norminette complains about any arithmetic operation in a define. this should
 ** be: WE_GRID_DIVIDE * WE_GRID_DIVIDE * 2
 */
-# define WE_SAVE_FILE_TO_CHART_BUFFER_SIZE (242)
-# define WE_BLOCK_W 100
+# define WE_LOAD_FILE_TO_CHART_BUFFER_SIZE (5000)
+# define WE_BLOCK_W (100)
 
-# define PI 3.14159265359
-# define WE_TO_RAD 0.017453292519944
+# define PI (3.14159265359)
+# define WE_TO_RAD (0.017453292519944)
 
-enum			e_side
+typedef struct s_line
 {
-	we_no_wall,
-	we_horisontal,
-	we_vertical
+	t_p2	start;
+	t_p2	end;
+	t_p2	delta;
+	t_f32	k;
+	t_f32	b;
+}				t_line;
+
+enum			e_order_3
+{
+	we_max = 0,
+	we_mid = 1,
+	we_min = 2
 };
-typedef enum e_side		t_side;
+typedef enum e_order		t_order_3;
 
-enum			e_compass
+typedef struct s_triangle
 {
-	we_north,
-	we_south,
-	we_east,
-	we_west
-};
-typedef enum e_compass	t_compass;
+	t_p2	a;
+	t_p2	b;
+	t_p2	c;
+	t_line	min_mid;
+	t_line	min_max;
+	t_line	mid_max;
+	t_p2	points[3];
+	t_u32	color;
+}					t_triangle;
 
-typedef struct s_texture
+typedef struct s_rgba
 {
-	t_u32		height;
-	t_u32		width;
-	t_u32		texture[9];
-}	t_texture;
+	t_u32			r;
+	t_u32			g;
+	t_u32			b;
+	t_u32			a;
+}				t_rgba;
 
-typedef struct s_texture_index
-{
-	t_p2	coord;
-	t_f32	increment_y;
-	t_u32	index;
-
-}	t_texture_index;
-
-struct			s_item
-{
-	t_p2		block;
-	t_u32		id;
-};
-typedef struct s_item	t_item;
-
-struct			s_player
-{
-	t_p2		position;
-	t_f32		direction_d;
-	t_f32		fov_d;
-	t_p2		w_start;
-	t_p2		w_end;
-	t_u32		w_block_count;
-	t_u32		w_step;
-};
-typedef struct s_player	t_player;
-
-struct			s_found
-{
-	t_p2		end;
-	t_f32		distance;
-	t_f32		projected_height;
-	t_u32		chart_id;
-	t_u32		chart_index;
-	t_side		side;
-	t_compass	compass;
-};
-typedef struct s_found	t_found;
-
-struct			s_ray
-{
-	t_u32		nb;
-	t_f32		k;
-	t_f32		b;
-	t_p2		delta;
-	t_f32		half_fov_d;
-	t_f32		angle_d;
-	t_f32		angle_to_player_d;
-	t_f32		angle_increment_d;
-	t_f32		player_direction_d;
-	t_f32		dist_to_screen;
-	t_p2		start;
-	t_found		wall;
-};
-typedef struct s_ray	t_ray;
-
-struct			s_button
+typedef struct s_button
 {
 	t_p2		start;
 	t_p2		end;
 	t_u32		color[4];
-};
-typedef struct s_button	t_button;
+}				t_button;
 
-struct			s_grid
+typedef struct s_grid
 {
 	t_p2		start;
 	t_p2		end;
 	t_p2		part;
 	t_u32		color[2];
 	t_u32		divide;
-};
-typedef struct s_grid	t_grid;
+}				t_grid;
 
 void		we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color);
 void		we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 color);
 void		we_draw_rec_full(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 c);
-void		we_draw_grid(t_grid *g, t_frame_buffer *fb);
 void		we_draw_rec_frame(t_p2 start, t_p2 end, t_frame_buffer *fb,
 				t_u32 c);
-void		we_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
-				t_p2 player_position);
-void		we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
-				t_f32 player_direction_d);
-void		we_ray_cast(t_ray *ray, t_item *chart);
-void		we_draw_texture(t_ray ray, t_p2 draw, t_frame_buffer *fb,
-				t_texture tex);
-t_compass	we_wall_compass_direction(t_f32 angle_ray_d, t_u32 side);
+void		we_init_triangle(t_p2 a, t_p2 b, t_p2 c, t_triangle *t);
+void		we_init_line(t_p2 a, t_p2 b, t_line *l);
+void		we_draw_triangle(t_u32 color, t_triangle *t, t_frame_buffer *fb);
+void		we_draw_grid(t_grid *g, t_frame_buffer *fb);
+void		we_draw_wall(t_ray ray, t_frame_buffer *fb, t_wall_type *wall_type);
+void		we_draw_texture_wall(t_ray ray, t_p2 draw, t_frame_buffer *fb,
+				t_tex tex);
+void		we_draw_floor(t_ray ray, t_frame_buffer *fb, t_bool draw_3d);
+t_p2		we_floor_draw_end(t_ray ray);
+t_tex		we_fractal_texture_create(t_p2 ray_start,
+				t_s32 (*f)(t_s32, t_s32, t_fractal *), t_u32 id);
 
 #endif

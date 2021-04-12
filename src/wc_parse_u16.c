@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   wc_parse_u16.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 18:45:24 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 18:46:11 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:01:45 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_parse.h"
+#include "wx_parse.h"
 
 /*
 ** exampple: 01234

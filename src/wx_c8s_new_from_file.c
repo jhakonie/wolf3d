@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_c8s_new_from_file.c                             :+:      :+:    :+:   */
+/*   wx_c8s_new_from_file.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 22:33:11 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/27 22:33:11 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:31:11 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "stdlib.h"
 #include "unistd.h"
 
-#include "wc_parse.h"
+#include "wx_parse.h"
 
 static t_bool	zz_c8s_add_back_be(t_c8s *c, void const *b, void const *e)
 {
@@ -62,11 +62,11 @@ static t_bool	zz_c8s_new(t_c8s *c, t_u64 buffer_size)
 static t_bool	zz_on_error(t_c8s *c, int fd)
 {
 	close(fd);
-	wc_c8s_del(c);
+	wx_c8s_del(c);
 	return (wx_false);
 }
 
-t_bool	wc_c8s_new_from_file(t_c8s *c, t_u64 buffer_size, char const *filename)
+t_bool	wx_c8s_new_from_file(t_c8s *c, t_u64 buffer_size, char const *filename)
 {
 	char		buffer[4096];
 	int			fd;

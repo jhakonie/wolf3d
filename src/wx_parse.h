@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_parse.h                                         :+:      :+:    :+:   */
+/*   wx_parse.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:56:03 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/24 14:49:20 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:37:53 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WC_PARSE_H
-# define WC_PARSE_H
+#ifndef WX_PARSE_H
+# define WX_PARSE_H
 
 # include "wc_draw.h"
 
@@ -30,8 +30,8 @@ struct	s_c8s
 };
 typedef struct s_c8s				t_c8s;
 
-t_bool	wc_c8s_new_from_file(t_c8s *c, t_u64 buffer_size, char const *filename);
-void	wc_c8s_del(t_c8s *c);
+t_bool	wx_c8s_new_from_file(t_c8s *c, t_u64 buffer_size, char const *filename);
+void	wx_c8s_del(t_c8s *c);
 
 /*
 ** 2021-04-26 note: sizes are in number of t_n3-sized elements. not in bytes
@@ -122,8 +122,8 @@ typedef struct s_parse_obj_context	t_parse_obj_context;
 t_bool	wc_parse_obj_context_new(t_parse_obj_context *poc);
 void	wc_parse_obj_context_del(t_parse_obj_context *poc);
 
-t_bool	wc_parse_f32(t_parse_context *pc, t_f32 *n);
-t_bool	wc_parse_keyword(t_parse_context *pc, char const *k);
+t_bool	wx_parse_f32(t_parse_context *pc, t_f32 *n);
+t_bool	wx_parse_keyword(t_parse_context *pc, char const *k);
 t_bool	wc_parse_obj(t_parse_context *pc, t_mesh *m);
 t_bool	wc_parse_obj_comment(t_parse_context *pc);
 t_bool	wc_parse_obj_face(t_parse_context *pc, t_obj_vertices *ofs);
@@ -136,6 +136,6 @@ t_bool	wc_parse_obj_object_name(t_parse_context *pc);
 t_bool	wc_parse_obj_smoothing(t_parse_context *pc);
 t_bool	wc_parse_u16(t_parse_context *pc, t_u16 *n);
 t_bool	wc_parse_u32(t_parse_context *pc, t_u32 *n);
-t_bool	wc_parse_whitespace(t_parse_context *pc);
+t_bool	wx_parse_whitespace(t_parse_context *pc);
 
 #endif

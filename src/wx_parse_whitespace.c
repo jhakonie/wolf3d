@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_parse_whitespace.c                              :+:      :+:    :+:   */
+/*   wx_parse_whitespace.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 10:04:10 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/24 14:54:49 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:06:49 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_parse.h"
+#include "wx_parse.h"
 
 static t_bool	zz_is_whitespace(char c)
 {
@@ -26,7 +26,7 @@ static t_bool	zz_is_whitespace(char c)
 ** example:
 */
 
-t_bool	wc_parse_whitespace(t_parse_context *pc)
+t_bool	wx_parse_whitespace(t_parse_context *pc)
 {
 	char const	*b;
 

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   wc_parse_obj_comment.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 15:18:10 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 16:18:23 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:26:00 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_parse.h"
+#include "wx_parse.h"
 
 t_bool	wc_parse_obj_comment(t_parse_context *pc)
 {
-	if (!wc_parse_keyword(pc, "#"))
+	if (!wx_parse_keyword(pc, "#"))
 	{
 		return (wx_false);
 	}

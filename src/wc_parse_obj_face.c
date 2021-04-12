@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   wc_parse_obj_face.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 16:48:48 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/24 14:50:14 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:26:00 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wc_draw.h"
-#include "wc_parse.h"
+#include "wx_parse.h"
 
 static t_bool	zz_parse_vertex_indices(t_parse_context *pc,
 	t_obj_vertices *ovs)
@@ -23,12 +23,12 @@ static t_bool	zz_parse_vertex_indices(t_parse_context *pc,
 	if (!wc_parse_u16(pc, &i))
 		return (wx_false);
 	ov.position = i - 1;
-	if (!wc_parse_keyword(pc, "/"))
+	if (!wx_parse_keyword(pc, "/"))
 		return (wx_false);
 	if (!wc_parse_u16(pc, &i))
 		return (wx_false);
 	ov.uv = i - 1;
-	if (!wc_parse_keyword(pc, "/"))
+	if (!wx_parse_keyword(pc, "/"))
 		return (wx_false);
 	if (!wc_parse_u16(pc, &i))
 		return (wx_false);
@@ -50,14 +50,14 @@ t_bool	wc_parse_obj_face(t_parse_context *pc, t_obj_vertices *ovs)
 	t_u8		i;
 
 	b = pc->p;
-	if (!wc_parse_keyword(pc, "f"))
+	if (!wx_parse_keyword(pc, "f"))
 	{
 		return (zz_on_error(pc, b));
 	}
 	i = 0;
 	while (i < 3)
 	{
-		wc_parse_whitespace(pc);
+		wx_parse_whitespace(pc);
 		if (!zz_parse_vertex_indices(pc, ovs))
 		{
 			return (zz_on_error(pc, b));

@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   wc_parse_keyword.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 10:01:57 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/07 16:03:49 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:26:00 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_parse.h"
+#include "wx_parse.h"
 
 /*
 ** exampple: variable
 */
 
-t_bool	wc_parse_keyword(t_parse_context *pc, char const *k)
+t_bool	wx_parse_keyword(t_parse_context *pc, char const *k)
 {
 	t_u64	i;
 

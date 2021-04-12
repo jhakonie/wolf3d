@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   wc_parse_obj_context_new.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 08:48:02 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/28 08:48:02 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:01:45 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_parse.h"
+#include "wx_parse.h"
 
 static t_bool	zz_on_error(t_parse_obj_context *poc, t_u8 i)
 {

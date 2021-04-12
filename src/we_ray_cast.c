@@ -6,11 +6,38 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 17:25:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/29 00:19:49 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/04/12 20:21:05 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_draw.h"
+
+/*
+** Calculating distance to wall and wall projected height.
+** Defineing wall type, side and wall compass direction.
+*/
+
+static t_found	zz_wall_values(t_ray *ray, t_item *chart, t_side side)
+{
+	if (side == we_no_wall)
+	{
+		wx_buffer_set(&ray->wall, sizeof(ray->wall), 0);
+		return (ray->wall);
+	}
+	ray->wall.side = side;
+	ray->wall.chart_id = chart[ray->wall.chart_index].id;
+	ray->wall.distance = sqrtf(powf((ray->wall.end.x - ray->start.x), 2.0)
+			+ powf((ray->wall.end.y - ray->start.y), 2.0));
+	ray->wall.distance *= cosf(wx_to_radians(ray->angle_to_player_d));
+	ray->wall.projected_height = (ray->dist_to_screen / ray->wall.distance)
+		* WE_BLOCK_W;
+	ray->wall.compass = we_wall_compass_direction(ray->angle_d, side);
+	return (ray->wall);
+}
+
+/*
+** Checking if ray hit a wall. Saving intersection point and chart index.
+*/
 
 static t_bool	zz_is_wall(t_item *chart, t_ray *ray, t_p2 intersection_w,
 	t_side line)
@@ -37,46 +64,37 @@ static t_bool	zz_is_wall(t_item *chart, t_ray *ray, t_p2 intersection_w,
 		ray->wall.chart_index = index;
 		if (chart[index].id == 1 || chart[index].id == 2)
 			return (wx_true);
+		zz_wall_values(ray, chart, line);
 	}
 	return (wx_false);
 }
 
-static t_found	zz_wall_values(t_ray *ray, t_item *chart, t_side side)
-{
-	if (side == we_no_wall)
-	{
-		wx_buffer_set(&ray->wall, sizeof(ray->wall), 0);
-		return (ray->wall);
-	}
-	ray->wall.side = side;
-	ray->wall.chart_id = chart[ray->wall.chart_index].id;
-	ray->wall.distance = sqrt(pow((ray->wall.end.x - ray->start.x), 2.0)
-			+ pow((ray->wall.end.y - ray->start.y), 2.0));
-	ray->wall.compass = we_wall_compass_direction(ray->angle_d, side);
-	return (ray->wall);
-}
+/*
+** Finding distance to horizontal wall, drawing floor, updating ray values.
+*/
 
-static t_found	zz_dist_horizontal_wall(t_ray *ray, t_item *chart)
+static t_found	zz_dist_horizontal_wall(t_ray *ray, t_item *chart,
+					t_frame_buffer *fb, t_bool draw_3d)
 {
 	t_p2	intersection_w;
 	t_u32	block_y;
-	t_f32	world_end_x;
+	t_f32	world_end;
 
-	world_end_x = WE_BLOCK_W * WE_GRID_DIVIDE;
+	world_end = WE_BLOCK_W * WE_GRID_DIVIDE;
 	block_y = ray->start.y / WE_BLOCK_W;
 	if (ray->angle_d >= 180 && ray->angle_d <= 360)
 		block_y += 1;
 	intersection_w.y = block_y * WE_BLOCK_W;
-	while (block_y < WE_GRID_DIVIDE)
+	while (intersection_w.y < world_end && intersection_w.y >= 0)
 	{
-		block_y = intersection_w.y / WE_BLOCK_W;
 		intersection_w.x = (intersection_w.y - ray->b) / ray->k;
-		if (intersection_w.x < 0 || intersection_w.x >= world_end_x
+		if (intersection_w.x < 0 || intersection_w.x >= world_end
 			|| (ray->angle_d == 180 || ray->angle_d == 0 || ray->angle_d == 360)
 			|| block_y >= WE_GRID_DIVIDE)
 			break ;
 		if ((zz_is_wall(chart, ray, intersection_w, we_horisontal)))
 			return (zz_wall_values(ray, chart, we_horisontal));
+		we_draw_floor(*ray, fb, draw_3d);
 		if (ray->angle_d < 180 && ray->angle_d > 0)
 			intersection_w.y -= WE_BLOCK_W;
 		else
@@ -85,27 +103,32 @@ static t_found	zz_dist_horizontal_wall(t_ray *ray, t_item *chart)
 	return (zz_wall_values(ray, chart, we_no_wall));
 }
 
-static t_found	zz_dist_vertical_wall(t_ray *ray, t_item *chart)
+/*
+** Finding distance to vertical wall, drawing floor, updating ray values.
+*/
+
+static t_found	zz_dist_vertical_wall(t_ray *ray, t_item *chart,
+					t_frame_buffer *fb, t_bool draw_3d)
 {
 	t_p2	intersection_w;
 	t_u32	block_x;
-	t_f32	world_end_y;
+	t_f32	world_end;
 
-	world_end_y = WE_BLOCK_W * WE_GRID_DIVIDE;
+	world_end = WE_BLOCK_W * WE_GRID_DIVIDE;
 	block_x = ray->start.x / WE_BLOCK_W;
 	if (ray->angle_d <= 90 || ray->angle_d >= 270)
 		block_x += 1;
 	intersection_w.x = block_x * WE_BLOCK_W;
-	while (block_x < WE_GRID_DIVIDE)
+	while (intersection_w.x < world_end && intersection_w.x >= 0)
 	{
-		block_x = intersection_w.x / WE_BLOCK_W;
 		intersection_w.y = ray->k * intersection_w.x + ray->b;
-		if (intersection_w.y < 0 || intersection_w.y >= world_end_y
+		if (intersection_w.y < 0 || intersection_w.y >= world_end
 			|| (ray->angle_d == 90 || ray->angle_d == 270)
 			|| block_x >= WE_GRID_DIVIDE)
 			break ;
 		if ((zz_is_wall(chart, ray, intersection_w, we_vertical)))
 			return (zz_wall_values(ray, chart, we_vertical));
+		we_draw_floor(*ray, fb, draw_3d);
 		if (ray->angle_d > 90 && ray->angle_d < 270)
 			intersection_w.x -= WE_BLOCK_W;
 		else
@@ -114,15 +137,19 @@ static t_found	zz_dist_vertical_wall(t_ray *ray, t_item *chart)
 	return (zz_wall_values(ray, chart, we_no_wall));
 }
 
-void	we_ray_cast(t_ray *ray, t_item *chart)
+/*
+** Finding the closest intersection point with horisontal and vertical
+** walls. Choosing the closer one to be drawn.
+*/
+
+void	we_ray_cast(t_ray *ray, t_item *chart, t_frame_buffer *fb,
+			t_bool draw_3d)
 {
 	t_found	vertical;
 	t_found	horizontal;
 
-	horizontal = zz_dist_horizontal_wall(ray, chart);
-	vertical = zz_dist_vertical_wall(ray, chart);
-	vertical.distance *= cos(wx_to_radians(ray->angle_to_player_d));
-	horizontal.distance *= cos(wx_to_radians(ray->angle_to_player_d));
+	horizontal = zz_dist_horizontal_wall(ray, chart, fb, draw_3d);
+	vertical = zz_dist_vertical_wall(ray, chart, fb, draw_3d);
 	if (vertical.distance < horizontal.distance)
 	{
 		ray->wall = vertical;

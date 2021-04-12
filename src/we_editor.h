@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/28 18:46:02 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/04/12 21:05:08 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 # define WE_EDITOR_H
 
 # include "SDL2/SDL.h"
-# include "wx_types.h"
 # include "we_draw.h"
-# include "wx_frame_buffer.h"
 # include "unistd.h"
-# define WE_WIN_H 512
-# define WE_WIN_W 512
+# define WE_WIN_H (512)
+# define WE_WIN_W (512)
 
 struct				s_tool
 {
@@ -39,11 +37,24 @@ struct				s_tools
 };
 typedef struct s_tools	t_tools;
 
+struct			s_player
+{
+	t_p2		position;
+	t_f32		direction_d;
+	t_f32		fov_d;
+	t_p2		w_start;
+	t_p2		w_end;
+	t_u32		w_block_count;
+	t_u32		w_step;
+};
+typedef struct s_player	t_player;
+
 struct				s_map
 {
 	char			*file;
 	t_grid			grid;
 	t_item			*chart;
+	t_wall_type		wall_type[WE_WALL_TYPE_COUNT];
 	t_u32			block_count;
 	t_p2			player_pos_chart;
 	t_p2			player_pos_chart_old;
@@ -80,6 +91,9 @@ t_bool				we_editor_run(t_editor *e);
 void				we_editor_del(t_editor *e);
 t_bool				we_chart_new(t_map *m);
 void				we_chart_del(t_item *c);
+t_bool				we_wall_type_new(t_wall_type *wall_type);
+t_bool				we_wall_type_del(t_wall_type *wall_type,
+						t_u32 wall_type_index, t_u32 wall_index);
 void				we_editor_on_resize(t_editor *e, t_s32 width, t_s32 height);
 void				we_init_tools(t_tools *t, t_u32 win_w, t_u32 win_h);
 void				we_init_wall(t_tool *t, t_u32 win_w, t_u32 win_h);
@@ -89,6 +103,7 @@ void				we_init_player_location(t_tool *t,
 void				we_init_empty(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_save(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_map(t_map *m, t_u32 win_w, t_u32 win_h);
+t_bool				we_init_textures(t_wall_type *wall_type);
 void				we_init_chart(t_map *m);
 void				we_init_player(t_player *p, t_map *m);
 t_p2				we_from_win_to_map(t_p2 win, t_map m);

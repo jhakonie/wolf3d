@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   wc_mesh_new.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 22:02:38 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/24 14:48:48 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:31:11 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wc_draw.h"
-#include "wc_parse.h"
+#include "wx_parse.h"
 
 static void	zz_aabb(t_mesh *m)
 {
@@ -50,7 +50,7 @@ static t_bool	zz_on_error(t_c8s *fb, t_mesh *m, t_u8 i)
 	}
 	if (i > 0)
 	{
-		wc_c8s_del(fb);
+		wx_c8s_del(fb);
 	}
 	return (wx_false);
 }
@@ -60,7 +60,7 @@ t_bool	wc_mesh_new(t_mesh *m, char const *filename)
 	t_c8s			fb;
 	t_parse_context	pc;
 
-	if (!wc_c8s_new_from_file(&fb, 1024, filename))
+	if (!wx_c8s_new_from_file(&fb, 1024, filename))
 		return (zz_on_error(&fb, m, 0));
 	if (!wc_u16s_new(&m->indices, 1024))
 		return (zz_on_error(&fb, m, 1));
@@ -72,7 +72,7 @@ t_bool	wc_mesh_new(t_mesh *m, char const *filename)
 	{
 		return (zz_on_error(&fb, m, 3));
 	}
-	wc_c8s_del(&fb);
+	wx_c8s_del(&fb);
 	zz_aabb(m);
 	return (wx_true);
 }

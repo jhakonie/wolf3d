@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   wc_parse_obj.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 16:25:12 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/26 16:25:12 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:06:49 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_parse.h"
+#include "wx_parse.h"
 
 static t_bool	zz_cache_find(t_obj_vertices *c, t_obj_vertex const *v,
 	t_u16 *out_i)
@@ -118,7 +118,7 @@ t_bool	wc_parse_obj(t_parse_context *pc, t_mesh *m)
 			&& !wc_parse_obj_normal(pc, &poc.normals)
 			&& !wc_parse_obj_position(pc, &poc.positions)
 			&& !wc_parse_obj_smoothing(pc) && !wc_parse_obj_uv(pc, &poc.uvs)
-			&& !wc_parse_whitespace(pc))
+			&& !wx_parse_whitespace(pc))
 			break ;
 	}
 	if (pc->p != pc->e)

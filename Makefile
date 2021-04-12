@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/04/05 11:36:57 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/04/12 23:32:35 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ libsdl2_cflags = `$(build_dir)libsdl2/bin/sdl2-config --cflags`
 libsdl2_ldflags = `$(build_dir)libsdl2/bin/sdl2-config --libs`
 
 client_src_files = $(addprefix $(src_dir), \
-	wc_c8s_del.c \
-	wc_c8s_new_from_file.c \
+	wx_c8s_del.c \
+	wx_c8s_new_from_file.c \
 	wc_client_dispatch_events.c \
 	wc_client_del.c \
 	wc_client_new.c \
@@ -51,8 +51,8 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_p3s_add_back.c \
 	wc_p3s_del.c \
 	wc_p3s_new.c \
-	wc_parse_f32.c \
-	wc_parse_keyword.c \
+	wx_parse_f32.c \
+	wx_parse_keyword.c \
 	wc_parse_obj.c \
 	wc_parse_obj_comment.c \
 	wc_parse_obj_context_del.c \
@@ -66,7 +66,7 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_parse_obj_smoothing.c \
 	wc_parse_obj_uv.c \
 	wc_parse_u16.c \
-	wc_parse_whitespace.c \
+	wx_parse_whitespace.c \
 	wc_remote_server_new.c \
 	wc_remote_server_del.c \
 	wc_remote_server_read.c \
@@ -119,6 +119,9 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_editor_del.c \
 	we_chart_new.c \
 	we_chart_del.c \
+	we_wall_type_new.c \
+	we_wall_type_del.c \
+	we_texture_new.c \
 	we_init_toolbar.c \
 	we_init_map.c \
 	we_init_chart.c \
@@ -139,27 +142,46 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_ray_init.c \
 	we_ray_calculate.c \
 	we_wall_compass_direction.c \
+	we_parse_xpm.c \
+	we_parse_xpm_colors.c \
+	we_parse_xpm_error.c \
+	we_parse_xpm_pixels.c \
+	we_parse_until.c \
+	we_parse_xpm_comment.c \
+	we_xpm_del.c \
+	we_parse_hexa.c \
+	we_init_triangle.c \
+	we_init_line.c \
 	we_draw.c \
 	we_draw_3d.c \
-	we_draw_texture.c \
 	we_draw_pixel.c \
 	we_draw_line.c \
 	we_draw_rectangle.c \
+	we_draw_triangle.c \
 	we_draw_grid.c \
 	we_draw_map.c \
 	we_draw_toolbar.c \
 	we_draw_button.c \
 	we_draw_player.c \
 	we_draw_rays.c \
+	we_draw_floor.c \
+	we_floor_draw_end.c \
+	we_draw_wall.c \
+	we_draw_texture_wall.c \
+	we_shade_pixel.c \
+	we_fractal_texture_create.c \
+	we_fractal.c \
+	we_complex_num_arithmetic.c \
 	wx_buffer_copy.c \
 	wx_buffer_set.c \
 	wx_frame_buffer_del.c \
 	wx_frame_buffer_new.c \
 	wx_to_radians.c \
-	wx_f32_max.c \
-	wx_f32_min.c \
-	wx_f64_min.c \
-	wc_draw_pixel.c \
+	wx_c8s_new_from_file.c \
+	wx_c8s_del.c \
+	wx_parse_keyword.c \
+	wx_parse_f32.c \
+	wx_parse_whitespace.c \
 )
 editor_obj_files = $(subst $(src_dir), $(build_dir), $(editor_src_files:.c=.o))
 editor_exe = wolf3d_editor
@@ -200,9 +222,9 @@ dependency_files = \
 dependency_flags = -MT $(@) -MMD -MP -MF $(build_dir)$(*).dep
 
 LD = gcc
-LDFLAGS = $(libsdl2_ldflags) -fsanitize=address
+LDFLAGS = $(libsdl2_ldflags) #-fsanitize=address
 CC = gcc
-CFLAGS = -c -g -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) -fsanitize=address
+CFLAGS = -O2 -c -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) #-fsanitize=address
 CPPFLAGS = -D_REENTRANT
 
 all: $(client_exe) $(editor_exe) $(server_exe) $(compile_commands_json)

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 17:18:30 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/24 15:35:50 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/06 23:00:09 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@
 ** ray->angle_d = angle of ray measured counter clock-wise from positive
 ** x-axis on a left handed coordinate system.
 **
-** ray_length = distance from ray start to projection plane
+** ray_length = distance from ray start to projection plane.
 **
-** ray->k and ray->b are terms of the mathematical formula of a line y = kx + b
+** ray->k and ray->b form y = kx + b.
 **
-** ray->delta = the difference in x and y between ray start and ray
-** intersection with screen
+** ray->delta = ray_intersection_with_screen(x, y) - ray_start(x, y).
 **
 ** TODO: check if ray->angle_d - notes are correct (also from ray_init)
 */
@@ -40,9 +39,9 @@ void	we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
 	else if (ray->angle_d > 360)
 		ray->angle_d -= 360;
 	ray_length = ray->dist_to_screen
-		/ cos(wx_to_radians(ray->angle_to_player_d));
-	ray->delta.x = fabs(cos(wx_to_radians(ray->angle_d))) * ray_length;
-	ray->delta.y = fabs(sin(wx_to_radians(ray->angle_d))) * ray_length;
+		/ cosf(wx_to_radians(ray->angle_to_player_d));
+	ray->delta.x = fabsf(cosf(wx_to_radians(ray->angle_d))) * ray_length;
+	ray->delta.y = fabsf(sinf(wx_to_radians(ray->angle_d))) * ray_length;
 	if (ray->angle_d < 180)
 		ray->delta.y *= -1;
 	if (ray->angle_d > 90 && ray->angle_d < 270)

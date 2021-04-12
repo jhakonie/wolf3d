@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_c8s_del.c                                       :+:      :+:    :+:   */
+/*   wx_c8s_del.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 22:34:25 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/27 22:34:25 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:29:16 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stdlib.h"
 
-#include "wc_parse.h"
+#include "wx_parse.h"
 
-void	wc_c8s_del(t_c8s *c)
+void	wx_c8s_del(t_c8s *c)
 {
 	free(c->buffer);
 }

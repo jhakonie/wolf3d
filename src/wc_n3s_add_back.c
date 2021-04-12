@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   wc_n3s_add_back.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 12:00:51 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/26 12:00:51 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:01:45 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stdlib.h"
 
-#include "wc_parse.h"
+#include "wx_parse.h"
 
 t_bool	wc_n3s_add_back(t_n3s *c, t_n3 const *v)
 {

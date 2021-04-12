@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 23:36:54 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/24 15:28:03 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/03/29 23:26:38 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static void	zz_player_rotation(t_u32 key, t_f32 *player_direction_d)
 {
 	if (key == SDLK_LEFT)
 	{
-		*player_direction_d += 1.0;
+		*player_direction_d += 5.0;
 		if (*player_direction_d > 360.0)
 			*player_direction_d -= 360.0;
 	}
 	if (key == SDLK_RIGHT)
 	{
-		*player_direction_d -= 1.0;
+		*player_direction_d -= 5.0;
 		if (*player_direction_d < 0.0)
 			*player_direction_d += 360.0;
 	}

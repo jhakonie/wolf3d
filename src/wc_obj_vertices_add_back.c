@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   wc_obj_vertices_add_back.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 11:25:32 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/27 11:25:32 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:01:45 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stdlib.h"
 
-#include "wc_parse.h"
+#include "wx_parse.h"
 
 t_bool	wc_obj_vertices_add_back(t_obj_vertices *c, t_obj_vertex const *v)
 {

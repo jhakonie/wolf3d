@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   wc_parse_f32.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 10:00:13 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/24 14:49:56 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:09:34 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_parse.h"
+#include "wx_parse.h"
 
 static t_bool	zz_parse_f32_fractional(t_parse_context *pc, t_f32 *n)
 {
@@ -79,7 +79,7 @@ static t_bool	zz_parse_f32_sign_integer(t_parse_context *pc, t_f32 *s,
 ** exactly represented by floating point numbers
 */
 
-t_bool	wc_parse_f32(t_parse_context *pc, t_f32 *n)
+t_bool	wx_parse_f32(t_parse_context *pc, t_f32 *n)
 {
 	t_f32	fractional;
 	t_f32	integer;

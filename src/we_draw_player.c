@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 13:46:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/24 15:09:44 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/02 19:29:24 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	we_draw_player(t_editor *e)
 	start.x = start.x;
 	start.y = start.y;
 	angle = e->player.direction_d;
-	delta.x = (cos(angle * WE_TO_RAD) * 1000);
-	delta.y = -(sin(angle * WE_TO_RAD) * 1000);
+	delta.x = (cosf(angle * WE_TO_RAD) * WE_BLOCK_W);
+	delta.y = -(sinf(angle * WE_TO_RAD) * WE_BLOCK_W);
 	end.x = (start.x + delta.x);
 	end.y = (start.y + delta.y);
 	we_draw_line(start, end, &e->frame_buffer, 0xff00FF);
