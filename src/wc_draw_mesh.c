@@ -33,26 +33,16 @@ static void	zz_clip(t_draw_context *dc, t_mesh const *m)
 */
 static void	zz_draw(t_draw_context *dc)
 {
-	t_face	face;
 	t_u64	i;
-	t_u64	j;
-	t_p3	*p;
 
 	i = 0;
 	while (i < dc->buffers->visible_indices_size)
 	{
-		face = (t_face){{dc->buffers->visible_indices[i + 0],
-			dc->buffers->visible_indices[i + 1],
-			dc->buffers->visible_indices[i + 2]}};
-		j = 0;
-		while (j < 3)
-		{
-			p = dc->buffers->screen_positions + face.indices[j];
-			if (p->x >= 0.0f && p->x < dc->frame_buffer->width
-				&& p->y >= 0.0f && p->y <= dc->frame_buffer->height)
-				wc_draw_pixel(dc->frame_buffer, p->x, p->y, 0xff0000ff);
-			++j;
-		}
+		wc_draw_face(dc,
+			dc->buffers->screen_positions + dc->buffers->visible_indices[i + 0],
+			dc->buffers->screen_positions + dc->buffers->visible_indices[i + 1],
+			dc->buffers->screen_positions
+			+ dc->buffers->visible_indices[i + 2]);
 		i += 3;
 	}
 }
@@ -91,8 +81,6 @@ static void	zz_view_from_model(t_draw_context *dc, t_mesh const *m)
 ** 2021-04-03 todo: figure out the whole -ndc.x business when going from ndc to
 ** screen space. it would indicate i've misunderstod something. stupid math.
 ** world would be a better place with out it
-**
-** 2021-04-03 todo: dc->buffers->sreen_positions oob check
 */
 static void	zz_screen_from_view(t_draw_context *dc)
 {

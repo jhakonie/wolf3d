@@ -145,6 +145,8 @@ void	wc_draw_add_visible(t_draw_context *dc, t_clip_context const *cc);
 void	wc_draw_clear(t_frame_buffer *fb);
 void	wc_draw_clip(t_draw_context *dc, t_face const *f, t_plane const *p);
 void	wc_draw_copy(t_client *c, t_frame_buffer const *fb);
+void	wc_draw_face(t_draw_context *dc, t_p3 const *p0, t_p3 const *p1,
+			t_p3 const *p2);
 void	wc_draw_mesh(t_draw_context *dc, t_mesh const *m);
 void	wc_draw_pixel(t_frame_buffer *fb, t_f32 x, t_f32 y, t_u32 abgr);
 void	wc_draw_rectangle_outline(t_frame_buffer *fb, t_p3 p, t_f32 width,

@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/04/03 17:42:18 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/04/05 11:36:57 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_draw_clear.c \
 	wc_draw_clip.c \
 	wc_draw_copy.c \
+	wc_draw_face.c \
 	wc_draw_mesh.c \
 	wc_draw_pixel.c \
 	wc_draw_rectangle_solid.c \
