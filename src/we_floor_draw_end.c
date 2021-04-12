@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 17:54:14 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 21:04:26 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/04/12 23:55:48 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_p2	zz_south(t_ray ray, t_p2 block)
 			end.x = (end.y - ray.b) / ray.k;
 		}
 		return (end);
-	}	
+	}
 	end.x = (block.x) * WE_BLOCK_W;
 	end.y = ray.k * end.x + ray.b;
 	if (end.y > ((block.y + 1) * WE_BLOCK_W))

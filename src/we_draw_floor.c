@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 15:40:30 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 23:25:06 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/04/12 23:57:01 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	we_draw_floor(t_ray ray, t_frame_buffer *fb, t_bool draw_3d)
 	t_p2	draw_end_fb;
 	t_p2	draw_end_w;
 	t_u32	color;
-	t_f32	floor_height;
 
 	color = 0x0000ff;
 	if (ray.wall.chart_id != 1 && draw_3d == wx_true)
@@ -66,7 +65,6 @@ void	we_draw_floor(t_ray ray, t_frame_buffer *fb, t_bool draw_3d)
 			+ ray.wall.projected_height;
 		draw_end_w = we_floor_draw_end(ray);
 		draw_end_fb = zz_draw_end_fb(draw_end_w, ray, fb->height, wx_true);
-		floor_height = fabsf(draw_start_fb.y - draw_end_fb.y);
 		if (ray.wall.chart_index % 4 == 0)
 			color = 0x00ff00;
 		we_shade_pixel(ray, &color, 7);

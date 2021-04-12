@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 22:11:24 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 23:04:22 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/04/12 23:56:20 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 t_bool	we_parse_xpm_comment(t_parse_context *pc)
 {
-	t_u32	i;
-
-	i = 0;
 	if (wx_parse_keyword(pc, "/*")
 		&& we_parse_until(pc, '*')
 		&& wx_parse_keyword(pc, "/")
