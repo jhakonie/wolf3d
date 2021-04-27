@@ -1,59 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_mouse_pos_on_click.c                            :+:      :+:    :+:   */
+/*   we_mouse_pos_grid.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 00:24:00 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/24 15:32:38 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/27 21:49:58 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
-
-t_bool	zz_update_tool_state(t_tool *t, t_u32 *draw, t_u32 x, t_u32 y)
-{
-	if (t->pre_selected && !t->selected)
-	{
-		t->selected = wx_true;
-		t->pre_selected = wx_false;
-		*draw = wx_true;
-		return (wx_true);
-	}
-	else if (t->selected && x >= t->button.start.x && x <= t->button.end.x
-		&& y >= t->button.start.y && y <= t->button.end.y)
-	{
-		t->selected = wx_false;
-		t->pre_selected = wx_true;
-		*draw = wx_true;
-	}
-	return (wx_false);
-}
-
-void	we_pos_on_click_tool(t_editor *e, t_u32 x, t_u32 y)
-{
-	t_u32	i;
-	t_u32	tool_is_selected;
-
-	i = 1;
-	while (i < WE_TOOL_COUNT)
-	{
-		tool_is_selected = zz_update_tool_state(&e->tools.tool[i],
-				&e->draw, x, y);
-		if (tool_is_selected && e->tools.id != i)
-		{
-			e->tools.tool[e->tools.id].selected = wx_false;
-			e->tools.tool[e->tools.id].pre_selected = wx_false;
-			e->tools.id = i;
-		}
-		else if (!tool_is_selected && e->tools.tool[i].pre_selected)
-			e->tools.id = WE_ID_INIT;
-		if (e->tools.id == WE_TOOL_COUNT - 1)
-			we_save_map_to_file(e);
-		i++;
-	}
-}
 
 static t_bool	zz_player_position(t_p2 win, t_editor *e)
 {
@@ -87,7 +44,7 @@ static t_bool	zz_player_position(t_p2 win, t_editor *e)
 ** todo: add "nothing can be placed on player location"
 */
 
-void	we_pos_on_click_grid(t_editor *e, t_u32 x, t_u32 y)
+void	we_mouse_pos_grid_on_click(t_editor *e, t_u32 x, t_u32 y)
 {
 	t_p2	win;
 
@@ -103,5 +60,18 @@ void	we_pos_on_click_grid(t_editor *e, t_u32 x, t_u32 y)
 	}
 	if (e->tools.id != WE_ID_INIT && e->tools.id != WE_TOOL_COUNT - 1)
 		we_save_win_to_map(win, e);
+	e->draw = wx_true;
+}
+
+void	we_mouse_pos_grid(t_editor *e, t_u32 x, t_u32 y)
+{
+	e->map.ptr.x = x;
+	e->map.ptr.y = y;
+	if (e->map.ptr_hold)
+	{
+		we_save_win_to_map(e->map.ptr, e);
+	}
+	if (e->tools.id != WE_TOOL_COUNT - 1)
+		e->map.ptr_draw = wx_true;
 	e->draw = wx_true;
 }

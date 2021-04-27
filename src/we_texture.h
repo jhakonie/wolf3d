@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 22:24:54 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 20:19:44 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/04/27 22:14:32 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,6 @@ typedef struct s_texture_index
 	t_u32	index;
 
 }	t_texture_index;
-
-typedef struct s_texture
-{
-	t_u32		height;
-	t_u32		width;
-	t_u32		texture[3600];
-}	t_texture;
 
 typedef struct s_tex
 {

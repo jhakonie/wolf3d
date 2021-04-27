@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/04/12 23:32:35 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/04/27 21:49:10 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -117,6 +117,7 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_editor_new.c \
 	we_editor_run.c \
 	we_editor_del.c \
+	we_window_event.c \
 	we_chart_new.c \
 	we_chart_del.c \
 	we_wall_type_new.c \
@@ -131,10 +132,9 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_from_map_to_win.c \
 	we_save_win_to_map.c \
 	we_save_map_to_file.c \
-	we_editor_on_resize.c \
-	we_mouse_pos.c \
-	we_mouse_pos_on_click.c \
-	we_mouse_button_up.c \
+	we_mouse_event.c \
+	we_mouse_pos_tool.c \
+	we_mouse_pos_grid.c \
 	we_key_event.c \
 	we_player_move.c \
 	we_to_rad.c \
@@ -153,6 +153,7 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_init_triangle.c \
 	we_init_line.c \
 	we_draw.c \
+	we_draw_to_window.c \
 	we_draw_3d.c \
 	we_draw_pixel.c \
 	we_draw_line.c \

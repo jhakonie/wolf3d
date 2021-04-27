@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 21:05:08 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/04/27 21:58:34 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void				we_chart_del(t_item *c);
 t_bool				we_wall_type_new(t_wall_type *wall_type);
 t_bool				we_wall_type_del(t_wall_type *wall_type,
 						t_u32 wall_type_index, t_u32 wall_index);
-void				we_editor_on_resize(t_editor *e, t_s32 width, t_s32 height);
+void				we_window_event(t_editor *e, SDL_WindowEvent *w);
+void				we_draw_to_window(t_editor *e);
 void				we_init_tools(t_tools *t, t_u32 win_w, t_u32 win_h);
 void				we_init_wall(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_floor(t_tool *t, t_u32 win_w, t_u32 win_h);
@@ -110,11 +111,11 @@ t_p2				we_from_win_to_map(t_p2 win, t_map m);
 t_p2				we_from_map_to_win(t_p2 map, t_map m);
 void				we_save_win_to_map(t_p2 win, t_editor *e);
 void				we_save_map_to_file(t_editor *e);
-t_bool				we_pos_mouse_tool(t_tool *t, t_u32 *draw, t_u32 x, t_u32 y);
-void				we_pos_mouse_grid(t_editor *e, t_u32 x, t_u32 y);
-void				we_pos_on_click_tool(t_editor *e, t_u32 x, t_u32 y);
-void				we_pos_on_click_grid(t_editor *e, t_u32 x, t_u32 y);
-void				we_mouse_button_up(t_bool *ptr_hold, int button);
+void				we_mouse_event(t_editor *e);
+void				we_mouse_pos_grid(t_editor *e, t_u32 x, t_u32 y);
+t_bool				we_mouse_pos_tool(t_tool *t, t_u32 *draw, t_u32 x, t_u32 y);
+void				we_mouse_pos_tool_on_click(t_editor *e, t_u32 x, t_u32 y);
+void				we_mouse_pos_grid_on_click(t_editor *e, t_u32 x, t_u32 y);
 void				we_key_event(t_u32 key, t_editor *e);
 void				we_draw(t_editor *e);
 void				we_draw_toolbar(t_editor *e);

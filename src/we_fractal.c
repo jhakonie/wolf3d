@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_fractals.c                                      :+:      :+:    :+:   */
+/*   we_fractal.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 17:35:29 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/10 22:18:43 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/04/27 22:36:48 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ t_s32	we_snowflake(t_s32 x, t_s32 y, t_fractal *fractal)
 	t_complex	a;
 
 	i = 0;
+	fractal->zoom = 2.0;
 	zz_init_c(&a, fractal);
 	zz_init_z(&z, x, y, fractal);
 	while (i < fractal->max_i)
