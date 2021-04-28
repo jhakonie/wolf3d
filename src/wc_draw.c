@@ -17,16 +17,17 @@
 
 static void	zz_draw_context_new(t_draw_context *dc, t_client *c)
 {
-	t_q4			player_orientation;
-	t_p3			player_position;
-	t_m44			view_from_world;
-	t_m44			world_from_object;
+	t_q4	player_orientation;
+	t_p3	player_position;
+	t_m44	view_from_world;
+	t_m44	world_from_object;
 
 	dc->buffers = &c->pipeline_buffers;
 	dc->buffers->screen_positions_size = 0;
 	dc->buffers->view_positions_size = 0;
 	dc->buffers->visible_indices_size = 0;
 	dc->frame_buffer = &c->frame_buffer;
+	dc->depth_buffer = &c->depth_buffer;
 	dc->clip_from_view = wx_m44_new_perspective(c->camera.hfov_rad,
 			c->camera.aspect_ratio, c->camera.near, c->camera.far);
 	dc->frustum = wx_frustum_new(&dc->clip_from_view);
@@ -43,7 +44,7 @@ void	wc_draw(t_client *c)
 	t_draw_context	dc;
 
 	zz_draw_context_new(&dc, c);
-	wc_draw_clear(dc.frame_buffer);
+	wc_draw_clear(&dc);
 	wc_draw_mesh(&dc, &c->unit_cube);
 	wc_draw_copy(c, dc.frame_buffer);
 }

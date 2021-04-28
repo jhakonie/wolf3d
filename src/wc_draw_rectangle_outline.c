@@ -23,7 +23,7 @@ static void	zz_draw_horizontal_line(t_frame_buffer *fb, t_rectangle const *r,
 	x1 = r->p1.x;
 	while (x0 < x1)
 	{
-		wc_draw_pixel(fb, x0, y, abgr);
+		wx_frame_buffer_set(fb, x0, y, abgr);
 		++x0;
 	}
 }
@@ -38,7 +38,7 @@ static void	zz_draw_vertical_line(t_frame_buffer *fb, t_rectangle const *r,
 	y1 = r->p1.y;
 	while (y0 < y1)
 	{
-		wc_draw_pixel(fb, x, y0, abgr);
+		wx_frame_buffer_set(fb, x, y0, abgr);
 		++y0;
 	}
 }

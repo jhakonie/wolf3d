@@ -33,9 +33,12 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_draw_copy.c \
 	wc_draw_face.c \
 	wc_draw_mesh.c \
-	wc_draw_pixel.c \
 	wc_draw_rectangle_solid.c \
 	wc_draw_rectangle_outline.c \
+	wc_depth_buffer_del.c \
+	wc_depth_buffer_get.c \
+	wc_depth_buffer_new.c \
+	wc_depth_buffer_set.c \
 	wc_main.c \
 	wc_mesh_del.c \
 	wc_mesh_new.c \
@@ -85,6 +88,7 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_f64_min.c \
 	wx_frame_buffer_del.c \
 	wx_frame_buffer_new.c \
+	wx_frame_buffer_set.c \
 	wx_frustum_aabb_test.c \
 	wx_frustum_new.c \
 	wx_m44_mul_m44.c \
@@ -225,7 +229,7 @@ dependency_flags = -MT $(@) -MMD -MP -MF $(build_dir)$(*).dep
 LD = gcc
 LDFLAGS = $(libsdl2_ldflags) #-fsanitize=address
 CC = gcc
-CFLAGS = -O2 -c -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) #-fsanitize=address
+CFLAGS = -g -c -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) #-fsanitize=address
 CPPFLAGS = -D_REENTRANT
 
 all: $(client_exe) $(editor_exe) $(server_exe) $(compile_commands_json)

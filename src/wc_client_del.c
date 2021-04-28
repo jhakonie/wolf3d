@@ -21,7 +21,8 @@ void	wc_client_del(t_client *c)
 	free(c->pipeline_buffers.screen_positions);
 	wc_mesh_del(&c->unit_cube);
 	wc_remote_server_del(&c->remote_server);
-	free(c->frame_buffer.data);
+	wc_depth_buffer_del(&c->depth_buffer);
+	wx_frame_buffer_del(&c->frame_buffer);
 	SDL_DestroyTexture(c->texture);
 	SDL_DestroyRenderer(c->renderer);
 	SDL_DestroyWindow(c->window);

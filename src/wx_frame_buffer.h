@@ -27,5 +27,6 @@ typedef struct s_frame_buffer	t_frame_buffer;
 t_bool	wx_frame_buffer_new(t_frame_buffer *fb, t_u32 image_width,
 			t_u32 image_height);
 void	wx_frame_buffer_del(t_frame_buffer *fb);
+void	wx_frame_buffer_set(t_frame_buffer *fb, t_f32 x, t_f32 y, t_u32 abgr);
 
 #endif

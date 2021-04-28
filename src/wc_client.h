@@ -56,6 +56,7 @@ struct	s_client
 	t_camera			camera;
 	t_pipeline_buffers	pipeline_buffers;
 	t_frame_buffer		frame_buffer;
+	t_depth_buffer		depth_buffer;
 	t_client_input		input;
 	t_p2				player_position;
 	t_p2				other_positions[WX_SERVER_REMOTE_CLIENTS_SIZE - 1];

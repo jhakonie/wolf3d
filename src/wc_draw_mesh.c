@@ -81,6 +81,14 @@ static void	zz_view_from_model(t_draw_context *dc, t_mesh const *m)
 ** 2021-04-03 todo: figure out the whole -ndc.x business when going from ndc to
 ** screen space. it would indicate i've misunderstod something. stupid math.
 ** world would be a better place with out it
+**
+** perhaps it's because view space is right-handed with camera looking towards
+** +z, so that's still true for clip space(?) and then above picture of ndc is
+** wrong?
+**
+** 2021-04-21 todo: decide what to do with screen_position.z.isst ndc.z? for now
+** sreen_position.z = 1.0f/view_z. currently we're not doing anything with ndc.z
+** either. so what's that about? ndc.z is mapped [near = 1.0f, far = 0.0f]
 */
 static void	zz_screen_from_view(t_draw_context *dc)
 {
@@ -98,7 +106,7 @@ static void	zz_screen_from_view(t_draw_context *dc)
 		ndc = (t_p3){k * clip.x, k * clip.y, k * clip.z};
 		dc->buffers->screen_positions[i] = (t_p3){(-ndc.x + 1.0f)
 			* (0.5 * dc->frame_buffer->width), (-ndc.y + 1.0f)
-			* (0.5 * dc->frame_buffer->height), ndc.z};
+			* (0.5 * dc->frame_buffer->height), k};
 		++dc->buffers->screen_positions_size;
 		++i;
 	}
@@ -125,7 +133,6 @@ static void	zz_screen_from_view(t_draw_context *dc)
 ** - reject faces facing away from the camera
 ** - normals and lighting
 ** - uvs
-** - screen positions
 */
 void	wc_draw_mesh(t_draw_context *dc, t_mesh const *m)
 {

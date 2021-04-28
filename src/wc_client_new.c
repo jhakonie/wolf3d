@@ -31,16 +31,18 @@ static void	zz_camera(t_client *c, t_f32 width, t_f32 height)
 
 static t_bool	zz_on_error(t_client *c, t_u8 i)
 {
-	if (i > 8)
+	if (i > 9)
 		free(c->pipeline_buffers.visible_indices);
-	if (i > 7)
+	if (i > 8)
 		free(c->pipeline_buffers.view_positions);
-	if (i > 6)
+	if (i > 7)
 		free(c->pipeline_buffers.screen_positions);
-	if (i > 5)
+	if (i > 6)
 		wc_remote_server_del(&c->remote_server);
+	if (i > 5)
+		free(c->depth_buffer.data);
 	if (i > 4)
-		wx_frame_buffer_del(&c->frame_buffer);
+		free(&c->frame_buffer.data);
 	if (i > 3)
 		SDL_DestroyTexture(c->texture);
 	if (i > 2)
@@ -55,19 +57,20 @@ static t_bool	zz_on_error(t_client *c, t_u8 i)
 static t_bool	zz_pipeline(t_client *c)
 {
 	c->pipeline_buffers.screen_positions
-		= (t_p3 *)malloc(WC_PIPELINE_VERTICES_SIZE * sizeof(t_p3));
+		= (t_p3 *)malloc(WC_PIPELINE_VERTICES_SIZE
+			* sizeof(t_p3));
 	if (!c->pipeline_buffers.screen_positions)
-		return (zz_on_error(c, 7));
+		return (zz_on_error(c, 8));
 	c->pipeline_buffers.screen_positions_size = 0;
 	c->pipeline_buffers.view_positions
 		= (t_p3 *)malloc(WC_PIPELINE_VERTICES_SIZE * sizeof(t_p3));
 	if (!c->pipeline_buffers.view_positions)
-		return (zz_on_error(c, 8));
+		return (zz_on_error(c, 9));
 	c->pipeline_buffers.view_positions_size = 0;
 	c->pipeline_buffers.visible_indices
 		= (t_u16 *)malloc(WC_PIPELINE_VERTICES_SIZE * sizeof(t_u16));
 	if (!c->pipeline_buffers.visible_indices)
-		return (zz_on_error(c, 9));
+		return (zz_on_error(c, 10));
 	c->pipeline_buffers.visible_indices_size = 0;
 	return (wx_true);
 }
@@ -97,11 +100,13 @@ t_bool	wc_client_new(t_client *c, t_u32 window_width, t_u32 window_height)
 		return (wx_false);
 	if (!wx_frame_buffer_new(&c->frame_buffer, window_width, window_height))
 		return (zz_on_error(c, 4));
+	if (!wc_depth_buffer_new(&c->depth_buffer, window_width, window_height))
+		return (zz_on_error(c, 5));
 	if (!wc_remote_server_new(&c->remote_server, "localhost",
 			WX_SERVER_DEFAULT_SOCKET))
-		return (zz_on_error(c, 5));
-	if (!wc_mesh_new(&c->unit_cube, "data/unit_cube.obj"))
 		return (zz_on_error(c, 6));
+	if (!wc_mesh_new(&c->unit_cube, "data/unit_cube.obj"))
+		return (zz_on_error(c, 7));
 	if (!zz_pipeline(c))
 		return (wx_false);
 	zz_camera(c, window_width, window_height);

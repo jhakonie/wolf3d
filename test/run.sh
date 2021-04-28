@@ -139,6 +139,15 @@ test_3d_pipeline_transform() {
 }
 
 
+test_3d_screen_area() {
+    local test_name=${FUNCNAME}
+    rm -f test/build/${test_name}
+    gcc -g -Wall -Wextra -l m -o test/build/${test_name} \
+	-x c test/${test_name}.c.test
+    ./test/build/${test_name}
+}
+
+
 test_wx_types_h() {
     local test_name=${FUNCNAME}
     rm -f test/build/${test_name}

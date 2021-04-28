@@ -15,8 +15,11 @@
 /*
 ** 2021-04-08 todo: clamping to [0.0f, width] and [0.0f, height] introduces
 ** some inaccuracy? does there need to be some sort of +/-0.5f offsets?
+**
+** 2021-04-26 todo: really need to think how to properly be pixel-accurate here.
+** the vertex coordinates will not usually hit pixel centers
 */
-static t_rectangle	zz_aabb2(t_p3 const *p0, t_p3 const *p1,
+static t_rectangle	zz_screen_aabb2(t_p3 const *p0, t_p3 const *p1,
 	t_p3 const *p2, t_frame_buffer const *fb)
 {
 	t_rectangle	r;
@@ -31,7 +34,30 @@ static t_rectangle	zz_aabb2(t_p3 const *p0, t_p3 const *p1,
 }
 
 /*
-** 2021-04-10  todo: top-left filling rule
+** 2021-04-09 note:
+** the "2d" area in screen space of the projected face
+** screen, pseudo-2d/3d omitting z-axis:
+** +------------>x
+** |   p0       p2
+** |    +-------+
+** |     \     /
+** |      \   /
+** |       \ /
+** |        +
+** v        p1
+** y
+*/
+static t_f32	zz_screen_area(t_p3 const *p0, t_p3 const *p1, t_p3 const *p2)
+{
+	t_f32	a;
+
+	a = 0.5f * ((p1->y - p0->y) * (p2->x - p0->x) - (p1->x - p0->x)
+			* (p2->y - p0->y));
+	return (a);
+}
+
+/*
+** 2021-04-10 todo: top-left filling rule
 ** static t_bool	zz_edge_top_or_left_test(t_p3 const *p0, t_p3 const *p1)
 ** {
 **	if (p0->x > p1->x && p0->y == p1->y)
@@ -47,7 +73,7 @@ static t_rectangle	zz_aabb2(t_p3 const *p0, t_p3 const *p1,
 */
 
 /*
-** 2021-04-09 note:
+** 2021-04-26 note: a "2d" edge function in screen space looks like:
 ** screen, pseudo-2d/3d omitting z-axis:
 ** +------------>x
 ** |        p0
@@ -58,52 +84,81 @@ static t_rectangle	zz_aabb2(t_p3 const *p0, t_p3 const *p1,
 ** |             +
 ** v             p1
 ** y
+**     (p1->y - p0->y) * (p->x - p0->x) - (p1->x - p0->x) * (p->y - p0->y)
+**
+** shuffling it:
+**     (p1->y - p0->y) * p->x + (p1->x + p0->x) * p->y +
+**     (p1->x * p0->y - p1->y * p0->x)
+**
+** shows the x: (p1->y - p0->y), and y: (p1->x + p0->x) gradients
+**
+** from there for each edge the x- and y-steps for the face's u, v and w:
+** u x_step = (p1->y - p0->y)
+** u y_step = (p1->x + p0->x)
+** v x_step = (p2->y - p1->y)
+** v y_step = (p2->x + p1->x)
+** w x_step = (p0->y - p2->y)
+** w y_step = (p0->x + p2->x)
+**
+** which could lead to a faster way to update u, v, w for a per pixel
+** rather than calling zz_screen_area() three times per pixel
 */
-static t_f32	zz_edge_p2_test(t_p3 const *p0, t_p3 const *p1, t_p2 const *p)
+static t_draw_face_context	zz_draw_face_context_new(t_draw_context *dc,
+	t_p3 const *p0, t_p3 const *p1, t_p3 const *p2)
 {
-	t_f32	a;
+	t_draw_face_context	dfc;
 
-	a = (p1->y - p0->y) * (p->x - p0->x) - (p1->x - p0->x) * (p->y - p0->y);
-	return (a);
+	dfc.fb = dc->frame_buffer;
+	dfc.db = dc->depth_buffer;
+	dfc.p0 = p0;
+	dfc.p1 = p1;
+	dfc.p2 = p2;
+	dfc.aabb = zz_screen_aabb2(p0, p1, p2, dc->frame_buffer);
+	dfc.inv_face_area = 1.0f / zz_screen_area(p0, p1, p2);
+	dfc.u = 0.0f;
+	dfc.v = 0.0f;
+	dfc.w = 0.0f;
+	return (dfc);
 }
 
-static t_bool	zz_face_p2_test(t_p3 const *p0, t_p3 const *p1, t_p3 const *p2,
-	t_p2 p)
+/*
+** 2021-04-28 todo: think about what to store in the depth buffer. right now
+** it's the interpolated 1.0f/view.z for the pixel, so smaller values are
+** further away. maybe that's ok?
+*/
+static void	zz_draw(t_draw_face_context *dfc)
 {
-	t_f32	as[3];
-
-	as[0] = zz_edge_p2_test(p1, p2, &p);
-	as[1] = zz_edge_p2_test(p2, p0, &p);
-	as[2] = zz_edge_p2_test(p0, p1, &p);
-	if (as[0] < 0.0f || as[1] < 0.0f || as[2] < 0.0f)
+	dfc->u = zz_screen_area(dfc->p0, dfc->p1, &dfc->p) * dfc->inv_face_area;
+	dfc->v = zz_screen_area(dfc->p1, dfc->p2, &dfc->p) * dfc->inv_face_area;
+	dfc->w = zz_screen_area(dfc->p2, dfc->p0, &dfc->p) * dfc->inv_face_area;
+	if (dfc->u >= 0.0f && dfc->v >= 0.0f && dfc->w >= 0.0f)
 	{
-		return (wx_false);
+		dfc->z = dfc->u * dfc->p0->z + dfc->v * dfc->p1->z + dfc->w
+			* dfc->p2->z;
+		if (dfc->z > wc_depth_buffer_get(dfc->db, dfc->p.x, dfc->p.y))
+		{
+			wx_frame_buffer_set(dfc->fb, dfc->p.x, dfc->p.y, 0xff0000ff);
+			wc_depth_buffer_set(dfc->db, dfc->p.x, dfc->p.y, dfc->z);
+		}
 	}
-	return (wx_true);
 }
 
 void	wc_draw_face(t_draw_context *dc, t_p3 const *p0, t_p3 const *p1,
 	t_p3 const *p2)
 {
-	t_rectangle	aabb;
-	t_f32		x;
-	t_f32		y;
+	t_draw_face_context	dfc;
 
-	aabb = zz_aabb2(p0, p1, p2, dc->frame_buffer);
-	y = aabb.p0.y;
-	while (y < aabb.p1.y)
+	dfc = zz_draw_face_context_new(dc, p0, p1, p2);
+	dfc.p.z = 0.0f;
+	dfc.p.y = dfc.aabb.p0.y;
+	while (dfc.p.y < dfc.aabb.p1.y)
 	{
-		x = aabb.p0.x;
-		while (x < aabb.p1.x)
+		dfc.p.x = dfc.aabb.p0.x;
+		while (dfc.p.x < dfc.aabb.p1.x)
 		{
-			if (!zz_face_p2_test(p0, p1, p2, (t_p2){x, y}))
-			{
-				++x;
-				continue ;
-			}
-			wc_draw_pixel(dc->frame_buffer, x, y, 0xff0000ff);
-			++x;
+			zz_draw(&dfc);
+			++dfc.p.x;
 		}
-		++y;
+		++dfc.p.y;
 	}
 }

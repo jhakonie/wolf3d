@@ -32,7 +32,7 @@ void	wc_draw_rectangle_solid(t_frame_buffer *fb, t_p3 p, t_f32 width,
 		x = r.p0.x;
 		while (x < r.p1.x)
 		{
-			wc_draw_pixel(fb, x, y, abgr);
+			wx_frame_buffer_set(fb, x, y, abgr);
 			++x;
 		}
 		++y;

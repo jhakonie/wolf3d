@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wc_draw_clear.c                                    :+:      :+:    :+:   */
+/*   wc_depth_buffer_get.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/17 16:30:21 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/05 12:48:53 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/04/12 18:17:24 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/04/12 18:17:24 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wc_draw.h"
 
-void	wc_draw_clear(t_draw_context *dc)
+t_f32	wc_depth_buffer_get(t_depth_buffer *db, t_f32 x, t_f32 y)
 {
-	wx_buffer_set(dc->frame_buffer->data, dc->frame_buffer->data_size, 0);
-	wx_buffer_set(dc->depth_buffer->data, dc->depth_buffer->data_size, 0);
+	t_u64	i;
+
+	i = (t_u32)y * db->width + (t_u32)x;
+	return (db->data[i]);
 }

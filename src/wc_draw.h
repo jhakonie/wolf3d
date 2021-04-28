@@ -17,7 +17,6 @@
 # include "wx_math.h"
 
 typedef struct s_client				t_client;
-typedef struct s_pipeline_vertex	t_pipeline_vertex;
 
 struct	s_camera
 {
@@ -40,6 +39,20 @@ struct	s_clip_context
 	t_f32			t;
 };
 typedef struct s_clip_context		t_clip_context;
+
+struct	s_depth_buffer
+{
+	t_f32	*data;
+	t_u64	data_size;
+	t_u32	width;
+	t_u32	height;
+};
+typedef struct s_depth_buffer		t_depth_buffer;
+
+t_bool	wc_depth_buffer_new(t_depth_buffer *db, t_u32 width, t_u32 height);
+void	wc_depth_buffer_del(t_depth_buffer *db);
+t_f32	wc_depth_buffer_get(t_depth_buffer *db, t_f32 x, t_f32 y);
+void	wc_depth_buffer_set(t_depth_buffer *db, t_f32 x, t_f32 y, t_f32 d);
 
 struct	s_face
 {
@@ -107,6 +120,11 @@ typedef struct s_mesh				t_mesh;
 t_bool	wc_mesh_new(t_mesh *m, char const *filename);
 void	wc_mesh_del(t_mesh *m);
 
+/*
+** 2021-04-20 todo: decide whether to keep screen_positions as t_p3 or make a
+** new specific type for them, with less confusing names for the members. right
+** now screen_position.z stores 1.0f/view_position.z confusingly enough
+*/
 struct	s_pipeline_buffers
 {
 	t_p3	*screen_positions;
@@ -123,15 +141,11 @@ struct	s_draw_context
 	t_pipeline_buffers	*buffers;
 	t_m44				clip_from_view;
 	t_frame_buffer		*frame_buffer;
+	t_depth_buffer		*depth_buffer;
 	t_frustum			frustum;
 	t_m44				view_from_object;
 };
 typedef struct s_draw_context		t_draw_context;
-
-/* struct	s_pipeline_vertex */
-/* { */
-/*	t_p3	view_position; */
-/* }; */
 
 struct	s_rectangle
 {
@@ -140,15 +154,31 @@ struct	s_rectangle
 };
 typedef struct s_rectangle			t_rectangle;
 
+struct	s_draw_face_context
+{
+	t_frame_buffer	*fb;
+	t_depth_buffer	*db;
+	t_p3 const		*p0;
+	t_p3 const		*p1;
+	t_p3 const		*p2;
+	t_rectangle		aabb;
+	t_f32			inv_face_area;
+	t_p3			p;
+	t_f32			z;
+	t_f32			u;
+	t_f32			v;
+	t_f32			w;
+};
+typedef struct s_draw_face_context	t_draw_face_context;
+
 void	wc_draw(t_client *c);
 void	wc_draw_add_visible(t_draw_context *dc, t_clip_context const *cc);
-void	wc_draw_clear(t_frame_buffer *fb);
+void	wc_draw_clear(t_draw_context *dc);
 void	wc_draw_clip(t_draw_context *dc, t_face const *f, t_plane const *p);
 void	wc_draw_copy(t_client *c, t_frame_buffer const *fb);
 void	wc_draw_face(t_draw_context *dc, t_p3 const *p0, t_p3 const *p1,
 			t_p3 const *p2);
 void	wc_draw_mesh(t_draw_context *dc, t_mesh const *m);
-void	wc_draw_pixel(t_frame_buffer *fb, t_f32 x, t_f32 y, t_u32 abgr);
 void	wc_draw_rectangle_outline(t_frame_buffer *fb, t_p3 p, t_f32 width,
 			t_u32 abgr);
 void	wc_draw_rectangle_solid(t_frame_buffer *fb, t_p3 p, t_f32 width,
