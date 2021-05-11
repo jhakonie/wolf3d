@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/04/27 21:49:10 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/05/11 19:07:20 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,6 @@ libsdl2_cflags = `$(build_dir)libsdl2/bin/sdl2-config --cflags`
 libsdl2_ldflags = `$(build_dir)libsdl2/bin/sdl2-config --libs`
 
 client_src_files = $(addprefix $(src_dir), \
-	wx_c8s_del.c \
-	wx_c8s_new_from_file.c \
 	wc_client_dispatch_events.c \
 	wc_client_del.c \
 	wc_client_new.c \
@@ -32,6 +30,8 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_draw_clip.c \
 	wc_draw_copy.c \
 	wc_draw_face.c \
+	wc_draw_face_context_new.c \
+	wc_draw_face_context_reset.c \
 	wc_draw_mesh.c \
 	wc_draw_rectangle_solid.c \
 	wc_draw_rectangle_outline.c \
@@ -48,14 +48,14 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_obj_vertices_add_back.c \
 	wc_obj_vertices_del.c \
 	wc_obj_vertices_new.c \
+	wc_p2_lerp.c \
 	wc_p2s_add_back.c \
 	wc_p2s_del.c \
 	wc_p2s_new.c \
+	wc_p3_lerp.c \
 	wc_p3s_add_back.c \
 	wc_p3s_del.c \
 	wc_p3s_new.c \
-	wx_parse_f32.c \
-	wx_parse_keyword.c \
 	wc_parse_obj.c \
 	wc_parse_obj_comment.c \
 	wc_parse_obj_context_del.c \
@@ -69,11 +69,17 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_parse_obj_smoothing.c \
 	wc_parse_obj_uv.c \
 	wc_parse_u16.c \
-	wx_parse_whitespace.c \
+	wc_pipeline_buffers_del.c \
+	wc_pipeline_buffers_new.c \
 	wc_remote_server_new.c \
 	wc_remote_server_del.c \
 	wc_remote_server_read.c \
 	wc_remote_server_write.c \
+	wc_screen_xy_aabb.c \
+	wc_screen_xy_area.c \
+	wc_texture_del.c \
+	wc_texture_get.c \
+	wc_texture_new_from_file.c \
 	wc_u16s_add_back.c \
 	wc_u16s_del.c \
 	wc_u16s_new.c \
@@ -83,6 +89,9 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_address_equal.c \
 	wx_buffer_copy.c \
 	wx_buffer_set.c \
+	wx_c8s_del.c \
+	wx_c8s_new_from_file.c \
+	wx_f32_lerp.c \
 	wx_f32_max.c \
 	wx_f32_min.c \
 	wx_f64_min.c \
@@ -99,6 +108,16 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_m44_new_perspective.c \
 	wx_m44_new_q4_p3.c \
 	wx_obb_new.c \
+	wx_parse_f32.c \
+	wx_parse_hex.c \
+	wx_parse_keyword.c \
+	wx_parse_until.c \
+	wx_parse_whitespace.c \
+	wx_parse_xpm.c \
+	wx_parse_xpm_colors.c \
+	wx_parse_xpm_comment.c \
+	wx_parse_xpm_error.c \
+	wx_parse_xpm_pixels.c \
 	wx_plane_new.c \
 	wx_plane_line_test.c \
 	wx_plane_signed_distance_n3.c \
@@ -112,6 +131,7 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_packet_read_p2.c \
 	wx_packet_write_u8.c \
 	wx_time_s.c \
+	wx_xpm_del.c \
 )
 client_obj_files = $(subst $(src_dir), $(build_dir), $(client_src_files:.c=.o))
 client_exe = wolf3d
@@ -146,14 +166,6 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_ray_init.c \
 	we_ray_calculate.c \
 	we_wall_compass_direction.c \
-	we_parse_xpm.c \
-	we_parse_xpm_colors.c \
-	we_parse_xpm_error.c \
-	we_parse_xpm_pixels.c \
-	we_parse_until.c \
-	we_parse_xpm_comment.c \
-	we_xpm_del.c \
-	we_parse_hexa.c \
 	we_init_triangle.c \
 	we_init_line.c \
 	we_draw.c \
@@ -179,14 +191,22 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_complex_num_arithmetic.c \
 	wx_buffer_copy.c \
 	wx_buffer_set.c \
-	wx_frame_buffer_del.c \
-	wx_frame_buffer_new.c \
-	wx_to_radians.c \
 	wx_c8s_new_from_file.c \
 	wx_c8s_del.c \
+	wx_frame_buffer_del.c \
+	wx_frame_buffer_new.c \
 	wx_parse_keyword.c \
 	wx_parse_f32.c \
+	wx_parse_hex.c \
+	wx_parse_until.c \
 	wx_parse_whitespace.c \
+	wx_parse_xpm.c \
+	wx_parse_xpm_colors.c \
+	wx_parse_xpm_error.c \
+	wx_parse_xpm_pixels.c \
+	wx_parse_xpm_comment.c \
+	wx_to_radians.c \
+	wx_xpm_del.c \
 )
 editor_obj_files = $(subst $(src_dir), $(build_dir), $(editor_src_files:.c=.o))
 editor_exe = wolf3d_editor

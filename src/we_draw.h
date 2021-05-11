@@ -20,7 +20,7 @@
 # include "we_fractal.h"
 # include "we_texture.h"
 # include "we_ray_cast.h"
-# include "we_parse_xpm.h"
+# include "wx_parse_xpm.h"
 # include "stdlib.h"
 # include "unistd.h"
 

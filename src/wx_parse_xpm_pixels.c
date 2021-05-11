@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_parse_xpm_pixels.c                              :+:      :+:    :+:   */
+/*   wx_parse_xpm_pixels.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_parse_xpm.h"
+#include "wx_parse_xpm.h"
 
 /*
 ** Parse the end of line or the end of image.
@@ -23,23 +23,27 @@ static t_bool	zz_parse_end_of_line(t_parse_context *pc, t_parse_xpm_index i,
 	if (i.h < xpm->height - 1)
 	{
 		if (!wx_parse_keyword(pc, "\",\n\""))
-			return (we_parse_xpm_error(xpm,
-					WE_XPM_FREE_PIXELS, xpm->color_count - 1));
+			return (wx_parse_xpm_error(xpm,
+					WX_XPM_FREE_PIXELS, xpm->color_count - 1));
 	}
 	else
 	{
 		if (!wx_parse_keyword(pc, "\""))
-			return (we_parse_xpm_error(xpm,
-					WE_XPM_FREE_PIXELS, xpm->color_count - 1));
+			return (wx_parse_xpm_error(xpm,
+					WX_XPM_FREE_PIXELS, xpm->color_count - 1));
 		wx_parse_whitespace(pc);
 		if (!wx_parse_keyword(pc, "};"))
-			return (we_parse_xpm_error(xpm,
-					WE_XPM_FREE_PIXELS, xpm->color_count - 1));
+			return (wx_parse_xpm_error(xpm,
+					WX_XPM_FREE_PIXELS, xpm->color_count - 1));
 		wx_parse_whitespace(pc);
 	}
 	return (wx_true);
 }
 
+/*
+** 2021-05-03 todo: pc->p < pc->e test should be first. also check other similar
+** usages
+*/
 static t_bool	zz_is_key(t_parse_context *pc, t_xpm *xpm,
 t_parse_xpm_index i)
 {
@@ -84,8 +88,8 @@ static t_bool	zz_key_match(t_parse_context *pc, t_xpm *xpm,
 		}
 		i.key_index++;
 	}
-	return (we_parse_xpm_error(xpm,
-			WE_XPM_FREE_PIXELS, xpm->color_count - 1));
+	return (wx_parse_xpm_error(xpm,
+			WX_XPM_FREE_PIXELS, xpm->color_count - 1));
 }
 
 /*
@@ -94,7 +98,7 @@ static t_bool	zz_key_match(t_parse_context *pc, t_xpm *xpm,
 ** Free saved colors and previously allocated pixel-array upon failure.
 */
 
-t_bool	we_parse_xpm_pixels(t_xpm *xpm, t_parse_context *pc)
+t_bool	wx_parse_xpm_pixels(t_xpm *xpm, t_parse_context *pc)
 {
 	t_u32				size;
 	t_parse_xpm_index	i;
@@ -102,8 +106,8 @@ t_bool	we_parse_xpm_pixels(t_xpm *xpm, t_parse_context *pc)
 	size = xpm->height * xpm->width * sizeof(t_u32);
 	xpm->pixels = (t_u32 *)malloc(size);
 	if (!wx_parse_keyword(pc, "\"") || !xpm->pixels)
-		return (we_parse_xpm_error(xpm,
-				WE_XPM_FREE_KEYWORD, (xpm->color_count - 1)));
+		return (wx_parse_xpm_error(xpm,
+				WX_XPM_FREE_KEYWORD, (xpm->color_count - 1)));
 	i.pixel_index = 0;
 	i.h = 0;
 	while (i.h < xpm->height)

@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_xpm_del.c                                       :+:      :+:    :+:   */
+/*   wx_parse_xpm_comment.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/10 14:56:33 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/10 19:59:19 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/04/07 22:11:24 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/04/12 23:56:20 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_draw.h"
+#include "wx_parse_xpm.h"
 
-void	we_xpm_del(t_xpm *xpm)
+t_bool	wx_parse_xpm_comment(t_parse_context *pc)
 {
-	we_parse_xpm_error(xpm, WE_XPM_FREE_PIXELS, xpm->color_count - 1);
+	if (wx_parse_keyword(pc, "/*")
+		&& wx_parse_until(pc, '*')
+		&& wx_parse_keyword(pc, "/")
+		&& wx_parse_whitespace(pc))
+		return (wx_true);
+	return (wx_false);
 }

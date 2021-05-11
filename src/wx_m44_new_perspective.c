@@ -17,7 +17,7 @@
 /*
 ** 2021-03-15 note: distance where:
 ** - x spans +/- aspect_ratio
-** - y spans to +/- 1
+** - y spans +/- 1
 */
 
 static t_f32	zz_projection_plane_distance(t_f32 hfov_rad, t_f32 aspect_ratio)

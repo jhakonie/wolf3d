@@ -28,21 +28,23 @@ static void	zz_clip(t_draw_context *dc, t_mesh const *m)
 }
 
 /*
-** 2021-04-02 todo: the whole damn thing. for now just plot a point for each
-** vertex
+** 2021-05-05 todo: this could be a chance to catch degenerate triangles with
+** zero area. don't know if such triangles cause problems later on in the
+** pipeline. investigate
 */
-static void	zz_draw(t_draw_context *dc)
+static void	zz_draw(t_draw_context *dc, t_texture const *t)
 {
-	t_u64	i;
+	t_draw_face_context	dfc;
+	t_u64				i;
 
+	dfc = wc_draw_face_context_new(dc, t);
 	i = 0;
 	while (i < dc->buffers->visible_indices_size)
 	{
-		wc_draw_face(dc,
-			dc->buffers->screen_positions + dc->buffers->visible_indices[i + 0],
-			dc->buffers->screen_positions + dc->buffers->visible_indices[i + 1],
-			dc->buffers->screen_positions
-			+ dc->buffers->visible_indices[i + 2]);
+		wc_draw_face_context_reset(&dfc, dc->buffers->visible_indices[i + 0],
+			dc->buffers->visible_indices[i + 1],
+			dc->buffers->visible_indices[i + 2]);
+		wc_draw_face(&dfc);
 		i += 3;
 	}
 }
@@ -57,6 +59,8 @@ static void	zz_view_from_model(t_draw_context *dc, t_mesh const *m)
 	i = 0;
 	while (i < m->vertices.size)
 	{
+		dc->buffers->uvs[i] = m->vertices.buffer[i].uv;
+		++dc->buffers->uvs_size;
 		dc->buffers->view_positions[i]
 			= wx_m44_mul_p3(&dc->view_from_object,
 				&m->vertices.buffer[i].position);
@@ -86,7 +90,7 @@ static void	zz_view_from_model(t_draw_context *dc, t_mesh const *m)
 ** +z, so that's still true for clip space(?) and then above picture of ndc is
 ** wrong?
 **
-** 2021-04-21 todo: decide what to do with screen_position.z.isst ndc.z? for now
+** 2021-04-21 todo: decide what to do with screen_position.z? for now
 ** sreen_position.z = 1.0f/view_z. currently we're not doing anything with ndc.z
 ** either. so what's that about? ndc.z is mapped [near = 1.0f, far = 0.0f]
 */
@@ -94,7 +98,7 @@ static void	zz_screen_from_view(t_draw_context *dc)
 {
 	t_p4	clip;
 	t_u64	i;
-	t_f32	k;
+	t_f32	inv_view_z;
 	t_p3	ndc;
 
 	i = 0;
@@ -102,11 +106,12 @@ static void	zz_screen_from_view(t_draw_context *dc)
 	{
 		clip = wx_m44_mul_p3_f32(&dc->clip_from_view,
 				dc->buffers->view_positions + i, 1.0f);
-		k = 1.0f / clip.w;
-		ndc = (t_p3){k * clip.x, k * clip.y, k * clip.z};
+		inv_view_z = 1.0f / clip.w;
+		ndc = (t_p3){inv_view_z * clip.x, inv_view_z * clip.y,
+			inv_view_z * clip.z};
 		dc->buffers->screen_positions[i] = (t_p3){(-ndc.x + 1.0f)
 			* (0.5 * dc->frame_buffer->width), (-ndc.y + 1.0f)
-			* (0.5 * dc->frame_buffer->height), k};
+			* (0.5 * dc->frame_buffer->height), inv_view_z};
 		++dc->buffers->screen_positions_size;
 		++i;
 	}
@@ -134,7 +139,7 @@ static void	zz_screen_from_view(t_draw_context *dc)
 ** - normals and lighting
 ** - uvs
 */
-void	wc_draw_mesh(t_draw_context *dc, t_mesh const *m)
+void	wc_draw_mesh(t_draw_context *dc, t_mesh const *m, t_texture const *t)
 {
 	t_frustum_aabb		cs;
 
@@ -146,5 +151,5 @@ void	wc_draw_mesh(t_draw_context *dc, t_mesh const *m)
 	zz_view_from_model(dc, m);
 	zz_clip(dc, m);
 	zz_screen_from_view(dc);
-	zz_draw(dc);
+	zz_draw(dc, t);
 }

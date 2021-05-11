@@ -16,7 +16,7 @@ t_bool	we_texture_new(char *filename, t_tex *t)
 {
 	t_xpm	xpm;
 
-	if (!we_parse_xpm(filename, &xpm))
+	if (!wx_parse_xpm(filename, &xpm))
 		return (wx_false);
 	t->height = xpm.height;
 	t->width = xpm.width;
@@ -25,10 +25,10 @@ t_bool	we_texture_new(char *filename, t_tex *t)
 	t->texture = (t_u32 *)malloc(t->size);
 	if (!t->texture)
 	{
-		we_xpm_del(&xpm);
+		wx_xpm_del(&xpm);
 		return (wx_false);
 	}
 	wx_buffer_copy(t->texture, xpm.pixels, t->size);
-	we_xpm_del(&xpm);
+	wx_xpm_del(&xpm);
 	return (wx_true);
 }

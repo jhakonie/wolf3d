@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_parse_xpm_colors.c                              :+:      :+:    :+:   */
+/*   wx_parse_xpm_colors.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_parse_xpm.h"
+#include "wx_parse_xpm.h"
 
 /*
 ** Save hexa to a string and parse that to uint.
@@ -29,7 +29,7 @@ static t_bool	zz_parse_hexa(t_parse_context *pc, t_u32 *hex)
 		i++;
 		pc->p++;
 	}
-	if (!we_parse_hexa(numbers, hex, 6))
+	if (!wx_parse_hex(numbers, hex, 6))
 		return (wx_false);
 	return (wx_true);
 }
@@ -39,31 +39,33 @@ static t_bool	zz_parse_hexa(t_parse_context *pc, t_u32 *hex)
 ** Parse color keys and corresponding colors and save them. Parse comment.
 ** Free allocated colors upon failure.
 */
-
-t_bool	we_parse_xpm_colors(t_xpm *xpm, t_parse_context *pc)
+/*
+** 2021-05-03 todo: think about all the spots where to use wx_parse_whitespace()
+*/
+t_bool	wx_parse_xpm_colors(t_xpm *xpm, t_parse_context *pc)
 {
 	t_u32	i;
 
 	i = 0;
-	we_parse_xpm_comment(pc);
+	wx_parse_xpm_comment(pc);
 	if (!wx_parse_keyword(pc, "\""))
-		return (we_parse_xpm_error(xpm, WE_XPM_FREE_KEY, i));
+		return (wx_parse_xpm_error(xpm, WX_XPM_FREE_KEY, i));
 	while (i <= xpm->color_count - 1 && pc->p != pc->e)
 	{
 		xpm->key[i].keyword
 			= (t_u8 *)malloc(sizeof(t_u8) * xpm->keyword_length);
 		if (!xpm->key[i].keyword)
-			return (we_parse_xpm_error(xpm, WE_XPM_FREE_KEYWORD, i));
+			return (wx_parse_xpm_error(xpm, WX_XPM_FREE_KEYWORD, i));
 		wx_buffer_copy(xpm->key[i].keyword, pc->p, xpm->keyword_length);
 		pc->p += xpm->keyword_length;
-		if (!wx_parse_keyword(pc, " c #")
+		if (!wx_parse_whitespace(pc) || !wx_parse_keyword(pc, "c #")
 			|| !zz_parse_hexa(pc, &xpm->key[i].color)
 			|| !wx_parse_keyword(pc, "\",\n"))
-			return (we_parse_xpm_error(xpm, WE_XPM_FREE_KEYWORD, i));
+			return (wx_parse_xpm_error(xpm, WX_XPM_FREE_KEYWORD, i));
 		if (i < xpm->color_count - 1 && !wx_parse_keyword(pc, "\""))
-			return (we_parse_xpm_error(xpm, WE_XPM_FREE_KEYWORD, i));
+			return (wx_parse_xpm_error(xpm, WX_XPM_FREE_KEYWORD, i));
 		i++;
 	}
-	we_parse_xpm_comment(pc);
+	wx_parse_xpm_comment(pc);
 	return (wx_true);
 }

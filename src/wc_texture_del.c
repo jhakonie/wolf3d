@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_parse_xpm_comment.c                             :+:      :+:    :+:   */
+/*   wc_texture_del.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/07 22:11:24 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 23:56:20 by ***REMOVED***         ###   ########.fr       */
+/*   Created: 2021/05/01 15:59:14 by ***REMOVED***          #+#    #+#             */
+/*   Updated: 2021/05/01 15:59:14 by ***REMOVED***         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_parse_xpm.h"
+#include "stdlib.h"
 
-t_bool	we_parse_xpm_comment(t_parse_context *pc)
+#include "wc_draw.h"
+
+void	wc_texture_del(t_texture *t)
 {
-	if (wx_parse_keyword(pc, "/*")
-		&& we_parse_until(pc, '*')
-		&& wx_parse_keyword(pc, "/")
-		&& wx_parse_whitespace(pc))
-		return (wx_true);
-	return (wx_false);
+	free(t->buffer);
 }

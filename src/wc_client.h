@@ -68,7 +68,8 @@ struct	s_client
 	t_f64				sim_time_accumulator_s;
 	t_f64				sim_time_step_s;
 	SDL_Texture			*texture;
-	t_mesh				unit_cube;
+	t_mesh				test_mesh;
+	t_texture			test_texture;
 	SDL_Window			*window;
 };
 typedef struct s_client			t_client;

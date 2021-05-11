@@ -13,9 +13,9 @@
 #ifndef WE_TEXTURE_H
 # define WE_TEXTURE_H
 
-# include "wx_types.h"
 # include "wx_frame_buffer.h"
-# include "we_parse_xpm.h"
+# include "wx_math.h"
+# include "wx_parse_xpm.h"
 
 typedef struct s_texture_index
 {

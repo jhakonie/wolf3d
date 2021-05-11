@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_parse_until.c                                   :+:      :+:    :+:   */
+/*   wx_parse_until.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "wx_parse.h"
 
-t_bool	we_parse_until(t_parse_context *pc, t_u8 c)
+t_bool	wx_parse_until(t_parse_context *pc, t_u8 c)
 {
 	char const	*b;
 

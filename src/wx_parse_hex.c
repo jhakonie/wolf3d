@@ -24,7 +24,7 @@ static void	zz_calculate_hex(t_u32	*number, t_u32 *hex)
 		| (num_part.g << 8) | (num_part.b << 0);
 }
 
-t_bool	we_parse_hexa(t_u8 *str, t_u32 *hex, t_u32 len)
+t_bool	wx_parse_hex(t_u8 *str, t_u32 *hex, t_u32 len)
 {
 	t_u32	number[8];
 	t_u32	i;

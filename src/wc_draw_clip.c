@@ -12,19 +12,25 @@
 
 #include "wc_draw.h"
 
-static t_p3	zz_p3_lerp(t_p3 const *p0, t_p3 const *p1, t_f32 t)
-{
-	t_p3	p;
-
-	p.x = p0->x + t * (p1->x - p0->x);
-	p.y = p0->y + t * (p1->y - p0->y);
-	p.z = p0->z + t * (p1->z - p0->z);
-	return (p);
-}
-
+/*
+** 2021-05-05 note:
+**
+**    p0
+**    +
+**     \
+**      \ (add new, add index)
+** ------+------
+**  |     \
+**  |      \
+**  v       + (add index)
+**  n       p1
+*/
 static void	zz_clip_going_in(t_pipeline_buffers *pb, t_clip_context *cc)
 {
-	pb->view_positions[pb->view_positions_size] = zz_p3_lerp(pb->view_positions
+	pb->uvs[pb->uvs_size] = wc_p2_lerp(pb->uvs + cc->i0, pb->uvs + cc->i1,
+			cc->t);
+	++pb->uvs_size;
+	pb->view_positions[pb->view_positions_size] = wc_p3_lerp(pb->view_positions
 			+ cc->i0, pb->view_positions + cc->i1, cc->t);
 	cc->out_indices[cc->out_indices_size] = pb->view_positions_size;
 	++pb->view_positions_size;
@@ -34,9 +40,25 @@ static void	zz_clip_going_in(t_pipeline_buffers *pb, t_clip_context *cc)
 	cc->i0 = cc->i1;
 }
 
+/*
+** 2021-05-05 note:
+**
+**    p1
+**    +
+**     \
+**      \ (add new, add index)
+** ------+------
+**  |     \
+**  |      \
+**  v       +
+**  n       p0
+*/
 static void	zz_clip_going_out(t_pipeline_buffers *pb, t_clip_context *cc)
 {
-	pb->view_positions[pb->view_positions_size] = zz_p3_lerp(pb->view_positions
+	pb->uvs[pb->uvs_size] = wc_p2_lerp(pb->uvs + cc->i0, pb->uvs + cc->i1,
+			cc->t);
+	++pb->uvs_size;
+	pb->view_positions[pb->view_positions_size] = wc_p3_lerp(pb->view_positions
 			+ cc->i0, pb->view_positions + cc->i1, cc->t);
 	cc->out_indices[cc->out_indices_size] = pb->view_positions_size;
 	++pb->view_positions_size;
@@ -44,6 +66,15 @@ static void	zz_clip_going_out(t_pipeline_buffers *pb, t_clip_context *cc)
 	cc->i0 = cc->i1;
 }
 
+/*
+** 2021-05-05 note:
+**
+** -------------
+**  |
+**  | +-------+
+**  v p0      p1
+**  n        (add index)
+*/
 static void	zz_clip_in(t_clip_context *cc)
 {
 	cc->out_indices[cc->out_indices_size] = cc->i1;

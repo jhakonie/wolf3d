@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_parse_xpm_error.c                               :+:      :+:    :+:   */
+/*   wx_parse_xpm_error.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_parse_xpm.h"
+#include "wx_parse_xpm.h"
 
-t_bool	we_parse_xpm_error(t_xpm *xpm, t_u32 error, t_u32 index)
+t_bool	wx_parse_xpm_error(t_xpm *xpm, t_u32 error, t_u32 index)
 {
 	t_u32	i;
 
-	if (error == WE_XPM_FREE_KEY)
+	if (error == WX_XPM_FREE_KEY)
 		free(xpm->key);
-	else if (error == WE_XPM_FREE_KEYWORD)
+	else if (error == WX_XPM_FREE_KEYWORD)
 	{
 		i = 0;
 		while (i < index + 1)
@@ -28,10 +28,10 @@ t_bool	we_parse_xpm_error(t_xpm *xpm, t_u32 error, t_u32 index)
 		}
 		free(xpm->key);
 	}
-	else if (error == WE_XPM_FREE_PIXELS)
+	else if (error == WX_XPM_FREE_PIXELS)
 	{
 		free(xpm->pixels);
-		return (we_parse_xpm_error(xpm, WE_XPM_FREE_KEYWORD,
+		return (wx_parse_xpm_error(xpm, WX_XPM_FREE_KEYWORD,
 				xpm->color_count - 1));
 	}
 	return (wx_false);

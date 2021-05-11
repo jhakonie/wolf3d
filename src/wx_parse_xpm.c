@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_parse_xpm.c                                     :+:      :+:    :+:   */
+/*   wx_parse_xpm.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_parse_xpm.h"
+#include "wx_parse_xpm.h"
 
 /* todo: remove <stdio.h> from draw.h */
 
@@ -57,12 +57,12 @@ static t_bool	zz_parse_declaration(t_parse_context *pc)
 		&& wx_parse_keyword(pc, "char")
 		&& wx_parse_whitespace(pc)
 		&& wx_parse_keyword(pc, "*")
-		&& we_parse_until(pc, '{')
+		&& wx_parse_until(pc, '{')
 		&& wx_parse_whitespace(pc))
 	{
-		we_parse_xpm_comment(pc);
+		wx_parse_xpm_comment(pc);
 		wx_parse_whitespace(pc);
-		we_parse_xpm_comment(pc);
+		wx_parse_xpm_comment(pc);
 		if (!wx_parse_keyword(pc, "\""))
 			return (wx_false);
 		return (wx_true);
@@ -83,7 +83,7 @@ static t_bool	zz_free_txt(t_c8s *txt)
 ** Free buffer upon failure.
 */
 
-t_bool	we_parse_xpm(char *filename, t_xpm *xpm)
+t_bool	wx_parse_xpm(char const *filename, t_xpm *xpm)
 {
 	t_parse_context	pc;
 	t_c8s			txt;
@@ -98,13 +98,13 @@ t_bool	we_parse_xpm(char *filename, t_xpm *xpm)
 			return (zz_free_txt(&txt));
 		write(1, "loading texture...", 19);
 		if (!zz_parse_info(xpm, &pc)
-			|| !we_parse_xpm_colors(xpm, &pc)
-			|| !we_parse_xpm_pixels(xpm, &pc)
+			|| !wx_parse_xpm_colors(xpm, &pc)
+			|| !wx_parse_xpm_pixels(xpm, &pc)
 			|| pc.p != pc.e)
 			return (zz_free_txt(&txt));
 		zz_free_txt(&txt);
 		return (wx_true);
 	}
 	zz_free_txt(&txt);
-	return (we_parse_xpm_error(xpm, 0, 0));
+	return (wx_parse_xpm_error(xpm, 0, 0));
 }

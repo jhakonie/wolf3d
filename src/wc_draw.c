@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdio.h"
-
 #include "wc_client.h"
 #include "wc_draw.h"
 
@@ -45,6 +43,6 @@ void	wc_draw(t_client *c)
 
 	zz_draw_context_new(&dc, c);
 	wc_draw_clear(&dc);
-	wc_draw_mesh(&dc, &c->unit_cube);
+	wc_draw_mesh(&dc, &c->test_mesh, &c->test_texture);
 	wc_draw_copy(c, dc.frame_buffer);
 }
