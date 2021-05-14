@@ -15,6 +15,28 @@ test_2d_raycast() {
     ./test/build/${test_name}
 }
 
+test_xpm_reader() {
+    local test_name=${FUNCNAME}
+    rm -f test/build/${test_name}
+    gcc -g -Wall -Wextra -l m -o test/build/${test_name} \
+	src/wx_parse_hex.c \
+	src/wx_parse_xpm_colors.c \
+	src/wx_parse_xpm_error.c \
+	src/wx_parse_xpm_pixels.c \
+	src/wx_parse_xpm_hash_key.c \
+	src/wx_parse_until.c \
+	src/wx_parse_xpm_comment.c \
+	src/wx_xpm_del.c \
+	src/wx_parse_f32.c \
+	src/wx_parse_keyword.c \
+	src/wx_parse_whitespace.c \
+	src/wx_buffer_copy.c \
+	src/wx_buffer_set.c \
+	src/wx_c8s_new_from_file.c \
+	src/wx_c8s_del.c \
+	-x c test/${test_name}.c.test
+    ./test/build/${test_name}
+}
 
 test_3d_clip_face_plane()
 {
@@ -166,6 +188,7 @@ tests[3]="test_3d_mesh_read"
 tests[4]="test_3d_pipeline_transform"
 tests[4]="test_3d_clip_face_plane"
 tests[5]="test_wx_types_h"
+tests[6]="test_xpm_reader"
 
 
 main() {

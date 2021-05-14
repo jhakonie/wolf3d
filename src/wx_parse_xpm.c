@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 14:56:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 22:54:54 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/14 16:37:20 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,53 @@
 /* todo: remove <stdio.h> from draw.h */
 
 /*
-** Parse image width, height, color count and color key length
-** Allocate array for colors.
+** Parse unsigned int.
 */
 
-static t_bool	zz_parse_info(t_xpm *xpm, t_parse_context *pc)
+t_bool	zz_parse_u32(t_parse_context *pc, t_u32 *num)
 {
-	t_f32	info[4];
+	t_u32		integer;
+	char const	*start;
 
-	wx_buffer_set(info, sizeof(t_f32), 0);
-	if (wx_parse_f32(pc, &info[0])
-		&& wx_parse_whitespace(pc)
-		&& wx_parse_f32(pc, &info[1])
-		&& wx_parse_whitespace(pc)
-		&& wx_parse_f32(pc, &info[2])
-		&& wx_parse_whitespace(pc)
-		&& wx_parse_f32(pc, &info[3])
+	start = pc->p;
+	integer = 0;
+	while (pc->p < pc->e && *pc->p >= '0' && *pc->p <= '9')
+	{
+		integer = 10 * integer + (*pc->p - '0');
+		pc->p++;
+	}
+	if (pc->p == start)
+		return (wx_false);
+	*num = integer;
+	return (wx_true);
+}
+
+/*
+** Parse width, height, color count, color key length and possible comment.
+** Allocate table for colors.
+*/
+
+static t_bool	zz_parse_info(t_parse_context *pc, t_xpm *xpm)
+{
+	if (wx_parse_keyword(pc, "\"")
+		&& zz_parse_u32(pc, &xpm->width) && wx_parse_whitespace(pc)
+		&& zz_parse_u32(pc, &xpm->height) && wx_parse_whitespace(pc)
+		&& zz_parse_u32(pc, &xpm->color_count) && wx_parse_whitespace(pc)
+		&& zz_parse_u32(pc, &xpm->keyword_length)
 		&& wx_parse_keyword(pc, "\",\n"))
 	{
-		xpm->width = (int)info[0];
-		xpm->height = (int)info[1];
-		xpm->color_count = (int)info[2];
-		xpm->keyword_length = (int)info[3];
-		xpm->key
-			= (t_color_key *)malloc(sizeof(t_color_key) * xpm->color_count);
-		if (!xpm->key)
-			return (wx_false);
+		xpm->size = xpm->width * xpm->height;
+		xpm->table_size = xpm->color_count * 2;
+		xpm->table
+			= (t_key_value *)malloc(sizeof(t_key_value) * xpm->table_size);
+		if (!xpm->table)
+			return (wx_parse_xpm_error(xpm, 0,
+					"xpm-error: parse info, malloc for table\n", 41));
+		wx_buffer_set(xpm->table, sizeof(t_key_value) * xpm->table_size, 0);
+		wx_parse_xpm_comment(pc);
 		return (wx_true);
 	}
-	return (wx_false);
+	return (wx_parse_xpm_error(xpm, 0, "xpm-error: parse info\n", 23));
 }
 
 /*
@@ -63,8 +81,6 @@ static t_bool	zz_parse_declaration(t_parse_context *pc)
 		wx_parse_xpm_comment(pc);
 		wx_parse_whitespace(pc);
 		wx_parse_xpm_comment(pc);
-		if (!wx_parse_keyword(pc, "\""))
-			return (wx_false);
 		return (wx_true);
 	}
 	return (wx_false);
@@ -78,33 +94,33 @@ static t_bool	zz_free_txt(t_c8s *txt)
 }
 
 /*
-** Read file into buffer, check if file type is valid,
+** Read file into buffer, check if file's first row is valid,
 ** parse declaration and save image info.
 ** Free buffer upon failure.
 */
 
-t_bool	wx_parse_xpm(char const *filename, t_xpm *xpm)
+t_bool	wx_parse_xpm(t_c8 const *filename, t_xpm *xpm)
 {
 	t_parse_context	pc;
 	t_c8s			txt;
 
 	if (!wx_c8s_new_from_file(&txt, 1024, filename))
 		return (wx_false);
-	pc.p = (char const *)txt.buffer;
-	pc.e = (char const *)(txt.buffer + txt.size);
+	pc.p = (t_c8 const *)txt.buffer;
+	pc.e = (t_c8 const *)(txt.buffer + txt.size);
 	if ((wx_parse_keyword(&pc, "/* XPM */\n")))
 	{
 		if (!zz_parse_declaration(&pc))
 			return (zz_free_txt(&txt));
 		write(1, "loading texture...", 19);
-		if (!zz_parse_info(xpm, &pc)
-			|| !wx_parse_xpm_colors(xpm, &pc)
-			|| !wx_parse_xpm_pixels(xpm, &pc)
+		if (!zz_parse_info(&pc, xpm)
+			|| !wx_parse_xpm_colors(&pc, xpm)
+			|| !wx_parse_xpm_pixels(&pc, xpm)
 			|| pc.p != pc.e)
 			return (zz_free_txt(&txt));
 		zz_free_txt(&txt);
 		return (wx_true);
 	}
 	zz_free_txt(&txt);
-	return (wx_parse_xpm_error(xpm, 0, 0));
+	return (wx_false);
 }

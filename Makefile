@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/05/11 19:07:20 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/05/14 11:09:00 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,6 +118,7 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_parse_xpm_comment.c \
 	wx_parse_xpm_error.c \
 	wx_parse_xpm_pixels.c \
+	wx_parse_xpm_hash_key.c \
 	wx_plane_new.c \
 	wx_plane_line_test.c \
 	wx_plane_signed_distance_n3.c \
@@ -205,6 +206,7 @@ editor_src_files = $(addprefix $(src_dir), \
 	wx_parse_xpm_error.c \
 	wx_parse_xpm_pixels.c \
 	wx_parse_xpm_comment.c \
+	wx_parse_xpm_hash_key.c \
 	wx_to_radians.c \
 	wx_xpm_del.c \
 )
