@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/15 00:48:15 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:43:47 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ struct				s_map
 {
 	char			*file;
 	t_grid			grid;
-	t_item			*chart;
+	t_map_tile		tiles[WE_MAP_SIZE];
 	t_wall_type		wall_type[WE_WALL_TYPE_COUNT];
 	t_u32			block_count;
-	t_p2			player_pos_chart;
-	t_p2			player_pos_chart_old;
+	t_p2			player_pos_tiles;
+	t_p2			player_pos_tiles_old;
 	t_u32			player_pos_old_id;
 	t_p2			ptr;
 	t_bool			ptr_draw;
@@ -69,8 +69,6 @@ struct				s_map
 	t_bool			ptr_hold;
 	t_bool			draw_3d;
 	t_bool			draw_rays;
-	t_bool			draw_rays_wall;
-	t_bool			draw_rays_no_wall;
 };
 typedef struct s_map	t_map;
 
@@ -93,8 +91,6 @@ t_bool				we_editor_new(t_editor *e, t_u32 window_width,
 						t_u32 window_height);
 t_bool				we_editor_run(t_editor *e);
 void				we_editor_del(t_editor *e);
-t_bool				we_chart_new(t_map *m);
-void				we_chart_del(t_item *c);
 t_bool				we_wall_type_new(t_wall_type *wall_type);
 t_bool				we_wall_type_del(t_wall_type *wall_type,
 						t_u32 wall_type_index, t_u32 wall_index);
@@ -108,8 +104,9 @@ void				we_init_player_location(t_tool *t,
 void				we_init_empty(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_save(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_map(t_map *m, t_u32 win_w, t_u32 win_h);
-t_bool				we_init_textures(t_wall_type *wall_type);
-void				we_init_chart(t_map *m);
+// t_bool				we_init_textures(t_wall_type *wall_type);
+void				we_init_tiles(t_map *m);
+void				we_tiles_set(t_map *m);
 void				we_init_player(t_player *p, t_map *m, t_u32 screen_width);
 t_p2				we_from_win_to_map(t_p2 win, t_map m);
 t_p2				we_from_map_to_win(t_p2 map, t_map m);

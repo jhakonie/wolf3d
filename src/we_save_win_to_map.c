@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 18:11:52 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/24 15:40:41 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/05/15 22:01:15 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	we_save_win_to_map(t_p2 win, t_editor *e)
 	if (map.x < WE_GRID_DIVIDE && map.y < WE_GRID_DIVIDE)
 	{
 		block_num = (int)map.x + WE_GRID_DIVIDE * (int)map.y;
-		e->map.chart[block_num].block.x = map.x;
-		e->map.chart[block_num].block.y = map.y;
+		e->map.tiles[block_num].block.x = map.x;
+		e->map.tiles[block_num].block.y = map.y;
 		if (e->tools.id == 4)
-			e->map.chart[block_num].id = 0;
+			e->map.tiles[block_num].id = 0;
 		else
-			e->map.chart[block_num].id = e->tools.id;
+			e->map.tiles[block_num].id = e->tools.id;
 	}
 }

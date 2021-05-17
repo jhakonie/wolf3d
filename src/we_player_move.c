@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 12:38:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/15 01:02:55 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/17 15:30:34 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	zz_move_forward(t_editor *e, t_f32 s)
 	move.y = -(sin(e->player.direction_d * WE_TO_RAD) * s);
 	block = (int)((e->player.position.x + move.x) / WE_BLOCK_W)
 		+ (int)((e->player.position.y + move.y) / WE_BLOCK_W) *WE_GRID_DIVIDE;
-	if (e->map.chart[block].id == 0 || e->map.chart[block].id == 3
+	if (e->map.tiles[block].id == 0 || e->map.tiles[block].id == 3
 		|| !e->player.wall_collision)
 	{
 		e->player.position.x += move.x;
@@ -38,7 +38,7 @@ static void	zz_move_backward(t_editor *e, t_f32 s)
 	move.y = -(sin(e->player.direction_d * WE_TO_RAD) * s);
 	block = (int)((e->player.position.x - move.x) / WE_BLOCK_W)
 		+ (int)((e->player.position.y - move.y) / WE_BLOCK_W) *WE_GRID_DIVIDE;
-	if (e->map.chart[block].id == 0 || e->map.chart[block].id == 3
+	if (e->map.tiles[block].id == 0 || e->map.tiles[block].id == 3
 		|| !e->player.wall_collision)
 	{
 		e->player.position.x -= move.x;
@@ -55,7 +55,7 @@ static void	zz_move_right(t_editor *e, t_f32 s)
 	move.y = -sin((90 + e->player.direction_d) * WE_TO_RAD) * s;
 	block = (int)((e->player.position.x + move.x) / WE_BLOCK_W)
 		+ (int)((e->player.position.y + move.y) / WE_BLOCK_W) *WE_GRID_DIVIDE;
-	if (e->map.chart[block].id == 0 || e->map.chart[block].id == 3
+	if (e->map.tiles[block].id == 0 || e->map.tiles[block].id == 3
 		|| !e->player.wall_collision)
 	{
 		e->player.position.x += move.x;
@@ -72,7 +72,7 @@ static void	zz_move_left(t_editor *e, t_f32 s)
 	move.y = -sin((90 + e->player.direction_d) * WE_TO_RAD) * s;
 	block = (int)((e->player.position.x - move.x) / WE_BLOCK_W)
 		+ (int)((e->player.position.y - move.y) / WE_BLOCK_W) *WE_GRID_DIVIDE;
-	if (e->map.chart[block].id == 0 || e->map.chart[block].id == 3
+	if (e->map.tiles[block].id == 0 || e->map.tiles[block].id == 3
 		|| !e->player.wall_collision)
 	{
 		e->player.position.x -= move.x;

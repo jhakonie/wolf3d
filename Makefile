@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/05/17 01:55:44 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/05/17 16:55:19 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -143,14 +143,13 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_editor_run.c \
 	we_editor_del.c \
 	we_window_event.c \
-	we_chart_new.c \
-	we_chart_del.c \
 	we_wall_type_new.c \
 	we_wall_type_del.c \
 	we_texture_new.c \
 	we_init_toolbar.c \
 	we_init_map.c \
-	we_init_chart.c \
+	we_init_tiles.c \
+	we_tiles_set.c \
 	we_init_player.c \
 	we_init_buttons.c \
 	we_from_win_to_map.c \

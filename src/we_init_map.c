@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:34:33 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/10 17:48:53 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/15 17:37:12 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ void	we_init_map(t_map *m, t_u32 win_w, t_u32 win_h)
 	m->ptr.x = 0;
 	m->ptr.y = 0;
 	m->ptr_hold = wx_false;
-	m->draw_3d = wx_false;
 	m->draw_rays = wx_false;
-	m->draw_rays_wall = wx_false;
-	m->draw_rays_no_wall = wx_false;
 	m->grid.color[0] = 0xAAB0AF;
 	m->grid.color[1] = 0x0000FF;
 }

@@ -14,12 +14,12 @@
 
 void	zz_player_pos_set(t_map *m, t_player *p, t_u32 i)
 {
-	m->chart[i].id = 3;
-	m->player_pos_chart = m->chart[i].block;
-	m->player_pos_chart_old = m->chart[i].block;
+	m->tiles[i].id = 3;
+	m->player_pos_tiles = m->tiles[i].block;
+	m->player_pos_tiles_old = m->tiles[i].block;
 	m->player_pos_old_id = 0;
-	p->position.x = m->chart[i].block.x * WE_BLOCK_W + WE_BLOCK_W / 2;
-	p->position.y = m->chart[i].block.y * WE_BLOCK_W + WE_BLOCK_W / 2;
+	p->position.x = m->tiles[i].block.x * WE_BLOCK_W + WE_BLOCK_W * 0.5f;
+	p->position.y = m->tiles[i].block.y * WE_BLOCK_W + WE_BLOCK_W * 0.5f;
 }
 
 void	zz_player_pos(t_map *m, t_player *p)
@@ -29,7 +29,7 @@ void	zz_player_pos(t_map *m, t_player *p)
 	i = 0;
 	while (i < p->w_block_count)
 	{
-		if (m->chart[i].id == 3)
+		if (m->tiles[i].id == 3)
 		{
 			zz_player_pos_set(m, p, i);
 			break ;

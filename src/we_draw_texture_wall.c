@@ -59,7 +59,7 @@ void	we_draw_texture_wall(t_ray ray, t_p2 draw,
 				+ (int)tex_index.coord.x);
 		if (tex_index.index < max_tex_index)
 		{
-			if (ray.wall.chart_id == 1)
+			if (ray.wall.tiles_id == 1)
 				color = tex.texture[tex_index.index];
 			else
 				color = tex.fractal[tex_index.index];

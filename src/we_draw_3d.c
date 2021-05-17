@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 17:10:51 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/16 13:48:31 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:15:45 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	we_draw_3d(t_frame_buffer *frame_buffer, t_player player,
 	while (ray.nb < frame_buffer->width)
 	{
 		we_ray_calculate(&ray, angle_d, player.direction_d);
-		we_ray_cast(&ray, map.chart, frame_buffer, map.draw_3d);
-		if (map.draw_3d == wx_true && ray.wall.side != we_no_wall)
+		we_ray_cast(&ray, map.tiles, frame_buffer, map.draw_3d);
+		if (map.draw_3d == wx_true)
 			we_draw_wall(ray, frame_buffer, map.wall_type);
 		else if ((map.draw_rays))
 			we_draw_rays(ray, map, frame_buffer);

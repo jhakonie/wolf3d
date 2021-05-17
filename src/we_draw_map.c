@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 21:52:54 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/07 22:39:23 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/15 22:30:29 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	we_draw_map(t_editor *e)
 	i = 0;
 	while (i < e->map.block_count)
 	{
-		if (e->map.chart[i].id != WE_ID_INIT)
+		if (e->map.tiles[i].id != WE_ID_INIT)
 		{
-			start = we_from_map_to_win(e->map.chart[i].block, e->map);
+			start = we_from_map_to_win(e->map.tiles[i].block, e->map);
 			end.x = start.x + e->map.grid.part.x;
 			end.y = start.y + e->map.grid.part.y;
 			we_draw_rec_full(start, end, &e->frame_buffer,
-				e->tools.tool[e->map.chart[i].id].button.color[0]);
+				e->tools.tool[e->map.tiles[i].id].button.color[0]);
 		}
 		i++;
 	}

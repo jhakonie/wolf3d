@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 17:54:14 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/14 21:39:20 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:14:10 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,15 @@ static t_p2	zz_north(t_ray ray, t_p2 block)
 		}
 		return (end);
 	}
-	end.x = (block.x) * WE_BLOCK_W;
-	end.y = ray.k * end.x + ray.b;
-	if (end.y < ((block.y - 1) * WE_BLOCK_W))
+	else
 	{
-		end.y = (block.y - 1) * WE_BLOCK_W;
-		end.x = (end.y - ray.b) / ray.k;
+		end.x = (block.x) * WE_BLOCK_W;
+		end.y = ray.k * end.x + ray.b;
+		if (end.y < ((block.y - 1) * WE_BLOCK_W))
+		{
+			end.y = (block.y - 1) * WE_BLOCK_W;
+			end.x = (end.y - ray.b) / ray.k;
+		}
 	}
 	return (end);
 }
@@ -52,12 +55,15 @@ static t_p2	zz_south(t_ray ray, t_p2 block)
 		}
 		return (end);
 	}
-	end.x = (block.x) * WE_BLOCK_W;
-	end.y = ray.k * end.x + ray.b;
-	if (end.y > ((block.y + 1) * WE_BLOCK_W))
+	else
 	{
-		end.y = (block.y + 1) * WE_BLOCK_W;
-		end.x = (end.y - ray.b) / ray.k;
+		end.x = (block.x) * WE_BLOCK_W;
+		end.y = ray.k * end.x + ray.b;
+		if (end.y > ((block.y + 1) * WE_BLOCK_W))
+		{
+			end.y = (block.y + 1) * WE_BLOCK_W;
+			end.x = (end.y - ray.b) / ray.k;
+		}
 	}
 	return (end);
 }
@@ -106,14 +112,17 @@ static t_p2	zz_west(t_ray ray, t_p2 block)
 		}
 		return (end);
 	}
-	end.y = (block.y + 1) * WE_BLOCK_W;
-	end.x = (end.y - ray.b) / ray.k;
-	if (end.x < ((block.x - 1) * WE_BLOCK_W))
+	else
 	{
-		end.x = (block.x - 1) * WE_BLOCK_W;
-		end.y = ray.k * end.x + ray.b;
+		end.y = (block.y + 1) * WE_BLOCK_W;
+		end.x = (end.y - ray.b) / ray.k;
+		if (end.x < ((block.x - 1) * WE_BLOCK_W))
+		{
+			end.x = (block.x - 1) * WE_BLOCK_W;
+			end.y = ray.k * end.x + ray.b;
+		}
+		return (end);
 	}
-	return (end);
 }
 
 t_p2	we_floor_draw_end(t_ray ray)

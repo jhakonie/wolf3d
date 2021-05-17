@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:55:17 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/11 23:36:59 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:17:42 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static t_s32	zz_fractal_color(t_s32 i, t_fractal *fractal, t_u32 id,
 
 static void	zz_init_fractal(t_fractal *fractal, t_s32 *h, t_s32 *w, t_p2 p)
 {
-	*h = WE_GRID_DIVIDE;
-	*w = WE_GRID_DIVIDE;
+	*h = 40;
+	*w = 40;
 	fractal->win_h = *h;
 	fractal->win_w = *w;
 	fractal->max_i = 20;

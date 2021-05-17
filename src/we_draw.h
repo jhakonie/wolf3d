@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/12 13:23:55 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:23:51 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,21 @@
 # define WE_ID_INIT (0)
 # define WE_WALL_TYPE_COUNT (2)
 # define WE_TOOL_COUNT (6)
-# define WE_GRID_DIVIDE (50)
+
+/*
+** REMEMBER to update WE_MAP_BUFF_SIZE (2 * WE_GRID_DIVIDE * WE_GRID_DIVIDE)
+** and WE_MAP_SIZE (WE_GRID_DIVIDE * WE_GRID_DIVIDE)
+** IF WE_GRID_DIVIDE is altered!
+*/
+# define WE_GRID_DIVIDE (57)
 
 /*
 ** 2021-03-24 todo: this is a temporary hack until something better. new
 ** norminette complains about any arithmetic operation in a define. this should
 ** be: WE_GRID_DIVIDE * WE_GRID_DIVIDE * 2
 */
-# define WE_LOAD_FILE_TO_CHART_BUFFER_SIZE (5000)
+# define WE_MAP_BUFF_SIZE (6498)
+# define WE_MAP_SIZE (3249)
 # define WE_BLOCK_W (2)
 
 # define PI (3.14159265359)

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 00:24:00 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/27 21:49:58 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/15 22:34:10 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ static t_bool	zz_player_position(t_p2 win, t_editor *e)
 
 	player_pos = we_from_win_to_map(win, e->map);
 	index = player_pos.x + player_pos.y * WE_GRID_DIVIDE;
-	if (e->map.chart[index].id == 0 || e->map.chart[index].id == 2)
+	if (e->map.tiles[index].id == 0 || e->map.tiles[index].id == 2)
 	{
-		e->map.player_pos_chart = player_pos;
+		e->map.player_pos_tiles = player_pos;
 		id = e->map.player_pos_old_id;
-		e->map.player_pos_old_id = e->map.chart[index].id;
-		e->player.position.x = e->map.player_pos_chart.x * WE_BLOCK_W
+		e->map.player_pos_old_id = e->map.tiles[index].id;
+		e->player.position.x = e->map.player_pos_tiles.x * WE_BLOCK_W
 			+ 0.5 * WE_BLOCK_W;
-		e->player.position.y = e->map.player_pos_chart.y * WE_BLOCK_W
+		e->player.position.y = e->map.player_pos_tiles.y * WE_BLOCK_W
 			+ 0.5 * WE_BLOCK_W;
-		index = e->map.player_pos_chart_old.x
-			+ e->map.player_pos_chart_old.y * WE_GRID_DIVIDE;
-		e->map.chart[index].id = id;
-		e->map.player_pos_chart_old = e->map.player_pos_chart;
+		index = e->map.player_pos_tiles_old.x
+			+ e->map.player_pos_tiles_old.y * WE_GRID_DIVIDE;
+		e->map.tiles[index].id = id;
+		e->map.player_pos_tiles_old = e->map.player_pos_tiles;
 		e->map.ptr_clear = wx_true;
 		return (wx_true);
 	}

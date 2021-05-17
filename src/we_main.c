@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 14:00:01 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/29 01:14:49 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/15 18:47:15 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,11 @@
 
 static void	zz_arguments_check(char **file, int ac, char **av)
 {
-	if (ac == 1)
-		*file = WX_NULL;
-	else if (ac == 2)
+	if (ac == 2)
 		*file = av[1];
 	else
 	{
-		write(1, "wrong args\n", 11);
+		write(1, "usage: ./wolf3d_editor <file_name>\n", 36);
 		exit(0);
 	}
 }

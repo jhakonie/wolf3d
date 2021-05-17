@@ -44,29 +44,12 @@ static void	zz_player_rotation(t_u32 key, t_f32 *player_direction_d)
 	}
 }
 
-static void	zz_draw_rays_2d(t_u32 key, t_editor *e)
+static void	zz_draw_rays_2d(t_bool *draw_rays)
 {
-	if (key == SDLK_r)
-	{
-		if (!e->map.draw_rays)
-			e->map.draw_rays = wx_true;
-		else
-			e->map.draw_rays = wx_false;
-	}
-	if (key == SDLK_t)
-	{
-		if (!e->map.draw_rays_wall)
-			e->map.draw_rays_wall = wx_true;
-		else
-			e->map.draw_rays_wall = wx_false;
-	}
-	if (key == SDLK_y)
-	{
-		if (!e->map.draw_rays_no_wall)
-			e->map.draw_rays_no_wall = wx_true;
-		else
-			e->map.draw_rays_no_wall = wx_false;
-	}
+	if (!*draw_rays)
+		*draw_rays = wx_true;
+	else
+		*draw_rays = wx_false;
 }
 
 void	we_key_event(t_u32 key, t_editor *e)
@@ -77,8 +60,8 @@ void	we_key_event(t_u32 key, t_editor *e)
 		zz_player_rotation(key, &e->player.direction_d);
 	else if (key == SDLK_w || key == SDLK_s || key == SDLK_a || key == SDLK_d)
 		we_player_move(key, e);
-	else if (key == SDLK_r || key == SDLK_t || key == SDLK_y)
-		zz_draw_rays_2d(key, e);
+	else if (key == SDLK_r)
+		zz_draw_rays_2d(&e->map.draw_rays);
 	else if (key == SDLK_c)
 		zz_go_through_walls(&e->player.wall_collision);
 	else if (key == SDLK_f && !e->player.run)
