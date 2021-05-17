@@ -6,15 +6,15 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 17:25:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 20:21:05 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/16 13:49:01 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_draw.h"
 
 /*
-** Calculating distance to wall and wall projected height.
-** Defineing wall type, side and wall compass direction.
+** Calculate distance to wall and wall projected height.
+** Define wall type, side and wall compass direction.
 */
 
 static t_found	zz_wall_values(t_ray *ray, t_item *chart, t_side side)
@@ -36,7 +36,13 @@ static t_found	zz_wall_values(t_ray *ray, t_item *chart, t_side side)
 }
 
 /*
-** Checking if ray hit a wall. Saving intersection point and chart index.
+** Check if ray hit a wall. Save intersection point, chart index and
+** ray values.
+*/
+
+/* todo: make this return ray.wall
+** and set it to no_wall if index was out of bounds,
+** otherwise outside map floor will be drawn based on prev. ray info
 */
 
 static t_bool	zz_is_wall(t_item *chart, t_ray *ray, t_p2 intersection_w,
@@ -59,18 +65,17 @@ static t_bool	zz_is_wall(t_item *chart, t_ray *ray, t_p2 intersection_w,
 		index -= WE_GRID_DIVIDE;
 	else if (ray->angle_d >= 90 && ray->angle_d <= 270 && line == we_vertical)
 		index -= 1;
-	if (index < block_count - 1)
+	if (index < block_count)
 	{
 		ray->wall.chart_index = index;
-		if (chart[index].id == 1 || chart[index].id == 2)
-			return (wx_true);
-		zz_wall_values(ray, chart, line);
+		ray->wall = zz_wall_values(ray, chart, line);
+		return (wx_true);
 	}
 	return (wx_false);
 }
 
 /*
-** Finding distance to horizontal wall, drawing floor, updating ray values.
+** Find distance to horizontal wall, draw floor, update ray values.
 */
 
 static t_found	zz_dist_horizontal_wall(t_ray *ray, t_item *chart,
@@ -93,18 +98,18 @@ static t_found	zz_dist_horizontal_wall(t_ray *ray, t_item *chart,
 			|| block_y >= WE_GRID_DIVIDE)
 			break ;
 		if ((zz_is_wall(chart, ray, intersection_w, we_horisontal)))
-			return (zz_wall_values(ray, chart, we_horisontal));
-		we_draw_floor(*ray, fb, draw_3d);
+			we_draw_floor(*ray, fb, draw_3d);
+		if (ray->wall.chart_id == 1 || ray->wall.chart_id == 2)
+			return (ray->wall);
+		intersection_w.y += WE_BLOCK_W;
 		if (ray->angle_d < 180 && ray->angle_d > 0)
-			intersection_w.y -= WE_BLOCK_W;
-		else
-			intersection_w.y += WE_BLOCK_W;
+			intersection_w.y -= 2 * WE_BLOCK_W;
 	}
 	return (zz_wall_values(ray, chart, we_no_wall));
 }
 
 /*
-** Finding distance to vertical wall, drawing floor, updating ray values.
+** Find distance to vertical wall, draw floor, update ray values.
 */
 
 static t_found	zz_dist_vertical_wall(t_ray *ray, t_item *chart,
@@ -127,19 +132,19 @@ static t_found	zz_dist_vertical_wall(t_ray *ray, t_item *chart,
 			|| block_x >= WE_GRID_DIVIDE)
 			break ;
 		if ((zz_is_wall(chart, ray, intersection_w, we_vertical)))
-			return (zz_wall_values(ray, chart, we_vertical));
-		we_draw_floor(*ray, fb, draw_3d);
+			we_draw_floor(*ray, fb, draw_3d);
+		if (ray->wall.chart_id == 1 || ray->wall.chart_id == 2)
+			return (ray->wall);
+		intersection_w.x += WE_BLOCK_W;
 		if (ray->angle_d > 90 && ray->angle_d < 270)
-			intersection_w.x -= WE_BLOCK_W;
-		else
-			intersection_w.x += WE_BLOCK_W;
+			intersection_w.x -= 2 * WE_BLOCK_W;
 	}
 	return (zz_wall_values(ray, chart, we_no_wall));
 }
 
 /*
-** Finding the closest intersection point with horisontal and vertical
-** walls. Choosing the closer one to be drawn.
+** Find the closest intersection point with horisontal and vertical
+** walls. Choose the closer one to be drawn.
 */
 
 void	we_ray_cast(t_ray *ray, t_item *chart, t_frame_buffer *fb,

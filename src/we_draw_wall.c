@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:08:31 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 23:28:38 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/17 14:36:28 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ void	we_draw_wall(t_ray ray, t_frame_buffer *fb, t_wall_type *wall_type)
 	if (ray.wall.distance > 0)
 		ray.wall.projected_height = (ray.dist_to_screen / ray.wall.distance)
 			* WE_BLOCK_W;
-	draw_start.y = 0.5 * fb->height - 0.5 * ray.wall.projected_height;
-	if ((t_s32)draw_start.y < 0)
-		draw_start.y = 0;
+	draw_start.y = ray.player_height * fb->height
+		- ray.player_height * ray.wall.projected_height;
+	if ((t_s32)draw_start.y >= (t_s32)fb->height)
+		return ;
 	draw_start.x = (t_f32)ray.nb;
 	we_draw_texture_wall(ray, draw_start, fb, texture);
 }

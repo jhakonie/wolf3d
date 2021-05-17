@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 22:34:23 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/28 22:20:06 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/04/14 21:28:06 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	we_draw_rays(t_ray ray, t_map map, t_frame_buffer *fb)
 		temp.x = ray.wall.end.x / WE_BLOCK_W;
 		temp.y = ray.wall.end.y / WE_BLOCK_W;
 		end = we_from_map_to_win(temp, map);
-		we_draw_line(start, end, fb, 0x00ff00);
+		if (start.x > map.grid.start.x)
+			we_draw_line(start, end, fb, 0x00ff00);
 	}
 }

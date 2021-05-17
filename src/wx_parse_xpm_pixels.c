@@ -13,7 +13,7 @@
 #include "wx_parse_xpm.h"
 
 /*
-** Parse the end of line or the end of image.
+** Parse the end of line or the end of file.
 ** Upon failure free saved colors and pixel-array.
 */
 

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/27 21:58:34 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/15 00:48:15 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,17 @@ typedef struct s_tools	t_tools;
 
 struct			s_player
 {
+	t_f32		height;
 	t_p2		position;
 	t_f32		direction_d;
+	t_f32		dist_to_screen;
 	t_f32		fov_d;
 	t_p2		w_start;
 	t_p2		w_end;
 	t_u32		w_block_count;
-	t_u32		w_step;
+	t_f32		w_step;
+	t_bool		run;
+	t_bool		wall_collision;
 };
 typedef struct s_player	t_player;
 
@@ -106,7 +110,7 @@ void				we_init_save(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_map(t_map *m, t_u32 win_w, t_u32 win_h);
 t_bool				we_init_textures(t_wall_type *wall_type);
 void				we_init_chart(t_map *m);
-void				we_init_player(t_player *p, t_map *m);
+void				we_init_player(t_player *p, t_map *m, t_u32 screen_width);
 t_p2				we_from_win_to_map(t_p2 win, t_map m);
 t_p2				we_from_map_to_win(t_p2 map, t_map m);
 void				we_save_win_to_map(t_p2 win, t_editor *e);
@@ -129,5 +133,6 @@ void				we_draw_3d(t_frame_buffer *frame_buffer, t_player player,
 						t_map map);
 t_f32				we_to_rad(t_f32 deg);
 void				we_player_move(t_u32 key, t_editor *e);
+void				we_player_rotate(t_editor *e, t_u32 x, t_u32 y);
 
 #endif

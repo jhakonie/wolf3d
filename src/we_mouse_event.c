@@ -11,7 +11,9 @@ static void	zz_mouse_event_move(t_editor *e, t_u32 x, t_u32 y)
 	t_u32	i;
 
 	i = 1;
-	if (x < e->map.grid.start.x)
+	if (e->map.draw_3d)
+		we_player_rotate(e, x, y);
+	else if (x < e->map.grid.start.x)
 	{
 		e->map.ptr_draw = wx_false;
 		e->map.ptr_clear = wx_true;
@@ -31,14 +33,16 @@ static void	zz_mouse_event_button_down(t_editor *e, t_u32 x, t_u32 y)
 	{
 		if (x < e->map.grid.start.x)
 			we_mouse_pos_tool_on_click(e, x, y);
-		else if (e->tools.id != WE_ID_INIT)
+		else if (!e->map.draw_3d && e->tools.id != WE_ID_INIT)
 			we_mouse_pos_grid_on_click(e, x, y);
 	}
 }
 
 void	we_mouse_event(t_editor *e)
 {
-	if (e->event.type == SDL_MOUSEMOTION)
+	if (e->map.draw_3d && e->event.type == SDL_MOUSEMOTION)
+		zz_mouse_event_move(e, e->event.motion.x, e->event.motion.y);
+	else if (!e->map.draw_3d && e->event.type == SDL_MOUSEMOTION)
 		zz_mouse_event_move(e, e->event.motion.x, e->event.motion.y);
 	else if (e->event.type == SDL_MOUSEBUTTONDOWN)
 		zz_mouse_event_button_down(e, e->event.button.x, e->event.button.y);

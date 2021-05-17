@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 17:54:14 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 23:55:48 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/04/14 21:39:20 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static t_p2	zz_north(t_ray ray, t_p2 block)
 {
 	t_p2	end;
 
-	if (ray.angle_d <= 90)
+	if (ray.angle_d < 90)
 	{
 		end.x = (block.x + 1) * WE_BLOCK_W;
 		end.y = ray.k * end.x + ray.b;
@@ -95,7 +95,7 @@ static t_p2	zz_west(t_ray ray, t_p2 block)
 {
 	t_p2	end;
 
-	if (ray.angle_d <= 180)
+	if (ray.angle_d < 180)
 	{
 		end.y = (block.y) * WE_BLOCK_W;
 		end.x = (end.y - ray.b) / ray.k;

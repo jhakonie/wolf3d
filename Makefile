@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/05/14 11:09:00 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/05/17 01:55:44 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -162,6 +162,7 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_mouse_pos_grid.c \
 	we_key_event.c \
 	we_player_move.c \
+	we_player_rotate.c \
 	we_to_rad.c \
 	we_ray_cast.c \
 	we_ray_init.c \

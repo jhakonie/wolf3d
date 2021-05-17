@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_editor_on_resize.c                              :+:      :+:    :+:   */
+/*   we_window_event.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 22:51:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/27 21:25:46 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/16 20:00:47 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 
 static void	zz_on_resize(t_editor *e, t_s32 width, t_s32 height)
 {
+	t_bool	draw_3d;
+
+	draw_3d = e->map.draw_3d;
 	SDL_DestroyRenderer(e->renderer);
 	e->renderer = SDL_CreateRenderer(e->window, -1, 0);
 	if (!e->renderer)
@@ -27,19 +30,14 @@ static void	zz_on_resize(t_editor *e, t_s32 width, t_s32 height)
 	if (!e->texture)
 		e->quit = wx_true;
 	free(e->frame_buffer.data);
-	e->frame_buffer.data = 0;
-	e->frame_buffer.data_size = width * height * 4;
-	e->frame_buffer.data = (t_u8 *)malloc(e->frame_buffer.data_size);
-	if (!e->frame_buffer.data)
-	{
+	if (!wx_frame_buffer_new(&e->frame_buffer, width, height))
 		e->quit = wx_true;
-	}
-	wx_buffer_set(e->frame_buffer.data, e->frame_buffer.data_size, 0);
-	e->frame_buffer.width = width;
-	e->frame_buffer.height = height;
 	we_init_map(&e->map, width, height);
 	we_init_tools(&e->tools, width, height);
+	e->player.dist_to_screen = 0.5f * e->frame_buffer.width
+		/ tanf(wx_to_radians(0.5f * e->player.fov_d));
 	e->draw = wx_true;
+	e->map.draw_3d = draw_3d;
 }
 
 static void	zz_on_expose(t_editor *e)

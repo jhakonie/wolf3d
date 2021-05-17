@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 22:38:37 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 20:06:37 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/14 21:15:12 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ struct			s_ray
 	t_f32		angle_to_player_d;
 	t_f32		angle_increment_d;
 	t_f32		player_direction_d;
+	t_f32		player_height;
 	t_f32		dist_to_screen;
 	t_f32		max_distance_w;
 	t_p2		start;
@@ -78,6 +79,7 @@ void		we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
 void		we_ray_cast(t_ray *ray, t_item *chart, t_frame_buffer *fb,
 				t_bool draw_3d);
 t_compass	we_wall_compass_direction(t_f32 angle_ray_d, t_u32 side);
-void		we_shade_pixel(t_ray ray, t_u32 *color, t_f32 darkness);
+void		we_shade_pixel( t_u32 *color, t_ray ray, t_f32 distance,
+				t_f32 darkness);
 
 #endif

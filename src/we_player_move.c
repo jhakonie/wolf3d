@@ -6,51 +6,88 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 12:38:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/24 15:34:36 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/05/15 01:02:55 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-static void	zz_move(t_u32 key, t_editor *e, t_u32 s)
+static void	zz_move_forward(t_editor *e, t_f32 s)
 {
-	if (key == SDLK_w)
+	t_u32	block;
+	t_p2	move;
+
+	move.x = (cos(e->player.direction_d * WE_TO_RAD) * s);
+	move.y = -(sin(e->player.direction_d * WE_TO_RAD) * s);
+	block = (int)((e->player.position.x + move.x) / WE_BLOCK_W)
+		+ (int)((e->player.position.y + move.y) / WE_BLOCK_W) *WE_GRID_DIVIDE;
+	if (e->map.chart[block].id == 0 || e->map.chart[block].id == 3
+		|| !e->player.wall_collision)
 	{
-		e->player.position.x += (cos(e->player.direction_d * WE_TO_RAD) * s);
-		e->player.position.y += -(sin(e->player.direction_d * WE_TO_RAD) * s);
-	}
-	else if (key == SDLK_s)
-	{
-		e->player.position.x -= (cos(e->player.direction_d * WE_TO_RAD) * s);
-		e->player.position.y -= -(sin(e->player.direction_d * WE_TO_RAD) * s);
+		e->player.position.x += move.x;
+		e->player.position.y += move.y;
 	}
 }
 
-static void	zz_move_sideways(t_u32 key, t_editor *e, t_u32 s)
+static void	zz_move_backward(t_editor *e, t_f32 s)
 {
-	if (key == SDLK_a)
+	t_u32	block;
+	t_p2	move;
+
+	move.x = (cos(e->player.direction_d * WE_TO_RAD) * s);
+	move.y = -(sin(e->player.direction_d * WE_TO_RAD) * s);
+	block = (int)((e->player.position.x - move.x) / WE_BLOCK_W)
+		+ (int)((e->player.position.y - move.y) / WE_BLOCK_W) *WE_GRID_DIVIDE;
+	if (e->map.chart[block].id == 0 || e->map.chart[block].id == 3
+		|| !e->player.wall_collision)
 	{
-		e->player.position.x += cos((90 + e->player.direction_d) * WE_TO_RAD)
-			* s;
-		e->player.position.y += -sin((90 + e->player.direction_d) * WE_TO_RAD)
-			* s;
+		e->player.position.x -= move.x;
+		e->player.position.y -= move.y;
 	}
-	else if (key == SDLK_d)
+}
+
+static void	zz_move_right(t_editor *e, t_f32 s)
+{
+	t_u32	block;
+	t_p2	move;
+
+	move.x = cos((90 + e->player.direction_d) * WE_TO_RAD) * s;
+	move.y = -sin((90 + e->player.direction_d) * WE_TO_RAD) * s;
+	block = (int)((e->player.position.x + move.x) / WE_BLOCK_W)
+		+ (int)((e->player.position.y + move.y) / WE_BLOCK_W) *WE_GRID_DIVIDE;
+	if (e->map.chart[block].id == 0 || e->map.chart[block].id == 3
+		|| !e->player.wall_collision)
 	{
-		e->player.position.x -= cos((90 + e->player.direction_d) * WE_TO_RAD)
-			* s;
-		e->player.position.y -= -sin((90 + e->player.direction_d) * WE_TO_RAD)
-			* s;
+		e->player.position.x += move.x;
+		e->player.position.y += move.y;
+	}
+}
+
+static void	zz_move_left(t_editor *e, t_f32 s)
+{
+	t_u32	block;
+	t_p2	move;
+
+	move.x = cos((90 + e->player.direction_d) * WE_TO_RAD) * s;
+	move.y = -sin((90 + e->player.direction_d) * WE_TO_RAD) * s;
+	block = (int)((e->player.position.x - move.x) / WE_BLOCK_W)
+		+ (int)((e->player.position.y - move.y) / WE_BLOCK_W) *WE_GRID_DIVIDE;
+	if (e->map.chart[block].id == 0 || e->map.chart[block].id == 3
+		|| !e->player.wall_collision)
+	{
+		e->player.position.x -= move.x;
+		e->player.position.y -= move.y;
 	}
 }
 
 void	we_player_move(t_u32 key, t_editor *e)
 {
-	t_u32	s;
-
-	s = e->player.w_step;
-	if (key == SDLK_w || key == SDLK_s)
-		zz_move(key, e, s);
-	else if (key == SDLK_a || key == SDLK_d)
-		zz_move_sideways(key, e, s);
+	if (key == SDLK_w)
+		zz_move_forward(e, e->player.w_step);
+	else if (key == SDLK_s)
+		zz_move_backward(e, e->player.w_step);
+	else if (key == SDLK_a)
+		zz_move_right(e, e->player.w_step);
+	else if (key == SDLK_d)
+		zz_move_left(e, e->player.w_step);
 }

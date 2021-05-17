@@ -7,6 +7,25 @@ if [ ! -d "test/build" ]; then
 fi
 
 
+test_xpm_reader() {
+    local test_name=${FUNCNAME}
+    rm -f test/build/${test_name}
+    gcc -g -Wall -Wextra -l m -o test/build/${test_name} \
+	src/we_parse_xpm.c \
+	src/we_parse_xpm_hexa.c \
+	src/we_parse_xpm_colors.c \
+	src/we_parse_xpm_error.c \
+	src/we_parse_xpm_pixels.c \
+	src/we_parse_until.c \
+	src/we_parse_xpm_comment.c \
+	src/we_xpm_del.c \
+	src/wx_parse_f32.c \
+	src/wx_parse_keyword.c \
+	src/wx_parse_whitespace.c \
+	-x c test/${test_name}.c.test
+    ./test/build/${test_name}
+}
+
 test_2d_raycast() {
     local test_name=${FUNCNAME}
     rm -f test/build/${test_name}

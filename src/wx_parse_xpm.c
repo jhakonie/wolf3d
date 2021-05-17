@@ -6,11 +6,12 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 14:56:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/14 16:37:20 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/17 02:03:09 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wx_parse_xpm.h"
+#include "stdio.h"
 
 /* todo: remove <stdio.h> from draw.h */
 
@@ -64,11 +65,18 @@ static t_bool	zz_parse_info(t_parse_context *pc, t_xpm *xpm)
 	return (wx_parse_xpm_error(xpm, 0, "xpm-error: parse info\n", 23));
 }
 
+static t_bool	zz_free_txt(t_c8s *txt)
+{
+	free(txt->buffer);
+	txt->buffer = WX_NULL;
+	return (wx_false);
+}
+
 /*
 ** Parse declaration and possible comments.
 */
 
-static t_bool	zz_parse_declaration(t_parse_context *pc)
+static t_bool	zz_parse_declaration(t_parse_context *pc, t_c8s *txt)
 {
 	if (wx_parse_keyword(pc, "static")
 		&& wx_parse_whitespace(pc)
@@ -83,13 +91,7 @@ static t_bool	zz_parse_declaration(t_parse_context *pc)
 		wx_parse_xpm_comment(pc);
 		return (wx_true);
 	}
-	return (wx_false);
-}
-
-static t_bool	zz_free_txt(t_c8s *txt)
-{
-	free(txt->buffer);
-	txt->buffer = WX_NULL;
+	zz_free_txt(txt);
 	return (wx_false);
 }
 
@@ -110,14 +112,17 @@ t_bool	wx_parse_xpm(t_c8 const *filename, t_xpm *xpm)
 	pc.e = (t_c8 const *)(txt.buffer + txt.size);
 	if ((wx_parse_keyword(&pc, "/* XPM */\n")))
 	{
-		if (!zz_parse_declaration(&pc))
-			return (zz_free_txt(&txt));
+		if (!zz_parse_declaration(&pc, &txt))
+			return (wx_parse_xpm_error(xpm, 0,
+					"xpm-parse error: declaration.\n", 31));
 		write(1, "loading texture...", 19);
 		if (!zz_parse_info(&pc, xpm)
 			|| !wx_parse_xpm_colors(&pc, xpm)
-			|| !wx_parse_xpm_pixels(&pc, xpm)
-			|| pc.p != pc.e)
+			|| !wx_parse_xpm_pixels(&pc, xpm))
 			return (zz_free_txt(&txt));
+		if (pc.p != pc.e)
+			return (wx_parse_xpm_error(xpm, WX_XPM_FREE_PIXELS,
+					"xpm-parse error: end of file.\n", 31));
 		zz_free_txt(&txt);
 		return (wx_true);
 	}

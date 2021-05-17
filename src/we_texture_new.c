@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 18:22:27 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 20:19:29 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/14 19:25:44 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ t_bool	we_texture_new(char *filename, t_tex *t)
 
 	if (!wx_parse_xpm(filename, &xpm))
 		return (wx_false);
+	if (xpm.height != xpm.width)
+	{
+		wx_xpm_del(&xpm);
+		write(1, "Error: texture must be square shaped.\n", 39);
+		return (wx_false);
+	}
 	t->height = xpm.height;
 	t->width = xpm.width;
 	t->size = xpm.width * xpm.height * sizeof(t_u32);

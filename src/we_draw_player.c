@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 13:46:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/02 19:29:24 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/04/14 21:28:19 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	we_draw_player(t_editor *e)
 	start.y = e->player.position.y / WE_BLOCK_W * e->map.grid.part.y - 3;
 	end.x = start.x + 3;
 	end.y = start.y + 3;
-	we_draw_rec_full(start, end, &e->frame_buffer, 0xff00FF);
-	start.x = start.x;
-	start.y = start.y;
+	if (start.x > e->tools.end.x)
+		we_draw_rec_full(start, end, &e->frame_buffer, 0xff00FF);
 	angle = e->player.direction_d;
 	delta.x = (cosf(angle * WE_TO_RAD) * WE_BLOCK_W);
 	delta.y = -(sinf(angle * WE_TO_RAD) * WE_BLOCK_W);
 	end.x = (start.x + delta.x);
 	end.y = (start.y + delta.y);
-	we_draw_line(start, end, &e->frame_buffer, 0xff00FF);
+	if (start.x > e->tools.end.x)
+		we_draw_line(start, end, &e->frame_buffer, 0xff00FF);
 }

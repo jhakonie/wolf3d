@@ -6,20 +6,22 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 23:16:10 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 19:52:39 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/11 21:46:21 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_draw.h"
 
-void	we_shade_pixel(t_ray ray, t_u32 *color, t_f32 darkness)
+void	we_shade_pixel(t_u32 *color, t_ray ray, t_f32 distance, t_f32 darkness)
 {
 	t_rgba			new_color;
 	t_f32			shade_factor;
+	t_f32			max_distance;
 	t_u32			i;
 
 	i = 0;
-	shade_factor = ray.wall.distance / ray.max_distance_w;
+	max_distance = ray.max_distance_w;
+	shade_factor = distance / max_distance;
 	while (i < darkness)
 	{
 		new_color.a = (((*color & 0x000000FF) >> 0) * (1 - shade_factor));

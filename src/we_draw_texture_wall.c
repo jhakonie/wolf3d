@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:29:31 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 23:20:12 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/17 14:50:41 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ static t_texture_index	zz_texture_coordinates(t_ray ray, t_p2 draw,
 	tex_index.coord.y = 0;
 	tex_index.increment_y = tex.height / ray.wall.projected_height;
 	if (draw.y == 0)
-		tex_index.coord.y = tex_index.increment_y * fabsf(0.5f * fb_height
-				- 0.5f * ray.wall.projected_height);
+		tex_index.coord.y = tex_index.increment_y
+			* (ray.player_height * fb_height
+				- ray.player_height * ray.wall.projected_height);
 	return (tex_index);
 }
 
@@ -62,7 +63,7 @@ void	we_draw_texture_wall(t_ray ray, t_p2 draw,
 				color = tex.texture[tex_index.index];
 			else
 				color = tex.fractal[tex_index.index];
-			we_shade_pixel(ray, &color, 3);
+			we_shade_pixel(&color, ray, ray.wall.distance, 3);
 			we_draw_pixel(draw, fb, color);
 		}
 		draw.y++;

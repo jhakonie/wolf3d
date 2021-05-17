@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 16:04:17 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/05 15:31:08 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/15 00:40:09 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	we_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
 	t_p2 player_position)
 {
 	static t_f32	map_side_w = WE_GRID_DIVIDE * WE_BLOCK_W;
-	t_f32			sqred_map_side_w;
+	t_f32			pow_map_side_w;
 
-	sqred_map_side_w = 2 * map_side_w * map_side_w;
-	ray->max_distance_w = sqrtf(sqred_map_side_w);
+	pow_map_side_w = map_side_w * map_side_w;
+	ray->max_distance_w = sqrtf(pow_map_side_w + pow_map_side_w);
 	ray->nb = 0;
 	ray->k = 0;
 	ray->b = 0;
@@ -43,7 +43,5 @@ void	we_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
 	wx_buffer_set(&ray->wall, sizeof(ray->wall), 0);
 	ray->half_fov_d = player_fov_d * 0.5f;
 	ray->start = player_position;
-	ray->dist_to_screen = 0.5f * screen_width
-		/ tanf(wx_to_radians(ray->half_fov_d));
 	ray->angle_increment_d = player_fov_d / screen_width;
 }

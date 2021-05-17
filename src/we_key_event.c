@@ -6,11 +6,19 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 23:36:54 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/29 23:26:38 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/12 00:20:20 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
+
+static void	zz_go_through_walls(t_bool *wall_collision)
+{
+	if (!*wall_collision)
+		*wall_collision = wx_true;
+	else
+		*wall_collision = wx_false;
+}
 
 static void	zz_change_view(t_bool *draw_3d)
 {
@@ -71,5 +79,11 @@ void	we_key_event(t_u32 key, t_editor *e)
 		we_player_move(key, e);
 	else if (key == SDLK_r || key == SDLK_t || key == SDLK_y)
 		zz_draw_rays_2d(key, e);
+	else if (key == SDLK_c)
+		zz_go_through_walls(&e->player.wall_collision);
+	else if (key == SDLK_f && !e->player.run)
+		e->player.w_step *= 2;
+	else if (key == SDLK_f && e->player.run)
+		e->player.w_step *= 0.5;
 	e->draw = wx_true;
 }

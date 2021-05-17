@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 23:04:09 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/12 13:23:55 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 ** be: WE_GRID_DIVIDE * WE_GRID_DIVIDE * 2
 */
 # define WE_LOAD_FILE_TO_CHART_BUFFER_SIZE (5000)
-# define WE_BLOCK_W (100)
+# define WE_BLOCK_W (2)
 
 # define PI (3.14159265359)
 # define WE_TO_RAD (0.017453292519944)
