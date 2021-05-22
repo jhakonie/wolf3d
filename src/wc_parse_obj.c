@@ -41,7 +41,7 @@ static t_bool	zz_cache_update(t_obj_vertices *c, t_parse_obj_context *poc,
 
 	if (zz_cache_find(c, obj_v, &obj_v->out_index))
 	{
-		if (!wc_u16s_add_back(&m->indices, &obj_v->out_index))
+		if (!wc_u16s_add_back(&m->indices, obj_v->out_index))
 		{
 			return (wx_false);
 		}
@@ -53,7 +53,7 @@ static t_bool	zz_cache_update(t_obj_vertices *c, t_parse_obj_context *poc,
 			poc->normals.buffer[obj_v->normal], poc->uvs.buffer[obj_v->uv]};
 		if (!(wc_obj_vertices_add_back(c, obj_v)
 				&& wc_vertices_add_back(&m->vertices, &v)
-				&& wc_u16s_add_back(&m->indices, &obj_v->out_index)))
+				&& wc_u16s_add_back(&m->indices, obj_v->out_index)))
 		{
 			return (wx_false);
 		}

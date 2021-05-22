@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wc_draw.h"
+#include "wx_frame_buffer.h"
 
 void	wx_frame_buffer_set(t_frame_buffer *fb, t_f32 x, t_f32 y, t_u32 abgr)
 {

@@ -12,6 +12,7 @@ t_bool	wc_texture_new_from_file(t_texture *t, char const *filename)
 {
 	t_xpm	xpm;
 
+	t->buffer = WX_NULL;
 	if (!wx_parse_xpm(filename, &xpm))
 	{
 		return (wx_false);

@@ -52,6 +52,11 @@ int main(void)
 	/*all out*/ {
 		printf("---\n");
 		printf("all out:\n");
+		t_p2 uvs[16] = {
+			{0.0f, 1.0f},
+			{0.5f, 0.0f},
+			{1.0f, 1.0f}
+		};
 		t_p3 view_positions[16] = {
 			{2.0f, 0.0f, -2.0f},
 			{0.0f, 0.0f, -4.0f},
@@ -61,6 +66,8 @@ int main(void)
 		t_pipeline_buffers buffers = {};
 		t_draw_context	dc;
 		dc.buffers = &buffers;
+		dc.buffers->uvs = uvs;
+		dc.buffers->uvs_size = 3;
 		dc.buffers->view_positions = view_positions;
 		dc.buffers->view_positions_size = 3;
 		dc.buffers->visible_indices = visible_indices;
@@ -73,6 +80,11 @@ int main(void)
 	/*1 out*/ {
 		printf("---\n");
 		printf("1 out:\n");
+		t_p2 uvs[16] = {
+			{0.0f, 1.0f},
+			{0.5f, 0.0f},
+			{1.0f, 1.0f}
+		};
 		t_p3 view_positions[16] = {
 			{2.0f, 0.0f, 2.0f},
 			{0.0f, 0.0f, -2.0f},
@@ -82,6 +94,8 @@ int main(void)
 		t_pipeline_buffers buffers = {};
 		t_draw_context	dc;
 		dc.buffers = &buffers;
+		dc.buffers->uvs = uvs;
+		dc.buffers->uvs_size = 3;
 		dc.buffers->view_positions = view_positions;
 		dc.buffers->view_positions_size = 3;
 		dc.buffers->visible_indices = visible_indices;
@@ -94,6 +108,11 @@ int main(void)
 	/*2 out*/ {
 		printf("---\n");
 		printf("2 out:\n");
+		t_p2 uvs[16] = {
+			{0.0f, 1.0f},
+			{0.5f, 0.0f},
+			{1.0f, 1.0f}
+		};
 		t_p3 view_positions[16] = {
 			{2.0f, 0.0f, -2.0f},
 			{0.0f, 0.0f, 2.0f},
@@ -103,6 +122,8 @@ int main(void)
 		t_pipeline_buffers buffers = {};
 		t_draw_context	dc;
 		dc.buffers = &buffers;
+		dc.buffers->uvs = uvs;
+		dc.buffers->uvs_size = 3;
 		dc.buffers->view_positions = view_positions;
 		dc.buffers->view_positions_size = 3;
 		dc.buffers->visible_indices = visible_indices;
@@ -115,6 +136,11 @@ int main(void)
 	/*all in*/ {
 		printf("---\n");
 		printf("all in:\n");
+		t_p2 uvs[16] = {
+			{0.0f, 1.0f},
+			{0.5f, 0.0f},
+			{1.0f, 1.0f}
+		};
 		t_p3 view_positions[16] = {
 			{2.0f, 0.0f, 4.0f},
 			{0.0f, 0.0f, 2.0f},
@@ -124,6 +150,8 @@ int main(void)
 		t_pipeline_buffers buffers = {};
 		t_draw_context	dc;
 		dc.buffers = &buffers;
+		dc.buffers->uvs = uvs;
+		dc.buffers->uvs_size = 3;
 		dc.buffers->view_positions = view_positions;
 		dc.buffers->view_positions_size = 3;
 		dc.buffers->visible_indices = visible_indices;

@@ -14,31 +14,6 @@
 #include "wc_parse.h"
 #include "wx_parse.h"
 
-static void	zz_aabb(t_mesh *m)
-{
-	t_u64		i;
-
-	m->aabb.max = (t_p3){-WX_F32_INF, -WX_F32_INF, -WX_F32_INF};
-	m->aabb.min = (t_p3){WX_F32_INF, WX_F32_INF, WX_F32_INF};
-	i = 0;
-	while (i < m->vertices.size)
-	{
-		m->aabb.max.x = wx_f32_max(m->vertices.buffer[i].position.x,
-				m->aabb.max.x);
-		m->aabb.max.y = wx_f32_max(m->vertices.buffer[i].position.y,
-				m->aabb.max.y);
-		m->aabb.max.z = wx_f32_max(m->vertices.buffer[i].position.z,
-				m->aabb.max.z);
-		m->aabb.min.x = wx_f32_min(m->vertices.buffer[i].position.x,
-				m->aabb.min.x);
-		m->aabb.min.y = wx_f32_min(m->vertices.buffer[i].position.y,
-				m->aabb.min.y);
-		m->aabb.min.z = wx_f32_min(m->vertices.buffer[i].position.z,
-				m->aabb.min.z);
-		++i;
-	}
-}
-
 static t_bool	zz_on_error(t_c8s *fb, t_mesh *m, t_u8 i)
 {
 	if (i > 2)
@@ -56,7 +31,7 @@ static t_bool	zz_on_error(t_c8s *fb, t_mesh *m, t_u8 i)
 	return (wx_false);
 }
 
-t_bool	wc_mesh_new(t_mesh *m, char const *filename)
+t_bool	wc_mesh_new_from_file(t_mesh *m, char const *filename)
 {
 	t_c8s			fb;
 	t_parse_context	pc;
@@ -74,6 +49,6 @@ t_bool	wc_mesh_new(t_mesh *m, char const *filename)
 		return (zz_on_error(&fb, m, 3));
 	}
 	wx_c8s_del(&fb);
-	zz_aabb(m);
+	wc_mesh_aabb(m);
 	return (wx_true);
 }

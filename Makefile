@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/05/17 16:55:19 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/05/22 21:25:19 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,8 +40,17 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_depth_buffer_new.c \
 	wc_depth_buffer_set.c \
 	wc_main.c \
+	wc_map_mesh_del.c \
+	wc_map_mesh_new_from_map.c \
+	wc_map_mesh_new_from_map_east.c \
+	wc_map_mesh_new_from_map_floor.c \
+	wc_map_mesh_new_from_map_north.c \
+	wc_map_mesh_new_from_map_south.c \
+	wc_map_mesh_new_from_map_west.c \
+	wc_map_new_from_file.c \
+	wc_mesh_aabb.c \
 	wc_mesh_del.c \
-	wc_mesh_new.c \
+	wc_mesh_new_from_file.c \
 	wc_n3s_add_back.c \
 	wc_n3s_del.c \
 	wc_n3s_new.c \
@@ -208,6 +217,7 @@ editor_src_files = $(addprefix $(src_dir), \
 	wx_parse_xpm_comment.c \
 	wx_parse_xpm_hash_key.c \
 	wx_to_radians.c \
+	wx_u64_max.c \
 	wx_xpm_del.c \
 )
 editor_obj_files = $(subst $(src_dir), $(build_dir), $(editor_src_files:.c=.o))

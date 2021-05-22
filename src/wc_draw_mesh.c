@@ -138,6 +138,8 @@ static void	zz_screen_from_view(t_draw_context *dc)
 ** - reject faces facing away from the camera
 ** - normals and lighting
 ** - uvs
+**
+** 2021-05-20 todo: pipeline_buffers begin/reset function?
 */
 void	wc_draw_mesh(t_draw_context *dc, t_mesh const *m, t_texture const *t)
 {
@@ -148,6 +150,10 @@ void	wc_draw_mesh(t_draw_context *dc, t_mesh const *m, t_texture const *t)
 	{
 		return ;
 	}
+	dc->buffers->screen_positions_size = 0;
+	dc->buffers->uvs_size = 0;
+	dc->buffers->view_positions_size = 0;
+	dc->buffers->visible_indices_size = 0;
 	zz_view_from_model(dc, m);
 	zz_clip(dc, m);
 	zz_screen_from_view(dc);

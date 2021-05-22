@@ -51,12 +51,23 @@ t_bool	wc_remote_server_write(t_remote_server *rs, t_client_input const *ci);
 ** size type in the whole codebase
 */
 
+/*
+** 2021-05-22 note: make sure all the subobjects behave nicely when they are
+** released after just being zeroed out. to simplify implementation _new() just
+** zeroes out the client object and calls _del() on failure
+*/
 struct	s_client
 {
 	t_camera			camera;
 	t_pipeline_buffers	pipeline_buffers;
 	t_frame_buffer		frame_buffer;
 	t_depth_buffer		depth_buffer;
+	t_map_mesh			map_mesh;
+	t_texture			floor_texture;
+	t_texture			north_texture;
+	t_texture			east_texture;
+	t_texture			west_texture;
+	t_texture			south_texture;
 	t_client_input		input;
 	t_p2				player_position;
 	t_p2				other_positions[WX_SERVER_REMOTE_CLIENTS_SIZE - 1];

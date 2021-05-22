@@ -50,7 +50,24 @@ typedef unsigned short		t_u16;
 typedef unsigned int		t_u32;
 typedef unsigned long int	t_u64;
 
+t_u64	wx_u64_max(t_u64 x0, t_u64 x1);
+
 void	wx_buffer_copy(void *xs, void const *ys, t_u64 size);
 void	wx_buffer_set(void *xs, t_u64 xs_size, t_u8 x);
+
+/*
+** 2021-04-27 note: sizes are in number of t_c8-sized elements. which happen to
+** be bytes in this case
+*/
+struct	s_c8s
+{
+	t_c8	*buffer;
+	t_u64	buffer_size;
+	t_u64	size;
+};
+typedef struct s_c8s		t_c8s;
+
+t_bool	wx_c8s_new_from_file(t_c8s *c, t_u64 buffer_size, char const *filename);
+void	wx_c8s_del(t_c8s *c);
 
 #endif

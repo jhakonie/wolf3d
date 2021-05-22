@@ -37,7 +37,7 @@ int main(void)
 	char const	*filename = "data/unit_cube.obj";
 	t_mesh		m;
 
-	if (!wc_mesh_new(&m, filename))
+	if (!wc_mesh_new_from_file(&m, filename))
 	{
 		printf("%s@%d: %s\n", __PRETTY_FUNCTION__, __LINE__, "!wc_mesh_new()");
 		return (-1);

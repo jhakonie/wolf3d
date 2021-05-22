@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "we_editor.h"
-#include "wc_draw.h"
 
 void	we_draw_map(t_editor *e)
 {

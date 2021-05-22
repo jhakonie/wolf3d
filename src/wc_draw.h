@@ -68,6 +68,37 @@ struct	s_face
 typedef struct s_face				t_face;
 
 /*
+** 2021-05-15 todo: see if editor has map-related things already that we could
+** use by moving shared bits to wx_
+*/
+/*
+** 2021-05-15 note: make sure WC_MAP_TILES_SIZE == WC_MAP_WIDTH * WC_MAP_WIDTH
+** unfortuntaly norm currently prevents doing this sensibly
+*/
+# define WC_MAP_WIDTH (50)
+# define WC_MAP_TILES_SIZE (2500)
+
+enum	e_map_tile_type
+{
+	wc_map_tile_type_floor = '.',
+	wc_map_tile_type_player_spawn = '3',
+	wc_map_tile_type_wall = '1'
+};
+typedef enum e_map_tile_type		t_map_tile_type;
+
+struct	s_map
+{
+	t_c8	tiles[WC_MAP_TILES_SIZE];
+	t_u64	width;
+	t_u64	height;
+	t_f32	tile_width;
+	t_f32	wall_height;
+};
+typedef struct s_map				t_map;
+
+t_bool				wc_map_new_from_file(t_map *m, char const *filename);
+
+/*
 ** 2021-03-26 note: sizes are in number of t_u16-sized elements. not in bytes
 */
 struct	s_u16s
@@ -80,7 +111,7 @@ typedef struct s_u16s				t_u16s;
 
 t_bool				wc_u16s_new(t_u16s *c, t_u64 buffer_size);
 void				wc_u16s_del(t_u16s *c);
-t_bool				wc_u16s_add_back(t_u16s *c, t_u16 const *v);
+t_bool				wc_u16s_add_back(t_u16s *c, t_u16 v);
 
 struct	s_vertex
 {
@@ -124,8 +155,35 @@ struct	s_mesh
 };
 typedef struct s_mesh				t_mesh;
 
-t_bool				wc_mesh_new(t_mesh *m, char const *filename);
+t_bool				wc_mesh_new_from_file(t_mesh *m, char const *filename);
 void				wc_mesh_del(t_mesh *m);
+void				wc_mesh_aabb(t_mesh *m);
+
+/*
+**
+*/
+struct	s_map_mesh
+{
+	t_mesh		floor;
+	t_mesh		north;
+	t_mesh		east;
+	t_mesh		west;
+	t_mesh		south;
+};
+typedef struct s_map_mesh			t_map_mesh;
+
+t_bool				wc_map_mesh_new_from_map(t_map_mesh *mm, t_map const *m);
+t_bool				wc_map_mesh_new_from_map_east(t_map_mesh *mm,
+						t_map const *m);
+t_bool				wc_map_mesh_new_from_map_floor(t_map_mesh *mm,
+						t_map const *m);
+t_bool				wc_map_mesh_new_from_map_north(t_map_mesh *mm,
+						t_map const *m);
+t_bool				wc_map_mesh_new_from_map_south(t_map_mesh *mm,
+						t_map const *m);
+t_bool				wc_map_mesh_new_from_map_west(t_map_mesh *mm,
+						t_map const *m);
+void				wc_map_mesh_del(t_map_mesh *mm);
 
 /*
 ** 2021-04-30 todo: merge with t_texture from editor

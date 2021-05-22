@@ -1,0 +1,16 @@
+#include "stdio.h"
+
+#include "../src/wc_client.h"
+
+
+int main(void)
+{
+	t_map	m;
+
+	if (!wc_map_new_from_file(&m, "data/maps/default/map.txt"))
+	{
+		printf("%s:%d\n", __FILE__, __LINE__);
+		return (-1);
+	}
+	return (0);
+}

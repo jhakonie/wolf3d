@@ -14,7 +14,7 @@
 
 #include "wc_draw.h"
 
-t_bool	wc_u16s_add_back(t_u16s *c, t_u16 const *v)
+t_bool	wc_u16s_add_back(t_u16s *c, t_u16 v)
 {
 	t_u16	*new_buffer;
 	t_u64	new_buffer_size;
@@ -35,7 +35,7 @@ t_bool	wc_u16s_add_back(t_u16s *c, t_u16 const *v)
 		c->buffer = new_buffer;
 		c->buffer_size = new_buffer_size;
 	}
-	c->buffer[c->size] = *v;
+	c->buffer[c->size] = v;
 	++c->size;
 	return (wx_true);
 }

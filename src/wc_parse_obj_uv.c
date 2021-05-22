@@ -21,6 +21,12 @@ static t_bool	zz_on_error(t_parse_context *pc, t_c8 const *b)
 	return (wx_false);
 }
 
+/*
+** 2021-05-22 todo: blender seems to export uv in such way that bottom-left is
+** [0,0] and top-right is [1,1]. i guess we want to invert the v-axis so that
+** top-left is [0, 0] and bottom-right is [1, 1]. needs to agree with
+** wc_texture_get(). right now it does not
+*/
 t_bool	wc_parse_obj_uv(t_parse_context *pc, t_p2s *p2s)
 {
 	t_c8 const	*b;

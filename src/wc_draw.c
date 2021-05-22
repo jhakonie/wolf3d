@@ -44,5 +44,10 @@ void	wc_draw(t_client *c)
 	zz_draw_context_new(&dc, c);
 	wc_draw_clear(&dc);
 	wc_draw_mesh(&dc, &c->test_mesh, &c->test_texture);
+	wc_draw_mesh(&dc, &c->map_mesh.floor, &c->floor_texture);
+	wc_draw_mesh(&dc, &c->map_mesh.north, &c->north_texture);
+	wc_draw_mesh(&dc, &c->map_mesh.east, &c->east_texture);
+	wc_draw_mesh(&dc, &c->map_mesh.west, &c->west_texture);
+	wc_draw_mesh(&dc, &c->map_mesh.south, &c->south_texture);
 	wc_draw_copy(c, dc.frame_buffer);
 }
