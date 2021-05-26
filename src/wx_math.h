@@ -37,6 +37,8 @@ struct		s_p3
 };
 typedef struct s_p3			t_p3;
 
+t_p3			wx_p3_add_v3(t_p3 const *l, t_v3 const *r);
+
 struct		s_aabb
 {
 	t_p3	max;
@@ -170,6 +172,9 @@ struct		s_q4
 };
 
 t_q4			wx_q4_new_v3_f32(t_v3 const *axis, t_f32 rad);
+t_q4			wx_q4_mul_q4(t_q4 const *l, t_q4 const *r);
+void			wx_q4_normalize(t_q4 *q);
+t_v3			wx_q4_rot_v3(t_q4 const *q, t_v3 const *v);
 
 struct		s_v3
 {

@@ -16,13 +16,8 @@
 
 static void	zz_camera(t_client *c, t_f32 width, t_f32 height)
 {
-	t_f32	angle_rad;
-	t_v3	axis;
-
-	axis = (t_v3){0.0f, 1.0f, 0.0f};
-	angle_rad = wx_to_radians(180.0f);
-	c->camera.orientation = wx_q4_new_v3_f32(&axis, angle_rad);
-	c->camera.position = (t_p3){50.0f, 1.0f, 10.0f};
+	c->camera.orientation = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
+	c->camera.position = (t_p3){0.0f, 0.0f, 0.0f};
 	c->camera.hfov_rad = wx_to_radians(90.0f);
 	c->camera.aspect_ratio = width / height;
 	c->camera.near = 0.1f;
@@ -80,6 +75,8 @@ static t_bool	zz_sdl(t_client *c, t_u32 window_width, t_u32 window_height)
 	{
 		return (wx_false);
 	}
+	SDL_SetRelativeMouseMode(SDL_TRUE);
+	SDL_GetMouseState(&c->mouse_x, &c->mouse_y);
 	return (wx_true);
 }
 
@@ -103,5 +100,7 @@ t_bool	wc_client_new(t_client *c, t_u32 window_width, t_u32 window_height)
 	c->sim_time_s = wx_time_s();
 	c->sim_time_step_s = 1.0 / 30.0;
 	c->run = wx_true;
+	c->player_orientation = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
+	c->player_position = (t_p3){0.0f, 0.0f, 0.0f};
 	return (wx_true);
 }

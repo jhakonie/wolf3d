@@ -15,8 +15,8 @@
 
 static void	zz_draw_context_new(t_draw_context *dc, t_client *c)
 {
-	t_q4	player_orientation;
-	t_p3	player_position;
+	t_q4	object_orientation;
+	t_p3	object_position;
 	t_m44	view_from_world;
 	t_m44	world_from_object;
 
@@ -29,9 +29,11 @@ static void	zz_draw_context_new(t_draw_context *dc, t_client *c)
 	dc->clip_from_view = wx_m44_new_perspective(c->camera.hfov_rad,
 			c->camera.aspect_ratio, c->camera.near, c->camera.far);
 	dc->frustum = wx_frustum_new(&dc->clip_from_view);
-	player_orientation = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
-	player_position = (t_p3){c->player_position.x, c->player_position.y, 0.0f};
-	world_from_object = wx_m44_new_q4_p3(&player_orientation, &player_position);
+	object_orientation = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
+	object_position = (t_p3){0.0f, 0.0f, 0.0f};
+	world_from_object = wx_m44_new_q4_p3(&object_orientation, &object_position);
+	c->camera.orientation = c->player_orientation;
+	c->camera.position = c->player_position;
 	view_from_world = wx_m44_new_inverse_q4_p3(&c->camera.orientation,
 			&c->camera.position);
 	dc->view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);

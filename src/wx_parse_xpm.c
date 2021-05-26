@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "wx_parse_xpm.h"
-#include "stdio.h"
-
-/* todo: remove <stdio.h> from draw.h */
 
 /*
 ** Parse unsigned int.

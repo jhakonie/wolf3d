@@ -33,7 +33,8 @@ struct	s_remote_client
 	socklen_t				address_size;
 	t_client_input			input;
 	t_f64					packet_time_s;
-	t_p2					position;
+	t_q4					orientation;
+	t_p3					position;
 };
 typedef struct s_remote_client		t_remote_client;
 

@@ -42,9 +42,13 @@ typedef struct s_packet			t_packet;
 
 void	wx_packet_read_f32(t_packet *p, t_u64 *i, t_f32 *x);
 void	wx_packet_read_p2(t_packet *p, t_u64 *i, t_p2 *x);
+void	wx_packet_read_p3(t_packet *p, t_u64 *i, t_p3 *x);
+void	wx_packet_read_q4(t_packet *p, t_u64 *i, t_q4 *x);
 void	wx_packet_read_u8(t_packet *p, t_u64 *i, t_u8 *x);
 void	wx_packet_write_f32(t_packet *p, t_f32 x);
 void	wx_packet_write_p2(t_packet *p, t_p2 const *x);
+void	wx_packet_write_p3(t_packet *p, t_p3 const *x);
+void	wx_packet_write_q4(t_packet *p, t_q4 const *x);
 void	wx_packet_write_u8(t_packet *p, t_u8 x);
 
 struct	s_server_update

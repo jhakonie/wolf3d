@@ -12,13 +12,15 @@
 
 #include "wc_client.h"
 
-t_bool	wc_remote_server_write(t_remote_server *rs, t_client_input const *ci)
+t_bool	wc_remote_server_write(t_remote_server *rs, t_client_input const *ci,
+	t_q4 const *player_orientation)
 {
 	t_packet	p;
 
 	p.address = rs->address;
 	p.address_size = rs->address_size;
 	p.size = 0;
+	wx_packet_write_q4(&p, player_orientation);
 	wx_packet_write_u8(&p, ci->move_up);
 	wx_packet_write_u8(&p, ci->move_down);
 	wx_packet_write_u8(&p, ci->move_left);

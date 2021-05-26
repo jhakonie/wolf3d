@@ -54,7 +54,8 @@ static t_remote_client	*zz_remote_clients_insert(t_server *s,
 		rc->address = p->address;
 		rc->address_size = p->address_size;
 		rc->packet_time_s = 0.0f;
-		rc->position = (t_p2){0.0f, 0.0f};
+		rc->orientation = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
+		rc->position = (t_p3){0.0f, 0.0f, 0.0f};
 		++s->remote_clients_connected_count;
 		return (rc);
 		++i;
@@ -107,6 +108,7 @@ void	ws_server_network_read(t_server *s, t_f64 packet_time_s)
 		if (!rc)
 			continue ;
 		i = 0;
+		wx_packet_read_q4(&p, &i, &rc->orientation);
 		wx_packet_read_u8(&p, &i, (t_u8 *)&rc->input.move_up);
 		wx_packet_read_u8(&p, &i, (t_u8 *)&rc->input.move_down);
 		wx_packet_read_u8(&p, &i, (t_u8 *)&rc->input.move_left);

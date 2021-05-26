@@ -44,7 +44,8 @@ t_bool	wc_remote_server_new(t_remote_server *rs, char const *hostname,
 			char const *port);
 void	wc_remote_server_del(t_remote_server *rs);
 t_bool	wc_remote_server_read(t_remote_server *rs, t_packet *p);
-t_bool	wc_remote_server_write(t_remote_server *rs, t_client_input const *ci);
+t_bool	wc_remote_server_write(t_remote_server *rs, t_client_input const *ci,
+			t_q4 const *player_orientation);
 
 /*
 ** 2021-03-24 todo: review the use of t_u64 as an index type and as a buffer
@@ -69,8 +70,15 @@ struct	s_client
 	t_texture			west_texture;
 	t_texture			south_texture;
 	t_client_input		input;
-	t_p2				player_position;
-	t_p2				other_positions[WX_SERVER_REMOTE_CLIENTS_SIZE - 1];
+	t_s32				mouse_x;
+	t_s32				mouse_y;
+	t_s32				mouse_dx;
+	t_s32				mouse_dy;
+	t_q4				player_orientation;
+	t_p3				player_position;
+	t_q4				other_orientations[WX_SERVER_REMOTE_CLIENTS_SIZE - 1];
+	t_u8				other_orientations_size;
+	t_p3				other_positions[WX_SERVER_REMOTE_CLIENTS_SIZE - 1];
 	t_u8				other_positions_size;
 	t_remote_server		remote_server;
 	SDL_Renderer		*renderer;

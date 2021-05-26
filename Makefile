@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/05/22 21:25:19 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/05/23 22:18:47 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_client_dispatch_events.c \
 	wc_client_del.c \
 	wc_client_new.c \
+	wc_client_on_resize.c \
 	wc_client_run.c \
 	wc_draw.c \
 	wc_draw_add_visible.c \
@@ -117,6 +118,13 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_m44_new_perspective.c \
 	wx_m44_new_q4_p3.c \
 	wx_obb_new.c \
+	wx_packet_read_f32.c \
+	wx_packet_read_u8.c \
+	wx_packet_read_p3.c \
+	wx_packet_read_q4.c \
+	wx_packet_write_f32.c \
+	wx_packet_write_q4.c \
+	wx_packet_write_u8.c \
 	wx_parse_f32.c \
 	wx_parse_hex.c \
 	wx_parse_keyword.c \
@@ -132,14 +140,12 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_plane_line_test.c \
 	wx_plane_signed_distance_n3.c \
 	wx_plane_signed_distance_p3.c \
+	wx_q4_mul_q4.c \
 	wx_q4_new_v3_f32.c \
+	wx_q4_normalize.c \
 	wx_socket_read.c \
 	wx_socket_write.c \
 	wx_to_radians.c \
-	wx_packet_read_f32.c \
-	wx_packet_read_u8.c \
-	wx_packet_read_p2.c \
-	wx_packet_write_u8.c \
 	wx_time_s.c \
 	wx_xpm_del.c \
 )
@@ -236,11 +242,16 @@ server_src_files = $(addprefix $(src_dir), \
 	wx_f64_min.c \
 	wx_socket_read.c \
 	wx_socket_write.c \
+	wx_p3_add_v3.c \
 	wx_packet_read_f32.c \
+	wx_packet_read_q4.c \
 	wx_packet_read_u8.c \
 	wx_packet_write_f32.c \
 	wx_packet_write_u8.c \
-	wx_packet_write_p2.c \
+	wx_packet_write_p3.c \
+	wx_packet_write_q4.c \
+	wx_q4_mul_q4.c \
+	wx_q4_rot_v3.c \
 	wx_time_s.c \
 )
 server_obj_files = $(subst $(src_dir), $(build_dir), $(server_src_files:.c=.o))
