@@ -20,9 +20,14 @@ void	wc_client_del(t_client *c)
 	free(c->pipeline_buffers.view_positions);
 	free(c->pipeline_buffers.uvs);
 	free(c->pipeline_buffers.screen_positions);
+	wc_texture_del(&c->floor_texture);
+	wc_texture_del(&c->north_texture);
+	wc_texture_del(&c->east_texture);
+	wc_texture_del(&c->west_texture);
+	wc_texture_del(&c->south_texture);
 	wc_map_mesh_del(&c->map_mesh);
-	wc_texture_del(&c->test_texture);
 	wc_mesh_del(&c->test_mesh);
+	wc_texture_del(&c->test_texture);
 	wc_remote_server_del(&c->remote_server);
 	wc_depth_buffer_del(&c->depth_buffer);
 	wx_frame_buffer_del(&c->frame_buffer);
