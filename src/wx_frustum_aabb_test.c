@@ -14,13 +14,22 @@
 
 #include "wx_math.h"
 
-static t_plane_obb	zz_plane_obb_test(t_obb const *obb, t_plane const *p)
+static t_f32	zz_n3_dot_n3(t_n3 const *l, t_n3 const *r)
+{
+	t_f32	dot;
+
+	dot = l->x * r->x + l->y * r->y + l->z * r->z;
+	return (dot);
+}
+
+static t_plane_obb	zz_plane_obb_test(t_plane const *p, t_obb const *obb)
 {
 	t_f32	e2;
 	t_f32	sd;
 
-	e2 = obb->extents2[0] * fabsf(p->n.x) + obb->extents2[1] * fabsf(p->n.y)
-		+ obb->extents2[2] * fabsf(p->n.z);
+	e2 = obb->extents2[0] * fabsf(zz_n3_dot_n3(&p->n, obb->axes + 0))
+		+ obb->extents2[1] * fabsf(zz_n3_dot_n3(&p->n, obb->axes + 1))
+		+ obb->extents2[2] * fabsf(zz_n3_dot_n3(&p->n, obb->axes + 2));
 	sd = wx_plane_signed_distance_p3(p, &obb->center);
 	if (sd + e2 < 0)
 	{
@@ -46,7 +55,7 @@ t_frustum_aabb	wx_frustum_aabb_test(t_frustum const *f, t_aabb const *aabb,
 	i = 0;
 	while (i < 6)
 	{
-		po = zz_plane_obb_test(&obb, f->planes + i);
+		po = zz_plane_obb_test(f->planes + i, &obb);
 		if (po == wx_plane_obb_out)
 			return (wx_frustum_aabb_all_out);
 		else if (po == wx_plane_obb_intersect)

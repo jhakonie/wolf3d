@@ -75,8 +75,8 @@ typedef struct s_face				t_face;
 ** 2021-05-15 note: make sure WC_MAP_TILES_SIZE == WC_MAP_WIDTH * WC_MAP_WIDTH
 ** unfortuntaly norm currently prevents doing this sensibly
 */
-# define WC_MAP_WIDTH (50)
-# define WC_MAP_TILES_SIZE (2500)
+# define WC_MAP_WIDTH (57)
+# define WC_MAP_TILES_SIZE (3249)
 
 enum	e_map_tile_type
 {

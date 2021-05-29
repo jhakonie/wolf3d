@@ -4,6 +4,16 @@
 #include "../src/wx_math.h"
 
 
+void	m44_print(t_m44 const*m, char const *n)
+{
+	printf("%s:\n", n);
+	printf("\t%f    %f    %f    %f\n", m->xs[0], m->xs[4], m->xs[8], m->xs[12]);
+	printf("\t%f    %f    %f    %f\n", m->xs[1], m->xs[5], m->xs[9], m->xs[13]);
+	printf("\t%f    %f    %f    %f\n", m->xs[2], m->xs[6], m->xs[10], m->xs[14]);
+	printf("\t%f    %f    %f    %f\n", m->xs[3], m->xs[7], m->xs[11], m->xs[15]);
+}
+
+
 void	n3_print(t_n3 n, char const *n_)
 {
 	printf("%s: [%f, %f, %f]\n", n_, n.x, n.y, n.z);
@@ -16,9 +26,27 @@ void	p3_print(t_p3 p, char const *n)
 }
 
 
-void	plane_print(t_plane p, char const *n)
+void	plane_print(t_plane const *p, char const *n)
 {
-	printf("%s: d: %f, n: [%f, %f, %f]\n", n, p.d, p.n.x, p.n.y, p.n.z);
+	printf("%s: d: %f, n: [%f, %f, %f]\n", n, p->d, p->n.x, p->n.y, p->n.z);
+}
+
+
+void	frustum_print(t_frustum const *f, char const *n)
+{
+	printf("%s\n", n);
+	printf("\t");
+	plane_print(f->planes + 0, "left");
+	printf("\t");
+	plane_print(f->planes + 1, "right");
+	printf("\t");
+	plane_print(f->planes + 2, "bottom");
+	printf("\t");
+	plane_print(f->planes + 3, "top");
+	printf("\t");
+	plane_print(f->planes + 4, "near");
+	printf("\t");
+	plane_print(f->planes + 5, "far");
 }
 
 
@@ -47,8 +75,9 @@ void	frustum_aabb_print(t_frustum_aabb cs)
 	else
 	{
 		printf("clip status: left: %d, right: %d, bottom: %d, top: %d, near: %d, far: %d\n",
-			cs & wx_frustum_aabb_left, cs & wx_frustum_aabb_right, cs & wx_frustum_aabb_bottom,
-			cs & wx_frustum_aabb_top, cs & wx_frustum_aabb_near, cs & wx_frustum_aabb_far);
+			(cs & wx_frustum_aabb_left) > 0, (cs & wx_frustum_aabb_right) > 0,
+			(cs & wx_frustum_aabb_bottom) > 0, (cs & wx_frustum_aabb_top) > 0,
+			(cs & wx_frustum_aabb_near) > 0, (cs & wx_frustum_aabb_far) > 0);
 	}
 }
 
@@ -78,20 +107,25 @@ t_aabb	zz_aabb_new_transformed(t_aabb const *a, t_m44 const *b_from_a)
 void	obb_print(t_obb	const *o, char const *n)
 {
 	printf("%s:\n", n);
+	printf("\t");
 	p3_print(o->center, "center");
+	printf("\t");
 	n3_print(o->axes[0], "x");
+	printf("\t");
 	n3_print(o->axes[1], "y");
+	printf("\t");
 	n3_print(o->axes[2], "z");
+	printf("\t");
 	printf("w2: %f, h2: %f, d2: %f\n", o->extents2[0], o->extents2[1], o->extents2[2]);
 }
 
 
 int main(void)
 {
-	/*box fully out*/
+	/*box all out*/
 	{
 		printf("---\n");
-		printf("box fully out:\n");
+		printf("box all out:\n");
 		t_q4	camera_orientation = {0.0f, 0.0f, 0.0f, 1.0f};
 		t_p3	camera_position = {0.0f, 0.0f, 0.0f};
 		t_m44	view_from_world = wx_m44_new_inverse_q4_p3(&camera_orientation, &camera_position);
@@ -214,10 +248,10 @@ int main(void)
 		t_frustum_aabb cs = wx_frustum_aabb_test(&frustum, &aabb, &view_from_object);
 		frustum_aabb_print(cs);
 	}
-	/*box fully in*/
+	/*box all in*/
 	{
 		printf("---\n");
-		printf("box fully in:\n");
+		printf("box all in:\n");
 		t_q4	camera_orientation = {0.0f, 0.0f, 0.0f, 1.0f};
 		t_p3	camera_position = {0.0f, 0.0f, 0.0f};
 		t_m44	view_from_world = wx_m44_new_inverse_q4_p3(&camera_orientation, &camera_position);
@@ -229,6 +263,58 @@ int main(void)
 		t_m44	view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);
 		t_m44	clip_from_view = wx_m44_new_perspective(wx_to_radians(90.0f), 16.0f / 9.0f, 1.0f, 1000.0f);
 		t_frustum	frustum = wx_frustum_new(&clip_from_view);
+		t_frustum_aabb cs = wx_frustum_aabb_test(&frustum, &aabb, &view_from_object);
+		frustum_aabb_print(cs);
+	}
+	/*graphics bug 114 degrees rotation*/
+	{
+		printf("---\n");
+		printf("graphics bug 114 degrees rotation:\n");
+		t_q4	camera_orientation = wx_q4_new_v3_f32(&(t_v3){0.0f, 1.0f, 0.0f}, wx_to_radians(114.0f));
+		t_p3	camera_position = (t_p3){1.0f, 1.0f, 4.0f};
+		t_m44	view_from_world = wx_m44_new_inverse_q4_p3(&camera_orientation, &camera_position);
+		m44_print(&view_from_world, "view_from_world");
+		t_m44	world_from_view = wx_m44_new_q4_p3(&camera_orientation, &camera_position);
+		m44_print(&world_from_view, "world_from_view");
+		t_v3	object_axis = {0.0f, 1.0f, 0.0f};
+		t_q4	object_orientation = wx_q4_new_v3_f32(&object_axis, wx_to_radians(0.0f));
+		t_p3	object_position = {0.0f, 0.0f, 0.0f};
+		t_aabb	aabb = {{2.0f, 2.0f, 2.0f}, {0.0f, 0.0f, 2.0f}};
+		t_m44	world_from_object = wx_m44_new_q4_p3(&object_orientation, &object_position);
+		m44_print(&world_from_object, "world_from_object");
+		t_m44	view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);
+		m44_print(&view_from_object, "view_from_object");
+		t_obb	obb = wx_obb_new(&aabb, &view_from_object);
+		obb_print(&obb, "obb");
+		t_m44	clip_from_view = wx_m44_new_perspective(wx_to_radians(90.0f), 16.0f / 9.0f, 0.1f, 1000.0f);
+		t_frustum	frustum = wx_frustum_new(&clip_from_view);
+		frustum_print(&frustum, "frustum");
+		t_frustum_aabb cs = wx_frustum_aabb_test(&frustum, &aabb, &view_from_object);
+		frustum_aabb_print(cs);
+	}
+	/*graphics bug 115 degrees rotation*/
+	{
+		printf("---\n");
+		printf("graphics bug 115 degrees rotation:\n");
+		t_q4	camera_orientation = wx_q4_new_v3_f32(&(t_v3){0.0f, 1.0f, 0.0f}, wx_to_radians(115.0f));
+		t_p3	camera_position = (t_p3){1.0f, 1.0f, 4.0f};
+		t_m44	view_from_world = wx_m44_new_inverse_q4_p3(&camera_orientation, &camera_position);
+		m44_print(&view_from_world, "view_from_world");
+		t_m44	world_from_view = wx_m44_new_q4_p3(&camera_orientation, &camera_position);
+		m44_print(&world_from_view, "world_from_view");
+		t_v3	object_axis = {0.0f, 1.0f, 0.0f};
+		t_q4	object_orientation = wx_q4_new_v3_f32(&object_axis, wx_to_radians(0.0f));
+		t_p3	object_position = {0.0f, 0.0f, 0.0f};
+		t_aabb	aabb = {{2.0f, 2.0f, 2.0f}, {0.0f, 0.0f, 2.0f}};
+		t_m44	world_from_object = wx_m44_new_q4_p3(&object_orientation, &object_position);
+		m44_print(&world_from_object, "world_from_object");
+		t_m44	view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);
+		m44_print(&view_from_object, "view_from_object");
+		t_obb	obb = wx_obb_new(&aabb, &view_from_object);
+		obb_print(&obb, "obb");
+		t_m44	clip_from_view = wx_m44_new_perspective(wx_to_radians(90.0f), 16.0f / 9.0f, 0.1f, 1000.0f);
+		t_frustum	frustum = wx_frustum_new(&clip_from_view);
+		frustum_print(&frustum, "frustum");
 		t_frustum_aabb cs = wx_frustum_aabb_test(&frustum, &aabb, &view_from_object);
 		frustum_aabb_print(cs);
 	}

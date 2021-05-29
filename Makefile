@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/05/23 22:18:47 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/05/27 12:17:24 by ***REMOVED***         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -251,8 +251,10 @@ server_src_files = $(addprefix $(src_dir), \
 	wx_packet_write_p3.c \
 	wx_packet_write_q4.c \
 	wx_q4_mul_q4.c \
+	wx_q4_new_v3_f32.c \
 	wx_q4_rot_v3.c \
 	wx_time_s.c \
+	wx_to_radians.c \
 )
 server_obj_files = $(subst $(src_dir), $(build_dir), $(server_src_files:.c=.o))
 server_exe = wolf3d_server

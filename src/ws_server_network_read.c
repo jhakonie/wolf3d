@@ -55,7 +55,7 @@ static t_remote_client	*zz_remote_clients_insert(t_server *s,
 		rc->address_size = p->address_size;
 		rc->packet_time_s = 0.0f;
 		rc->orientation = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
-		rc->position = (t_p3){0.0f, 0.0f, 0.0f};
+		rc->position = (t_p3){0.0f, 1.0f, 0.0f};
 		++s->remote_clients_connected_count;
 		return (rc);
 		++i;

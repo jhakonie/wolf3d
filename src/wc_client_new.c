@@ -101,6 +101,6 @@ t_bool	wc_client_new(t_client *c, t_u32 window_width, t_u32 window_height)
 	c->sim_time_step_s = 1.0 / 30.0;
 	c->run = wx_true;
 	c->player_orientation = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
-	c->player_position = (t_p3){0.0f, 0.0f, 0.0f};
+	c->player_position = (t_p3){0.0f, 1.0f, 0.0f};
 	return (wx_true);
 }

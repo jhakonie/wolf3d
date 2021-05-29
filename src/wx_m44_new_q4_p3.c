@@ -12,6 +12,13 @@
 
 #include "wx_math.h"
 
+/*
+** 2021-05-29 note: the current [0], [5] and [10] should be equivalent to:
+** m.xs[0] = (2.0f * q->x * q->x + 2.0f * q->w * q->w) - 1.0f;
+** m.xs[5] = (2.0f * q->y * q->y + 2.0f * q->w * q->w) - 1.0f;
+** m.xs[10] = (2.0f * q->z * q->z + 2.0f * q->w * q->w) - 1.0f;
+** that is shown in some literature
+*/
 t_m44	wx_m44_new_q4_p3(t_q4 const *q, t_p3 const *p)
 {
 	t_m44	m;
