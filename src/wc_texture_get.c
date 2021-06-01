@@ -21,6 +21,9 @@
 **     v = 1.0f - v;
 ** needs to agree with wc_parse_obj_uv() and wc_map_mesh_new_from_map_*()
 ** functions generate uvs
+**
+** 2021-06-01 todo: we're getting uv coordinates outside [0.0f, 1.0f], so
+** just clamp them?
 */
 t_u32	wc_texture_get(t_texture const *t, t_f32 u, t_f32 v)
 {

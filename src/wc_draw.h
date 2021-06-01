@@ -255,9 +255,9 @@ struct	s_draw_face_context
 	t_texture const	*t;
 	t_p3 const		*screen_positions;
 	t_p2 const		*uvs;
-	t_p3 const		*p0;
-	t_p3 const		*p1;
-	t_p3 const		*p2;
+	t_p3 const		*screen_p0;
+	t_p3 const		*screen_p1;
+	t_p3 const		*screen_p2;
 	t_rectangle		aabb;
 	t_p2 const		*uv0;
 	t_p2 const		*uv1;

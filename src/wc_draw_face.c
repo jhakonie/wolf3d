@@ -10,25 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "math.h"
+
 #include "wc_draw.h"
 
 /*
 ** 2021-04-10 todo: top-left filling rule
-** static t_bool	zz_edge_top_or_left_test(t_p3 const *p0, t_p3 const *p1)
-** {
-**	if (p0->x > p1->x && p0->y == p1->y)
-**	{
-**		return (wx_true);
-**	}
-**	if (p0->y > p1->y)
-**	{
-**		return (wx_true);
-**	}
-**	return (wx_false);
-** }
-*/
-
-/*
+**
+**
 ** 2021-04-28 todo: think about what to store in the depth buffer. right now
 ** it's the interpolated 1.0f/view.z for the pixel, so smaller values are
 ** further away. maybe that's ok?
@@ -49,18 +38,21 @@ static void	zz_draw(t_draw_face_context *dfc)
 **
 ** look into implementing the same functionality by precomputing any constants
 ** per face, which would then make per pixel cost lower hopefully
+**
+** 2021-06-01 todo: texture uv coordinates still go outside of [0.0f, 1.0f]. as
+** crap fix could just clamp them
 */
 static t_bool	zz_interpolate(t_draw_face_context *dfc)
 {
-	dfc->screen_a0 = wc_screen_xy_area(dfc->p1, dfc->p2, &dfc->p);
-	dfc->screen_a1 = wc_screen_xy_area(dfc->p2, dfc->p0, &dfc->p);
-	dfc->screen_a2 = wc_screen_xy_area(dfc->p0, dfc->p1, &dfc->p);
+	dfc->screen_a0 = wc_screen_xy_area(dfc->screen_p1, dfc->screen_p2, &dfc->p);
+	dfc->screen_a1 = wc_screen_xy_area(dfc->screen_p2, dfc->screen_p0, &dfc->p);
+	dfc->screen_a2 = wc_screen_xy_area(dfc->screen_p0, dfc->screen_p1, &dfc->p);
 	if (dfc->screen_a0 < 0.0f || dfc->screen_a1 < 0.0f || dfc->screen_a2 < 0.0f)
 	{
 		return (wx_false);
 	}
-	dfc->p_inv_view_z = dfc->screen_a0 * dfc->p0->z + dfc->screen_a1
-		* dfc->p1->z + dfc->screen_a2 * dfc->p2->z;
+	dfc->p_inv_view_z = dfc->screen_a0 * dfc->screen_p0->z + dfc->screen_a1
+		* dfc->screen_p1->z + dfc->screen_a2 * dfc->screen_p2->z;
 	if (dfc->p_inv_view_z < wc_depth_buffer_get(dfc->db, dfc->p.x, dfc->p.y))
 	{
 		return (wx_false);
@@ -78,12 +70,16 @@ static t_bool	zz_interpolate(t_draw_face_context *dfc)
 	return (wx_true);
 }
 
+/*
+** 2021-06-01 todo: ceilf() calls should be in somewhere else where they are
+** done only once per face
+*/
 void	wc_draw_face(t_draw_face_context *dfc)
 {
-	dfc->p.y = dfc->aabb.p0.y;
+	dfc->p.y = ceilf(dfc->aabb.p0.y - 0.5f);
 	while (dfc->p.y < dfc->aabb.p1.y)
 	{
-		dfc->p.x = dfc->aabb.p0.x;
+		dfc->p.x = ceilf(dfc->aabb.p0.x - 0.5f);
 		while (dfc->p.x < dfc->aabb.p1.x)
 		{
 			if (zz_interpolate(dfc))

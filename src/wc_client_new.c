@@ -96,11 +96,11 @@ t_bool	wc_client_new(t_client *c, t_u32 window_width, t_u32 window_height)
 		wc_client_del(c);
 		return (wx_false);
 	}
-	zz_camera(c, window_width, window_height);
 	c->sim_time_s = wx_time_s();
 	c->sim_time_step_s = 1.0 / 30.0;
 	c->run = wx_true;
 	c->player_orientation = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
 	c->player_position = (t_p3){0.0f, 1.0f, 0.0f};
+	zz_camera(c, window_width, window_height);
 	return (wx_true);
 }
