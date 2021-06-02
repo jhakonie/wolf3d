@@ -13,6 +13,13 @@
 # define WX_XPM_FREE_KEYWORD (2)
 # define WX_WX_XPM_FREE_PIXELS (3)
 
+typedef struct s_color_key
+{
+	t_u32	color;
+	t_u8	*keyword;
+
+}					t_color_key;
+
 typedef struct s_xpmtest
 {
 	t_u32		width;

@@ -174,7 +174,7 @@ test_3d_screen_area() {
 test_wc_map_new_from_file() {
     local test_name=${FUNCNAME}
     rm -f test/build/${test_name}
-    gcc -g -Wall -Wextra -l m -o test/build/${test_name} \
+    gcc -g -Wall -Wextra -l m -o test/build/${test_name} -I build/libsdl2/include/\
 	src/wc_map_new_from_file.c \
 	src/wx_buffer_copy.c \
 	src/wx_buffer_set.c \

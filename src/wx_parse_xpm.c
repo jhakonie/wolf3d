@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 14:56:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/17 02:03:09 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/17 22:26:27 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ t_bool	wx_parse_xpm(t_c8 const *filename, t_xpm *xpm)
 		return (wx_true);
 	}
 	zz_free_txt(&txt);
-	return (wx_false);
+	return (wx_parse_xpm_error(xpm, 0,
+					"xpm-parse error: start of file /* XPM */.\n", 43));
 }

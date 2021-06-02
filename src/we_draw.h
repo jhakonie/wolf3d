@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/17 16:23:51 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/02 11:31:35 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@
 
 /*
 ** REMEMBER to update WE_MAP_BUFF_SIZE (2 * WE_GRID_DIVIDE * WE_GRID_DIVIDE)
-** and WE_MAP_SIZE (WE_GRID_DIVIDE * WE_GRID_DIVIDE)
+** and WE_MAP_SIZE (WE_GRID_DIVIDE * WE_GRID_DIVIDE), used for reading map.
+** and WE_RAY_CAST_BUFF_SIZE_M in we_raycast.h, used for ray cast buffer.
+** ----> sqrt(WE_MAP_SIZE + WE_MAP_SIZE);
 ** IF WE_GRID_DIVIDE is altered!
 */
 # define WE_GRID_DIVIDE (57)
@@ -42,7 +44,7 @@
 */
 # define WE_MAP_BUFF_SIZE (6498)
 # define WE_MAP_SIZE (3249)
-# define WE_BLOCK_W (2)
+# define WE_BLOCK_W (10)
 
 # define PI (3.14159265359)
 # define WE_TO_RAD (0.017453292519944)
@@ -100,6 +102,16 @@ typedef struct s_grid
 	t_u32		divide;
 }				t_grid;
 
+struct			s_draw_floor
+{
+	t_p2		end_w;
+	t_p2		delta_w;
+	t_f32		end_distance_w;
+	t_p2		start_fb;
+	t_p2		end_fb;
+};
+typedef struct s_draw_floor	t_draw_floor;
+
 void		we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color);
 void		we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 color);
 void		we_draw_rec_full(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 c);
@@ -111,8 +123,9 @@ void		we_draw_triangle(t_u32 color, t_triangle *t, t_frame_buffer *fb);
 void		we_draw_grid(t_grid *g, t_frame_buffer *fb);
 void		we_draw_wall(t_ray ray, t_frame_buffer *fb, t_wall_type *wall_type);
 void		we_draw_texture_wall(t_ray ray, t_p2 draw, t_frame_buffer *fb,
-				t_tex tex);
-void		we_draw_floor(t_ray ray, t_frame_buffer *fb, t_bool draw_3d);
+				t_tex *tex);
+void		we_draw_floor(t_ray ray, t_frame_buffer *fb,
+				t_wall_type *wall_type);
 t_p2		we_floor_draw_end(t_ray ray);
 t_tex		we_fractal_texture_create(t_p2 ray_start,
 				t_s32 (*f)(t_s32, t_s32, t_fractal *), t_u32 id);

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:44:57 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/14 21:20:32 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/02 11:37:28 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,11 @@ static void	zz_color_ptr(t_editor *e)
 	we_draw_rec_full(low, top, &e->frame_buffer, color);
 }
 
-void	we_draw(t_editor *e)
+static void	zz_draw_2d(t_editor *e)
 {
-	if (e->map.draw_3d == wx_false)
-	{
-		wx_buffer_set(e->frame_buffer.data, e->frame_buffer.data_size, 0);
-		we_draw_toolbar(e);
-	}
-	we_draw_3d(&e->frame_buffer, e->player, e->map);
-	if (e->map.draw_3d == wx_false)
-		we_draw_grid(&e->map.grid, &e->frame_buffer);
+	wx_buffer_set(e->frame_buffer.data, e->frame_buffer.data_size, 0);
+	we_draw_toolbar(e);
+	we_draw_grid(&e->map.grid, &e->frame_buffer);
 	if (e->map.draw_3d == wx_false && (e->map.ptr_clear || (e->map.ptr_draw)))
 	{
 		we_draw_map(e);
@@ -48,10 +43,18 @@ void	we_draw(t_editor *e)
 			zz_color_ptr(e);
 		e->map.ptr_clear = wx_false;
 	}
-	else if (e->map.draw_3d == wx_false)
+	else
 	{
 		we_draw_map(e);
 		we_draw_player(e);
 	}
+}
+
+void	we_draw(t_editor *e)
+{
+	if (!e->map.draw_3d)
+		zz_draw_2d(e);
+	else
+		we_draw_3d(&e->frame_buffer, e->player, e->map);
 	e->draw = wx_false;
 }

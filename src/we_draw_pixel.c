@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 21:25:21 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/15 17:09:38 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/29 20:31:48 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 
 void	we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color)
 {
-	t_u32	i;
+	t_u64	i;
 
-	i = ((int)point.x + fb->width * (int)point.y) * 4;
-	if (point.x < fb->width && point.y < fb->height && point.x >= 0
-		&& point.y >= 0)
-	{
-		fb->data[0 + i] = (color >> 24);
-		fb->data[1 + i] = (color) & 0xFF;
-		fb->data[2 + i] = (color >> 8) & 0xFF;
-		fb->data[3 + i] = (color >> 16) & 0xFF;
-	}
+	i = 4 * ((t_u32)point.y * fb->width + (t_u32)point.x);
+	fb->data[i + 0] = (color >> 24) & 0xff;
+	fb->data[i + 3] = (color >> 16) & 0xff;
+	fb->data[i + 2] = (color >> 8) & 0xff;
+	fb->data[i + 1] = (color >> 0) & 0xff;
 }

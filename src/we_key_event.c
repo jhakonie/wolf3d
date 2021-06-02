@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 23:36:54 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/12 00:20:20 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/02 10:52:35 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,21 @@ void	we_key_event(t_u32 key, t_editor *e)
 		zz_change_view(&e->map.draw_3d);
 	else if (key == SDLK_LEFT || key == SDLK_RIGHT)
 		zz_player_rotation(key, &e->player.direction_d);
-	else if (key == SDLK_w || key == SDLK_s || key == SDLK_a || key == SDLK_d)
+	else if (key == SDLK_w || key == SDLK_a || key == SDLK_s || key == SDLK_d)
 		we_player_move(key, e);
 	else if (key == SDLK_r)
 		zz_draw_rays_2d(&e->map.draw_rays);
 	else if (key == SDLK_c)
 		zz_go_through_walls(&e->player.wall_collision);
 	else if (key == SDLK_f && !e->player.run)
+	{
+		e->player.run = wx_true;
 		e->player.w_step *= 2;
+	}
 	else if (key == SDLK_f && e->player.run)
+	{
+		e->player.run = wx_false;
 		e->player.w_step *= 0.5;
+	}
 	e->draw = wx_true;
 }

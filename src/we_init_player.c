@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 21:24:00 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/16 21:03:15 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/02 10:53:35 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,18 @@ void	zz_player_pos(t_map *m, t_player *p)
 
 void	we_init_player(t_player *p, t_map *m, t_u32 screen_width)
 {
-	p->direction_d = 45;
+	p->direction_d = 0;
 	p->height = 0.5f;
 	p->fov_d = 60;
-	p->dist_to_screen = 0.5f * screen_width
+	p->dist_to_screen_w = 0.5f * screen_width
 		/ tanf(wx_to_radians(0.5f * p->fov_d));
+	wx_buffer_set(&p->move, sizeof(p->move), 0);
 	p->w_start.x = 0;
 	p->w_start.y = 0;
 	p->w_end.x = WE_BLOCK_W * WE_GRID_DIVIDE;
 	p->w_end.y = WE_BLOCK_W * WE_GRID_DIVIDE;
 	p->w_block_count = WE_GRID_DIVIDE * WE_GRID_DIVIDE;
-	p->w_step = WE_BLOCK_W * 0.25f;
+	p->w_step = 30;
 	p->run = wx_false;
 	p->wall_collision = wx_true;
 	zz_player_pos(m, p);

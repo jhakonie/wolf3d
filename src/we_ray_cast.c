@@ -6,33 +6,37 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 17:25:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/17 15:31:20 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/02 10:41:59 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_draw.h"
+#include "we_editor.h"
 
 /*
 ** Calculate distance to wall and wall projected height.
 ** Define wall type, side and wall compass direction.
 */
 
-static t_found	zz_wall_values(t_ray *ray, t_map_tile *tiles, t_side side)
+static t_hit	zz_tile_values(t_ray *ray, t_map_tile *tiles, t_side side)
 {
+	t_p2	delta;
+
 	if (side == we_no_wall)
 	{
-		wx_buffer_set(&ray->wall, sizeof(ray->wall), 0);
-		return (ray->wall);
+		wx_buffer_set(&ray->tile, sizeof(ray->tile), 0);
+		return (ray->tile);
 	}
-	ray->wall.side = side;
-	ray->wall.tiles_id = tiles[ray->wall.tiles_index].id;
-	ray->wall.distance = sqrtf(powf((ray->wall.end.x - ray->start.x), 2.0)
-			+ powf((ray->wall.end.y - ray->start.y), 2.0));
-	ray->wall.distance *= cosf(wx_to_radians(ray->angle_to_player_d));
-	ray->wall.projected_height = (ray->dist_to_screen / ray->wall.distance)
+	ray->tile.side = side;
+	ray->tile.tiles_id = tiles[ray->tile.tiles_index].id;
+	delta.x = ray->tile.hit.x - ray->start.x;
+	delta.y = ray->tile.hit.y - ray->start.y;
+	ray->tile.distance = sqrtf(delta.x * delta.x + delta.y * delta.y);
+	ray->tile.distance *= cosf(wx_to_radians(ray->angle_to_player_d));
+	ray->tile.projected_height = (ray->dist_to_screen_w / ray->tile.distance)
 		* WE_BLOCK_W;
-	ray->wall.compass = we_wall_compass_direction(ray->angle_d, side);
-	return (ray->wall);
+	ray->tile.compass = we_wall_compass_direction(ray->angle_d, side);
+	return (ray->tile);
 }
 
 /*
@@ -40,21 +44,20 @@ static t_found	zz_wall_values(t_ray *ray, t_map_tile *tiles, t_side side)
 ** ray values.
 */
 
-/* todo: make this return ray.wall
-** and set it to no_wall if index was out of bounds,
-** otherwise outside map floor will be drawn based on prev. ray info
+/* 
+** Checks if the ray and vertical or horisontal map line intersection
+** hit a wall. Updates tile values
 */
 
 static t_bool	zz_is_wall(t_map_tile *tiles, t_ray *ray, t_p2 intersection_w,
 	t_side line)
 {
-	t_u32	block_y;
-	t_u32	block_x;
-	t_u32	block_count;
-	t_u32	index;
+	t_u32			block_y;
+	t_u32			block_x;
+	static t_u32	block_count = WE_GRID_DIVIDE * WE_GRID_DIVIDE;
+	t_u32			index;
 
-	ray->wall.end = intersection_w;
-	block_count = WE_GRID_DIVIDE * WE_GRID_DIVIDE;
+	ray->tile.hit = intersection_w;
 	block_y = intersection_w.y / WE_BLOCK_W;
 	block_x = intersection_w.x / WE_BLOCK_W;
 	index = block_x + block_y * WE_GRID_DIVIDE;
@@ -67,30 +70,28 @@ static t_bool	zz_is_wall(t_map_tile *tiles, t_ray *ray, t_p2 intersection_w,
 		index -= 1;
 	if (index < block_count)
 	{
-		ray->wall.tiles_index = index;
-		ray->wall = zz_wall_values(ray, tiles, line);
-		if (tiles[index].id == 1 || tiles[index].id == 2)
+		ray->tile.tiles_index = index;
+		ray->tile = zz_tile_values(ray, tiles, line);
+		if (tiles[index].id == ray->tile_type_to_find)
 			return (wx_true);
 	}
 	return (wx_false);
 }
 
 /*
-** Find distance to horizontal wall, draw floor, update ray values.
+** Find distance to horizontal wall, record floor, update ray values.
 */
-
-static t_found	zz_dist_horizontal_wall(t_ray *ray, t_map_tile *tiles,
-					t_frame_buffer *fb, t_bool draw_3d)
+static t_hit	zz_dist_horizontal_wall(t_ray *ray, t_map_tile *tiles)
 {
-	t_p2	intersection_w;
-	t_u32	block_y;
-	t_f32	world_end;
+	t_p2			intersection_w;
+	t_u32			block_y;
+	static t_f32	world_end = WE_BLOCK_W * WE_GRID_DIVIDE;
 
-	world_end = WE_BLOCK_W * WE_GRID_DIVIDE;
 	block_y = ray->start.y / WE_BLOCK_W;
-	if (ray->angle_d >= 180 && ray->angle_d <= 360)
+	if (ray->angle_d > 180 && ray->angle_d < 360)
 		block_y += 1;
 	intersection_w.y = block_y * WE_BLOCK_W;
+	ray->tiles_h_size = 0;
 	while (intersection_w.y < world_end && intersection_w.y >= 0)
 	{
 		intersection_w.x = (intersection_w.y - ray->b) / ray->k;
@@ -99,32 +100,31 @@ static t_found	zz_dist_horizontal_wall(t_ray *ray, t_map_tile *tiles,
 			|| block_y >= WE_GRID_DIVIDE)
 			break ;
 		if ((zz_is_wall(tiles, ray, intersection_w, we_horisontal)))
-			return (zz_wall_values(ray, tiles, we_horisontal));
-		we_draw_floor(*ray, fb, draw_3d);
+			return (ray->tile);
+		ray->tiles_h[ray->tiles_h_size] = ray->tile;
+		ray->tiles_h_size++;
+		intersection_w.y += WE_BLOCK_W;
 		if (ray->angle_d < 180 && ray->angle_d > 0)
-			intersection_w.y -= WE_BLOCK_W;
-		else
-			intersection_w.y += WE_BLOCK_W;
+			intersection_w.y -= 2 * WE_BLOCK_W;
 	}
-	return (zz_wall_values(ray, tiles, we_no_wall));
+	return (zz_tile_values(ray, tiles, we_no_wall));
 }
 
 /*
-** Find distance to vertical wall, draw floor, update ray values.
+** Find distance to vertical wall, record floor, update ray values.
 */
 
-static t_found	zz_dist_vertical_wall(t_ray *ray, t_map_tile *tiles,
-					t_frame_buffer *fb, t_bool draw_3d)
+static t_hit	zz_dist_vertical_wall(t_ray *ray, t_map_tile *tiles)
 {
-	t_p2	intersection_w;
-	t_u32	block_x;
-	t_f32	world_end;
+	t_p2			intersection_w;
+	t_u32			block_x;
+	static t_f32	world_end = WE_BLOCK_W * WE_GRID_DIVIDE;
 
-	world_end = WE_BLOCK_W * WE_GRID_DIVIDE;
 	block_x = ray->start.x / WE_BLOCK_W;
 	if (ray->angle_d <= 90 || ray->angle_d >= 270)
 		block_x += 1;
 	intersection_w.x = block_x * WE_BLOCK_W;
+	ray->tiles_v_size = 0;
 	while (intersection_w.x < world_end && intersection_w.x >= 0)
 	{
 		intersection_w.y = ray->k * intersection_w.x + ray->b;
@@ -133,14 +133,14 @@ static t_found	zz_dist_vertical_wall(t_ray *ray, t_map_tile *tiles,
 			|| block_x >= WE_GRID_DIVIDE)
 			break ;
 		if ((zz_is_wall(tiles, ray, intersection_w, we_vertical)))
-			return (zz_wall_values(ray, tiles, we_vertical));
-		we_draw_floor(*ray, fb, draw_3d);
+			return (ray->tile);
+		ray->tiles_v[ray->tiles_v_size] = ray->tile;
+		ray->tiles_v_size++;
+		intersection_w.x += WE_BLOCK_W;
 		if (ray->angle_d > 90 && ray->angle_d < 270)
-			intersection_w.x -= WE_BLOCK_W;
-		else
-			intersection_w.x += WE_BLOCK_W;
+			intersection_w.x -= 2 * WE_BLOCK_W;
 	}
-	return (zz_wall_values(ray, tiles, we_no_wall));
+	return (zz_tile_values(ray, tiles, we_no_wall));
 }
 
 /*
@@ -148,24 +148,23 @@ static t_found	zz_dist_vertical_wall(t_ray *ray, t_map_tile *tiles,
 ** walls. Choose the closer one to be drawn.
 */
 
-void	we_ray_cast(t_ray *ray, t_map_tile *tiles, t_frame_buffer *fb,
-			t_bool draw_3d)
+void	we_ray_cast(t_ray *ray, t_map_tile *tiles)
 {
-	t_found	vertical;
-	t_found	horizontal;
+	t_hit	horizontal;
+	t_hit	vertical;
 
-	horizontal = zz_dist_horizontal_wall(ray, tiles, fb, draw_3d);
-	vertical = zz_dist_vertical_wall(ray, tiles, fb, draw_3d);
+	horizontal = zz_dist_horizontal_wall(ray, tiles);
+	vertical = zz_dist_vertical_wall(ray, tiles);
 	if (vertical.distance < horizontal.distance)
 	{
-		ray->wall = vertical;
+		ray->tile = vertical;
 		if (vertical.distance == 0)
-			ray->wall = horizontal;
+			ray->tile = horizontal;
 	}
 	else
 	{
-		ray->wall = horizontal;
+		ray->tile = horizontal;
 		if (horizontal.distance == 0)
-			ray->wall = vertical;
+			ray->tile = vertical;
 	}
 }

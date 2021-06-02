@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/17 16:43:47 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/19 22:33:25 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,41 @@ struct				s_tools
 };
 typedef struct s_tools	t_tools;
 
+struct				s_move
+{
+	t_p2		forward;
+	t_p2		backward;
+	t_p2		left;
+	t_p2		right;
+	t_f32		turn_r;
+	t_f32		turn_l;
+};
+typedef struct s_move	t_move;
+
 struct			s_player
 {
 	t_f32		height;
 	t_p2		position;
 	t_f32		direction_d;
-	t_f32		dist_to_screen;
+	t_f32		dist_to_screen_w;
 	t_f32		fov_d;
 	t_p2		w_start;
 	t_p2		w_end;
 	t_u32		w_block_count;
 	t_f32		w_step;
 	t_bool		run;
+	t_move		move;
 	t_bool		wall_collision;
 };
 typedef struct s_player	t_player;
+
+struct			s_time
+{
+	t_f64			sim_time_s;
+	t_f64			sim_time_accumulator_s;
+	t_f64			sim_time_step_s;
+};
+typedef struct s_time	t_time;
 
 struct				s_map
 {
@@ -84,6 +104,7 @@ struct				s_editor
 	t_tools			tools;
 	t_map			map;
 	t_player		player;
+	t_time			time;
 };
 typedef struct s_editor	t_editor;
 

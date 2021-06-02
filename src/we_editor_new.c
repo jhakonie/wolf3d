@@ -6,11 +6,12 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:14:34 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/17 16:58:40 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/25 14:17:23 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
+#include "wx_time.h"
 
 static t_bool	zz_on_error(t_editor *e, t_u8 i)
 {
@@ -72,5 +73,7 @@ t_bool	we_editor_new(t_editor *e, t_u32 window_width, t_u32 window_height)
 	e->quit = wx_false;
 	e->draw = wx_true;
 	e->map.draw_3d = wx_false;
+	e->time.sim_time_s = wx_time_s();
+	e->time.sim_time_step_s = 1.0 / 30.0;
 	return (wx_true);
 }

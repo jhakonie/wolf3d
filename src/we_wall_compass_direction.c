@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 23:56:28 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/30 16:15:40 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/18 18:41:22 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ t_compass	we_wall_compass_direction(t_f32 angle_ray_d, t_u32 side)
 		direction = we_north;
 		if (angle_ray_d > 180)
 			direction = we_south;
+		return (direction);
 	}
-	else
-	{
-		direction = we_east;
-		if (angle_ray_d > 90 && angle_ray_d < 270)
-			direction = we_west;
-	}
+	direction = we_east;
+	if (angle_ray_d > 90 && angle_ray_d < 270)
+		direction = we_west;
 	return (direction);
 }

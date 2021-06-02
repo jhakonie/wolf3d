@@ -11,9 +11,8 @@ static void	zz_mouse_event_move(t_editor *e, t_u32 x, t_u32 y)
 	t_u32	i;
 
 	i = 1;
-	if (e->map.draw_3d)
-		we_player_rotate(e, x, y);
-	else if (x < e->map.grid.start.x)
+	we_player_rotate(e, x, y);
+	if (x < e->map.grid.start.x)
 	{
 		e->map.ptr_draw = wx_false;
 		e->map.ptr_clear = wx_true;

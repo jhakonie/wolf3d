@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/05/27 12:17:24 by ***REMOVED***         ###   ########.fr        #
+#    Updated: 2021/06/02 12:00:40 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -225,6 +225,8 @@ editor_src_files = $(addprefix $(src_dir), \
 	wx_to_radians.c \
 	wx_u64_max.c \
 	wx_xpm_del.c \
+	wx_time_s.c \
+	wx_f64_min.c \
 )
 editor_obj_files = $(subst $(src_dir), $(build_dir), $(editor_src_files:.c=.o))
 editor_exe = wolf3d_editor

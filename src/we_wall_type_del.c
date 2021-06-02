@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 19:01:52 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/15 17:29:31 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/05/17 21:15:35 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_bool	we_wall_type_del(t_wall_type *wall_type, t_u32 wall_type_index,
 	t_s32	j;
 
 	i = wall_type_index;
-	while (i >= 0)
+	while (i > 0)
 	{
 		j = wall_index;
 		while (j >= 0)
