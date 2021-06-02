@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 13:46:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 14:54:31 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/02 16:06:32 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static t_bool	zz_inside_map(t_triangle *t,
 	return (wx_true);
 }
 
-static void	zz_draw_triangle(t_editor *e, t_p2 tip, t_p2 player)
+static void	zz_draw_triangle(t_editor *e, t_p2 base, t_p2 tip)
 {
 	t_triangle	t;
 	t_p2		delta;
@@ -70,10 +70,10 @@ static void	zz_draw_triangle(t_editor *e, t_p2 tip, t_p2 player)
 		* e->map.grid.part.x * 0.3f;
 	delta.y = -(sinf((90 + e->player.direction_d) * WE_TO_RAD)
 			* e->map.grid.part.y * 0.3f);
-	base_a.x = player.x - delta.x;
-	base_a.y = player.y - delta.y;
-	base_b.x = player.x + delta.x;
-	base_b.y = player.y + delta.y;
+	base_a.x = base.x - delta.x;
+	base_a.y = base.y - delta.y;
+	base_b.x = base.x + delta.x;
+	base_b.y = base.y + delta.y;
 	we_init_triangle(base_a, base_b, tip, &t);
 	if (zz_inside_map(&t, &e->map))
 		we_draw_triangle(0xFF00D0, &t, &e->frame_buffer);
@@ -82,6 +82,7 @@ static void	zz_draw_triangle(t_editor *e, t_p2 tip, t_p2 player)
 void	we_draw_player(t_editor *e)
 {
 	t_p2	player;
+	t_p2	triangle_base;
 	t_p2	triangle_tip;
 	t_p2	delta;
 
@@ -90,14 +91,14 @@ void	we_draw_player(t_editor *e)
 	player.y = e->player.position.y / WE_BLOCK_W * e->map.grid.part.y;
 	delta.x = (cosf(e->player.direction_d * WE_TO_RAD) * e->map.grid.part.x);
 	delta.y = -(sinf(e->player.direction_d * WE_TO_RAD) * e->map.grid.part.y);
+	triangle_base.x = (player.x - 0.5f * delta.x);
+	triangle_base.y = (player.y - 0.5f * delta.y);
 	triangle_tip.x = (player.x + delta.x);
 	triangle_tip.y = (player.y + delta.y);
 	if (player.x > e->tools.end.x)
-		zz_draw_triangle(e, triangle_tip, player);
+		zz_draw_triangle(e, triangle_base, triangle_tip);
 	if (e->map.draw_rays)
-		zz_draw_rays(&e->frame_buffer, e, triangle_tip);
-	player.x += 0.3f * delta.x;
-	player.y += 0.3f * delta.y;
+		zz_draw_rays(&e->frame_buffer, e, player);
 	if (zz_point_inside_map(player, &e->map))
 		we_draw_pixel(player, &e->frame_buffer, 0xFFFF00);
 }

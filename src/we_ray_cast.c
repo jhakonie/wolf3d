@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 17:25:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 10:41:59 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/02 16:10:57 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,16 @@ static t_hit	zz_dist_horizontal_wall(t_ray *ray, t_map_tile *tiles)
 {
 	t_p2			intersection_w;
 	t_u32			block_y;
-	static t_f32	world_end = WE_BLOCK_W * WE_GRID_DIVIDE;
 
 	block_y = ray->start.y / WE_BLOCK_W;
 	if (ray->angle_d > 180 && ray->angle_d < 360)
 		block_y += 1;
 	intersection_w.y = block_y * WE_BLOCK_W;
 	ray->tiles_h_size = 0;
-	while (intersection_w.y < world_end && intersection_w.y >= 0)
+	while (intersection_w.y < ray->world_end_w && intersection_w.y >= 0)
 	{
 		intersection_w.x = (intersection_w.y - ray->b) / ray->k;
-		if (intersection_w.x < 0 || intersection_w.x >= world_end
+		if (intersection_w.x < 0 || intersection_w.x >= ray->world_end_w
 			|| (ray->angle_d == 180 || ray->angle_d == 0 || ray->angle_d == 360)
 			|| block_y >= WE_GRID_DIVIDE)
 			break ;
@@ -118,17 +117,16 @@ static t_hit	zz_dist_vertical_wall(t_ray *ray, t_map_tile *tiles)
 {
 	t_p2			intersection_w;
 	t_u32			block_x;
-	static t_f32	world_end = WE_BLOCK_W * WE_GRID_DIVIDE;
 
 	block_x = ray->start.x / WE_BLOCK_W;
 	if (ray->angle_d <= 90 || ray->angle_d >= 270)
 		block_x += 1;
 	intersection_w.x = block_x * WE_BLOCK_W;
 	ray->tiles_v_size = 0;
-	while (intersection_w.x < world_end && intersection_w.x >= 0)
+	while (intersection_w.x < ray->world_end_w && intersection_w.x >= 0)
 	{
 		intersection_w.y = ray->k * intersection_w.x + ray->b;
-		if (intersection_w.y < 0 || intersection_w.y >= world_end
+		if (intersection_w.y < 0 || intersection_w.y >= ray->world_end_w
 			|| (ray->angle_d == 90 || ray->angle_d == 270)
 			|| block_x >= WE_GRID_DIVIDE)
 			break ;

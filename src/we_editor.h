@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/19 22:33:25 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/02 18:04:39 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void				we_init_player_location(t_tool *t,
 void				we_init_empty(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_save(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_map(t_map *m, t_u32 win_w, t_u32 win_h);
-// t_bool				we_init_textures(t_wall_type *wall_type);
+t_bool				we_init_textures(t_wall_type *wall_type);
 void				we_init_tiles(t_map *m);
 void				we_tiles_set(t_map *m);
 void				we_init_player(t_player *p, t_map *m, t_u32 screen_width);
