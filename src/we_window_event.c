@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 22:51:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/01 23:56:24 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/07 19:38:44 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	zz_on_resize(t_editor *e, t_s32 width, t_s32 height)
 	if (!wx_frame_buffer_new(&e->frame_buffer, width, height))
 		e->quit = wx_true;
 	we_init_map(&e->map, width, height);
-	we_init_tools(&e->tools, width, height);
+	we_init_toolbar(&e->tools, width, height);
 	e->tools.id = tool_id;
 	e->tools.tool[tool_id].selected = wx_true;
 	e->map.draw_rays = draw_rays;

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/07 16:47:33 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/08 00:34:13 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ typedef struct s_button
 {
 	t_p2		start;
 	t_p2		end;
-	t_u32		color[4];
+	t_tex		icon;
+	t_u32		color[3];
 }				t_button;
 
 typedef struct s_grid
@@ -114,6 +115,9 @@ typedef struct s_draw_floor	t_draw_floor;
 
 void		we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color);
 void		we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 color);
+void		we_draw_clip(t_p2 *p, t_frame_buffer *fb);
+void		we_draw_rec_texture(t_p2 start, t_p2 end,
+				t_frame_buffer *fb, t_tex *t);
 void		we_draw_rec_full(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 c);
 void		we_draw_rec_frame(t_p2 start, t_p2 end, t_frame_buffer *fb,
 				t_u32 c);
@@ -127,6 +131,7 @@ void		we_draw_texture_wall(t_ray ray, t_p2 draw, t_frame_buffer *fb,
 				t_tex *tex);
 void		we_draw_floor(t_ray ray, t_frame_buffer *fb,
 				t_level_texture *texture_type);
+void		we_draw_sky(t_frame_buffer *fb, t_f32 view_height, t_tex *t);
 t_p2		we_floor_draw_end(t_ray ray);
 t_tex		we_fractal_texture_create(t_p2 ray_start,
 				t_s32 (*f)(t_s32, t_s32, t_fractal *), t_u32 id);

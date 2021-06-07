@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/06/07 15:44:50 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/06/08 01:09:49 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -173,6 +173,8 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_texture_type_del.c \
 	we_texture_new.c \
 	we_init_toolbar.c \
+	we_toolbar_icons_new.c \
+	we_toolbar_icons_del.c \
 	we_init_map.c \
 	we_init_tiles.c \
 	we_tiles_set.c \
@@ -200,7 +202,10 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_draw_3d.c \
 	we_draw_pixel.c \
 	we_draw_line.c \
-	we_draw_rectangle.c \
+	we_draw_clip.c \
+	we_draw_rec_full.c \
+	we_draw_rec_frame.c \
+	we_draw_rec_texture.c \
 	we_draw_triangle.c \
 	we_draw_grid.c \
 	we_draw_map.c \
@@ -209,6 +214,7 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_draw_player.c \
 	we_draw_rays.c \
 	we_draw_floor.c \
+	we_draw_sky.c \
 	we_floor_draw_end.c \
 	we_draw_wall.c \
 	we_draw_texture_wall.c \
@@ -288,9 +294,9 @@ dependency_files = \
 dependency_flags = -MT $(@) -MMD -MP -MF $(build_dir)$(*).dep
 
 LD = gcc
-LDFLAGS = $(libsdl2_ldflags) #-fsanitize=address,leak,undefined
+LDFLAGS = $(libsdl2_ldflags) -fsanitize=address#,leak,undefined
 CC = gcc
-CFLAGS = -g -c -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) #-fsanitize=address,leak,undefined
+CFLAGS = -g -c -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) -fsanitize=address#,leak,undefined
 CPPFLAGS = -D_REENTRANT
 
 all: $(client_exe) $(editor_exe) $(server_exe) $(compile_commands_json)

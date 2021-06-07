@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:44:57 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 11:37:28 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/08 01:23:02 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	zz_color_ptr(t_editor *e)
 		color = e->tools.tool[e->tools.id].button.color[0];
 	else
 		return ;
-	we_draw_rec_full(low, top, &e->frame_buffer, color);
+	we_draw_rec_texture(low, top, &e->frame_buffer,
+		&e->tools.tool[e->tools.id].button.icon);
 }
 
 static void	zz_draw_2d(t_editor *e)

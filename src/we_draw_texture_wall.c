@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:29:31 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 11:44:16 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/08 02:10:21 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,18 @@ void	we_draw_texture_wall(t_ray ray, t_p2 draw,
 											t_frame_buffer *fb, t_tex *tex)
 {
 	t_texture_index		tex_index;
-	t_u32				max_tex_index;
 	t_u32				color;
 	t_u32				max_y_fb;
 
-	max_tex_index = tex->height * tex->width;
 	tex_index = zz_texture_coordinates(ray, draw, tex);
+	tex_index.max_index = tex->height * tex->width;
 	max_y_fb = draw.y + ray.tile.projected_height;
 	zz_clip(&draw, fb->height, &max_y_fb);
 	while (draw.y < max_y_fb)
 	{
 		tex_index.index = ((t_u32)tex_index.coord.y * tex->width
 				+ (t_u32)tex_index.coord.x);
-		if (tex_index.index < max_tex_index)
+		if (tex_index.index < tex_index.max_index)
 		{
 			if (ray.tile.tiles_id == 1)
 				color = tex->texture[tex_index.index];

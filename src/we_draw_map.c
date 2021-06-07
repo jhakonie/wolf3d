@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 21:52:54 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/15 22:30:29 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/07 23:55:55 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	we_draw_map(t_editor *e)
 			start = we_from_map_to_win(e->map.tiles[i].block, e->map);
 			end.x = start.x + e->map.grid.part.x;
 			end.y = start.y + e->map.grid.part.y;
-			we_draw_rec_full(start, end, &e->frame_buffer,
-				e->tools.tool[e->map.tiles[i].id].button.color[0]);
+			we_draw_rec_texture(start, end, &e->frame_buffer,
+				&e->tools.tool[e->map.tiles[i].id].button.icon);
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 22:24:54 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/03 19:00:37 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/08 02:00:11 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_texture_index
 	t_f32	increment_y;
 	t_p2	increment;
 	t_u32	index;
+	t_u32	max_index;
 
 }	t_texture_index;
 

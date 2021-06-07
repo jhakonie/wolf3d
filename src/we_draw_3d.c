@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 17:10:51 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/03 20:32:50 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/07 19:21:12 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	we_draw_3d(t_frame_buffer *frame_buffer, t_player player,
 	wx_buffer_set(&ray, sizeof(t_ray), 0);
 	we_ray_init(&ray, player.fov_d, frame_buffer->width, player.position);
 	ray.view_height = player.height;
+	we_draw_sky(frame_buffer, ray.view_height, &map.level.texture_type.sky);
 	ray.tile_type_to_find = 1;
 	while (ray.nb < frame_buffer->width)
 	{

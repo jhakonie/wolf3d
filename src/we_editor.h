@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/07 16:44:37 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/07 23:43:55 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ struct				s_tools
 	t_p2			end;
 	t_u32			color[2];
 	t_u32			id;
-	t_tool			tool[6];
+	t_tool			tool[WE_TOOL_COUNT];
 };
 typedef struct s_tools	t_tools;
 
@@ -126,13 +126,15 @@ t_bool				we_texture_type_new(t_level_texture *texture_type,
 t_bool				we_texture_type_del(t_level_texture *texture_type);
 void				we_window_event(t_editor *e, SDL_WindowEvent *w);
 void				we_draw_to_window(t_editor *e);
-void				we_init_tools(t_tools *t, t_u32 win_w, t_u32 win_h);
+void				we_init_toolbar(t_tools *t, t_u32 win_w, t_u32 win_h);
 void				we_init_wall(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_floor(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_player_location(t_tool *t,
 						t_u32 win_w, t_u32 win_h);
 void				we_init_empty(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_save(t_tool *t, t_u32 win_w, t_u32 win_h);
+t_bool				we_toolbar_icons_new(t_tool *t);
+t_bool				we_toolbar_icons_del(t_tool *t);
 void				we_init_map(t_map *m, t_u32 win_w, t_u32 win_h);
 t_bool				we_level_new(t_level *l);
 void				we_level_del(t_level *l);

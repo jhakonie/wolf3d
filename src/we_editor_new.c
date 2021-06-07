@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:14:34 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/07 16:46:03 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/07 23:42:50 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 static t_bool	zz_on_error(t_editor *e, t_u8 i)
 {
+	if (i > 5)
+		we_level_del(&e->map.level);
 	if (i > 4)
 	{
 		wx_frame_buffer_del(&e->frame_buffer);
@@ -98,7 +100,9 @@ t_bool	we_editor_new(t_editor *e, t_u32 window_width, t_u32 window_height)
 	}
 	we_init_map(&e->map, window_width, window_height);
 	we_init_tiles(&e->map);
-	we_init_tools(&e->tools, window_width, window_height);
+	we_init_toolbar(&e->tools, window_width, window_height);
+	if (!we_toolbar_icons_new(e->tools.tool))
+		return (zz_on_error(e, 6));
 	we_init_player(&e->player, &e->map, e->frame_buffer.width);
 	e->quit = wx_false;
 	e->draw = wx_true;
