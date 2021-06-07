@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 21:21:55 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/13 20:59:03 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/03 19:15:45 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_xpm
 	t_u32				keyword_length;
 	t_color_key			*key;
 	t_u32				*pixels;
+	t_u32				size;
 
 }					t_xpm;
 

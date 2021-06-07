@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 11:31:35 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/07 16:47:33 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,12 @@ void		we_init_triangle(t_p2 a, t_p2 b, t_p2 c, t_triangle *t);
 void		we_init_line(t_p2 a, t_p2 b, t_line *l);
 void		we_draw_triangle(t_u32 color, t_triangle *t, t_frame_buffer *fb);
 void		we_draw_grid(t_grid *g, t_frame_buffer *fb);
-void		we_draw_wall(t_ray ray, t_frame_buffer *fb, t_wall_type *wall_type);
+void		we_draw_wall(t_ray ray, t_frame_buffer *fb,
+				t_level_texture *texture_type);
 void		we_draw_texture_wall(t_ray ray, t_p2 draw, t_frame_buffer *fb,
 				t_tex *tex);
 void		we_draw_floor(t_ray ray, t_frame_buffer *fb,
-				t_wall_type *wall_type);
+				t_level_texture *texture_type);
 t_p2		we_floor_draw_end(t_ray ray);
 t_tex		we_fractal_texture_create(t_p2 ray_start,
 				t_s32 (*f)(t_s32, t_s32, t_fractal *), t_u32 id);

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 18:04:39 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/07 16:44:37 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 # include "SDL2/SDL.h"
 # include "we_draw.h"
+# include "we_path.h"
 # include "unistd.h"
 # define WE_WIN_H (512)
 # define WE_WIN_W (512)
+# define WE_RESOURCES_COUNT (8)
 
 struct				s_tool
 {
@@ -73,12 +75,19 @@ struct			s_time
 };
 typedef struct s_time	t_time;
 
+struct				s_level
+{
+	t_c8				*name;
+	t_path				paths[WE_RESOURCES_COUNT];
+	t_level_texture		texture_type;
+};
+typedef struct s_level	t_level;
+
 struct				s_map
 {
-	char			*file;
+	t_level			level;
 	t_grid			grid;
 	t_map_tile		tiles[WE_MAP_SIZE];
-	t_wall_type		wall_type[WE_WALL_TYPE_COUNT];
 	t_u32			block_count;
 	t_p2			player_pos_tiles;
 	t_p2			player_pos_tiles_old;
@@ -112,9 +121,9 @@ t_bool				we_editor_new(t_editor *e, t_u32 window_width,
 						t_u32 window_height);
 t_bool				we_editor_run(t_editor *e);
 void				we_editor_del(t_editor *e);
-t_bool				we_wall_type_new(t_wall_type *wall_type);
-t_bool				we_wall_type_del(t_wall_type *wall_type,
-						t_u32 wall_type_index, t_u32 wall_index);
+t_bool				we_texture_type_new(t_level_texture *texture_type,
+						t_path *paths);
+t_bool				we_texture_type_del(t_level_texture *texture_type);
 void				we_window_event(t_editor *e, SDL_WindowEvent *w);
 void				we_draw_to_window(t_editor *e);
 void				we_init_tools(t_tools *t, t_u32 win_w, t_u32 win_h);
@@ -125,7 +134,12 @@ void				we_init_player_location(t_tool *t,
 void				we_init_empty(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_save(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_map(t_map *m, t_u32 win_w, t_u32 win_h);
-t_bool				we_init_textures(t_wall_type *wall_type);
+t_bool				we_level_new(t_level *l);
+void				we_level_del(t_level *l);
+t_bool				we_paths_new(t_path *p, t_c8 *level);
+t_bool				we_paths_del(t_path *p);
+t_bool				we_path_create(t_path	*p, t_c8 *start, t_c8 *middle,
+						t_c8 *end);
 void				we_init_tiles(t_map *m);
 void				we_tiles_set(t_map *m);
 void				we_init_player(t_player *p, t_map *m, t_u32 screen_width);

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 22:38:50 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/17 16:57:55 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/07 15:13:27 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,6 @@ static t_bool	zz_buf_to_tiles(t_map *m, char *buf, t_u32 ret)
 }
 
 /*
-** todo: add path to folder?
-*/
-
-/*
 ** Opens a file, reads allowed numer of bytes + 1, to verify file length.
 ** Closes file. Updates map_tiles based on file.
 **
@@ -84,7 +80,7 @@ static t_bool	zz_load_file_to_tiles(t_map *m)
 	t_s32		ret;
 	char		buf[WE_MAP_BUFF_SIZE + 1];
 
-	fd = open(m->file, O_RDONLY, 0644);
+	fd = open(m->level.paths[we_map].buffer, O_RDONLY, 0644);
 	if (fd < 0)
 	{
 		write(1, "open failed\n", 13);

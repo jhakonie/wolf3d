@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/06/02 12:00:40 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/06/07 15:44:50 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -157,12 +157,20 @@ client_exe = wolf3d
 
 editor_src_files = $(addprefix $(src_dir), \
 	we_main.c \
+	we_path_new.c \
+	we_path_del.c \
+	we_path_add_back.c \
+	we_path_create.c \
+	we_paths_new.c \
+	we_paths_del.c \
+	we_level_new.c \
+	we_level_del.c \
 	we_editor_new.c \
 	we_editor_run.c \
 	we_editor_del.c \
 	we_window_event.c \
-	we_wall_type_new.c \
-	we_wall_type_del.c \
+	we_texture_type_new.c \
+	we_texture_type_del.c \
 	we_texture_new.c \
 	we_init_toolbar.c \
 	we_init_map.c \

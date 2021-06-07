@@ -6,21 +6,22 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 14:00:01 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 18:04:04 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/07 15:04:29 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wx_frame_buffer.h"
 #include "wx_types.h"
 #include "we_editor.h"
+#include "we_path.h"
 
-static void	zz_arguments_check(char **file, int ac, char **av)
+static void	zz_arguments_check(t_c8	**level, int ac, char **av)
 {
 	if (ac == 2)
-		*file = av[1];
+		*level = av[1];
 	else
 	{
-		write(1, "usage: ./wolf3d_editor <file_name>\n", 36);
+		write(1, "usage: ./wolf3d_editor <level_name>\n", 37);
 		exit(0);
 	}
 }
@@ -29,8 +30,8 @@ int	main(int ac, char **av)
 {
 	t_editor	e;
 
-	wx_buffer_set(&e, sizeof(e), 0);
-	zz_arguments_check(&e.map.file, ac, av);
+	wx_buffer_set(&e, sizeof(t_editor), 0);
+	zz_arguments_check(&e.map.level.name, ac, av);
 	if (!(we_editor_new(&e, WE_WIN_W, WE_WIN_H)))
 		return (-1);
 	if (!(we_editor_run(&e)))

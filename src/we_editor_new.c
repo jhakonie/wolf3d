@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:14:34 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/25 14:17:23 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/07 16:46:03 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,33 @@ static t_bool	zz_sdl(t_editor *e, t_u32 window_width, t_u32 window_height)
 	return (wx_true);
 }
 
+static t_bool	zz_set_default_textures(t_level *l)
+{
+	wx_buffer_set(l->paths, sizeof(*l->paths), 0);
+	if (!we_path_create(&l->paths[we_map], "data/maps/", l->name, "/map.txt")
+		|| !we_path_create(&l->paths[we_wall_north],
+			"data/maps/", "default", "/north.xpm")
+		|| !we_path_create(&l->paths[we_wall_east],
+			"data/maps/", "default", "/east.xpm")
+		|| !we_path_create(&l->paths[we_wall_south],
+			"data/maps/", "default", "/south.xpm")
+		|| !we_path_create(&l->paths[we_wall_west],
+			"data/maps/", "default", "/west.xpm")
+		|| !we_path_create(&l->paths[we_floor],
+			"data/maps/", "default", "/floor.xpm")
+		|| !we_path_create(&l->paths[we_sky],
+			"data/maps/", "default", "/sky.xpm")
+		|| !we_path_create(&l->paths[we_door],
+			"data/maps/", "default", "/door.xpm"))
+	{
+		return (we_paths_del(l->paths));
+	}
+	wx_buffer_set(&l->texture_type, sizeof(t_level_texture), 0);
+	if (!we_texture_type_new(&l->texture_type, l->paths))
+		return (wx_false);
+	return (wx_true);
+}
+
 t_bool	we_editor_new(t_editor *e, t_u32 window_width, t_u32 window_height)
 {
 	if (!zz_sdl(e, window_width, window_height))
@@ -64,8 +91,11 @@ t_bool	we_editor_new(t_editor *e, t_u32 window_width, t_u32 window_height)
 	if (!wx_frame_buffer_new(&e->frame_buffer, window_width, window_height))
 		return (zz_on_error(e, 4));
 	wx_buffer_set(&e->tools, sizeof(e->tools), 0);
-	if (!we_wall_type_new(e->map.wall_type))
-		return (zz_on_error(e, 5));
+	if (!we_level_new(&e->map.level))
+	{
+		if (!zz_set_default_textures(&e->map.level))
+			return (zz_on_error(e, 5));
+	}
 	we_init_map(&e->map, window_width, window_height);
 	we_init_tiles(&e->map);
 	we_init_tools(&e->tools, window_width, window_height);

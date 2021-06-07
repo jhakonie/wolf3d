@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 17:10:51 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 11:48:06 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/03 20:32:50 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	we_draw_3d(t_frame_buffer *frame_buffer, t_player player,
 	{
 		we_ray_calculate(&ray, angle_d, player.direction_d);
 		we_ray_cast(&ray, map.tiles);
-		we_draw_floor(ray, frame_buffer, map.wall_type);
-		we_draw_wall(ray, frame_buffer, map.wall_type);
+		we_draw_floor(ray, frame_buffer, &map.level.texture_type);
+		we_draw_wall(ray, frame_buffer, &map.level.texture_type);
 		angle_d += ray.angle_increment_d;
 		ray.nb++;
 	}

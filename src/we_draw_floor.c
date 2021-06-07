@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 15:40:30 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 10:39:56 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/07 16:48:02 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static void	zz_draw_ceiling(t_draw_floor draw, t_frame_buffer *fb, t_ray ray,
 */
 
 static void	zz_draw_horisontal_tiles(t_ray ray, t_frame_buffer *fb,
-	t_wall_type *wall_type)
+	t_level_texture *texture_type)
 {
 	t_draw_floor	draw;
 	t_u32			i;
@@ -113,8 +113,8 @@ static void	zz_draw_horisontal_tiles(t_ray ray, t_frame_buffer *fb,
 		draw.end_distance_w = sqrtf((draw.delta_w.x * draw.delta_w.x
 					+ draw.delta_w.y * draw.delta_w.y));
 		draw.end_distance_w *= cosf(wx_to_radians(ray.angle_to_player_d));
-		zz_draw_floor(draw, fb, ray, &wall_type[1].wall[0]);
-		zz_draw_ceiling(draw, fb, ray, &wall_type[1].wall[0]);
+		zz_draw_floor(draw, fb, ray, &texture_type->floor);
+		zz_draw_ceiling(draw, fb, ray, &texture_type->sky);
 		i++;
 	}
 }
@@ -124,7 +124,8 @@ static void	zz_draw_horisontal_tiles(t_ray ray, t_frame_buffer *fb,
 ** encountered by the ray in question.
 */
 
-void	we_draw_floor(t_ray ray, t_frame_buffer *fb, t_wall_type *wall_type)
+void	we_draw_floor(t_ray ray, t_frame_buffer *fb,
+			t_level_texture *texture_type)
 {
 	t_draw_floor	draw;
 	t_u32			i;
@@ -143,9 +144,9 @@ void	we_draw_floor(t_ray ray, t_frame_buffer *fb, t_wall_type *wall_type)
 		draw.end_distance_w = sqrtf((draw.delta_w.x * draw.delta_w.x
 					+ draw.delta_w.y * draw.delta_w.y));
 		draw.end_distance_w *= cosf(wx_to_radians(ray.angle_to_player_d));
-		zz_draw_floor(draw, fb, ray, &wall_type[1].wall[0]);
-		zz_draw_ceiling(draw, fb, ray, &wall_type[1].wall[0]);
+		zz_draw_floor(draw, fb, ray, &texture_type->floor);
+		zz_draw_ceiling(draw, fb, ray, &texture_type->sky);
 		i++;
 	}
-	zz_draw_horisontal_tiles(ray, fb, wall_type);
+	zz_draw_horisontal_tiles(ray, fb, texture_type);
 }

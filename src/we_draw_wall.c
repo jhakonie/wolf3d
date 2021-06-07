@@ -6,21 +6,22 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:08:31 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 11:07:21 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/07 16:47:05 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_draw.h"
 
-void	we_draw_wall(t_ray ray, t_frame_buffer *fb, t_wall_type *wall_type)
+void	we_draw_wall(t_ray ray, t_frame_buffer *fb,
+	t_level_texture *texture_type)
 {
 	t_p2			draw_start;
 	t_tex			texture;
 
-	if (ray.tile.tiles_id == 2)
-		texture = wall_type[1].wall[ray.tile.compass];
+	if (ray.tile.tiles_id == 1)
+		texture = texture_type->wall[ray.tile.compass];
 	else
-		texture = wall_type[0].wall[ray.tile.compass];
+		return ;
 	if (ray.tile.distance > 0)
 		ray.tile.projected_height = (ray.dist_to_screen_w
 				/ ray.tile.distance) * WE_BLOCK_W;
