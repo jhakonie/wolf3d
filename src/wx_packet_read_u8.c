@@ -12,8 +12,8 @@
 
 #include "wx_net.h"
 
-void	wx_packet_read_u8(t_packet *p, t_u64 *i, t_u8 *x)
+void	wx_packet_read_u8(t_packet *p, t_u8 *x)
 {
-	*x = *(t_u8 *)(p->buffer + *i);
-	++(*i);
+	*x = *(t_u8 *)(p->buffer + p->read_i);
+	++p->read_i;
 }

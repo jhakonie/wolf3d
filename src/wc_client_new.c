@@ -96,6 +96,8 @@ t_bool	wc_client_new(t_client *c, t_u32 window_width, t_u32 window_height)
 		wc_client_del(c);
 		return (wx_false);
 	}
+	c->net_time_accumulator_s = 0.0;
+	c->net_time_step_s = 1.0 / 30.0;
 	c->sim_time_s = wx_time_s();
 	c->sim_time_step_s = 1.0 / 30.0;
 	c->run = wx_true;

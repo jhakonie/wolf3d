@@ -48,21 +48,25 @@ static void	zz_integrate(t_client *c)
 static void	zz_network(t_client *c)
 {
 	t_u8		i;
-	t_u64		p_offset;
 	t_packet	p;
 
-	wc_remote_server_write(&c->remote_server, &c->input,
-		&c->player_orientation);
-	if (wc_remote_server_read(&c->remote_server, &p))
+	if (c->net_time_accumulator_s >= c->net_time_step_s)
 	{
-		p_offset = 0;
-		wx_packet_read_p3(&p, &p_offset, &c->player_position);
-		wx_packet_read_u8(&p, &p_offset, &c->other_positions_size);
+		c->net_time_accumulator_s -= c->net_time_step_s;
+		wc_remote_server_write(&c->remote_server, &c->input,
+			&c->player_orientation);
+	}
+	while (wc_remote_server_read(&c->remote_server, &p))
+	{
+		p.read_i = 0;
+		wx_packet_read_u64(&p, &p.read_seq);
+		wx_packet_read_p3(&p, &c->player_position);
+		wx_packet_read_u8(&p, &c->other_positions_size);
 		i = 0;
 		while (i < c->other_positions_size)
 		{
-			wx_packet_read_q4(&p, &p_offset, &c->other_orientations[i]);
-			wx_packet_read_p3(&p, &p_offset, &c->other_positions[i]);
+			wx_packet_read_q4(&p, &c->other_orientations[i]);
+			wx_packet_read_p3(&p, &c->other_positions[i]);
 			++i;
 		}
 	}
@@ -70,7 +74,7 @@ static void	zz_network(t_client *c)
 
 t_bool	wc_client_run(t_client *c)
 {
-	t_f64		sim_delta_s;
+	t_f64		real_delta_s;
 	t_f64		real_time0_s;
 	t_f64		real_time1_s;
 
@@ -78,10 +82,11 @@ t_bool	wc_client_run(t_client *c)
 	while (c->run)
 	{
 		real_time1_s = wx_time_s();
-		sim_delta_s = wx_f64_min(real_time1_s - real_time0_s, 3.0
+		real_delta_s = wx_f64_min(real_time1_s - real_time0_s, 3.0
 				* c->sim_time_step_s);
 		real_time0_s = real_time1_s;
-		c->sim_time_accumulator_s += sim_delta_s;
+		c->net_time_accumulator_s += real_delta_s;
+		c->sim_time_accumulator_s += real_delta_s;
 		wc_client_dispatch_events(c);
 		zz_network(c);
 		zz_integrate(c);

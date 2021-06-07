@@ -59,5 +59,7 @@ t_bool	wc_remote_server_new(t_remote_server *rs, char const *hostname,
 	rs->address = *i->ai_addr;
 	rs->address_size = i->ai_addrlen;
 	freeaddrinfo(server_infos);
+	rs->received_packet_seq = 0;
+	rs->sent_packet_seq = 0;
 	return (wx_true);
 }

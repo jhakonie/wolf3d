@@ -20,6 +20,7 @@ t_bool	wc_remote_server_write(t_remote_server *rs, t_client_input const *ci,
 	p.address = rs->address;
 	p.address_size = rs->address_size;
 	p.size = 0;
+	wx_packet_write_u64(&p, rs->sent_packet_seq);
 	wx_packet_write_q4(&p, player_orientation);
 	wx_packet_write_u8(&p, ci->move_up);
 	wx_packet_write_u8(&p, ci->move_down);
@@ -29,5 +30,6 @@ t_bool	wc_remote_server_write(t_remote_server *rs, t_client_input const *ci,
 	{
 		return (wx_false);
 	}
+	++rs->sent_packet_seq;
 	return (wx_true);
 }

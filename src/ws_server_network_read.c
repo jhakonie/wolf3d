@@ -92,7 +92,6 @@ static t_remote_client	*zz_remote_clients_lookup(t_server *s,
 
 void	ws_server_network_read(t_server *s, t_f64 packet_time_s)
 {
-	t_u64			i;
 	t_packet		p;
 	t_remote_client	*rc;
 
@@ -107,12 +106,13 @@ void	ws_server_network_read(t_server *s, t_f64 packet_time_s)
 		rc = zz_remote_clients_lookup(s, &p);
 		if (!rc)
 			continue ;
-		i = 0;
-		wx_packet_read_q4(&p, &i, &rc->orientation);
-		wx_packet_read_u8(&p, &i, (t_u8 *)&rc->input.move_up);
-		wx_packet_read_u8(&p, &i, (t_u8 *)&rc->input.move_down);
-		wx_packet_read_u8(&p, &i, (t_u8 *)&rc->input.move_left);
-		wx_packet_read_u8(&p, &i, (t_u8 *)&rc->input.move_right);
+		p.read_i = 0;
+		wx_packet_read_u64(&p, &rc->received_packet_seq);
+		wx_packet_read_q4(&p, &rc->orientation);
+		wx_packet_read_u8(&p, (t_u8 *)&rc->input.move_up);
+		wx_packet_read_u8(&p, (t_u8 *)&rc->input.move_down);
+		wx_packet_read_u8(&p, (t_u8 *)&rc->input.move_left);
+		wx_packet_read_u8(&p, (t_u8 *)&rc->input.move_right);
 		rc->packet_time_s = packet_time_s;
 	}
 }

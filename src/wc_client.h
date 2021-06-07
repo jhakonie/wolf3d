@@ -37,6 +37,8 @@ struct	s_remote_server
 	struct sockaddr	address;
 	socklen_t		address_size;
 	int				socket;
+	t_u64			received_packet_seq;
+	t_u64			sent_packet_seq;
 };
 typedef struct s_remote_server	t_remote_server;
 
@@ -74,6 +76,8 @@ struct	s_client
 	t_s32				mouse_y;
 	t_s32				mouse_dx;
 	t_s32				mouse_dy;
+	t_f64				net_time_accumulator_s;
+	t_f64				net_time_step_s;
 	t_q4				player_orientation;
 	t_p3				player_position;
 	t_q4				other_orientations[WX_SERVER_REMOTE_CLIENTS_SIZE - 1];

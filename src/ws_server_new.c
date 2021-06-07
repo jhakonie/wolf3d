@@ -72,6 +72,7 @@ t_bool	ws_server_new(t_server *s)
 		return (wx_false);
 	}
 	s->run = wx_true;
+	s->sent_packet_seq = 0;
 	s->sim_time_s = wx_time_s();
 	s->sim_time_step_s = 1.0 / 30.0;
 	return (wx_true);

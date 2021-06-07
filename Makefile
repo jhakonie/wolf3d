@@ -119,12 +119,15 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_m44_new_q4_p3.c \
 	wx_obb_new.c \
 	wx_packet_read_f32.c \
-	wx_packet_read_u8.c \
+	wx_packet_read_f64.c \
 	wx_packet_read_p3.c \
 	wx_packet_read_q4.c \
+	wx_packet_read_u8.c \
+	wx_packet_read_u64.c \
 	wx_packet_write_f32.c \
 	wx_packet_write_q4.c \
 	wx_packet_write_u8.c \
+	wx_packet_write_u64.c \
 	wx_parse_f32.c \
 	wx_parse_hex.c \
 	wx_parse_keyword.c \
@@ -248,10 +251,13 @@ server_src_files = $(addprefix $(src_dir), \
 	wx_packet_read_f32.c \
 	wx_packet_read_q4.c \
 	wx_packet_read_u8.c \
+	wx_packet_read_u64.c \
 	wx_packet_write_f32.c \
-	wx_packet_write_u8.c \
 	wx_packet_write_p3.c \
 	wx_packet_write_q4.c \
+	wx_packet_write_u8.c \
+	wx_packet_write_u64.c \
+	wx_packet_write_f64.c \
 	wx_q4_mul_q4.c \
 	wx_q4_new_v3_f32.c \
 	wx_q4_rot_v3.c \
@@ -274,9 +280,9 @@ dependency_files = \
 dependency_flags = -MT $(@) -MMD -MP -MF $(build_dir)$(*).dep
 
 LD = gcc
-LDFLAGS = $(libsdl2_ldflags) #-fsanitize=address
+LDFLAGS = $(libsdl2_ldflags) #-fsanitize=address,leak,undefined
 CC = gcc
-CFLAGS = -g -c -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) #-fsanitize=address
+CFLAGS = -g -c -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) #-fsanitize=address,leak,undefined
 CPPFLAGS = -D_REENTRANT
 
 all: $(client_exe) $(editor_exe) $(server_exe) $(compile_commands_json)

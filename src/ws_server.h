@@ -31,6 +31,7 @@ struct	s_remote_client
 	t_remote_client_state	state;
 	struct sockaddr			address;
 	socklen_t				address_size;
+	t_u64					received_packet_seq;
 	t_client_input			input;
 	t_f64					packet_time_s;
 	t_q4					orientation;
@@ -46,6 +47,7 @@ struct	s_server
 	t_f64			remote_client_timeout_s;
 	t_bool			run;
 	int				socket;
+	t_u64			sent_packet_seq;
 	t_f64			sim_time_s;
 	t_f64			sim_time_accumulator_s;
 	t_f64			sim_time_step_s;
