@@ -23,7 +23,8 @@ enum e_file
 	we_floor = 5,
 	we_sky = 6,
 	we_door = 7
-}	t_file;
+};
+typedef enum e_file		t_file;
 
 t_bool	we_path_new(t_path *p, t_c8 *str);
 t_bool	we_path_add_back(t_path *p, t_c8 *str);
