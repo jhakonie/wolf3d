@@ -17,6 +17,11 @@ t_bool	wc_texture_new_from_file(t_texture *t, char const *filename)
 	{
 		return (wx_false);
 	}
+	if (xpm.width == 0 || xpm.height == 0)
+	{
+		wx_xpm_del(&xpm);
+		return (wx_false);
+	}
 	t->buffer = (t_u8 *)xpm.pixels;
 	t->buffer_size = xpm.width * xpm.height * sizeof(*xpm.pixels);
 	t->width = xpm.width;
