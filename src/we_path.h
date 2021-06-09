@@ -26,8 +26,8 @@ enum e_file
 };
 typedef enum e_file		t_file;
 
-t_bool	we_path_new(t_path *p, t_c8 *str);
-t_bool	we_path_add_back(t_path *p, t_c8 *str);
+t_bool	we_path_new(t_path *p, t_c8 const *str);
+t_bool	we_path_add_back(t_path *p, t_c8 const *str);
 void	we_path_del(t_path *p);
 
 #endif

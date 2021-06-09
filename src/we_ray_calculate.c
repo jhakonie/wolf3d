@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 17:18:30 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 10:43:39 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 15:13:13 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,26 @@
 **
 ** ray->k and ray->b form y = kx + b.
 **
-** ray->delta = ray_intersection_with_screen(x, y) - ray_start(x, y).
+** ray->delta = ray intersection with projection plane(x,y) - ray_start(x,y).
+**	
+**		ray_start(x,y)
+**			* __ __ __ __ __ __ x
+**			|\
+**			| \		y = kx + b
+**			|  \  /
+**	delta.y	|   \/
+**			|	 \
+**			|delta.x
+**			|______\
+**			|	    * projection_plane(x,y)
+**			|	     \
+**			|		  \
+**			|		   \
+**			y		 	*
+**					wall(x,y)
 **
-** TODO: check if ray->angle_d - notes are correct (also from ray_init)
+** k = delta.y / delta.x
+** angle_d ~ 315 degrees
 */
 
 void	we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,

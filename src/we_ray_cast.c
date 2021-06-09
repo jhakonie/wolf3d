@@ -6,11 +6,10 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 17:25:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 16:10:57 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 15:19:46 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_draw.h"
 #include "we_editor.h"
 
 /*
@@ -24,7 +23,7 @@ static t_hit	zz_tile_values(t_ray *ray, t_map_tile *tiles, t_side side)
 
 	if (side == we_no_wall)
 	{
-		wx_buffer_set(&ray->tile, sizeof(ray->tile), 0);
+		wx_buffer_set(&ray->tile, sizeof(t_hit), 0);
 		return (ray->tile);
 	}
 	ray->tile.side = side;
@@ -39,14 +38,9 @@ static t_hit	zz_tile_values(t_ray *ray, t_map_tile *tiles, t_side side)
 	return (ray->tile);
 }
 
-/*
-** Checking if ray hit a wall. Saving intersection point and tiles index.
-** ray values.
-*/
-
 /* 
-** Checks if the ray and vertical or horisontal map line intersection
-** hit a wall. Updates tile values
+** Check if the ray and vertical or horisontal map line intersection point
+** hit a wall. Updates tile values.
 */
 
 static t_bool	zz_is_wall(t_map_tile *tiles, t_ray *ray, t_p2 intersection_w,

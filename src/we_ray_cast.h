@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 22:38:37 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 10:40:55 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 11:38:49 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void		we_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
 void		we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
 				t_f32 player_direction_d);
 void		we_ray_cast(t_ray *ray, t_map_tile *tiles);
+t_hit		we_ray_cast_sky(t_ray *ray);
 t_compass	we_wall_compass_direction(t_f32 angle_ray_d, t_u32 side);
 void		we_shade_pixel( t_u32 *color, t_f32 distance);
 

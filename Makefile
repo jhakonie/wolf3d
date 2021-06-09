@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/06/08 01:09:49 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/06/09 11:39:54 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -192,6 +192,7 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_player_rotate.c \
 	we_to_rad.c \
 	we_ray_cast.c \
+	we_ray_cast_sky.c \
 	we_ray_init.c \
 	we_ray_calculate.c \
 	we_wall_compass_direction.c \

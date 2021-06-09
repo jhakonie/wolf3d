@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:44:57 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/08 01:23:02 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 12:41:02 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,11 @@ static void	zz_color_ptr(t_editor *e)
 	t_p2	top;
 	t_p2	temp;
 	t_p2	low;
-	t_u32	color;
 
 	temp = we_from_win_to_map(e->map.ptr, e->map);
 	low = we_from_map_to_win(temp, e->map);
 	top.x = low.x + e->map.grid.part.x;
 	top.y = low.y + e->map.grid.part.y;
-	if (e->tools.id != WE_ID_INIT)
-		color = e->tools.tool[e->tools.id].button.color[0];
-	else
-		return ;
 	we_draw_rec_texture(low, top, &e->frame_buffer,
 		&e->tools.tool[e->tools.id].button.icon);
 }
