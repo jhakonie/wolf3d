@@ -31,5 +31,8 @@ t_bool	we_texture_type_new(t_level_texture *texture_type, t_path *paths)
 	if (!we_texture_new(paths[we_sky].buffer, &texture_type->sky))
 		return (we_texture_type_del(texture_type));
 	write(1, "\nsky texture loaded\n", 21);
+	if (!we_texture_new(paths[we_door].buffer, &texture_type->door))
+		return (we_texture_type_del(texture_type));
+	write(1, "\ndoor texture loaded\n", 22);
 	return (wx_true);
 }

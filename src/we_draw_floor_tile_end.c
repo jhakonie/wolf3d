@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_floor_draw_end.c                                :+:      :+:    :+:   */
+/*   we_draw_floor_tile_end.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 17:54:14 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/08 21:37:16 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 18:57:23 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ static t_p2	zz_west(t_ray *ray, t_p2 block)
 	}
 }
 
-t_p2	we_floor_draw_end(t_ray *ray)
+t_p2	we_draw_floor_tile_end(t_ray *ray)
 {
 	t_p2	block;
 	t_p2	end;

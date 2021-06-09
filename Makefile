@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/06/09 11:39:54 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/06/09 19:21:50 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -160,7 +160,7 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_path_new.c \
 	we_path_del.c \
 	we_path_add_back.c \
-	we_path_create.c \
+	we_path_new3.c \
 	we_paths_new.c \
 	we_paths_del.c \
 	we_level_new.c \
@@ -213,10 +213,11 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_draw_toolbar.c \
 	we_draw_button.c \
 	we_draw_player.c \
-	we_draw_rays.c \
 	we_draw_floor.c \
+	we_draw_floor_tile_end.c \
 	we_draw_sky.c \
-	we_floor_draw_end.c \
+	we_draw_door.c \
+	we_draw_door_distance.c \
 	we_draw_wall.c \
 	we_draw_texture_wall.c \
 	we_shade_pixel.c \

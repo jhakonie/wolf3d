@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/07 23:43:55 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 19:37:15 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,8 @@ t_bool				we_level_new(t_level *l);
 void				we_level_del(t_level *l);
 t_bool				we_paths_new(t_path *p, t_c8 *level);
 t_bool				we_paths_del(t_path *p);
-t_bool				we_path_create(t_path	*p, t_c8 *start, t_c8 *middle,
-						t_c8 *end);
+t_bool				we_path_new3(t_path	*p, t_c8 const *start,
+						t_c8 const *middle, t_c8 const *end);
 void				we_init_tiles(t_map *m);
 void				we_tiles_set(t_map *m);
 void				we_init_player(t_player *p, t_map *m, t_u32 screen_width);
@@ -162,7 +162,7 @@ void				we_draw_grid(t_grid *g, t_frame_buffer *data);
 void				we_draw_block(t_editor *e, t_u32 id);
 void				we_draw_map(t_editor *e);
 void				we_draw_player(t_editor *e);
-void				we_draw_rays(t_ray ray, t_map map, t_frame_buffer *fb);
+void				we_draw_rays(t_ray *ray, t_map map, t_frame_buffer *fb);
 void				we_draw_3d(t_frame_buffer *frame_buffer, t_player player,
 						t_map map);
 t_f32				we_to_rad(t_f32 deg);

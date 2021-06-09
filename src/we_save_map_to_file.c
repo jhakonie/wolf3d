@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 15:53:52 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/07 16:30:36 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 19:21:50 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_bool	zz_create_directory(t_c8 *level)
 {
 	t_path	p;
 
-	if (!we_path_create(&p, "data/maps/", level, ""))
+	if (!we_path_new3(&p, "data/maps/", level, ""))
 		return (wx_false);
 	if (mkdir(p.buffer, 0777) < 0)
 	{
@@ -35,7 +35,7 @@ static t_bool	zz_remove_directory(t_c8 *level)
 {
 	t_path	p;
 
-	if (!we_path_create(&p, "data/maps/", level, ""))
+	if (!we_path_new3(&p, "data/maps/", level, ""))
 		return (wx_false);
 	if (rmdir(p.buffer) < 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 15:40:30 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/08 22:10:18 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 18:59:56 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static void	zz_draw_horisontal_tiles(t_ray *ray, t_frame_buffer *fb,
 		ray->tile = ray->tiles_h[i];
 		draw.start_fb.y = ray->view_height * fb->height
 			- ray->view_height * ray->tile.projected_height;
-		draw.end_w = we_floor_draw_end(ray);
+		draw.end_w = we_draw_floor_tile_end(ray);
 		draw.delta_w.x = draw.end_w.x - ray->start.x;
 		draw.delta_w.y = draw.end_w.y - ray->start.y;
 		draw.end_distance_w = sqrtf((draw.delta_w.x * draw.delta_w.x
@@ -138,7 +138,7 @@ void	we_draw_floor(t_ray ray, t_frame_buffer *fb,
 		ray.tile = ray.tiles_v[i];
 		draw.start_fb.y = ray.view_height * fb->height
 			- ray.view_height * ray.tile.projected_height;
-		draw.end_w = we_floor_draw_end(&ray);
+		draw.end_w = we_draw_floor_tile_end(&ray);
 		draw.delta_w.x = draw.end_w.x - ray.start.x;
 		draw.delta_w.y = draw.end_w.y - ray.start.y;
 		draw.end_distance_w = sqrtf((draw.delta_w.x * draw.delta_w.x

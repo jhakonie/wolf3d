@@ -6,11 +6,24 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 13:46:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/08 01:18:00 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 19:15:55 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
+
+static void	zz_raycast_door(t_ray *ray, t_map *m, t_p2 *end)
+{
+	ray->tile_type_to_find = 2;
+	we_ray_cast(ray, m->tiles);
+	(*end).x = (ray->tile.hit.x / WE_BLOCK_W) * m->grid.part.x
+		+ m->grid.start.x;
+	(*end).y = ray->tile.hit.y / WE_BLOCK_W * m->grid.part.y;
+}
+
+/*
+** Raycast walls and doors separately and draw a line to them.
+*/
 
 static void	zz_draw_rays(t_frame_buffer *fb, t_editor *e, t_p2 start)
 {
@@ -21,9 +34,9 @@ static void	zz_draw_rays(t_frame_buffer *fb, t_editor *e, t_p2 start)
 	angle_d = 0;
 	wx_buffer_set(&ray, sizeof(t_ray), 0);
 	we_ray_init(&ray, e->player.fov_d, fb->width - 1, e->player.position);
-	ray.tile_type_to_find = 1;
 	while (ray.nb < fb->width - 1)
 	{
+		ray.tile_type_to_find = 1;
 		we_ray_calculate(&ray, angle_d, e->player.direction_d);
 		we_ray_cast(&ray, e->map.tiles);
 		end.x = (ray.tile.hit.x / WE_BLOCK_W) * e->map.grid.part.x
@@ -31,18 +44,12 @@ static void	zz_draw_rays(t_frame_buffer *fb, t_editor *e, t_p2 start)
 		end.y = ray.tile.hit.y / WE_BLOCK_W * e->map.grid.part.y;
 		if (ray.tile.side != we_no_wall)
 			we_draw_line(start, end, fb, 0x00FF00);
+		zz_raycast_door(&ray, &e->map, &end);
+		if (ray.tile.side != we_no_wall && ray.tile.tiles_id == 2)
+			we_draw_line(start, end, fb, 0xaa00ff);
 		angle_d += ray.angle_increment_d;
 		ray.nb++;
 	}
-}
-
-static t_bool	zz_point_inside_map(t_p2 a,
-					t_map *m)
-{
-	if (a.x < m->grid.start.x || a.y < m->grid.start.y
-		|| a.x >= m->grid.end.x || a.y >= m->grid.end.y)
-		return (wx_false);
-	return (wx_true);
 }
 
 static t_bool	zz_inside_map(t_triangle *t,
@@ -58,6 +65,10 @@ static t_bool	zz_inside_map(t_triangle *t,
 		return (wx_false);
 	return (wx_true);
 }
+
+/*
+** Set triangle tips around player.
+*/
 
 static void	zz_draw_triangle(t_editor *e, t_p2 base, t_p2 tip)
 {
@@ -79,6 +90,12 @@ static void	zz_draw_triangle(t_editor *e, t_p2 base, t_p2 tip)
 		we_draw_triangle(0xFF00D0, &t, &e->frame_buffer);
 }
 
+/*
+** Draw a triangle around the player location.
+** Draw one pixel at player location.
+** Draw rays.
+*/
+
 void	we_draw_player(t_editor *e)
 {
 	t_p2	player;
@@ -99,6 +116,7 @@ void	we_draw_player(t_editor *e)
 		zz_draw_triangle(e, triangle_base, triangle_tip);
 	if (e->map.draw_rays)
 		zz_draw_rays(&e->frame_buffer, e, player);
-	if (zz_point_inside_map(player, &e->map))
+	if (player.x < e->map.grid.start.x || player.y < e->map.grid.start.y
+		|| player.x >= e->map.grid.end.x || player.y >= e->map.grid.end.y)
 		we_draw_pixel(player, &e->frame_buffer, 0xFFFF00);
 }

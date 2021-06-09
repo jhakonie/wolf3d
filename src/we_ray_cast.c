@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 17:25:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 15:19:46 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 18:58:13 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,21 @@ static t_hit	zz_tile_values(t_ray *ray, t_map_tile *tiles, t_side side)
 	}
 	ray->tile.side = side;
 	ray->tile.tiles_id = tiles[ray->tile.tiles_index].id;
+	ray->tile.compass = we_wall_compass_direction(ray->angle_d, side);
+	if (ray->tile_type_to_find == 2 && ray->tile.tiles_id == 2)
+		we_draw_door_distance(ray);
 	delta.x = ray->tile.hit.x - ray->start.x;
 	delta.y = ray->tile.hit.y - ray->start.y;
 	ray->tile.distance = sqrtf(delta.x * delta.x + delta.y * delta.y);
 	ray->tile.distance *= cosf(wx_to_radians(ray->angle_to_player_d));
 	ray->tile.projected_height = (ray->dist_to_screen_w / ray->tile.distance)
 		* WE_BLOCK_W;
-	ray->tile.compass = we_wall_compass_direction(ray->angle_d, side);
 	return (ray->tile);
 }
 
 /* 
 ** Check if the ray and vertical or horisontal map line intersection point
-** hit a wall. Updates tile values.
+** hit a wall. Update tile values.
 */
 
 static t_bool	zz_is_wall(t_map_tile *tiles, t_ray *ray, t_p2 intersection_w,
@@ -48,7 +50,6 @@ static t_bool	zz_is_wall(t_map_tile *tiles, t_ray *ray, t_p2 intersection_w,
 {
 	t_u32			block_y;
 	t_u32			block_x;
-	static t_u32	block_count = WE_GRID_DIVIDE * WE_GRID_DIVIDE;
 	t_u32			index;
 
 	ray->tile.hit = intersection_w;
@@ -62,11 +63,13 @@ static t_bool	zz_is_wall(t_map_tile *tiles, t_ray *ray, t_p2 intersection_w,
 		index -= WE_GRID_DIVIDE;
 	else if (ray->angle_d >= 90 && ray->angle_d <= 270 && line == we_vertical)
 		index -= 1;
-	if (index < block_count)
+	if (index < WE_MAP_SIZE)
 	{
 		ray->tile.tiles_index = index;
 		ray->tile = zz_tile_values(ray, tiles, line);
-		if (tiles[index].id == ray->tile_type_to_find)
+		if ((ray->tile_type_to_find == 1 && tiles[index].id == 1)
+			|| (ray->tile_type_to_find == 2
+				&& (tiles[index].id == 1 || tiles[index].id == 2)))
 			return (wx_true);
 	}
 	return (wx_false);
@@ -75,6 +78,7 @@ static t_bool	zz_is_wall(t_map_tile *tiles, t_ray *ray, t_p2 intersection_w,
 /*
 ** Find distance to horizontal wall, record floor, update ray values.
 */
+
 static t_hit	zz_dist_horizontal_wall(t_ray *ray, t_map_tile *tiles)
 {
 	t_p2			intersection_w;

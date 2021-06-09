@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 17:10:51 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 12:40:30 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 17:13:51 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,17 @@ void	we_draw_3d(t_frame_buffer *frame_buffer, t_player player,
 	wx_buffer_set(&ray, sizeof(t_ray), 0);
 	we_ray_init(&ray, player.fov_d, frame_buffer->width, player.position);
 	ray.view_height = player.height;
-	ray.tile_type_to_find = 1;
 	while (ray.nb < frame_buffer->width)
 	{
+		ray.tile_type_to_find = 1;
 		we_draw_sky(frame_buffer, ray, &map.level.texture_type.sky);
 		we_ray_calculate(&ray, angle_d, player.direction_d);
 		we_ray_cast(&ray, map.tiles);
 		we_draw_floor(ray, frame_buffer, &map.level.texture_type);
 		we_draw_wall(ray, frame_buffer, &map.level.texture_type);
+		ray.tile_type_to_find = 2;
+		we_ray_cast(&ray, map.tiles);
+		we_draw_door(ray, frame_buffer, &map.level.texture_type);
 		angle_d += ray.angle_increment_d;
 		ray.nb++;
 	}

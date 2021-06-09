@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:08:31 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/08 22:07:13 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 15:58:48 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ void	we_draw_wall(t_ray ray, t_frame_buffer *fb,
 		texture = texture_type->wall[ray.tile.compass];
 	else
 		return ;
-	if (ray.tile.distance > 0)
-		ray.tile.projected_height = (ray.dist_to_screen_w
-				/ ray.tile.distance) * WE_BLOCK_W;
 	draw_start.y = ray.view_height * fb->height
 		- ray.view_height * ray.tile.projected_height;
 	if ((t_s32)draw_start.y >= (t_s32)fb->height)

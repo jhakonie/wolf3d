@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 01:05:59 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 18:57:44 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,11 @@ void		we_draw_texture_wall(t_ray *ray, t_p2 draw, t_frame_buffer *fb,
 				t_tex *tex);
 void		we_draw_floor(t_ray ray, t_frame_buffer *fb,
 				t_level_texture *texture_type);
+t_p2		we_draw_floor_tile_end(t_ray *ray);
 void		we_draw_sky(t_frame_buffer *fb, t_ray ray, t_tex *sky);
-t_p2		we_floor_draw_end(t_ray *ray);
+void		we_draw_door(t_ray ray, t_frame_buffer *fb,
+				t_level_texture *texture_type);
+void		we_draw_door_distance(t_ray *ray);
 t_tex		we_fractal_texture_create(t_p2 ray_start,
 				t_s32 (*f)(t_s32, t_s32, t_fractal *), t_u32 id);
 

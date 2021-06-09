@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:14:34 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/07 23:42:50 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 19:21:50 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,20 @@ static t_bool	zz_sdl(t_editor *e, t_u32 window_width, t_u32 window_height)
 static t_bool	zz_set_default_textures(t_level *l)
 {
 	wx_buffer_set(l->paths, sizeof(*l->paths), 0);
-	if (!we_path_create(&l->paths[we_map], "data/maps/", l->name, "/map.txt")
-		|| !we_path_create(&l->paths[we_wall_north],
+	if (!we_path_new3(&l->paths[we_map], "data/maps/", l->name, "/map.txt")
+		|| !we_path_new3(&l->paths[we_wall_north],
 			"data/maps/", "default", "/north.xpm")
-		|| !we_path_create(&l->paths[we_wall_east],
+		|| !we_path_new3(&l->paths[we_wall_east],
 			"data/maps/", "default", "/east.xpm")
-		|| !we_path_create(&l->paths[we_wall_south],
+		|| !we_path_new3(&l->paths[we_wall_south],
 			"data/maps/", "default", "/south.xpm")
-		|| !we_path_create(&l->paths[we_wall_west],
+		|| !we_path_new3(&l->paths[we_wall_west],
 			"data/maps/", "default", "/west.xpm")
-		|| !we_path_create(&l->paths[we_floor],
+		|| !we_path_new3(&l->paths[we_floor],
 			"data/maps/", "default", "/floor.xpm")
-		|| !we_path_create(&l->paths[we_sky],
+		|| !we_path_new3(&l->paths[we_sky],
 			"data/maps/", "default", "/sky.xpm")
-		|| !we_path_create(&l->paths[we_door],
+		|| !we_path_new3(&l->paths[we_door],
 			"data/maps/", "default", "/door.xpm"))
 	{
 		return (we_paths_del(l->paths));
