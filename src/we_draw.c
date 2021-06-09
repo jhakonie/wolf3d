@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:44:57 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 12:41:02 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 22:23:42 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static void	zz_color_ptr(t_editor *e)
 	top.y = low.y + e->map.grid.part.y;
 	we_draw_rec_texture(low, top, &e->frame_buffer,
 		&e->tools.tool[e->tools.id].button.icon);
+	if (e->tools.id == 4)
+		we_draw_rec_frame(low, top, &e->frame_buffer, 0xffffff);
 }
 
 static void	zz_draw_2d(t_editor *e)
 {
 	wx_buffer_set(e->frame_buffer.data, e->frame_buffer.data_size, 0);
-	we_draw_toolbar(e);
-	we_draw_grid(&e->map.grid, &e->frame_buffer);
 	if (e->map.draw_3d == wx_false && (e->map.ptr_clear || (e->map.ptr_draw)))
 	{
 		we_draw_map(e);
@@ -44,6 +44,8 @@ static void	zz_draw_2d(t_editor *e)
 		we_draw_map(e);
 		we_draw_player(e);
 	}
+	we_draw_toolbar(e);
+	we_draw_grid(&e->map.grid, &e->frame_buffer);
 }
 
 void	we_draw(t_editor *e)

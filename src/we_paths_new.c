@@ -11,7 +11,7 @@ t_bool	we_paths_new(t_path *p, t_c8 *level)
 		|| !we_path_new3(&p[we_sky], "data/maps/", level, "/sky.xpm")
 		|| !we_path_new3(&p[we_door], "data/maps/", level, "/door.xpm"))
 	{
-		return (we_paths_del(p));
+		return (we_paths_del(p, WE_RESOURCES_COUNT));
 	}
 	return (wx_true);
 }

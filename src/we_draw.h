@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 18:57:44 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 20:33:38 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "wx_math.h"
 # include "wx_types.h"
 # include "wx_frame_buffer.h"
-# include "we_fractal.h"
 # include "we_texture.h"
 # include "we_ray_cast.h"
 # include "wx_parse_xpm.h"
@@ -91,7 +90,6 @@ typedef struct s_button
 	t_p2		start;
 	t_p2		end;
 	t_tex		icon;
-	t_u32		color[3];
 }				t_button;
 
 typedef struct s_grid
@@ -136,7 +134,5 @@ void		we_draw_sky(t_frame_buffer *fb, t_ray ray, t_tex *sky);
 void		we_draw_door(t_ray ray, t_frame_buffer *fb,
 				t_level_texture *texture_type);
 void		we_draw_door_distance(t_ray *ray);
-t_tex		we_fractal_texture_create(t_p2 ray_start,
-				t_s32 (*f)(t_s32, t_s32, t_fractal *), t_u32 id);
 
 #endif

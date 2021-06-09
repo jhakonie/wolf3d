@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 18:22:27 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/08 01:50:59 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 20:35:15 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_bool	we_texture_new(char *filename, t_tex *t)
 	t->height = xpm.height;
 	t->width = xpm.width;
 	t->size = xpm.width * xpm.height * sizeof(t_u32);
-	wx_buffer_set(t->fractal, 2500, 0);
 	t->texture = (t_u32 *)malloc(t->size);
 	if (!t->texture)
 	{

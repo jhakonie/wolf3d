@@ -9,11 +9,14 @@ t_bool	we_path_new3(t_path	*p, t_c8 const *start,
 		p->buffer = WX_NULL;
 		return (wx_false);
 	}
-	if (!we_path_add_back(p, middle)
-		|| !we_path_add_back(p, end))
+	if (!we_path_add_back(p, middle))
 	{
-		free(p->buffer);
-		p->buffer = WX_NULL;
+		we_path_del(p);
+		return (wx_false);
+	}
+	if (!we_path_add_back(p, end))
+	{
+		we_path_del(p);
 		return (wx_false);
 	}
 	return (wx_true);

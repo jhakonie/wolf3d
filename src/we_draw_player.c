@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 13:46:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 19:15:55 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 21:39:30 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	we_draw_player(t_editor *e)
 		zz_draw_triangle(e, triangle_base, triangle_tip);
 	if (e->map.draw_rays)
 		zz_draw_rays(&e->frame_buffer, e, player);
-	if (player.x < e->map.grid.start.x || player.y < e->map.grid.start.y
-		|| player.x >= e->map.grid.end.x || player.y >= e->map.grid.end.y)
+	if (player.x > e->map.grid.start.x && player.y > e->map.grid.start.y
+		&& player.x < e->map.grid.end.x && player.y < e->map.grid.end.y)
 		we_draw_pixel(player, &e->frame_buffer, 0xFFFF00);
 }

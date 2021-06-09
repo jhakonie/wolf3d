@@ -9,12 +9,10 @@ void	we_draw_door(t_ray ray, t_frame_buffer *fb,
 {
 	t_p2	draw_fb;
 	t_f32	min_distance;
-	t_f32	ray_to_draw;
 
 	if (ray.tile.tiles_id == 2)
 	{
 		min_distance = WE_BLOCK_W * 0.5f;
-		ray_to_draw = ray.nb * 0.1f;
 		if (ray.tile.distance > min_distance
 			&& ray.nb * 0.1f < ray.tile.distance)
 		{

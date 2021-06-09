@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 22:24:54 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/08 02:00:11 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 20:34:21 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_tex
 {
 	t_u32	height;
 	t_u32	width;
-	t_u32	fractal[2500];
 	t_u64	size;
 	t_u32	*texture;
 }	t_tex;

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 13:36:40 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/08 01:22:03 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 20:18:13 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,63 +16,48 @@ void	we_init_save(t_tool *t, t_u32 win_w, t_u32 win_h)
 {
 	t->pre_selected = wx_false;
 	t->selected = wx_false;
-	t->button.start.x = (win_w - 1) / 35;
+	t->button.start.x = (win_w - 1) / 45;
 	t->button.start.y = win_h * 5 / 8;
 	t->button.end.x = t->button.start.x + win_w / 12;
 	t->button.end.y = t->button.start.y + win_h / 12;
-	t->button.color[0] = 0x00FF00;
-	t->button.color[1] = 0xFF0000;
-	t->button.color[2] = 0xf08080;
 }
 
 void	we_init_wall(t_tool *t, t_u32 win_w, t_u32 win_h)
 {
 	t->pre_selected = wx_false;
 	t->selected = wx_false;
-	t->button.start.x = (win_w - 1) / 35;
+	t->button.start.x = (win_w - 1) / 45;
 	t->button.start.y = win_h / 8;
 	t->button.end.x = t->button.start.x + win_w / 12;
 	t->button.end.y = t->button.start.y + win_h / 12;
-	t->button.color[0] = 0x00FF00;
-	t->button.color[1] = 0xFF0000;
-	t->button.color[2] = 0xcd8500;
 }
 
 void	we_init_player_location(t_tool *t, t_u32 win_w, t_u32 win_h)
 {
 	t->pre_selected = wx_false;
 	t->selected = wx_false;
-	t->button.start.x = (win_w - 1) / 35;
+	t->button.start.x = (win_w - 1) / 45;
 	t->button.start.y = win_h * 3 / 8;
 	t->button.end.x = t->button.start.x + win_w / 12;
 	t->button.end.y = t->button.start.y + win_h / 12;
-	t->button.color[0] = 0x00FF00;
-	t->button.color[1] = 0xFF0000;
-	t->button.color[2] = 0xFF2626;
 }
 
-void	we_init_floor(t_tool *t, t_u32 win_w, t_u32 win_h)
+void	we_init_door(t_tool *t, t_u32 win_w, t_u32 win_h)
 {
 	t->pre_selected = wx_false;
 	t->selected = wx_false;
-	t->button.start.x = (win_w - 1) / 35;
+	t->button.start.x = (win_w - 1) / 45;
 	t->button.start.y = win_h / 4;
 	t->button.end.x = t->button.start.x + win_w / 12;
 	t->button.end.y = t->button.start.y + win_h / 12;
-	t->button.color[0] = 0x00FF00;
-	t->button.color[1] = 0xFF0000;
-	t->button.color[2] = 0xffff00;
 }
 
 void	we_init_empty(t_tool *t, t_u32 win_w, t_u32 win_h)
 {
 	t->pre_selected = wx_false;
 	t->selected = wx_false;
-	t->button.start.x = (win_w - 1) / 35;
+	t->button.start.x = (win_w - 1) / 45;
 	t->button.start.y = win_h * 4 / 8;
 	t->button.end.x = t->button.start.x + win_w / 12;
 	t->button.end.y = t->button.start.y + win_h / 12;
-	t->button.color[0] = 0x00FF00;
-	t->button.color[1] = 0xFF0000;
-	t->button.color[2] = 0xffff00;
 }

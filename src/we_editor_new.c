@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:14:34 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 19:21:50 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 22:17:51 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,30 +59,42 @@ static t_bool	zz_sdl(t_editor *e, t_u32 window_width, t_u32 window_height)
 	return (wx_true);
 }
 
+static t_bool	zz_default_texture_paths(t_path *p)
+{
+	if (!we_path_new3(&p[we_wall_north],
+			"data/maps/", "default", "/north.xpm")
+		|| !we_path_new3(&p[we_wall_east],
+			"data/maps/", "default", "/east.xpm")
+		|| !we_path_new3(&p[we_wall_south],
+			"data/maps/", "default", "/south.xpm")
+		|| !we_path_new3(&p[we_wall_west],
+			"data/maps/", "default", "/west.xpm")
+		|| !we_path_new3(&p[we_floor],
+			"data/maps/", "default", "/floor.xpm")
+		|| !we_path_new3(&p[we_sky],
+			"data/maps/", "default", "/sky.xpm")
+		|| !we_path_new3(&p[we_door],
+			"data/maps/", "default", "/door.xpm"))
+	{
+		return (wx_false);
+	}	
+	return (wx_true);
+}
+
 static t_bool	zz_set_default_textures(t_level *l)
 {
 	wx_buffer_set(l->paths, sizeof(*l->paths), 0);
 	if (!we_path_new3(&l->paths[we_map], "data/maps/", l->name, "/map.txt")
-		|| !we_path_new3(&l->paths[we_wall_north],
-			"data/maps/", "default", "/north.xpm")
-		|| !we_path_new3(&l->paths[we_wall_east],
-			"data/maps/", "default", "/east.xpm")
-		|| !we_path_new3(&l->paths[we_wall_south],
-			"data/maps/", "default", "/south.xpm")
-		|| !we_path_new3(&l->paths[we_wall_west],
-			"data/maps/", "default", "/west.xpm")
-		|| !we_path_new3(&l->paths[we_floor],
-			"data/maps/", "default", "/floor.xpm")
-		|| !we_path_new3(&l->paths[we_sky],
-			"data/maps/", "default", "/sky.xpm")
-		|| !we_path_new3(&l->paths[we_door],
-			"data/maps/", "default", "/door.xpm"))
+		|| !zz_default_texture_paths(l->paths))
 	{
-		return (we_paths_del(l->paths));
+		return (we_paths_del(l->paths, WE_RESOURCES_COUNT));
 	}
 	wx_buffer_set(&l->texture_type, sizeof(t_level_texture), 0);
 	if (!we_texture_type_new(&l->texture_type, l->paths))
+	{
+		we_paths_del(l->paths, WE_RESOURCES_COUNT);
 		return (wx_false);
+	}
 	return (wx_true);
 }
 

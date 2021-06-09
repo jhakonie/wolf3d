@@ -7,6 +7,9 @@ t_bool	we_level_new(t_level *l)
 		return (wx_false);
 	wx_buffer_set(&l->texture_type, sizeof(t_level_texture), 0);
 	if (!we_texture_type_new(&l->texture_type, l->paths))
+	{
+		we_paths_del(l->paths, WE_RESOURCES_COUNT);
 		return (wx_false);
+	}
 	return (wx_true);
 }

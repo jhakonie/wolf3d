@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/06/09 19:21:50 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/06/09 21:50:59 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -221,9 +221,6 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_draw_wall.c \
 	we_draw_texture_wall.c \
 	we_shade_pixel.c \
-	we_fractal_texture_create.c \
-	we_fractal.c \
-	we_complex_num_arithmetic.c \
 	wx_buffer_copy.c \
 	wx_buffer_set.c \
 	wx_c8s_new_from_file.c \
@@ -296,9 +293,9 @@ dependency_files = \
 dependency_flags = -MT $(@) -MMD -MP -MF $(build_dir)$(*).dep
 
 LD = gcc
-LDFLAGS = $(libsdl2_ldflags) -fsanitize=address#,leak,undefined
+LDFLAGS = $(libsdl2_ldflags) #-fsanitize=address#,leak,undefined
 CC = gcc
-CFLAGS = -g -c -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) -fsanitize=address#,leak,undefined
+CFLAGS = -g -c -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) #-fsanitize=address#,leak,undefined
 CPPFLAGS = -D_REENTRANT
 
 all: $(client_exe) $(editor_exe) $(server_exe) $(compile_commands_json)

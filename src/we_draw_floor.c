@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 15:40:30 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 18:59:56 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 22:17:01 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	zz_draw_ceiling(t_draw_floor draw, t_frame_buffer *fb, t_ray *ray,
 }
 
 /*
-** Looping through the raycast buffer to draw all the horisontal non-wall tiles
-** encountered by the ray in question.
+** Looping through the raycast buffer to draw floor on all the horisontal
+** non-wall tiles encountered by the ray in question.
 */
 
 static void	zz_draw_horisontal_tiles(t_ray *ray, t_frame_buffer *fb,

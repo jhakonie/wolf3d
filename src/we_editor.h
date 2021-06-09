@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 19:37:15 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/09 20:38:54 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void				we_window_event(t_editor *e, SDL_WindowEvent *w);
 void				we_draw_to_window(t_editor *e);
 void				we_init_toolbar(t_tools *t, t_u32 win_w, t_u32 win_h);
 void				we_init_wall(t_tool *t, t_u32 win_w, t_u32 win_h);
-void				we_init_floor(t_tool *t, t_u32 win_w, t_u32 win_h);
+void				we_init_door(t_tool *t, t_u32 win_w, t_u32 win_h);
 void				we_init_player_location(t_tool *t,
 						t_u32 win_w, t_u32 win_h);
 void				we_init_empty(t_tool *t, t_u32 win_w, t_u32 win_h);
@@ -139,7 +139,7 @@ void				we_init_map(t_map *m, t_u32 win_w, t_u32 win_h);
 t_bool				we_level_new(t_level *l);
 void				we_level_del(t_level *l);
 t_bool				we_paths_new(t_path *p, t_c8 *level);
-t_bool				we_paths_del(t_path *p);
+t_bool				we_paths_del(t_path *p, t_u32 size);
 t_bool				we_path_new3(t_path	*p, t_c8 const *start,
 						t_c8 const *middle, t_c8 const *end);
 void				we_init_tiles(t_map *m);
