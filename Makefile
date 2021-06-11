@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/06/09 21:50:59 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/06/09 23:42:31 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -215,6 +215,7 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_draw_player.c \
 	we_draw_floor.c \
 	we_draw_floor_tile_end.c \
+	we_draw_floor_player_position.c \
 	we_draw_sky.c \
 	we_draw_door.c \
 	we_draw_door_distance.c \

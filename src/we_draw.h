@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 20:33:38 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/11 21:13:47 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ void		we_draw_texture_wall(t_ray *ray, t_p2 draw, t_frame_buffer *fb,
 void		we_draw_floor(t_ray ray, t_frame_buffer *fb,
 				t_level_texture *texture_type);
 t_p2		we_draw_floor_tile_end(t_ray *ray);
+void		we_draw_floor_player_position(t_frame_buffer *fb, t_ray *ray,
+				t_tex *t);
 void		we_draw_sky(t_frame_buffer *fb, t_ray ray, t_tex *sky);
 void		we_draw_door(t_ray ray, t_frame_buffer *fb,
 				t_level_texture *texture_type);

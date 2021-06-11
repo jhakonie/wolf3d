@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 15:40:30 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 22:17:01 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/11 21:14:19 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	zz_draw_ceiling(t_draw_floor draw, t_frame_buffer *fb, t_ray *ray,
 }
 
 /*
-** Looping through the raycast buffer to draw floor on all the horisontal
+** Go through the raycast buffer to draw floor on all the horisontal
 ** non-wall tiles encountered by the ray in question.
 */
 
@@ -120,7 +120,7 @@ static void	zz_draw_horisontal_tiles(t_ray *ray, t_frame_buffer *fb,
 }
 
 /*
-** Looping through the raycast buffer to draw all the vertical non-wall tiles
+** Go through the raycast buffer to draw all the vertical non-wall tiles
 ** encountered by the ray in question.
 */
 
@@ -131,6 +131,7 @@ void	we_draw_floor(t_ray ray, t_frame_buffer *fb,
 	t_u32			i;
 
 	i = 0;
+	we_draw_floor_player_position(fb, &ray, &texture_type->floor);
 	wx_buffer_set(&draw, sizeof(t_draw_floor), 0);
 	while (i < ray.tiles_v_size)
 	{
