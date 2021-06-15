@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 22:38:50 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/07 15:13:27 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/14 19:24:23 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 static void	zz_add_char(t_map *m, char *buf, t_u32 i, t_u32 j)
 {
 	if (buf[i] == '.')
-		m->tiles[j].id = 0;
+		m->level.tiles[j].id = 0;
 	else
-		m->tiles[j].id = buf[i] - '0';
+		m->level.tiles[j].id = buf[i] - '0';
 }
 
 static t_bool	zz_check_char(char *buf, t_u32 i)

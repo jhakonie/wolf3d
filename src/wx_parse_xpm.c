@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 14:56:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/08 01:16:17 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/14 19:09:32 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ t_bool	wx_parse_xpm(t_c8 const *filename, t_xpm *xpm)
 		if (!zz_parse_declaration(&pc, &txt))
 			return (wx_parse_xpm_error(xpm, 0,
 					"xpm-parse error: declaration.\n", 31));
-		write(1, "loading texture...\n", 20);
 		if (!zz_parse_info(&pc, xpm) || !wx_parse_xpm_colors(&pc, xpm)
 			|| !wx_parse_xpm_pixels(&pc, xpm))
 			return (zz_free_txt(&txt));

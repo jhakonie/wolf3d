@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 20:38:54 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/14 18:55:11 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ struct				s_move
 	t_p2		backward;
 	t_p2		left;
 	t_p2		right;
-	t_f32		turn_r;
-	t_f32		turn_l;
 };
 typedef struct s_move	t_move;
 
@@ -57,9 +55,7 @@ struct			s_player
 	t_f32		direction_d;
 	t_f32		dist_to_screen_w;
 	t_f32		fov_d;
-	t_p2		w_start;
-	t_p2		w_end;
-	t_u32		w_block_count;
+	t_u32		w_tile_count;
 	t_f32		w_step;
 	t_bool		run;
 	t_move		move;
@@ -80,6 +76,7 @@ struct				s_level
 	t_c8				*name;
 	t_path				paths[WE_RESOURCES_COUNT];
 	t_level_texture		texture_type;
+	t_map_tile			tiles[WE_MAP_SIZE];
 };
 typedef struct s_level	t_level;
 
@@ -87,8 +84,7 @@ struct				s_map
 {
 	t_level			level;
 	t_grid			grid;
-	t_map_tile		tiles[WE_MAP_SIZE];
-	t_u32			block_count;
+	t_u32			tile_count;
 	t_p2			player_pos_tiles;
 	t_p2			player_pos_tiles_old;
 	t_u32			player_pos_old_id;
@@ -164,7 +160,7 @@ void				we_draw_map(t_editor *e);
 void				we_draw_player(t_editor *e);
 void				we_draw_rays(t_ray *ray, t_map map, t_frame_buffer *fb);
 void				we_draw_3d(t_frame_buffer *frame_buffer, t_player player,
-						t_map map);
+						t_map *map);
 t_f32				we_to_rad(t_f32 deg);
 void				we_player_move(t_u32 key, t_editor *e);
 void				we_player_rotate(t_editor *e, t_u32 x, t_u32 y);

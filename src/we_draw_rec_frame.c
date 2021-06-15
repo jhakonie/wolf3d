@@ -5,8 +5,6 @@ void	we_draw_rec_frame(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 c)
 	t_p2	up;
 	t_p2	down;
 
-	if (end.x >= fb->height)
-		return ;
 	if (start.y < 0)
 		start.y = 0;
 	if (start.x < 0)

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 13:46:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 21:39:30 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/14 19:26:41 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	zz_raycast_door(t_ray *ray, t_map *m, t_p2 *end)
 {
 	ray->tile_type_to_find = 2;
-	we_ray_cast(ray, m->tiles);
+	we_ray_cast(ray, m->level.tiles);
 	(*end).x = (ray->tile.hit.x / WE_BLOCK_W) * m->grid.part.x
 		+ m->grid.start.x;
 	(*end).y = ray->tile.hit.y / WE_BLOCK_W * m->grid.part.y;
@@ -38,7 +38,7 @@ static void	zz_draw_rays(t_frame_buffer *fb, t_editor *e, t_p2 start)
 	{
 		ray.tile_type_to_find = 1;
 		we_ray_calculate(&ray, angle_d, e->player.direction_d);
-		we_ray_cast(&ray, e->map.tiles);
+		we_ray_cast(&ray, e->map.level.tiles);
 		end.x = (ray.tile.hit.x / WE_BLOCK_W) * e->map.grid.part.x
 			+ e->tools.end.x;
 		end.y = ray.tile.hit.y / WE_BLOCK_W * e->map.grid.part.y;
@@ -77,9 +77,9 @@ static void	zz_draw_triangle(t_editor *e, t_p2 base, t_p2 tip)
 	t_p2		base_a;
 	t_p2		base_b;
 
-	delta.x = cosf((90 + e->player.direction_d) * WE_TO_RAD)
+	delta.x = cosf((wx_to_radians(90 + e->player.direction_d)))
 		* e->map.grid.part.x * 0.3f;
-	delta.y = -(sinf((90 + e->player.direction_d) * WE_TO_RAD)
+	delta.y = -(sinf((wx_to_radians(90 + e->player.direction_d)))
 			* e->map.grid.part.y * 0.3f);
 	base_a.x = base.x - delta.x;
 	base_a.y = base.y - delta.y;
@@ -106,8 +106,9 @@ void	we_draw_player(t_editor *e)
 	player.x = (e->player.position.x / WE_BLOCK_W) * e->map.grid.part.x
 		+ e->tools.end.x;
 	player.y = e->player.position.y / WE_BLOCK_W * e->map.grid.part.y;
-	delta.x = (cosf(e->player.direction_d * WE_TO_RAD) * e->map.grid.part.x);
-	delta.y = -(sinf(e->player.direction_d * WE_TO_RAD) * e->map.grid.part.y);
+	delta.x = (cosf(wx_to_radians(e->player.direction_d)) * e->map.grid.part.x);
+	delta.y = -(sinf(wx_to_radians(e->player.direction_d))
+			* e->map.grid.part.y);
 	triangle_base.x = (player.x - 0.5f * delta.x);
 	triangle_base.y = (player.y - 0.5f * delta.y);
 	triangle_tip.x = (player.x + delta.x);

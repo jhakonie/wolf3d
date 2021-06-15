@@ -5,19 +5,19 @@ static t_bool	zz_wall_texture(t_level_texture *texture_type, t_path *paths)
 	if (!we_texture_new(paths[we_wall_north].buffer,
 			&texture_type->wall[we_north]))
 		return (we_texture_type_del(texture_type));
-	write(1, "\n1/4 loaded\n", 13);
+	write(1, "\nwall north texture 1/4 loaded\n", 32);
 	if (!we_texture_new(paths[we_wall_east].buffer,
 			&texture_type->wall[we_east]))
 		return (we_texture_type_del(texture_type));
-	write(1, "\n2/4 loaded\n", 13);
+	write(1, "\nwall east texture 2/4 loaded\n", 31);
 	if (!we_texture_new(paths[we_wall_south].buffer,
 			&texture_type->wall[we_south]))
 		return (we_texture_type_del(texture_type));
-	write(1, "\n3/4 loaded\n", 13);
+	write(1, "\nwall south texture 3/4 loaded\n", 32);
 	if (!we_texture_new(paths[we_wall_west].buffer,
 			&texture_type->wall[we_west]))
 		return (we_texture_type_del(texture_type));
-	write(1, "\n4/4 loaded\n", 13);
+	write(1, "\nwall west texture 4/4 loaded\n", 31);
 	return (wx_true);
 }
 

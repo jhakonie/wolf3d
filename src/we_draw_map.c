@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 21:52:54 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 21:16:50 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/14 18:22:13 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ void	we_draw_map(t_editor *e)
 	t_p2	end;
 
 	i = 0;
-	while (i < e->map.block_count)
+	while (i < e->map.tile_count)
 	{
-		if (e->map.tiles[i].id != WE_ID_INIT)
+		if (e->map.level.tiles[i].id != WE_ID_INIT)
 		{
-			start = we_from_map_to_win(e->map.tiles[i].block, e->map);
+			start = we_from_map_to_win(e->map.level.tiles[i].block, e->map);
 			end.x = start.x + e->map.grid.part.x;
 			end.y = start.y + e->map.grid.part.y;
 			we_draw_rec_texture(start, end, &e->frame_buffer,
-				&e->tools.tool[e->map.tiles[i].id].button.icon);
+				&e->tools.tool[e->map.level.tiles[i].id].button.icon);
 		}
 		i++;
 	}

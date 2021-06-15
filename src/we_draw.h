@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/11 21:13:47 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/14 18:40:04 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include "unistd.h"
 
 # define WE_ID_INIT (0)
-# define WE_WALL_TYPE_COUNT (2)
 # define WE_TOOL_COUNT (6)
 
 /*
@@ -46,7 +45,6 @@
 # define WE_BLOCK_W (10)
 
 # define PI (3.14159265359)
-# define WE_TO_RAD (0.017453292519944)
 
 typedef struct s_line
 {

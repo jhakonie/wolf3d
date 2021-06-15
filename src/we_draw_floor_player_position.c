@@ -34,8 +34,8 @@ void	we_draw_floor_player_position(t_frame_buffer *fb, t_ray *ray,
 	draw.start_fb.y = fb->height - 1;
 	ray->tile.hit = ray->start;
 	draw.end_w = we_draw_floor_tile_end(ray);
-	draw.delta_w.x = draw.end_w.x - ray->start.x;
-	draw.delta_w.y = draw.end_w.y - ray->start.y;
+	draw.delta_w.x = fabsf(draw.end_w.x - ray->start.x);
+	draw.delta_w.y = fabsf(draw.end_w.y - ray->start.y);
 	draw.end_distance_w = sqrtf((draw.delta_w.x * draw.delta_w.x
 				+ draw.delta_w.y * draw.delta_w.y));
 	draw.end_distance_w *= cosf(wx_to_radians(ray->angle_to_player_d));

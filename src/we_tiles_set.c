@@ -16,9 +16,9 @@ void	we_tiles_set(t_map *m)
 		x = 0;
 		while (x < WE_GRID_DIVIDE)
 		{
-			m->tiles[i].id = WE_ID_INIT;
-			m->tiles[i].block.x = x;
-			m->tiles[i].block.y = y;
+			m->level.tiles[i].id = WE_ID_INIT;
+			m->level.tiles[i].block.x = x;
+			m->level.tiles[i].block.y = y;
 			i++;
 			x++;
 		}
