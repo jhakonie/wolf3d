@@ -13,14 +13,34 @@
 #include "ws_server.h"
 #include "wx_time.h"
 
+static void	zz_remote_client_switch_move_mode(t_remote_client *rc)
+{
+	if (rc->move_mode == rc->input.move_mode)
+	{
+		return ;
+	}
+	if (rc->move_mode == wx_client_move_mode_2d)
+	{
+		rc->move_mode = wx_client_move_mode_3d;
+	}
+	else
+	{
+		rc->move_mode = wx_client_move_mode_2d;
+		rc->orientation = wx_q4_new_v3_f32(&(t_v3){0.0f, 1.0f, 0.0f},
+				wx_q4_yrot(&rc->orientation));
+		rc->position.y = WX_CLIENT_CAMERA_HEIGHT;
+	}
+}
+
 static void	zz_remote_client_integrate(t_remote_client *rc, t_f64 time_step_s)
 {
 	t_v3	v;
 
+	zz_remote_client_switch_move_mode(rc);
 	v = (t_v3){0.0f, 0.0f, 0.0f};
-	if (rc->input.move_up)
+	if (rc->input.move_forward)
 		v.z += 10.0f * time_step_s;
-	if (rc->input.move_down)
+	if (rc->input.move_backward)
 		v.z -= 10.0f * time_step_s;
 	if (rc->input.move_left)
 		v.x += 10.0f * time_step_s;

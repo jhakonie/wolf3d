@@ -11,13 +11,14 @@
 /* ************************************************************************** */
 
 #include "wc_client.h"
+#include "wc_draw.h"
 #include "wx_net.h"
 #include "wx_time.h"
 
 static void	zz_camera(t_client *c, t_f32 width, t_f32 height)
 {
 	c->camera.orientation = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
-	c->camera.position = (t_p3){0.0f, 0.0f, 0.0f};
+	c->camera.position = (t_p3){0.0f, WX_CLIENT_CAMERA_HEIGHT, 0.0f};
 	c->camera.hfov_rad = wx_to_radians(90.0f);
 	c->camera.aspect_ratio = width / height;
 	c->camera.near = 0.1f;
@@ -96,6 +97,8 @@ t_bool	wc_client_new(t_client *c, t_u32 window_width, t_u32 window_height)
 		wc_client_del(c);
 		return (wx_false);
 	}
+	c->move_mode = wx_client_move_mode_2d;
+	c->draw = &wc_draw_25d;
 	c->net_time_accumulator_s = 0.0;
 	c->net_time_step_s = 1.0 / 30.0;
 	c->sim_time_s = wx_time_s();

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   wc_draw.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/05 12:50:55 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/30 07:40:27 by ***REMOVED***         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "wc_client.h"
 #include "wc_draw.h"
 
@@ -39,7 +27,7 @@ static void	zz_draw_context_new(t_draw_context *dc, t_client *c)
 	dc->view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);
 }
 
-void	wc_draw(t_client *c)
+void	wc_draw_3d(t_client *c)
 {
 	t_draw_context	dc;
 

@@ -22,10 +22,11 @@ t_bool	wc_remote_server_write(t_remote_server *rs, t_client_input const *ci,
 	p.size = 0;
 	wx_packet_write_u64(&p, rs->sent_packet_seq);
 	wx_packet_write_q4(&p, player_orientation);
-	wx_packet_write_u8(&p, ci->move_up);
-	wx_packet_write_u8(&p, ci->move_down);
+	wx_packet_write_u8(&p, ci->move_forward);
+	wx_packet_write_u8(&p, ci->move_backward);
 	wx_packet_write_u8(&p, ci->move_left);
 	wx_packet_write_u8(&p, ci->move_right);
+	wx_packet_write_u8(&p, ci->move_mode);
 	if (!wx_socket_write(rs->socket, &p))
 	{
 		return (wx_false);

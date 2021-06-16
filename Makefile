@@ -25,7 +25,8 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_client_new.c \
 	wc_client_on_resize.c \
 	wc_client_run.c \
-	wc_draw.c \
+	wc_draw_25d.c \
+	wc_draw_3d.c \
 	wc_draw_add_visible.c \
 	wc_draw_clear.c \
 	wc_draw_clip.c \
@@ -146,6 +147,7 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_q4_mul_q4.c \
 	wx_q4_new_v3_f32.c \
 	wx_q4_normalize.c \
+	wx_q4_yrot.c \
 	wx_socket_read.c \
 	wx_socket_write.c \
 	wx_to_radians.c \
@@ -275,6 +277,7 @@ server_src_files = $(addprefix $(src_dir), \
 	wx_q4_mul_q4.c \
 	wx_q4_new_v3_f32.c \
 	wx_q4_rot_v3.c \
+	wx_q4_yrot.c \
 	wx_time_s.c \
 	wx_to_radians.c \
 )

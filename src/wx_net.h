@@ -18,16 +18,25 @@
 # include "wx_math.h"
 # include "wx_types.h"
 
+# define WX_CLIENT_CAMERA_HEIGHT (1.0f)
 # define WX_PACKET_BUFFER_SIZE (1024)
 # define WX_SERVER_REMOTE_CLIENTS_SIZE (4)
 # define WX_SERVER_DEFAULT_SOCKET ("12345")
 
+enum	e_client_move_mode
+{
+	wx_client_move_mode_2d,
+	wx_client_move_mode_3d
+};
+typedef enum e_client_move_mode	t_client_move_mode;
+
 struct	s_client_input
 {
-	t_bool	move_up;
-	t_bool	move_down;
-	t_bool	move_left;
-	t_bool	move_right;
+	t_bool				move_forward;
+	t_bool				move_backward;
+	t_bool				move_left;
+	t_bool				move_right;
+	t_client_move_mode	move_mode;
 };
 typedef struct s_client_input	t_client_input;
 

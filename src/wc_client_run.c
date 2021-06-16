@@ -15,8 +15,6 @@
 #include "unistd.h"
 
 #include "wc_client.h"
-#include "wc_draw.h"
-#include "wx_net.h"
 #include "wx_time.h"
 
 /*
@@ -25,6 +23,23 @@
 ** windows mru. resulting in both windows closing! would be nice to fix this.
 ** happens on different wm? happens on macos?
 */
+
+/*
+** 2021-06-15 todo: rethink this or rename at least?
+*/
+static void	zz_client_move_mode(t_client *c)
+{
+	if (c->move_mode == wx_client_move_mode_2d)
+	{
+		c->draw = &wc_draw_25d;
+		c->player_orientation = wx_q4_new_v3_f32(&(t_v3){0.0f, 1.0f, 0.0f},
+				wx_q4_yrot(&c->player_orientation));
+	}
+	else
+	{
+		c->draw = &wc_draw_3d;
+	}
+}
 
 static void	zz_integrate(t_client *c)
 {
@@ -37,6 +52,7 @@ static void	zz_integrate(t_client *c)
 	axis = (t_v3){1.0f, 0.0f, 0.0f};
 	rotation = wx_q4_new_v3_f32(&axis, 0.01 * c->mouse_dy);
 	c->player_orientation = wx_q4_mul_q4(&c->player_orientation, &rotation);
+	zz_client_move_mode(c);
 	wx_q4_normalize(&c->player_orientation);
 	if (c->sim_time_accumulator_s >= c->sim_time_step_s)
 	{
@@ -47,8 +63,8 @@ static void	zz_integrate(t_client *c)
 
 static void	zz_network(t_client *c)
 {
-	t_u8		i;
-	t_packet	p;
+	t_u8				i;
+	t_packet			p;
 
 	if (c->net_time_accumulator_s >= c->net_time_step_s)
 	{
@@ -60,6 +76,7 @@ static void	zz_network(t_client *c)
 	{
 		p.read_i = 0;
 		wx_packet_read_u64(&p, &p.read_seq);
+		wx_packet_read_u8(&p, (t_u8 *)&c->move_mode);
 		wx_packet_read_p3(&p, &c->player_position);
 		wx_packet_read_u8(&p, &c->other_positions_size);
 		i = 0;
@@ -90,7 +107,7 @@ t_bool	wc_client_run(t_client *c)
 		wc_client_dispatch_events(c);
 		zz_network(c);
 		zz_integrate(c);
-		wc_draw(c);
+		c->draw(c);
 	}
 	return (wx_true);
 }

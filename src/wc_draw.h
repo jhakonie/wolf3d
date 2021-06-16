@@ -284,7 +284,8 @@ t_draw_face_context	wc_draw_face_context_new(t_draw_context *dc,
 void				wc_draw_face_context_reset(t_draw_face_context *dfc,
 						t_u16 i0, t_u16 i1, t_u16 i2);
 
-void				wc_draw(t_client *c);
+void				wc_draw_25d(t_client *c);
+void				wc_draw_3d(t_client *c);
 void				wc_draw_add_visible(t_draw_context *dc,
 						t_clip_context const *cc);
 void				wc_draw_clear(t_draw_context *dc);

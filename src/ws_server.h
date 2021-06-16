@@ -34,6 +34,7 @@ struct	s_remote_client
 	t_u64					received_packet_seq;
 	t_client_input			input;
 	t_f64					packet_time_s;
+	t_client_move_mode		move_mode;
 	t_q4					orientation;
 	t_p3					position;
 };

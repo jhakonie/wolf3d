@@ -50,6 +50,7 @@ static t_remote_client	*zz_remote_clients_insert(t_server *s,
 			++i;
 			continue ;
 		}
+		rc->move_mode = wx_client_move_mode_2d;
 		rc->state = ws_connected;
 		rc->address = p->address;
 		rc->address_size = p->address_size;
@@ -106,13 +107,15 @@ void	ws_server_network_read(t_server *s, t_f64 packet_time_s)
 		rc = zz_remote_clients_lookup(s, &p);
 		if (!rc)
 			continue ;
+		wx_buffer_set(&rc->input, sizeof(rc->input), 0);
 		p.read_i = 0;
 		wx_packet_read_u64(&p, &rc->received_packet_seq);
 		wx_packet_read_q4(&p, &rc->orientation);
-		wx_packet_read_u8(&p, (t_u8 *)&rc->input.move_up);
-		wx_packet_read_u8(&p, (t_u8 *)&rc->input.move_down);
+		wx_packet_read_u8(&p, (t_u8 *)&rc->input.move_forward);
+		wx_packet_read_u8(&p, (t_u8 *)&rc->input.move_backward);
 		wx_packet_read_u8(&p, (t_u8 *)&rc->input.move_left);
 		wx_packet_read_u8(&p, (t_u8 *)&rc->input.move_right);
+		wx_packet_read_u8(&p, (t_u8 *)&rc->input.move_mode);
 		rc->packet_time_s = packet_time_s;
 	}
 }

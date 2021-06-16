@@ -28,7 +28,6 @@ void	we_draw_floor_player_position(t_frame_buffer *fb, t_ray *ray,
 {
 	t_u32			color;
 	t_draw_floor	draw;
-	t_f32			pixel_distance;
 
 	draw.start_fb.x = ray->nb;
 	draw.start_fb.y = fb->height - 1;
@@ -45,8 +44,6 @@ void	we_draw_floor_player_position(t_frame_buffer *fb, t_ray *ray,
 	while (draw.start_fb.y > draw.end_fb.y)
 	{
 		color = t->texture[0];
-		pixel_distance = (ray->tile.distance * draw.start_fb.y / draw.end_fb.y
-				+ draw.end_distance_w * (1 - draw.start_fb.y / draw.end_fb.y));
 		we_draw_pixel(draw.start_fb, fb, color);
 		draw.start_fb.y--;
 	}

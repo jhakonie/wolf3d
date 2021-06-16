@@ -27,21 +27,33 @@ static void	zz_on_key(t_client *c, SDL_KeyboardEvent const *k, t_bool down)
 	if (k->keysym.sym == SDLK_ESCAPE && down)
 		c->run = wx_false;
 	else if (k->keysym.sym == SDLK_w)
-		c->input.move_up = down;
+		c->input.move_forward = down;
 	else if (k->keysym.sym == SDLK_a)
 		c->input.move_left = down;
 	else if (k->keysym.sym == SDLK_s)
-		c->input.move_down = down;
+		c->input.move_backward = down;
 	else if (k->keysym.sym == SDLK_d)
 		c->input.move_right = down;
+	else if (k->keysym.sym == SDLK_DELETE && down)
+		c->input.move_mode = (c->input.move_mode + 1) % 2;
 }
 
 static void	zz_on_mouse(t_client *c, SDL_MouseMotionEvent const *m)
 {
-	c->mouse_x = m->x;
-	c->mouse_y = m->y;
-	c->mouse_dx += m->xrel;
-	c->mouse_dy += m->yrel;
+	if (c->move_mode == wx_client_move_mode_2d)
+	{
+		c->mouse_x = m->x;
+		c->mouse_y = 0;
+		c->mouse_dx += m->xrel;
+		c->mouse_dy += 0;
+	}
+	else
+	{
+		c->mouse_x = m->x;
+		c->mouse_y = m->y;
+		c->mouse_dx += m->xrel;
+		c->mouse_dy += m->yrel;
+	}
 }
 
 static void	zz_on_windowevent(t_client *c, SDL_WindowEvent *w)

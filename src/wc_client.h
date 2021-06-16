@@ -61,6 +61,7 @@ t_bool	wc_remote_server_write(t_remote_server *rs, t_client_input const *ci,
 */
 struct	s_client
 {
+	void				(*draw)(struct s_client *);
 	t_camera			camera;
 	t_pipeline_buffers	pipeline_buffers;
 	t_frame_buffer		frame_buffer;
@@ -76,6 +77,7 @@ struct	s_client
 	t_s32				mouse_y;
 	t_s32				mouse_dx;
 	t_s32				mouse_dy;
+	t_client_move_mode	move_mode;
 	t_f64				net_time_accumulator_s;
 	t_f64				net_time_step_s;
 	t_q4				player_orientation;

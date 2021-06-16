@@ -175,6 +175,9 @@ t_q4			wx_q4_new_v3_f32(t_v3 const *axis, t_f32 rad);
 t_q4			wx_q4_mul_q4(t_q4 const *l, t_q4 const *r);
 void			wx_q4_normalize(t_q4 *q);
 t_v3			wx_q4_rot_v3(t_q4 const *q, t_v3 const *v);
+t_f32			wx_q4_xrot(t_q4 const *q);
+t_f32			wx_q4_yrot(t_q4 const *q);
+t_f32			wx_q4_zrot(t_q4 const *q);
 
 struct		s_v3
 {
@@ -183,6 +186,7 @@ struct		s_v3
 	t_f32	z;
 };
 
+t_f32			wx_to_degrees(t_f32 rad);
 t_f32			wx_to_radians(t_f32 deg);
 
 #endif

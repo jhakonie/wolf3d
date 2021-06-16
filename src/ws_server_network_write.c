@@ -44,20 +44,19 @@ void	ws_server_network_write(t_server *s)
 	while (i < s->remote_clients_size)
 	{
 		rc = &s->remote_clients[i];
-		if (rc->state != ws_connected)
+		if (rc->state == ws_connected)
 		{
-			++i;
-			continue ;
+			p.address = rc->address;
+			p.address_size = rc->address_size;
+			p.size = 0;
+			wx_packet_write_u64(&p, s->sent_packet_seq);
+			wx_packet_write_u8(&p, rc->move_mode);
+			wx_packet_write_p3(&p, &rc->position);
+			wx_packet_write_u8(&p, s->remote_clients_connected_count - 1);
+			zz_packet_write_others(&p, s->remote_clients,
+				s->remote_clients_size, i);
+			(void)wx_socket_write(s->socket, &p);
 		}
-		p.address = rc->address;
-		p.address_size = rc->address_size;
-		p.size = 0;
-		wx_packet_write_u64(&p, s->sent_packet_seq);
-		wx_packet_write_p3(&p, &rc->position);
-		wx_packet_write_u8(&p, s->remote_clients_connected_count - 1);
-		zz_packet_write_others(&p, s->remote_clients, s->remote_clients_size,
-			i);
-		(void)wx_socket_write(s->socket, &p);
 		++i;
 	}
 	++s->sent_packet_seq;
