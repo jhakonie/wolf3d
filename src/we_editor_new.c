@@ -61,30 +61,30 @@ static t_bool	zz_sdl(t_editor *e, t_u32 window_width, t_u32 window_height)
 
 static t_bool	zz_default_texture_paths(t_path *p)
 {
-	if (!we_path_new3(&p[we_wall_north],
+	if (!wx_path_new3(&p[we_wall_north],
 			"data/maps/", "default", "/north.xpm")
-		|| !we_path_new3(&p[we_wall_east],
+		|| !wx_path_new3(&p[we_wall_east],
 			"data/maps/", "default", "/east.xpm")
-		|| !we_path_new3(&p[we_wall_south],
+		|| !wx_path_new3(&p[we_wall_south],
 			"data/maps/", "default", "/south.xpm")
-		|| !we_path_new3(&p[we_wall_west],
+		|| !wx_path_new3(&p[we_wall_west],
 			"data/maps/", "default", "/west.xpm")
-		|| !we_path_new3(&p[we_floor],
+		|| !wx_path_new3(&p[we_floor],
 			"data/maps/", "default", "/floor.xpm")
-		|| !we_path_new3(&p[we_sky],
+		|| !wx_path_new3(&p[we_sky],
 			"data/maps/", "default", "/sky.xpm")
-		|| !we_path_new3(&p[we_door],
+		|| !wx_path_new3(&p[we_door],
 			"data/maps/", "default", "/door.xpm"))
 	{
 		return (wx_false);
-	}	
+	}
 	return (wx_true);
 }
 
 static t_bool	zz_set_default_textures(t_level *l)
 {
 	wx_buffer_set(l->paths, sizeof(*l->paths), 0);
-	if (!we_path_new3(&l->paths[we_map], "data/maps/", l->name, "/map.txt")
+	if (!wx_path_new3(&l->paths[we_map], "data/maps/", l->name, "/map.txt")
 		|| !zz_default_texture_paths(l->paths))
 	{
 		return (we_paths_del(l->paths, WE_RESOURCES_COUNT));

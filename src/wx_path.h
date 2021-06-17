@@ -1,12 +1,12 @@
-#ifndef WE_PATH_H
-# define WE_PATH_H
+#ifndef WX_PATH_H
+# define WX_PATH_H
 
 # include "wx_types.h"
 # include "wx_math.h"
 # include "wx_frame_buffer.h"
 
 struct		s_path
-{	
+{
 	t_c8	*buffer;
 	t_u64	buffer_size;
 	t_u64	path_size;
@@ -14,7 +14,7 @@ struct		s_path
 typedef struct s_path	t_path;
 
 enum e_file
-{	
+{
 	we_map = 0,
 	we_wall_north = 1,
 	we_wall_east = 2,
@@ -26,8 +26,10 @@ enum e_file
 };
 typedef enum e_file		t_file;
 
-t_bool	we_path_new(t_path *p, t_c8 const *str);
-t_bool	we_path_add_back(t_path *p, t_c8 const *str);
-void	we_path_del(t_path *p);
+t_bool	wx_path_new(t_path *p, t_c8 const *str);
+t_bool	wx_path_new3(t_path	*p, t_c8 const *start, t_c8 const *middle,
+			t_c8 const *end);
+t_bool	wx_path_add_back(t_path *p, t_c8 const *str);
+void	wx_path_del(t_path *p);
 
 #endif

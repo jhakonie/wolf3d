@@ -1,7 +1,8 @@
-#include "we_path.h"
 #include "stdlib.h"
 
-void	we_path_del(t_path *p)
+#include "wx_path.h"
+
+void	wx_path_del(t_path *p)
 {
 	free(p->buffer);
 	p->buffer = WX_NULL;

@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "we_editor.h"
 #include "wx_frame_buffer.h"
 #include "wx_types.h"
-#include "we_editor.h"
-#include "we_path.h"
+#include "wx_path.h"
 
 static void	zz_arguments_check(t_c8	**level, int ac, char **av)
 {

@@ -1,5 +1,6 @@
-#include "we_path.h"
 #include "stdlib.h"
+
+#include "wx_path.h"
 
 static t_u64	zz_strlen(t_c8 const *str)
 {
@@ -11,7 +12,7 @@ static t_u64	zz_strlen(t_c8 const *str)
 	return (i);
 }
 
-t_bool	we_path_new(t_path *p, t_c8 const *str)
+t_bool	wx_path_new(t_path *p, t_c8 const *str)
 {
 	t_u64	len;
 

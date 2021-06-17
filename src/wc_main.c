@@ -13,11 +13,17 @@
 #include "wc_client.h"
 #include "wx_types.h"
 
-int	main(void)
+int	main(int as_size, char **as)
 {
 	t_client	c;
+	char const	*map_name;
 
-	if (!wc_client_new(&c, 800, 450))
+	map_name = as[1];
+	if (as_size < 2)
+	{
+		map_name = "default";
+	}
+	if (!wc_client_new(&c, 800, 450, map_name))
 	{
 		return (-1);
 	}

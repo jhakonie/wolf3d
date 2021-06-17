@@ -19,15 +19,15 @@ static t_bool	zz_create_directory(t_c8 *level)
 {
 	t_path	p;
 
-	if (!we_path_new3(&p, "data/maps/", level, ""))
+	if (!wx_path_new3(&p, "data/maps/", level, ""))
 		return (wx_false);
 	if (mkdir(p.buffer, 0777) < 0)
 	{
 		write(1, "mkdir failed\n", 14);
-		we_path_del(&p);
+		wx_path_del(&p);
 		return (wx_false);
 	}
-	we_path_del(&p);
+	wx_path_del(&p);
 	return (wx_true);
 }
 
@@ -35,15 +35,15 @@ static t_bool	zz_remove_directory(t_c8 *level)
 {
 	t_path	p;
 
-	if (!we_path_new3(&p, "data/maps/", level, ""))
+	if (!wx_path_new3(&p, "data/maps/", level, ""))
 		return (wx_false);
 	if (rmdir(p.buffer) < 0)
 	{
 		write(1, "rmdir failed\n", 14);
-		we_path_del(&p);
+		wx_path_del(&p);
 		return (wx_false);
 	}
-	we_path_del(&p);
+	wx_path_del(&p);
 	return (wx_true);
 }
 

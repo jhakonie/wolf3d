@@ -99,9 +99,11 @@ struct	s_client
 };
 typedef struct s_client			t_client;
 
-t_bool	wc_client_new(t_client *c, t_u32 window_width, t_u32 window_height);
+t_bool	wc_client_new(t_client *c, t_u32 window_width, t_u32 window_height,
+			char const *map_name);
 void	wc_client_del(t_client *c);
 void	wc_client_dispatch_events(t_client *c);
+t_bool	wc_client_load_data(t_client *c, char const *map_name);
 void	wc_client_on_expose(t_client *c);
 void	wc_client_on_resize(t_client *c, t_s32 width, t_s32 height);
 t_bool	wc_client_run(t_client *c);

@@ -15,7 +15,7 @@
 
 # include "SDL2/SDL.h"
 # include "we_draw.h"
-# include "we_path.h"
+# include "wx_path.h"
 # include "unistd.h"
 # define WE_WIN_H (512)
 # define WE_WIN_W (512)
@@ -136,7 +136,7 @@ t_bool				we_level_new(t_level *l);
 void				we_level_del(t_level *l);
 t_bool				we_paths_new(t_path *p, t_c8 *level);
 t_bool				we_paths_del(t_path *p, t_u32 size);
-t_bool				we_path_new3(t_path	*p, t_c8 const *start,
+t_bool				wx_path_new3(t_path	*p, t_c8 const *start,
 						t_c8 const *middle, t_c8 const *end);
 void				we_init_tiles(t_map *m);
 void				we_tiles_set(t_map *m);

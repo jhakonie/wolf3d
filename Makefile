@@ -22,6 +22,7 @@ libsdl2_ldflags = `$(build_dir)libsdl2/bin/sdl2-config --libs`
 client_src_files = $(addprefix $(src_dir), \
 	wc_client_dispatch_events.c \
 	wc_client_del.c \
+	wc_client_load_data.c \
 	wc_client_new.c \
 	wc_client_on_resize.c \
 	wc_client_run.c \
@@ -140,6 +141,10 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_parse_xpm_error.c \
 	wx_parse_xpm_pixels.c \
 	wx_parse_xpm_hash_key.c \
+	wx_path_add_back.c \
+	wx_path_del.c \
+	wx_path_new.c \
+	wx_path_new3.c \
 	wx_plane_new.c \
 	wx_plane_line_test.c \
 	wx_plane_signed_distance_n3.c \
@@ -159,10 +164,6 @@ client_exe = wolf3d
 
 editor_src_files = $(addprefix $(src_dir), \
 	we_main.c \
-	we_path_new.c \
-	we_path_del.c \
-	we_path_add_back.c \
-	we_path_new3.c \
 	we_paths_new.c \
 	we_paths_del.c \
 	we_level_new.c \
@@ -241,6 +242,10 @@ editor_src_files = $(addprefix $(src_dir), \
 	wx_parse_xpm_pixels.c \
 	wx_parse_xpm_comment.c \
 	wx_parse_xpm_hash_key.c \
+	wx_path_add_back.c \
+	wx_path_del.c \
+	wx_path_new.c \
+	wx_path_new3.c \
 	wx_to_radians.c \
 	wx_u64_max.c \
 	wx_xpm_del.c \

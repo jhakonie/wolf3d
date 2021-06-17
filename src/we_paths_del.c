@@ -7,7 +7,7 @@ t_bool	we_paths_del(t_path *p, t_u32 size)
 	i = 0;
 	while (i < size)
 	{
-		we_path_del(&p[i]);
+		wx_path_del(&p[i]);
 		i++;
 	}
 	return (wx_false);
