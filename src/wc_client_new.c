@@ -25,34 +25,6 @@ static void	zz_camera(t_client *c, t_f32 width, t_f32 height)
 	c->camera.far = 1000.0f;
 }
 
-/* static t_bool	zz_map(t_client *c, char const *map_name) */
-/* { */
-/*	t_map	m; */
-
-/*	if (!wc_map_new_from_file(&m, "data/maps/default/map.txt")) */
-/*	{ */
-/*		return (wx_false); */
-/*	} */
-/*	if (!wc_map_mesh_new_from_map(&c->map_mesh, &m)) */
-/*	{ */
-/*		return (wx_false); */
-/*	} */
-/*	if (!wc_texture_new_from_file(&c->floor_texture, */
-/*			"data/maps/default/floor.xpm") */
-/*		|| !wc_texture_new_from_file(&c->north_texture, */
-/*			"data/maps/default/north.xpm") */
-/*		|| !wc_texture_new_from_file(&c->east_texture, */
-/*			"data/maps/default/east.xpm") */
-/*		|| !wc_texture_new_from_file(&c->west_texture, */
-/*			"data/maps/default/west.xpm") */
-/*		|| !wc_texture_new_from_file(&c->south_texture, */
-/*			"data/maps/default/south.xpm")) */
-/*	{ */
-/*		return (wx_false); */
-/*	} */
-/*	return (wx_true); */
-/* } */
-
 static t_bool	zz_sdl(t_client *c, t_u32 window_width, t_u32 window_height)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)

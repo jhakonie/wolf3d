@@ -1,10 +1,9 @@
 #include "wc_client.h"
 #include "wc_draw.h"
 
-static void	zz_draw_context_new(t_draw_context *dc, t_client *c)
+static void	zz_draw_context_new(t_draw_context *dc, t_client *c, t_q4 const *o,
+	t_p3 const *p)
 {
-	t_q4	object_orientation;
-	t_p3	object_position;
 	t_m44	view_from_world;
 	t_m44	world_from_object;
 
@@ -17,9 +16,7 @@ static void	zz_draw_context_new(t_draw_context *dc, t_client *c)
 	dc->clip_from_view = wx_m44_new_perspective(c->camera.hfov_rad,
 			c->camera.aspect_ratio, c->camera.near, c->camera.far);
 	dc->frustum = wx_frustum_new(&dc->clip_from_view);
-	object_orientation = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
-	object_position = (t_p3){0.0f, 0.0f, 0.0f};
-	world_from_object = wx_m44_new_q4_p3(&object_orientation, &object_position);
+	world_from_object = wx_m44_new_q4_p3(o, p);
 	c->camera.orientation = c->player_orientation;
 	c->camera.position = c->player_position;
 	view_from_world = wx_m44_new_inverse_q4_p3(&c->camera.orientation,
@@ -27,17 +24,42 @@ static void	zz_draw_context_new(t_draw_context *dc, t_client *c)
 	dc->view_from_object = wx_m44_mul_m44(&view_from_world, &world_from_object);
 }
 
-void	wc_draw_3d(t_client *c)
+static void	zz_draw_map(t_client *c)
 {
 	t_draw_context	dc;
+	t_q4			o;
+	t_p3			p;
 
-	zz_draw_context_new(&dc, c);
-	wc_draw_clear(&dc);
-	wc_draw_mesh(&dc, &c->test_mesh, &c->test_texture);
+	o = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
+	p = (t_p3){0.0f, 0.0f, 0.0f};
+	zz_draw_context_new(&dc, c, &o, &p);
 	wc_draw_mesh(&dc, &c->map_mesh.floor, &c->floor_texture);
 	wc_draw_mesh(&dc, &c->map_mesh.north, &c->north_texture);
 	wc_draw_mesh(&dc, &c->map_mesh.east, &c->east_texture);
 	wc_draw_mesh(&dc, &c->map_mesh.west, &c->west_texture);
 	wc_draw_mesh(&dc, &c->map_mesh.south, &c->south_texture);
-	wc_draw_copy(c, dc.frame_buffer);
+}
+
+static void	zz_draw_others(t_client *c)
+{
+	t_draw_context	dc;
+	t_u64			i;
+
+	i = 0;
+	while (i < c->others_size)
+	{
+		zz_draw_context_new(&dc, c, c->other_orientations + i,
+			c->other_positions + i);
+		wc_draw_mesh(&dc, &c->test_mesh, &c->test_texture);
+		++i;
+	}
+}
+
+void	wc_draw_3d(t_client *c)
+{
+	wx_buffer_set(c->frame_buffer.data, c->frame_buffer.data_size, 0);
+	wx_buffer_set(c->depth_buffer.data, c->depth_buffer.data_size, 0);
+	zz_draw_map(c);
+	zz_draw_others(c);
+	wc_draw_copy(c, &c->frame_buffer);
 }

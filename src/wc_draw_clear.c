@@ -12,6 +12,9 @@
 
 #include "wc_draw.h"
 
+/*
+** 2021-06-18 todo: remove?
+*/
 void	wc_draw_clear(t_draw_context *dc)
 {
 	wx_buffer_set(dc->frame_buffer->data, dc->frame_buffer->data_size, 0);

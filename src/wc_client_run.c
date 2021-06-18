@@ -78,9 +78,9 @@ static void	zz_network(t_client *c)
 		wx_packet_read_u64(&p, &p.read_seq);
 		wx_packet_read_u8(&p, (t_u8 *)&c->move_mode);
 		wx_packet_read_p3(&p, &c->player_position);
-		wx_packet_read_u8(&p, &c->other_positions_size);
+		wx_packet_read_u8(&p, &c->others_size);
 		i = 0;
-		while (i < c->other_positions_size)
+		while (i < c->others_size)
 		{
 			wx_packet_read_q4(&p, &c->other_orientations[i]);
 			wx_packet_read_p3(&p, &c->other_positions[i]);

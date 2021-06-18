@@ -83,9 +83,8 @@ struct	s_client
 	t_q4				player_orientation;
 	t_p3				player_position;
 	t_q4				other_orientations[WX_SERVER_REMOTE_CLIENTS_SIZE - 1];
-	t_u8				other_orientations_size;
 	t_p3				other_positions[WX_SERVER_REMOTE_CLIENTS_SIZE - 1];
-	t_u8				other_positions_size;
+	t_u8				others_size;
 	t_remote_server		remote_server;
 	SDL_Renderer		*renderer;
 	t_bool				run;
