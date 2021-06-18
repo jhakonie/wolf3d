@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wc_client.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:11:35 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/24 14:29:18 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/06/18 18:50:53 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ struct	s_client
 	t_frame_buffer		frame_buffer;
 	t_depth_buffer		depth_buffer;
 	t_map_mesh			map_mesh;
+	t_map				map;
 	t_texture			floor_texture;
 	t_texture			north_texture;
 	t_texture			east_texture;

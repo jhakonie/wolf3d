@@ -6,11 +6,11 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 16:04:17 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 14:53:38 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/18 22:49:29 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_editor.h"
+#include "wx_draw.h"
 
 /*
 ** ray->nb = ray number startting from the start of screen.
@@ -38,5 +38,5 @@ void	we_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
 	ray->dist_to_screen_w = 0.5f * screen_width
 		/ tanf(wx_to_radians(0.5f * player_fov_d));
 	ray->angle_increment_d = player_fov_d / screen_width;
-	ray->world_end_w = WE_GRID_DIVIDE * WE_BLOCK_W;
+	ray->world_end_w = WX_MAP_TILES_WIDTH * WX_TILE_WIDTH;
 }

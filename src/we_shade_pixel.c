@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 23:16:10 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/02 16:07:21 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/18 22:42:21 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	we_shade_pixel(t_u32 *color, t_f32 distance)
 {
 	t_rgba			new_color;
 	t_f32			shade_factor;
-	static t_f32	max_dist_w = (WE_GRID_DIVIDE * 0.35f * WE_BLOCK_W);
+	static t_f32	max_dist_w = (WX_MAP_TILES_WIDTH * 0.35f * WX_TILE_WIDTH);
 
 	shade_factor = distance / max_dist_w;
 	if (shade_factor >= 1)

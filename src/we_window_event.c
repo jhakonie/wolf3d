@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 22:51:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 20:29:32 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/17 01:20:16 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	zz_on_resize(t_editor *e, t_s32 width, t_s32 height)
 	t_u32	tool_id;
 	t_bool	draw_rays;
 
-	draw_rays = e->map.draw_rays;
+	draw_rays = e->map_view.draw_rays;
 	tool_id = e->tools.id;
 	SDL_DestroyRenderer(e->renderer);
 	e->renderer = SDL_CreateRenderer(e->window, -1, 0);
@@ -34,11 +34,11 @@ static void	zz_on_resize(t_editor *e, t_s32 width, t_s32 height)
 	free(e->frame_buffer.data);
 	if (!wx_frame_buffer_new(&e->frame_buffer, width, height))
 		e->quit = wx_true;
-	we_init_map(&e->map, width, height);
+	we_init_map(&e->map_view, width, height);
 	we_init_toolbar(&e->tools, width, height);
 	e->tools.id = tool_id;
 	e->tools.tool[tool_id].selected = wx_true;
-	e->map.draw_rays = draw_rays;
+	e->map_view.draw_rays = draw_rays;
 	e->draw = wx_true;
 }
 

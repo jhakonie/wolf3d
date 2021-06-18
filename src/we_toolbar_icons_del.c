@@ -7,7 +7,7 @@ t_bool	we_toolbar_icons_del(t_tool *t)
 	i = 1;
 	while (i < WE_TOOL_COUNT)
 	{
-		free(t[i].button.icon.texture);
+		free(t[i].button.icon.buffer);
 		i++;
 	}
 	return (wx_false);

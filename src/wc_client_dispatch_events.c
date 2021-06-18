@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wc_client_dispatch_events.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:53:50 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/24 14:34:28 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/06/18 19:46:20 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	zz_on_key(t_client *c, SDL_KeyboardEvent const *k, t_bool down)
 		c->input.move_backward = down;
 	else if (k->keysym.sym == SDLK_d)
 		c->input.move_right = down;
-	else if (k->keysym.sym == SDLK_DELETE && down)
+	else if (k->keysym.sym == SDLK_SPACE && down)
 		c->input.move_mode = (c->input.move_mode + 1) % 2;
 }
 

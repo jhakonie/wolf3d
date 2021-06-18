@@ -1,13 +1,13 @@
 #include "we_editor.h"
 
-t_bool	we_texture_type_del(t_level_texture *texture_type)
+t_bool	we_textures_del(t_map_textures *textures)
 {
-	free(texture_type->wall[we_north].texture);
-	free(texture_type->wall[we_east].texture);
-	free(texture_type->wall[we_south].texture);
-	free(texture_type->wall[we_west].texture);
-	free(texture_type->floor.texture);
-	free(texture_type->sky.texture);
-	free(texture_type->door.texture);
+	free(textures->walls[we_north].buffer);
+	free(textures->walls[we_east].buffer);
+	free(textures->walls[we_south].buffer);
+	free(textures->walls[we_west].buffer);
+	free(textures->floor.buffer);
+	free(textures->sky.buffer);
+	free(textures->door.buffer);
 	return (wx_false);
 }

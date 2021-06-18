@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_draw.h"
+#include "wx_draw.h"
 
 static void	zz_calculate_hex(t_u32	*number, t_u32 *hex)
 {

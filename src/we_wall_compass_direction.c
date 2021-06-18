@@ -6,11 +6,11 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 23:56:28 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/18 18:41:22 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/18 22:41:26 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_draw.h"
+#include "wx_draw.h"
 
 t_compass	we_wall_compass_direction(t_f32 angle_ray_d, t_u32 side)
 {

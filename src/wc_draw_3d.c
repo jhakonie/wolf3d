@@ -1,5 +1,7 @@
 #include "wc_client.h"
 #include "wc_draw.h"
+#include "wx_draw.h"
+#include "unistd.h"
 
 static void	zz_draw_context_new(t_draw_context *dc, t_client *c, t_q4 const *o,
 	t_p3 const *p)
@@ -33,11 +35,11 @@ static void	zz_draw_map(t_client *c)
 	o = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
 	p = (t_p3){0.0f, 0.0f, 0.0f};
 	zz_draw_context_new(&dc, c, &o, &p);
-	wc_draw_mesh(&dc, &c->map_mesh.floor, &c->floor_texture);
-	wc_draw_mesh(&dc, &c->map_mesh.north, &c->north_texture);
-	wc_draw_mesh(&dc, &c->map_mesh.east, &c->east_texture);
-	wc_draw_mesh(&dc, &c->map_mesh.west, &c->west_texture);
-	wc_draw_mesh(&dc, &c->map_mesh.south, &c->south_texture);
+	wc_draw_mesh(&dc, &c->map_mesh.floor, &c->map.textures.floor);
+	wc_draw_mesh(&dc, &c->map_mesh.north, &c->map.textures.walls[we_north]);
+	wc_draw_mesh(&dc, &c->map_mesh.east, &c->map.textures.walls[we_east]);
+	wc_draw_mesh(&dc, &c->map_mesh.west, &c->map.textures.walls[we_west]);
+	wc_draw_mesh(&dc, &c->map_mesh.south, &c->map.textures.walls[we_south]);
 }
 
 static void	zz_draw_others(t_client *c)

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:14:34 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 22:17:51 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 00:45:55 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static t_bool	zz_on_error(t_editor *e, t_u8 i)
 {
 	if (i > 5)
-		we_level_del(&e->map.level);
+		we_level_del(&e->level);
 	if (i > 4)
 	{
 		wx_frame_buffer_del(&e->frame_buffer);
@@ -89,8 +89,8 @@ static t_bool	zz_set_default_textures(t_level *l)
 	{
 		return (we_paths_del(l->paths, WE_RESOURCES_COUNT));
 	}
-	wx_buffer_set(&l->texture_type, sizeof(t_level_texture), 0);
-	if (!we_texture_type_new(&l->texture_type, l->paths))
+	wx_buffer_set(&l->map.textures, sizeof(t_map_textures), 0);
+	if (!we_textures_new(&l->map.textures, l->paths))
 	{
 		we_paths_del(l->paths, WE_RESOURCES_COUNT);
 		return (wx_false);
@@ -105,20 +105,21 @@ t_bool	we_editor_new(t_editor *e, t_u32 window_width, t_u32 window_height)
 	if (!wx_frame_buffer_new(&e->frame_buffer, window_width, window_height))
 		return (zz_on_error(e, 4));
 	wx_buffer_set(&e->tools, sizeof(e->tools), 0);
-	if (!we_level_new(&e->map.level))
+	if (!we_level_new(&e->level))
 	{
-		if (!zz_set_default_textures(&e->map.level))
+		if (!zz_set_default_textures(&e->level))
 			return (zz_on_error(e, 5));
 	}
-	we_init_map(&e->map, window_width, window_height);
-	we_init_tiles(&e->map);
+	we_init_map(&e->map_view, window_width, window_height);
+	we_init_tiles(&e->level);
 	we_init_toolbar(&e->tools, window_width, window_height);
 	if (!we_toolbar_icons_new(e->tools.tool))
 		return (zz_on_error(e, 6));
-	we_init_player(&e->player, &e->map, e->frame_buffer.width);
+	we_init_player(&e->player, &e->level.map, &e->map_view,
+		e->frame_buffer.width);
 	e->quit = wx_false;
 	e->draw = wx_true;
-	e->map.draw_3d = wx_false;
+	e->map_view.draw_3d = wx_false;
 	e->time.sim_time_s = wx_time_s();
 	e->time.sim_time_step_s = 1.0 / 30.0;
 	return (wx_true);

@@ -6,11 +6,11 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 17:18:30 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 15:13:13 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/18 22:40:03 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_draw.h"
+#include "wx_draw.h"
 
 /*
 ** ang_ray_start_d = angle between ray and ray-cast start angle.

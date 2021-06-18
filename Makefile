@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/06/09 23:42:31 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/06/18 21:43:51 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -158,6 +158,23 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_to_radians.c \
 	wx_time_s.c \
 	wx_xpm_del.c \
+	we_draw_3d.c \
+	we_ray_cast.c \
+	we_ray_cast_sky.c \
+	we_ray_init.c \
+	we_ray_calculate.c \
+	we_draw_floor.c \
+	we_draw_floor_tile_end.c \
+	we_draw_floor_player_position.c \
+	we_draw_sky.c \
+	we_draw_door.c \
+	we_draw_door_distance.c \
+	we_draw_wall.c \
+	we_draw_texture_wall.c \
+	we_shade_pixel.c \
+	we_draw_pixel.c \
+	we_wall_compass_direction.c \
+	wx_to_degrees.c \
 )
 client_obj_files = $(subst $(src_dir), $(build_dir), $(client_src_files:.c=.o))
 client_exe = wolf3d
@@ -193,7 +210,6 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_key_event.c \
 	we_player_move.c \
 	we_player_rotate.c \
-	we_to_rad.c \
 	we_ray_cast.c \
 	we_ray_cast_sky.c \
 	we_ray_init.c \

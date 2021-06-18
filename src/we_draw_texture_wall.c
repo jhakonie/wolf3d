@@ -6,14 +6,14 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:29:31 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 12:39:57 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/18 23:56:12 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_draw.h"
+#include "wx_draw.h"
 
 static t_texture_index	zz_texture_coordinates(t_ray *ray, t_p2 draw,
-	t_tex *tex)
+	t_texture *texture)
 {
 	t_texture_index	tex_index;
 	t_u32			block;
@@ -21,20 +21,20 @@ static t_texture_index	zz_texture_coordinates(t_ray *ray, t_p2 draw,
 
 	if (ray->tile.side == we_horisontal)
 	{
-		block = (int)(ray->tile.hit.x / WE_BLOCK_W);
-		in_block_pos = ray->tile.hit.x - block * WE_BLOCK_W;
-		tex_index.coord.x = in_block_pos / WE_BLOCK_W * tex->width;
+		block = (int)(ray->tile.hit.x / WX_TILE_WIDTH);
+		in_block_pos = ray->tile.hit.x - block * WX_TILE_WIDTH;
+		tex_index.coord.x = in_block_pos / WX_TILE_WIDTH * texture->width;
 	}
 	else
 	{
-		block = (int)(ray->tile.hit.y / WE_BLOCK_W);
-		in_block_pos = ray->tile.hit.y - block * WE_BLOCK_W;
-		tex_index.coord.x = in_block_pos / WE_BLOCK_W * tex->height;
+		block = (int)(ray->tile.hit.y / WX_TILE_WIDTH);
+		in_block_pos = ray->tile.hit.y - block * WX_TILE_WIDTH;
+		tex_index.coord.x = in_block_pos / WX_TILE_WIDTH * texture->height;
 	}
 	if (ray->tile.compass == we_west || ray->tile.compass == we_south)
-		tex_index.coord.x = tex->width - tex_index.coord.x;
+		tex_index.coord.x = texture->width - tex_index.coord.x;
 	tex_index.coord.y = 0;
-	tex_index.increment_y = tex->height / ray->tile.projected_height;
+	tex_index.increment_y = texture->height / ray->tile.projected_height;
 	if (draw.y < 0)
 		tex_index.coord.y = tex_index.increment_y
 			* fabsf(draw.y);
@@ -50,24 +50,25 @@ static void	zz_clip(t_p2 *draw, t_u32 fb_height, t_u32 *max_y_fb)
 }
 
 void	we_draw_texture_wall(t_ray *ray, t_p2 draw,
-											t_frame_buffer *fb, t_tex *tex)
+			t_frame_buffer *fb, t_texture *texture)
 {
 	t_texture_index		tex_index;
 	t_u32				max_tex_index;
 	t_u32				color;
 	t_u32				max_y_fb;
 
-	max_tex_index = tex->height * tex->width;
-	tex_index = zz_texture_coordinates(ray, draw, tex);
+	max_tex_index = texture->height * texture->width;
+	tex_index = zz_texture_coordinates(ray, draw, texture);
 	max_y_fb = draw.y + ray->tile.projected_height;
 	zz_clip(&draw, fb->height, &max_y_fb);
 	while (draw.y < max_y_fb)
 	{
-		tex_index.index = ((t_u32)tex_index.coord.y * tex->width
+		tex_index.index = ((t_u32)tex_index.coord.y * texture->width
 				+ (t_u32)tex_index.coord.x);
 		if (tex_index.index < max_tex_index)
 		{
-			color = tex->texture[tex_index.index];
+			wx_buffer_copy(&color, texture->buffer + (tex_index.index * 4),
+				sizeof(color));
 			we_shade_pixel(&color, ray->tile.distance);
 			we_draw_pixel(draw, fb, color);
 		}

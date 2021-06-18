@@ -6,13 +6,13 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 21:12:26 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/03/24 15:21:35 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/06/16 15:50:39 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-t_p2	we_from_win_to_map(t_p2 win, t_map m)
+t_p2	we_from_win_to_map(t_p2 win, t_map_view m)
 {
 	t_p2	map;
 

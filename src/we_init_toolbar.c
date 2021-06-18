@@ -6,13 +6,13 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:13 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 20:09:05 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/16 15:42:46 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-void	we_init_toolbar(t_tools *t, t_u32 win_w, t_u32 win_h)
+void	we_init_toolbar(t_toolbar *t, t_u32 win_w, t_u32 win_h)
 {
 	t->start.x = 0;
 	t->start.y = 0;

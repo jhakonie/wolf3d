@@ -6,19 +6,19 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 13:46:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/14 19:26:41 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 00:35:23 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-static void	zz_raycast_door(t_ray *ray, t_map *m, t_p2 *end)
+static void	zz_raycast_door(t_ray *ray, t_map *m, t_p2 *end, t_map_view *mv)
 {
 	ray->tile_type_to_find = 2;
-	we_ray_cast(ray, m->level.tiles);
-	(*end).x = (ray->tile.hit.x / WE_BLOCK_W) * m->grid.part.x
-		+ m->grid.start.x;
-	(*end).y = ray->tile.hit.y / WE_BLOCK_W * m->grid.part.y;
+	we_ray_cast(ray, m->tiles);
+	(*end).x = (ray->tile.hit.x / WX_TILE_WIDTH) * mv->grid.part.x
+		+ mv->grid.start.x;
+	(*end).y = ray->tile.hit.y / WX_TILE_WIDTH * mv->grid.part.y;
 }
 
 /*
@@ -38,13 +38,13 @@ static void	zz_draw_rays(t_frame_buffer *fb, t_editor *e, t_p2 start)
 	{
 		ray.tile_type_to_find = 1;
 		we_ray_calculate(&ray, angle_d, e->player.direction_d);
-		we_ray_cast(&ray, e->map.level.tiles);
-		end.x = (ray.tile.hit.x / WE_BLOCK_W) * e->map.grid.part.x
+		we_ray_cast(&ray, e->level.map.tiles);
+		end.x = (ray.tile.hit.x / WX_TILE_WIDTH) * e->map_view.grid.part.x
 			+ e->tools.end.x;
-		end.y = ray.tile.hit.y / WE_BLOCK_W * e->map.grid.part.y;
+		end.y = ray.tile.hit.y / WX_TILE_WIDTH * e->map_view.grid.part.y;
 		if (ray.tile.side != we_no_wall)
 			we_draw_line(start, end, fb, 0x00FF00);
-		zz_raycast_door(&ray, &e->map, &end);
+		zz_raycast_door(&ray, &e->level.map, &end, &e->map_view);
 		if (ray.tile.side != we_no_wall && ray.tile.tiles_id == 2)
 			we_draw_line(start, end, fb, 0xaa00ff);
 		angle_d += ray.angle_increment_d;
@@ -53,7 +53,7 @@ static void	zz_draw_rays(t_frame_buffer *fb, t_editor *e, t_p2 start)
 }
 
 static t_bool	zz_inside_map(t_triangle *t,
-					t_map *m)
+					t_map_view *m)
 {
 	if (t->a.x < m->grid.start.x || t->b.x < m->grid.start.x
 		|| t->c.x < m->grid.start.x || t->a.y < m->grid.start.y
@@ -78,15 +78,15 @@ static void	zz_draw_triangle(t_editor *e, t_p2 base, t_p2 tip)
 	t_p2		base_b;
 
 	delta.x = cosf((wx_to_radians(90 + e->player.direction_d)))
-		* e->map.grid.part.x * 0.3f;
+		* e->map_view.grid.part.x * 0.3f;
 	delta.y = -(sinf((wx_to_radians(90 + e->player.direction_d)))
-			* e->map.grid.part.y * 0.3f);
+			* e->map_view.grid.part.y * 0.3f);
 	base_a.x = base.x - delta.x;
 	base_a.y = base.y - delta.y;
 	base_b.x = base.x + delta.x;
 	base_b.y = base.y + delta.y;
 	we_init_triangle(base_a, base_b, tip, &t);
-	if (zz_inside_map(&t, &e->map))
+	if (zz_inside_map(&t, &e->map_view))
 		we_draw_triangle(0xFF00D0, &t, &e->frame_buffer);
 }
 
@@ -103,21 +103,24 @@ void	we_draw_player(t_editor *e)
 	t_p2	triangle_tip;
 	t_p2	delta;
 
-	player.x = (e->player.position.x / WE_BLOCK_W) * e->map.grid.part.x
+	player.x = (e->player.position.x / WX_TILE_WIDTH) * e->map_view.grid.part.x
 		+ e->tools.end.x;
-	player.y = e->player.position.y / WE_BLOCK_W * e->map.grid.part.y;
-	delta.x = (cosf(wx_to_radians(e->player.direction_d)) * e->map.grid.part.x);
+	player.y = e->player.position.y / WX_TILE_WIDTH * e->map_view.grid.part.y;
+	delta.x = (cosf(wx_to_radians(e->player.direction_d))
+			* e->map_view.grid.part.x);
 	delta.y = -(sinf(wx_to_radians(e->player.direction_d))
-			* e->map.grid.part.y);
+			* e->map_view.grid.part.y);
 	triangle_base.x = (player.x - 0.5f * delta.x);
 	triangle_base.y = (player.y - 0.5f * delta.y);
 	triangle_tip.x = (player.x + delta.x);
 	triangle_tip.y = (player.y + delta.y);
 	if (player.x > e->tools.end.x)
 		zz_draw_triangle(e, triangle_base, triangle_tip);
-	if (e->map.draw_rays)
+	if (e->map_view.draw_rays)
 		zz_draw_rays(&e->frame_buffer, e, player);
-	if (player.x > e->map.grid.start.x && player.y > e->map.grid.start.y
-		&& player.x < e->map.grid.end.x && player.y < e->map.grid.end.y)
+	if (player.x > e->map_view.grid.start.x
+		&& player.y > e->map_view.grid.start.y
+		&& player.x < e->map_view.grid.end.x
+		&& player.y < e->map_view.grid.end.y)
 		we_draw_pixel(player, &e->frame_buffer, 0xFFFF00);
 }

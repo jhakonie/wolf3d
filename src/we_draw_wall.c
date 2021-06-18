@@ -6,20 +6,20 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:08:31 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 15:58:48 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/17 01:30:16 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_draw.h"
 
 void	we_draw_wall(t_ray ray, t_frame_buffer *fb,
-			t_level_texture *texture_type)
+			t_map_textures *textures)
 {
 	t_p2			draw_start;
-	t_tex			texture;
+	t_texture		texture;
 
 	if (ray.tile.tiles_id == 1)
-		texture = texture_type->wall[ray.tile.compass];
+		texture = textures->walls[ray.tile.compass];
 	else
 		return ;
 	draw_start.y = ray.view_height * fb->height

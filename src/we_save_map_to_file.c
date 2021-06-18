@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 15:53:52 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/14 18:22:13 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/18 22:34:32 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,19 @@ void	we_save_map_to_file(t_editor *e)
 	t_u8	block;
 
 	i = 0;
-	fd = zz_open(e->map.level.paths[we_map].buffer, e->map.level.name);
+	fd = zz_open(e->level.paths[we_map].buffer, e->level.name);
 	if (fd < 0)
 		return ;
-	while (i < e->map.tile_count)
+	while (i < e->map_view.tile_count)
 	{
-		if (e->map.level.tiles[i].id > 0)
-			block = e->map.level.tiles[i].id + '0';
+		if (e->level.map.tiles[i].id > 0)
+			block = e->level.map.tiles[i].id + '0';
 		else
 			block = '.';
 		write(fd, &block, 1);
-		if ((int)e->map.level.tiles[i].block.x != WE_GRID_DIVIDE - 1)
+		if ((int)e->level.map.tiles[i].tile.x != WX_MAP_TILES_WIDTH - 1)
 			write(fd, " ", 1);
-		else if ((int)e->map.level.tiles[i].block.x == WE_GRID_DIVIDE - 1)
+		else if ((int)e->level.map.tiles[i].tile.x == WX_MAP_TILES_WIDTH - 1)
 			write(fd, "\n", 1);
 		i++;
 	}

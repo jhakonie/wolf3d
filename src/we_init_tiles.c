@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 22:38:50 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/14 19:24:23 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/18 22:35:30 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 static void	zz_add_char(t_map *m, char *buf, t_u32 i, t_u32 j)
 {
 	if (buf[i] == '.')
-		m->level.tiles[j].id = 0;
+		m->tiles[j].id = 0;
 	else
-		m->level.tiles[j].id = buf[i] - '0';
+		m->tiles[j].id = buf[i] - '0';
 }
 
 static t_bool	zz_check_char(char *buf, t_u32 i)
@@ -52,7 +52,7 @@ static t_bool	zz_buf_to_tiles(t_map *m, char *buf, t_u32 ret)
 		{
 			if (buf[i] == ' ' || buf[i] == '\n')
 			{
-				if (buf[i] == '\n' && j % WE_GRID_DIVIDE != 0)
+				if (buf[i] == '\n' && j % WX_MAP_TILES_WIDTH != 0)
 					break ;
 				i++;
 				if (i == ret)
@@ -74,39 +74,43 @@ static t_bool	zz_buf_to_tiles(t_map *m, char *buf, t_u32 ret)
 **
 ** Assumes that read returns exactly as many bytes as requested.
 */
-static t_bool	zz_load_file_to_tiles(t_map *m)
+static t_bool	zz_load_file_to_tiles(t_level *l)
 {
 	t_s32		fd;
 	t_s32		ret;
-	char		buf[WE_MAP_BUFF_SIZE + 1];
+	char		buf[WX_MAP_READ_BUFF_SIZE + 1];
 
-	fd = open(m->level.paths[we_map].buffer, O_RDONLY, 0644);
+	fd = open(l->paths[we_map].buffer, O_RDONLY, 0644);
 	if (fd < 0)
 	{
 		write(1, "open failed\n", 13);
 		return (wx_false);
 	}
-	ret = read(fd, buf, WE_MAP_BUFF_SIZE + 1);
+	ret = read(fd, buf, WX_MAP_READ_BUFF_SIZE + 1);
 	close(fd);
 	if (ret < 0)
 	{
 		write(1, "read failed\n", 13);
 		return (wx_false);
 	}
-	if (ret < WE_MAP_BUFF_SIZE || ret > WE_MAP_BUFF_SIZE)
+	if (ret < WX_MAP_READ_BUFF_SIZE || ret > WX_MAP_READ_BUFF_SIZE)
 	{
 		write(1, "No pre-existing file or invalid map, save replaces it.\n", 56);
 		return (wx_false);
 	}
-	return (zz_buf_to_tiles(m, buf, ret));
+	return (zz_buf_to_tiles(&l->map, buf, ret));
 }
 
 /*
 ** Initializes map_tiles array, loads a map from a file to tiles.
 */
-void	we_init_tiles(t_map *m)
+void	we_init_tiles(t_level *l)
 {
-	we_tiles_set(m);
-	if (!(zz_load_file_to_tiles(m)))
-		we_tiles_set(m);
+	we_tiles_set(&l->map);
+	if (!(zz_load_file_to_tiles(l)))
+		we_tiles_set(&l->map);
+	l->map.tile_width = WX_TILE_WIDTH;
+	l->map.wall_height = WX_TILE_WIDTH;
+	l->map.height = WX_MAP_TILES_WIDTH;
+	l->map.width = WX_MAP_TILES_WIDTH;
 }

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/14 18:40:04 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 00:36:44 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,6 @@
 
 # define WE_ID_INIT (0)
 # define WE_TOOL_COUNT (6)
-
-/*
-** REMEMBER to update WE_MAP_BUFF_SIZE (2 * WE_GRID_DIVIDE * WE_GRID_DIVIDE)
-** and WE_MAP_SIZE (WE_GRID_DIVIDE * WE_GRID_DIVIDE), used for reading map.
-** and WE_RAY_CAST_BUFF_SIZE_M in we_raycast.h, used for ray cast buffer.
-** ----> sqrt(WE_MAP_SIZE + WE_MAP_SIZE);
-** IF WE_GRID_DIVIDE is altered!
-*/
-# define WE_GRID_DIVIDE (57)
-
-/*
-** 2021-03-24 todo: this is a temporary hack until something better. new
-** norminette complains about any arithmetic operation in a define. this should
-** be: WE_GRID_DIVIDE * WE_GRID_DIVIDE * 2
-*/
-# define WE_MAP_BUFF_SIZE (6498)
-# define WE_MAP_SIZE (3249)
-# define WE_BLOCK_W (10)
-
-# define PI (3.14159265359)
 
 typedef struct s_line
 {
@@ -75,19 +55,11 @@ typedef struct s_triangle
 	t_u32	color;
 }					t_triangle;
 
-typedef struct s_rgba
-{
-	t_u32			r;
-	t_u32			g;
-	t_u32			b;
-	t_u32			a;
-}				t_rgba;
-
 typedef struct s_button
 {
 	t_p2		start;
 	t_p2		end;
-	t_tex		icon;
+	t_texture	icon;
 }				t_button;
 
 typedef struct s_grid
@@ -99,21 +71,10 @@ typedef struct s_grid
 	t_u32		divide;
 }				t_grid;
 
-struct			s_draw_floor
-{
-	t_p2		end_w;
-	t_p2		delta_w;
-	t_f32		end_distance_w;
-	t_p2		start_fb;
-	t_p2		end_fb;
-};
-typedef struct s_draw_floor	t_draw_floor;
-
-void		we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color);
 void		we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 color);
 void		we_draw_clip(t_p2 *p, t_frame_buffer *fb);
 void		we_draw_rec_texture(t_p2 start, t_p2 end,
-				t_frame_buffer *fb, t_tex *t);
+				t_frame_buffer *fb, t_texture *t);
 void		we_draw_rec_full(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 c);
 void		we_draw_rec_frame(t_p2 start, t_p2 end, t_frame_buffer *fb,
 				t_u32 c);
@@ -121,18 +82,5 @@ void		we_init_triangle(t_p2 a, t_p2 b, t_p2 c, t_triangle *t);
 void		we_init_line(t_p2 a, t_p2 b, t_line *l);
 void		we_draw_triangle(t_u32 color, t_triangle *t, t_frame_buffer *fb);
 void		we_draw_grid(t_grid *g, t_frame_buffer *fb);
-void		we_draw_wall(t_ray ray, t_frame_buffer *fb,
-				t_level_texture *texture_type);
-void		we_draw_texture_wall(t_ray *ray, t_p2 draw, t_frame_buffer *fb,
-				t_tex *tex);
-void		we_draw_floor(t_ray ray, t_frame_buffer *fb,
-				t_level_texture *texture_type);
-t_p2		we_draw_floor_tile_end(t_ray *ray);
-void		we_draw_floor_player_position(t_frame_buffer *fb, t_ray *ray,
-				t_tex *t);
-void		we_draw_sky(t_frame_buffer *fb, t_ray ray, t_tex *sky);
-void		we_draw_door(t_ray ray, t_frame_buffer *fb,
-				t_level_texture *texture_type);
-void		we_draw_door_distance(t_ray *ray);
 
 #endif

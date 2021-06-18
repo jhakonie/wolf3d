@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wc_draw.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ***REMOVED*** <***REMOVED***@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 23:38:47 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/03/29 19:13:05 by ***REMOVED***         ###   ########.fr       */
+/*   Updated: 2021/06/19 00:36:13 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "wx_frame_buffer.h"
 # include "wx_math.h"
+# include "wx_draw.h"
 
 typedef struct s_client				t_client;
 
@@ -77,24 +78,6 @@ typedef struct s_face				t_face;
 */
 # define WC_MAP_WIDTH (57)
 # define WC_MAP_TILES_SIZE (3249)
-
-enum	e_map_tile_type
-{
-	wc_map_tile_type_floor = '.',
-	wc_map_tile_type_player_spawn = '3',
-	wc_map_tile_type_wall = '1'
-};
-typedef enum e_map_tile_type		t_map_tile_type;
-
-struct	s_map
-{
-	t_c8	tiles[WC_MAP_TILES_SIZE];
-	t_u64	width;
-	t_u64	height;
-	t_f32	tile_width;
-	t_f32	wall_height;
-};
-typedef struct s_map				t_map;
 
 t_bool				wc_map_new_from_file(t_map *m, char const *filename);
 
@@ -188,14 +171,14 @@ void				wc_map_mesh_del(t_map_mesh *mm);
 /*
 ** 2021-04-30 todo: merge with t_texture from editor
 */
-struct	s_texture
-{
-	t_u8	*buffer;
-	t_u64	buffer_size;
-	t_u32	width;
-	t_u32	height;
-};
-typedef struct s_texture			t_texture;
+// struct	s_texture
+// {
+// 	t_u8	*buffer;
+// 	t_u64	buffer_size;
+// 	t_u32	width;
+// 	t_u32	height;
+// };
+// typedef struct s_texture			t_texture;
 
 t_bool				wc_texture_new_from_file(t_texture *t,
 						char const *filename);

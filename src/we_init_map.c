@@ -1,27 +1,16 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   we_init_map.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/07 20:34:33 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/14 18:22:13 by jhakonie         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "we_editor.h"
 
-void	we_init_map(t_map *m, t_u32 win_w, t_u32 win_h)
+void	we_init_map(t_map_view *m, t_u32 win_w, t_u32 win_h)
 {
-	m->grid.divide = WE_GRID_DIVIDE;
+	m->grid.divide = WX_MAP_TILES_WIDTH;
 	m->grid.start.x = (win_w - 1) / 8;
 	m->grid.start.y = 0;
 	m->grid.end.x = win_w - 1;
 	m->grid.end.y = win_h - 1;
-	m->grid.part.x = (m->grid.end.x - m->grid.start.x) / m->grid.divide;
+	m->grid.part.x = (m->grid.end.x - m->grid.start.x)
+		/ m->grid.divide;
 	m->grid.part.y = m->grid.end.y / m->grid.divide;
-	m->tile_count = WE_GRID_DIVIDE * WE_GRID_DIVIDE;
+	m->tile_count = WX_MAP_TILES_WIDTH * WX_MAP_TILES_WIDTH;
 	m->ptr_draw = wx_false;
 	m->ptr_clear = wx_false;
 	m->ptr.x = 0;

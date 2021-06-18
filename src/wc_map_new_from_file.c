@@ -15,13 +15,17 @@ static t_bool	zz_parse_map_tile(t_parse_context *pc, t_parse_map_context *pmc,
 	{
 		return (wx_false);
 	}
-	if (*pc->p != wc_map_tile_type_floor
-		&& *pc->p != wc_map_tile_type_player_spawn
-		&& *pc->p != wc_map_tile_type_wall)
+	if (*pc->p != '.'
+		&& *pc->p != '1'
+		&& *pc->p != '2'
+		&& *pc->p != '3')
 	{
 		return (wx_false);
 	}
-	m->tiles[pmc->y * m->width + pmc->x] = *pc->p;
+	if (*pc->p == '.')
+		m->tiles[pmc->y * m->width + pmc->x].id = 0;
+	else
+		m->tiles[pmc->y * m->width + pmc->x].id = *pc->p - '0';
 	++pc->p;
 	++pmc->x;
 	return (wx_true);
@@ -84,8 +88,8 @@ t_bool	wc_map_new_from_file(t_map *m, char const *filename)
 		wx_c8s_del(&fb);
 		return (wx_false);
 	}
-	m->tile_width = 2.0f;
-	m->wall_height = 2.0f;
+	m->tile_width = WX_TILE_WIDTH;
+	m->wall_height = WX_TILE_WIDTH;
 	wx_c8s_del(&fb);
 	return (wx_true);
 }

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 22:38:37 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 18:54:11 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/18 21:24:46 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 # include "wx_frame_buffer.h"
 
 # define WE_RAY_CAST_BUFF_SIZE_M (81)
-# define WE_RAY_CAST_BUFF_SIZE_M (81)
+# define WE_WALL (1)
+# define WE_DOOR (2)
 
-struct			s_map_tile
+typedef struct s_map_tile
 {
-	t_p2		block;
-	t_u32		id;
-};
-typedef struct s_map_tile	t_map_tile;
+	t_p2	tile;
+	t_u32	id;
+}	t_map_tile;
 
 enum						e_side
 {

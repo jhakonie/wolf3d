@@ -79,7 +79,7 @@ t_bool	we_editor_run(t_editor *e)
 				* e->time.sim_time_step_s);
 		real_time0_s = real_time1_s;
 		e->time.sim_time_accumulator_s += sim_delta_s;
-		if (e->map.draw_3d)
+		if (e->map_view.draw_3d)
 			e->quit = zz_poll_event(e);
 		else
 			e->quit = zz_wait_event(e);

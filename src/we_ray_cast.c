@@ -6,11 +6,11 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 17:25:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/09 18:58:13 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/18 22:52:37 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "we_editor.h"
+#include "wx_draw.h"
 
 /*
 ** Calculate distance to wall and wall projected height.
@@ -36,7 +36,7 @@ static t_hit	zz_tile_values(t_ray *ray, t_map_tile *tiles, t_side side)
 	ray->tile.distance = sqrtf(delta.x * delta.x + delta.y * delta.y);
 	ray->tile.distance *= cosf(wx_to_radians(ray->angle_to_player_d));
 	ray->tile.projected_height = (ray->dist_to_screen_w / ray->tile.distance)
-		* WE_BLOCK_W;
+		* WX_TILE_WIDTH;
 	return (ray->tile);
 }
 
@@ -53,17 +53,17 @@ static t_bool	zz_is_wall(t_map_tile *tiles, t_ray *ray, t_p2 intersection_w,
 	t_u32			index;
 
 	ray->tile.hit = intersection_w;
-	block_y = intersection_w.y / WE_BLOCK_W;
-	block_x = intersection_w.x / WE_BLOCK_W;
-	index = block_x + block_y * WE_GRID_DIVIDE;
-	if (block_x >= WE_GRID_DIVIDE || block_y >= WE_GRID_DIVIDE
+	block_y = intersection_w.y / WX_TILE_WIDTH;
+	block_x = intersection_w.x / WX_TILE_WIDTH;
+	index = block_x + block_y * WX_MAP_TILES_WIDTH;
+	if (block_x >= WX_MAP_TILES_WIDTH || block_y >= WX_MAP_TILES_WIDTH
 		|| (block_x == 0 && line == we_vertical))
 		return (wx_false);
 	if (ray->angle_d <= 180 && ray->angle_d >= 0 && line == we_horisontal)
-		index -= WE_GRID_DIVIDE;
+		index -= WX_MAP_TILES_WIDTH;
 	else if (ray->angle_d >= 90 && ray->angle_d <= 270 && line == we_vertical)
 		index -= 1;
-	if (index < WE_MAP_SIZE)
+	if (index < WX_MAP_SIZE)
 	{
 		ray->tile.tiles_index = index;
 		ray->tile = zz_tile_values(ray, tiles, line);
@@ -84,25 +84,25 @@ static t_hit	zz_dist_horizontal_wall(t_ray *ray, t_map_tile *tiles)
 	t_p2			intersection_w;
 	t_u32			block_y;
 
-	block_y = ray->start.y / WE_BLOCK_W;
+	block_y = ray->start.y / WX_TILE_WIDTH;
 	if (ray->angle_d > 180 && ray->angle_d < 360)
 		block_y += 1;
-	intersection_w.y = block_y * WE_BLOCK_W;
+	intersection_w.y = block_y * WX_TILE_WIDTH;
 	ray->tiles_h_size = 0;
 	while (intersection_w.y < ray->world_end_w && intersection_w.y >= 0)
 	{
 		intersection_w.x = (intersection_w.y - ray->b) / ray->k;
 		if (intersection_w.x < 0 || intersection_w.x >= ray->world_end_w
 			|| (ray->angle_d == 180 || ray->angle_d == 0 || ray->angle_d == 360)
-			|| block_y >= WE_GRID_DIVIDE)
+			|| block_y >= WX_MAP_TILES_WIDTH)
 			break ;
 		if ((zz_is_wall(tiles, ray, intersection_w, we_horisontal)))
 			return (ray->tile);
 		ray->tiles_h[ray->tiles_h_size] = ray->tile;
 		ray->tiles_h_size++;
-		intersection_w.y += WE_BLOCK_W;
+		intersection_w.y += WX_TILE_WIDTH;
 		if (ray->angle_d < 180 && ray->angle_d > 0)
-			intersection_w.y -= 2 * WE_BLOCK_W;
+			intersection_w.y -= 2 * WX_TILE_WIDTH;
 	}
 	return (zz_tile_values(ray, tiles, we_no_wall));
 }
@@ -116,25 +116,25 @@ static t_hit	zz_dist_vertical_wall(t_ray *ray, t_map_tile *tiles)
 	t_p2			intersection_w;
 	t_u32			block_x;
 
-	block_x = ray->start.x / WE_BLOCK_W;
+	block_x = ray->start.x / WX_TILE_WIDTH;
 	if (ray->angle_d <= 90 || ray->angle_d >= 270)
 		block_x += 1;
-	intersection_w.x = block_x * WE_BLOCK_W;
+	intersection_w.x = block_x * WX_TILE_WIDTH;
 	ray->tiles_v_size = 0;
 	while (intersection_w.x < ray->world_end_w && intersection_w.x >= 0)
 	{
 		intersection_w.y = ray->k * intersection_w.x + ray->b;
 		if (intersection_w.y < 0 || intersection_w.y >= ray->world_end_w
 			|| (ray->angle_d == 90 || ray->angle_d == 270)
-			|| block_x >= WE_GRID_DIVIDE)
+			|| block_x >= WX_MAP_TILES_WIDTH)
 			break ;
 		if ((zz_is_wall(tiles, ray, intersection_w, we_vertical)))
 			return (ray->tile);
 		ray->tiles_v[ray->tiles_v_size] = ray->tile;
 		ray->tiles_v_size++;
-		intersection_w.x += WE_BLOCK_W;
+		intersection_w.x += WX_TILE_WIDTH;
 		if (ray->angle_d > 90 && ray->angle_d < 270)
-			intersection_w.x -= 2 * WE_BLOCK_W;
+			intersection_w.x -= 2 * WX_TILE_WIDTH;
 	}
 	return (zz_tile_values(ray, tiles, we_no_wall));
 }

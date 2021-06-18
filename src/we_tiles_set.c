@@ -11,14 +11,14 @@ void	we_tiles_set(t_map *m)
 
 	i = 0;
 	y = 0;
-	while (y < WE_GRID_DIVIDE)
+	while (y < WX_MAP_TILES_WIDTH)
 	{
 		x = 0;
-		while (x < WE_GRID_DIVIDE)
+		while (x < WX_MAP_TILES_WIDTH)
 		{
-			m->level.tiles[i].id = WE_ID_INIT;
-			m->level.tiles[i].block.x = x;
-			m->level.tiles[i].block.y = y;
+			m->tiles[i].id = WE_ID_INIT;
+			m->tiles[i].tile.x = x;
+			m->tiles[i].tile.y = y;
 			i++;
 			x++;
 		}

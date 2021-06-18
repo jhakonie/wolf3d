@@ -8,7 +8,7 @@ void	we_player_rotate(t_editor *e, t_u32 x, t_u32 y)
 
 	current.x = (float)x - 0.5f * e->frame_buffer.width;
 	current.y = (float)y - 0.5f * e->frame_buffer.height;
-	if (e->map.draw_3d)
+	if (e->map_view.draw_3d)
 	{
 		relative.x = previous.x - current.x;
 		e->player.direction_d += relative.x;
