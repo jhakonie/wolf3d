@@ -34,7 +34,8 @@ static void	zz_draw_sky_under_floor(t_ray *ray, t_p2 draw,
 				+ (t_u32)tex_index.coord.x);
 		if (tex_index.index < max_tex_index)
 		{
-			color = texture->buffer[tex_index.index];
+			wx_buffer_copy(&color, texture->buffer + (tex_index.index * 4),
+				sizeof(color));
 			we_draw_pixel(draw, fb, color);
 		}
 		draw.y++;
@@ -71,14 +72,11 @@ void	we_draw_sky(t_frame_buffer *fb, t_ray ray, t_texture *sky)
 	t_p2			draw_start;
 
 	ray.tile = we_ray_cast_sky(&ray);
-	if (ray.tile.side != we_no_wall)
-	{
-		ray.tile.projected_height = ray.world_end_w * 2;
-		draw_start.y = ray.view_height * fb->height;
-		if ((t_s32)draw_start.y >= (t_s32)fb->height)
-			draw_start.y = fb->height - 1;
-		draw_start.x = (t_f32)ray.nb;
-		zz_draw_sky(&ray, draw_start, fb, sky);
-		zz_draw_sky_under_floor(&ray, draw_start, fb, sky);
-	}
+	ray.tile.projected_height = ray.world_end_w * 6;
+	draw_start.y = ray.view_height * fb->height;
+	if ((t_s32)draw_start.y >= (t_s32)fb->height)
+		draw_start.y = fb->height - 1;
+	draw_start.x = (t_f32)ray.nb;
+	zz_draw_sky(&ray, draw_start, fb, sky);
+	zz_draw_sky_under_floor(&ray, draw_start, fb, sky);
 }

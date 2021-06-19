@@ -20,7 +20,7 @@ static t_bool	zz_is_western_outter(t_map const *m, t_u32 x, t_u32 z)
 	{
 		return (wx_false);
 	}
-	if (m->tiles[z * m->width + (x + 1)].id == WX_MAP_TILE_TYPE_WALL)
+	if (m->tiles[z * m->width + (x + 1)] == WX_MAP_TILE_TYPE_WALL)
 	{
 		return (wx_false);
 	}
@@ -83,7 +83,7 @@ t_bool	wc_map_mesh_new_from_map_west(t_map_mesh *mm, t_map const *m)
 		x = 0;
 		while (x < m->width)
 		{
-			if (m->tiles[z * m->width + x].id == WX_MAP_TILE_TYPE_WALL
+			if (m->tiles[z * m->width + x] == WX_MAP_TILE_TYPE_WALL
 				&& zz_is_western_outter(m, x, z))
 			{
 				zz_add_west_wall(mm, x, z, m);

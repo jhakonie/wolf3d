@@ -63,10 +63,10 @@ t_bool	wc_map_mesh_new_from_map_floor(t_map_mesh *mm, t_map const *m)
 		x = 0;
 		while (x < m->width)
 		{
-			if (m->tiles[z * m->width + x].id == WX_MAP_TILE_TYPE_FLOOR
-				|| m->tiles[z * m->width + x].id
+			if (m->tiles[z * m->width + x] == WX_MAP_TILE_TYPE_FLOOR
+				|| m->tiles[z * m->width + x]
 				== WX_MAP_TILE_TYPE_PLAYER_SPAWN
-				|| m->tiles[z * m->width + x].id == WX_MAP_TILE_TYPE_DOOR)
+				|| m->tiles[z * m->width + x] == WX_MAP_TILE_TYPE_DOOR)
 			{
 				zz_add_floor_tile(mm, x, z, m->tile_width);
 			}

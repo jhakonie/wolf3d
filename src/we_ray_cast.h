@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 22:38:37 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/18 21:24:46 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 15:55:15 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@
 # define WE_RAY_CAST_BUFF_SIZE_M (81)
 # define WE_WALL (1)
 # define WE_DOOR (2)
-
-typedef struct s_map_tile
-{
-	t_p2	tile;
-	t_u32	id;
-}	t_map_tile;
 
 enum						e_side
 {
@@ -84,7 +78,7 @@ void		we_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
 				t_p2 player_position);
 void		we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
 				t_f32 player_direction_d);
-void		we_ray_cast(t_ray *ray, t_map_tile *tiles);
+void		we_ray_cast(t_ray *ray, t_u32 *tiles);
 t_hit		we_ray_cast_sky(t_ray *ray);
 t_compass	we_wall_compass_direction(t_f32 angle_ray_d, t_u32 side);
 void		we_shade_pixel( t_u32 *color, t_f32 distance);

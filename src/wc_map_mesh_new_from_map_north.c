@@ -20,7 +20,7 @@ static t_bool	zz_is_northern_outter(t_map const *m, t_u32 x, t_u32 z)
 	{
 		return (wx_false);
 	}
-	if (m->tiles[(z + 1) *m->width + x].id == WX_MAP_TILE_TYPE_WALL)
+	if (m->tiles[(z + 1) *m->width + x] == WX_MAP_TILE_TYPE_WALL)
 	{
 		return (wx_false);
 	}
@@ -83,7 +83,7 @@ t_bool	wc_map_mesh_new_from_map_north(t_map_mesh *mm, t_map const *m)
 		x = 0;
 		while (x < m->width)
 		{
-			if (m->tiles[z * m->width + x].id == WX_MAP_TILE_TYPE_WALL
+			if (m->tiles[z * m->width + x] == WX_MAP_TILE_TYPE_WALL
 				&& zz_is_northern_outter(m, x, z))
 			{
 				zz_add_north_wall(mm, x, z, m);

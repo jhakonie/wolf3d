@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 15:53:52 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/18 22:34:32 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 17:17:04 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ void	we_save_map_to_file(t_editor *e)
 		return ;
 	while (i < e->map_view.tile_count)
 	{
-		if (e->level.map.tiles[i].id > 0)
-			block = e->level.map.tiles[i].id + '0';
+		if (e->level.map.tiles[i] > 0)
+			block = e->level.map.tiles[i] + '0';
 		else
 			block = '.';
 		write(fd, &block, 1);
-		if ((int)e->level.map.tiles[i].tile.x != WX_MAP_TILES_WIDTH - 1)
+		if ((int)(i % e->level.map.width) != WX_MAP_TILES_WIDTH - 1)
 			write(fd, " ", 1);
-		else if ((int)e->level.map.tiles[i].tile.x == WX_MAP_TILES_WIDTH - 1)
+		else if ((int)(i % e->level.map.width) == WX_MAP_TILES_WIDTH - 1)
 			write(fd, "\n", 1);
 		i++;
 	}

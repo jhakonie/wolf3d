@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 00:40:49 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 17:19:51 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ struct				s_tool
 };
 typedef struct s_tool	t_tool;
 
-struct				s_toolbar
+typedef struct s_toolbar
 {
 	t_p2			start;
 	t_p2			end;
@@ -55,7 +55,7 @@ struct				s_level
 };
 typedef struct s_level	t_level;
 
-struct				s_map_view
+typedef struct s_map_view
 {
 	t_grid			grid;
 	t_u32			tile_count;
@@ -115,8 +115,7 @@ t_bool				wx_path_new3(t_path	*p, t_c8 const *start,
 						t_c8 const *middle, t_c8 const *end);
 void				we_init_tiles(t_level *l);
 void				we_tiles_set(t_map *m);
-void				we_init_player(t_player *p, t_map *map, t_map_view *m,
-						t_u32 screen_width);
+void				we_init_player(t_player *p, t_map *map, t_map_view *m);
 t_p2				we_from_win_to_map(t_p2 win, t_map_view m);
 t_p2				we_from_map_to_win(t_p2 map, t_map_view m);
 void				we_save_win_to_map(t_p2 win, t_editor *e);

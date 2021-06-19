@@ -16,9 +16,7 @@ void	we_tiles_set(t_map *m)
 		x = 0;
 		while (x < WX_MAP_TILES_WIDTH)
 		{
-			m->tiles[i].id = WE_ID_INIT;
-			m->tiles[i].tile.x = x;
-			m->tiles[i].tile.y = y;
+			m->tiles[i] = WE_ID_INIT;
 			i++;
 			x++;
 		}

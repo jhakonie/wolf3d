@@ -23,9 +23,9 @@ static t_bool	zz_parse_map_tile(t_parse_context *pc, t_parse_map_context *pmc,
 		return (wx_false);
 	}
 	if (*pc->p == '.')
-		m->tiles[pmc->y * m->width + pmc->x].id = 0;
+		m->tiles[pmc->y * m->width + pmc->x] = 0;
 	else
-		m->tiles[pmc->y * m->width + pmc->x].id = *pc->p - '0';
+		m->tiles[pmc->y * m->width + pmc->x] = *pc->p - '0';
 	++pc->p;
 	++pmc->x;
 	return (wx_true);

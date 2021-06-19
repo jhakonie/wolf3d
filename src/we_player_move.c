@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 12:38:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 00:33:45 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 15:11:28 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static void	zz_move_forward(t_editor *e, t_f32 s)
 		+ (int)((e->player.position.y + move.y) / WX_TILE_WIDTH)
 		*WX_MAP_TILES_WIDTH;
 	if (!e->player.wall_collision || (block < WX_MAP_SIZE
-			&& (e->level.map.tiles[block].id == 0
-				|| e->level.map.tiles[block].id == 3
-				|| e->level.map.tiles[block].id == 2)))
+			&& (e->level.map.tiles[block] == 0
+				|| e->level.map.tiles[block] == 3
+				|| e->level.map.tiles[block] == 2)))
 	{
 		e->player.move.forward = move;
 	}
@@ -46,9 +46,9 @@ static void	zz_move_backward(t_editor *e, t_f32 s)
 		+ (int)((e->player.position.y - move.y) / WX_TILE_WIDTH)
 		*WX_MAP_TILES_WIDTH;
 	if (!e->player.wall_collision || (block < WX_MAP_SIZE
-			&& (e->level.map.tiles[block].id == 0
-				|| e->level.map.tiles[block].id == 3
-				|| e->level.map.tiles[block].id == 2)))
+			&& (e->level.map.tiles[block] == 0
+				|| e->level.map.tiles[block] == 3
+				|| e->level.map.tiles[block] == 2)))
 	{
 		e->player.move.backward = move;
 	}
@@ -67,9 +67,9 @@ static void	zz_move_right(t_editor *e, t_f32 s)
 		+ (int)((e->player.position.y + move.y) / WX_TILE_WIDTH)
 		*WX_MAP_TILES_WIDTH;
 	if (!e->player.wall_collision || (block < WX_MAP_SIZE
-			&& (e->level.map.tiles[block].id == 0
-				|| e->level.map.tiles[block].id == 3
-				|| e->level.map.tiles[block].id == 2)))
+			&& (e->level.map.tiles[block] == 0
+				|| e->level.map.tiles[block] == 3
+				|| e->level.map.tiles[block] == 2)))
 	{
 		e->player.move.right = move;
 	}
@@ -88,9 +88,9 @@ static void	zz_move_left(t_editor *e, t_f32 s)
 		+ (int)((e->player.position.y - move.y) / WX_TILE_WIDTH)
 		*WX_MAP_TILES_WIDTH;
 	if (!e->player.wall_collision || (block < WX_MAP_SIZE
-			&& (e->level.map.tiles[block].id == 0
-				|| e->level.map.tiles[block].id == 3
-				|| e->level.map.tiles[block].id == 2)))
+			&& (e->level.map.tiles[block] == 0
+				|| e->level.map.tiles[block] == 3
+				|| e->level.map.tiles[block] == 2)))
 	{
 		e->player.move.left = move;
 	}

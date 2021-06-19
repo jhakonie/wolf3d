@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 17:54:14 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/18 22:29:43 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 16:04:14 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ t_p2	we_draw_floor_tile_end(t_ray *ray)
 		end.x = (float)ray->world_end_w;
 	if (end.y < 0)
 		end.y = 0;
-	else if (end.y > (float)ray->world_end_w - 1)
-		end.y = (float)ray->world_end_w - 1;
+	else if (end.y > (float)ray->world_end_w)
+		end.y = (float)ray->world_end_w;
 	return (end);
 }

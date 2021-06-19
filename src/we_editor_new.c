@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:14:34 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 00:45:55 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 17:20:03 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,7 @@ t_bool	we_editor_new(t_editor *e, t_u32 window_width, t_u32 window_height)
 	we_init_toolbar(&e->tools, window_width, window_height);
 	if (!we_toolbar_icons_new(e->tools.tool))
 		return (zz_on_error(e, 6));
-	we_init_player(&e->player, &e->level.map, &e->map_view,
-		e->frame_buffer.width);
+	we_init_player(&e->player, &e->level.map, &e->map_view);
 	e->quit = wx_false;
 	e->draw = wx_true;
 	e->map_view.draw_3d = wx_false;

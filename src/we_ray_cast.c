@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 17:25:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/18 22:52:37 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 16:15:29 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 /*
 ** Calculate distance to wall and wall projected height.
-** Define wall type, side and wall compass direction.
+** Define side and wall compass direction.
 */
 
-static t_hit	zz_tile_values(t_ray *ray, t_map_tile *tiles, t_side side)
+static t_hit	zz_tile_values(t_ray *ray, t_u32 *tiles, t_side side)
 {
 	t_p2	delta;
 
@@ -27,7 +27,7 @@ static t_hit	zz_tile_values(t_ray *ray, t_map_tile *tiles, t_side side)
 		return (ray->tile);
 	}
 	ray->tile.side = side;
-	ray->tile.tiles_id = tiles[ray->tile.tiles_index].id;
+	ray->tile.tiles_id = tiles[ray->tile.tiles_index];
 	ray->tile.compass = we_wall_compass_direction(ray->angle_d, side);
 	if (ray->tile_type_to_find == 2 && ray->tile.tiles_id == 2)
 		we_draw_door_distance(ray);
@@ -41,11 +41,17 @@ static t_hit	zz_tile_values(t_ray *ray, t_map_tile *tiles, t_side side)
 }
 
 /* 
-** Check if the ray and vertical or horisontal map line intersection point
-** hit a wall. Update tile values.
+** Check if the ray and vertical or horisontal map-line intersection point
+** is next to a wall.
+** Update tile values: side that was hit, compass direction
+** of hit tile, distance of hit tile from player, projected height of tile
+** on screen/projection plane.
+** If the tile hit was a wall and we were looking for a wall or if we were
+** looking for a door and it was either a door or a wall, return true and
+** as a result end raycasting.
 */
 
-static t_bool	zz_is_wall(t_map_tile *tiles, t_ray *ray, t_p2 intersection_w,
+static t_bool	zz_is_wall(t_u32 *tiles, t_ray *ray, t_p2 intersection_w,
 	t_side line)
 {
 	t_u32			block_y;
@@ -67,9 +73,9 @@ static t_bool	zz_is_wall(t_map_tile *tiles, t_ray *ray, t_p2 intersection_w,
 	{
 		ray->tile.tiles_index = index;
 		ray->tile = zz_tile_values(ray, tiles, line);
-		if ((ray->tile_type_to_find == 1 && tiles[index].id == 1)
-			|| (ray->tile_type_to_find == 2
-				&& (tiles[index].id == 1 || tiles[index].id == 2)))
+		if ((ray->tile_type_to_find == WE_WALL && tiles[index] == WE_WALL)
+			|| (ray->tile_type_to_find == WE_DOOR
+				&& (tiles[index] == WE_WALL || tiles[index] == WE_DOOR)))
 			return (wx_true);
 	}
 	return (wx_false);
@@ -79,7 +85,7 @@ static t_bool	zz_is_wall(t_map_tile *tiles, t_ray *ray, t_p2 intersection_w,
 ** Find distance to horizontal wall, record floor, update ray values.
 */
 
-static t_hit	zz_dist_horizontal_wall(t_ray *ray, t_map_tile *tiles)
+static t_hit	zz_dist_horizontal_wall(t_ray *ray, t_u32 *tiles)
 {
 	t_p2			intersection_w;
 	t_u32			block_y;
@@ -111,7 +117,7 @@ static t_hit	zz_dist_horizontal_wall(t_ray *ray, t_map_tile *tiles)
 ** Find distance to vertical wall, record floor, update ray values.
 */
 
-static t_hit	zz_dist_vertical_wall(t_ray *ray, t_map_tile *tiles)
+static t_hit	zz_dist_vertical_wall(t_ray *ray, t_u32 *tiles)
 {
 	t_p2			intersection_w;
 	t_u32			block_x;
@@ -144,7 +150,7 @@ static t_hit	zz_dist_vertical_wall(t_ray *ray, t_map_tile *tiles)
 ** walls. Choose the closer one to be drawn.
 */
 
-void	we_ray_cast(t_ray *ray, t_map_tile *tiles)
+void	we_ray_cast(t_ray *ray, t_u32 *tiles)
 {
 	t_hit	horizontal;
 	t_hit	vertical;

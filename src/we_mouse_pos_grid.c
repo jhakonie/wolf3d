@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 00:24:00 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/18 22:34:32 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 15:11:01 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ static t_bool	zz_player_position(t_p2 win, t_editor *e)
 
 	player_pos = we_from_win_to_map(win, e->map_view);
 	index = player_pos.x + player_pos.y * WX_MAP_TILES_WIDTH;
-	if (e->level.map.tiles[index].id == 0 || e->level.map.tiles[index].id == 2)
+	if (e->level.map.tiles[index] == 0 || e->level.map.tiles[index] == 2)
 	{
 		e->map_view.player_pos_tiles = player_pos;
 		id = e->map_view.player_pos_old_id;
-		e->map_view.player_pos_old_id = e->level.map.tiles[index].id;
+		e->map_view.player_pos_old_id = e->level.map.tiles[index];
 		e->player.position.x = e->map_view.player_pos_tiles.x * WX_TILE_WIDTH
 			+ 0.5 * WX_TILE_WIDTH;
 		e->player.position.y = e->map_view.player_pos_tiles.y * WX_TILE_WIDTH
 			+ 0.5 * WX_TILE_WIDTH;
 		index = e->map_view.player_pos_tiles_old.x
 			+ e->map_view.player_pos_tiles_old.y * WX_MAP_TILES_WIDTH;
-		e->level.map.tiles[index].id = id;
+		e->level.map.tiles[index] = id;
 		e->map_view.player_pos_tiles_old = e->map_view.player_pos_tiles;
 		e->map_view.ptr_clear = wx_true;
 		return (wx_true);
