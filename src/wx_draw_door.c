@@ -4,7 +4,7 @@
 ** Draw door if ray distance to door is far enough.
 */
 
-void	we_draw_door(t_ray ray, t_frame_buffer *fb,
+void	wx_draw_door(t_ray ray, t_frame_buffer *fb,
 			t_map_textures *textures)
 {
 	t_p2	draw_fb;
@@ -19,7 +19,7 @@ void	we_draw_door(t_ray ray, t_frame_buffer *fb,
 			draw_fb.x = ray.nb;
 			draw_fb.y = ray.view_height * fb->height
 				- ray.view_height * ray.tile.projected_height;
-			we_draw_texture_wall(&ray, draw_fb, fb, &textures->door);
+			wx_draw_wall_texture(&ray, draw_fb, fb, &textures->door);
 		}
 	}
 }

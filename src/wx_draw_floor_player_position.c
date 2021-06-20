@@ -23,7 +23,7 @@ static void	zz_clip(t_p2 *draw_end_fb)
 		draw_end_fb->y = 0;
 }
 
-void	we_draw_floor_player_position(t_frame_buffer *fb, t_ray *ray,
+void	wx_draw_floor_player_position(t_frame_buffer *fb, t_ray *ray,
 			t_texture *t)
 {
 	t_u32			color;
@@ -32,7 +32,7 @@ void	we_draw_floor_player_position(t_frame_buffer *fb, t_ray *ray,
 	draw.start_fb.x = ray->nb;
 	draw.start_fb.y = fb->height - 1;
 	ray->tile.hit = ray->start;
-	draw.end_w = we_draw_floor_tile_end(ray);
+	draw.end_w = wx_draw_floor_tile_end(ray);
 	draw.delta_w.x = fabsf(draw.end_w.x - ray->start.x);
 	draw.delta_w.y = fabsf(draw.end_w.y - ray->start.y);
 	draw.end_distance_w = sqrtf((draw.delta_w.x * draw.delta_w.x
@@ -44,7 +44,7 @@ void	we_draw_floor_player_position(t_frame_buffer *fb, t_ray *ray,
 	while (draw.start_fb.y > draw.end_fb.y)
 	{
 		wx_buffer_copy(&color, t->buffer, sizeof(color));
-		we_draw_pixel(draw.start_fb, fb, color);
+		wx_draw_pixel(draw.start_fb, fb, color);
 		draw.start_fb.y--;
 	}
 }

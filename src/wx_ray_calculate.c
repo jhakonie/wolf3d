@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_ray_calculate.c                                 :+:      :+:    :+:   */
+/*   wx_ray_calculate.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 17:18:30 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/18 22:40:03 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 20:25:03 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 ** angle_d ~ 315 degrees
 */
 
-void	we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
+void	wx_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
 	t_f32 player_direction_d)
 {
 	t_f32	ray_length;

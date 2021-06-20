@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 13:46:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 00:35:23 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 20:25:03 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	zz_raycast_door(t_ray *ray, t_map *m, t_p2 *end, t_map_view *mv)
 {
 	ray->tile_type_to_find = 2;
-	we_ray_cast(ray, m->tiles);
+	wx_ray_cast(ray, m->tiles);
 	(*end).x = (ray->tile.hit.x / WX_TILE_WIDTH) * mv->grid.part.x
 		+ mv->grid.start.x;
 	(*end).y = ray->tile.hit.y / WX_TILE_WIDTH * mv->grid.part.y;
@@ -33,12 +33,12 @@ static void	zz_draw_rays(t_frame_buffer *fb, t_editor *e, t_p2 start)
 
 	angle_d = 0;
 	wx_buffer_set(&ray, sizeof(t_ray), 0);
-	we_ray_init(&ray, e->player.fov_d, fb->width - 1, e->player.position);
+	wx_ray_init(&ray, e->player.fov_d, fb->width - 1, e->player.position);
 	while (ray.nb < fb->width - 1)
 	{
 		ray.tile_type_to_find = 1;
-		we_ray_calculate(&ray, angle_d, e->player.direction_d);
-		we_ray_cast(&ray, e->level.map.tiles);
+		wx_ray_calculate(&ray, angle_d, e->player.direction_d);
+		wx_ray_cast(&ray, e->level.map.tiles);
 		end.x = (ray.tile.hit.x / WX_TILE_WIDTH) * e->map_view.grid.part.x
 			+ e->tools.end.x;
 		end.y = ray.tile.hit.y / WX_TILE_WIDTH * e->map_view.grid.part.y;
@@ -122,5 +122,5 @@ void	we_draw_player(t_editor *e)
 		&& player.y > e->map_view.grid.start.y
 		&& player.x < e->map_view.grid.end.x
 		&& player.y < e->map_view.grid.end.y)
-		we_draw_pixel(player, &e->frame_buffer, 0xFFFF00);
+		wx_draw_pixel(player, &e->frame_buffer, 0xFFFF00);
 }

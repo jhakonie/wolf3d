@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 23:57:29 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/06 15:49:03 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 20:12:06 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	zz_draw_vertical_line(t_p2 start, t_p2 end, t_frame_buffer *fb,
 	}
 	while (draw_start.y < draw_end.y)
 	{
-		we_draw_pixel(draw_start, fb, color);
+		wx_draw_pixel(draw_start, fb, color);
 		draw_start.y++;
 	}
 }

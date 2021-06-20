@@ -6,13 +6,13 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 23:16:10 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/18 22:42:21 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 20:25:35 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_draw.h"
 
-void	we_shade_pixel(t_u32 *color, t_f32 distance)
+void	wx_shade_pixel(t_u32 *color, t_f32 distance)
 {
 	t_rgba			new_color;
 	t_f32			shade_factor;

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:44:57 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/17 01:22:38 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 20:18:20 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ void	we_draw(t_editor *e)
 	if (!e->map_view.draw_3d)
 		zz_draw_2d(e);
 	else
-		we_draw_3d(&e->frame_buffer, e->player, &e->level.map);
+		wx_draw_3d(&e->frame_buffer, e->player, &e->level.map);
 	e->draw = wx_false;
 }

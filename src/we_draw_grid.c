@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 20:26:29 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/12 21:24:34 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 20:12:06 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	we_draw_grid(t_grid *g, t_frame_buffer *fb)
 		start.x = g->start.x;
 		while (start.x < end.x)
 		{
-			we_draw_pixel(start, fb, g->color[0]);
+			wx_draw_pixel(start, fb, g->color[0]);
 			start.x += g->part.x;
 		}
 		start.y += g->part.y;

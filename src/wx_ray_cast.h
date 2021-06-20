@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_ray_cast.h                                      :+:      :+:    :+:   */
+/*   wx_ray_cast.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 22:38:37 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 15:55:15 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/20 14:24:36 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WE_RAY_CAST_H
-# define WE_RAY_CAST_H
+#ifndef WX_RAY_CAST_H
+# define WX_RAY_CAST_H
 
 # include "wx_types.h"
 # include "wx_math.h"
 # include "wx_frame_buffer.h"
 
-# define WE_RAY_CAST_BUFF_SIZE_M (81)
+# define WX_RAY_CAST_BUFF_SIZE_M (81)
 # define WE_WALL (1)
 # define WE_DOOR (2)
 
@@ -67,20 +67,20 @@ struct			s_ray
 	t_p2		start;
 	t_u32		tile_type_to_find;
 	t_hit		tile;
-	t_hit		tiles_h[WE_RAY_CAST_BUFF_SIZE_M];
+	t_hit		tiles_h[WX_RAY_CAST_BUFF_SIZE_M];
 	t_u32		tiles_h_size;
-	t_hit		tiles_v[WE_RAY_CAST_BUFF_SIZE_M];
+	t_hit		tiles_v[WX_RAY_CAST_BUFF_SIZE_M];
 	t_u32		tiles_v_size;
 };
 typedef struct s_ray		t_ray;
 
-void		we_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
+void		wx_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
 				t_p2 player_position);
-void		we_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
+void		wx_ray_calculate(t_ray *ray, t_f32 ang_ray_start_d,
 				t_f32 player_direction_d);
-void		we_ray_cast(t_ray *ray, t_u32 *tiles);
-t_hit		we_ray_cast_sky(t_ray *ray);
-t_compass	we_wall_compass_direction(t_f32 angle_ray_d, t_u32 side);
-void		we_shade_pixel( t_u32 *color, t_f32 distance);
+void		wx_ray_cast(t_ray *ray, t_u32 *tiles);
+t_hit		wx_ray_cast_sky(t_ray *ray);
+t_compass	wx_wall_compass_direction(t_f32 angle_ray_d, t_u32 side);
+void		wx_shade_pixel( t_u32 *color, t_f32 distance);
 
 #endif

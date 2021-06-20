@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_draw_floor.c                                    :+:      :+:    :+:   */
+/*   wx_draw_floor.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 15:40:30 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/18 22:29:43 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/20 16:42:46 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void	zz_draw_floor(t_draw_floor draw, t_frame_buffer *fb, t_ray *ray,
 				t_texture *texture)
 {
 	t_u32			color;
+	t_u32			texture_index;
 	t_f32			pixel_distance;
 
 	draw.start_fb.y += ray->tile.projected_height;
@@ -51,11 +52,14 @@ static void	zz_draw_floor(t_draw_floor draw, t_frame_buffer *fb, t_ray *ray,
 		draw.end_fb.y = 0;
 	while (draw.start_fb.y > draw.end_fb.y)
 	{
-		color = texture->buffer[0];
+		texture_index = (float)ray->tile.tiles_index / WX_MAP_TILES_SIZE
+			* texture->height * texture->width;
+		wx_buffer_copy(&color, texture->buffer + (texture_index * 4),
+			sizeof(color));
 		pixel_distance = (ray->tile.distance * draw.start_fb.y / draw.end_fb.y
 				+ draw.end_distance_w * (1 - draw.start_fb.y / draw.end_fb.y));
-		we_shade_pixel(&color, pixel_distance);
-		we_draw_pixel(draw.start_fb, fb, color);
+		wx_shade_pixel(&color, pixel_distance);
+		wx_draw_pixel(draw.start_fb, fb, color);
 		draw.start_fb.y--;
 	}
 }
@@ -83,8 +87,8 @@ void	zz_draw_ceiling(t_draw_floor draw, t_frame_buffer *fb, t_ray *ray,
 		color = texture->buffer[0];
 		pixel_distance = (ray->tile.distance * draw.start_fb.y / draw.end_fb.y
 				+ draw.end_distance_w * (1 - draw.start_fb.y / draw.end_fb.y));
-		we_shade_pixel(&color, pixel_distance);
-		we_draw_pixel(draw.start_fb, fb, color);
+		wx_shade_pixel(&color, pixel_distance);
+		wx_draw_pixel(draw.start_fb, fb, color);
 		draw.start_fb.y++;
 	}
 }
@@ -108,7 +112,7 @@ static void	zz_draw_horisontal_tiles(t_ray *ray, t_frame_buffer *fb,
 		ray->tile = ray->tiles_h[i];
 		draw.start_fb.y = ray->view_height * fb->height
 			- ray->view_height * ray->tile.projected_height;
-		draw.end_w = we_draw_floor_tile_end(ray);
+		draw.end_w = wx_draw_floor_tile_end(ray);
 		draw.delta_w.x = draw.end_w.x - ray->start.x;
 		draw.delta_w.y = draw.end_w.y - ray->start.y;
 		draw.end_distance_w = sqrtf((draw.delta_w.x * draw.delta_w.x
@@ -124,14 +128,14 @@ static void	zz_draw_horisontal_tiles(t_ray *ray, t_frame_buffer *fb,
 ** encountered by the ray in question.
 */
 
-void	we_draw_floor(t_ray ray, t_frame_buffer *fb,
+void	wx_draw_floor(t_ray ray, t_frame_buffer *fb,
 			t_texture *texture)
 {
 	t_draw_floor	draw;
 	t_u32			i;
 
 	i = 0;
-	we_draw_floor_player_position(fb, &ray, texture);
+	wx_draw_floor_player_position(fb, &ray, texture);
 	wx_buffer_set(&draw, sizeof(t_draw_floor), 0);
 	while (i < ray.tiles_v_size)
 	{
@@ -139,7 +143,7 @@ void	we_draw_floor(t_ray ray, t_frame_buffer *fb,
 		ray.tile = ray.tiles_v[i];
 		draw.start_fb.y = ray.view_height * fb->height
 			- ray.view_height * ray.tile.projected_height;
-		draw.end_w = we_draw_floor_tile_end(&ray);
+		draw.end_w = wx_draw_floor_tile_end(&ray);
 		draw.delta_w.x = draw.end_w.x - ray.start.x;
 		draw.delta_w.y = draw.end_w.y - ray.start.y;
 		draw.end_distance_w = sqrtf((draw.delta_w.x * draw.delta_w.x

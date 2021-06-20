@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_draw_floor_tile_end.c                           :+:      :+:    :+:   */
+/*   wx_draw_floor_tile_end.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 17:54:14 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 16:04:14 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/20 14:24:55 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ static t_p2	zz_west(t_ray *ray, t_p2 block)
 	}
 }
 
-t_p2	we_draw_floor_tile_end(t_ray *ray)
+t_p2	wx_draw_floor_tile_end(t_ray *ray)
 {
 	t_p2	block;
 	t_p2	end;
@@ -142,11 +142,11 @@ t_p2	we_draw_floor_tile_end(t_ray *ray)
 		end = zz_west(ray, block);
 	if (end.x < 0)
 		end.x = 0;
-	else if (end.x > (float)ray->world_end_w)
-		end.x = (float)ray->world_end_w;
+	else if (end.x >= (float)(ray->world_end_w))
+		end.x = (float)(ray->world_end_w);
 	if (end.y < 0)
 		end.y = 0;
-	else if (end.y > (float)ray->world_end_w)
-		end.y = (float)ray->world_end_w;
+	else if (end.y >= (float)(ray->world_end_w))
+		end.y = (float)(ray->world_end_w);
 	return (end);
 }

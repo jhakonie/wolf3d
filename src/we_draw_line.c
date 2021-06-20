@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:09:11 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/04/02 19:40:46 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 20:12:06 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	we_draw_line(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 color)
 	dy = dy / s;
 	while (i <= s)
 	{
-		we_draw_pixel(start, fb, color);
+		wx_draw_pixel(start, fb, color);
 		start.x += dx;
 		start.y += dy;
 		i++;

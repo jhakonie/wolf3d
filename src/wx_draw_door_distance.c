@@ -1,6 +1,6 @@
 #include "we_editor.h"
 
-void	we_draw_door_distance(t_ray *ray)
+void	wx_draw_door_distance(t_ray *ray)
 {
 	if (ray->tile.compass == we_north)
 	{

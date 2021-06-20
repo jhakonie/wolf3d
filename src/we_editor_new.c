@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:14:34 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 17:20:03 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/20 16:21:03 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,14 @@ static t_bool	zz_default_texture_paths(t_path *p)
 			"data/maps/", "default", "/west.xpm")
 		|| !wx_path_new3(&p[we_floor],
 			"data/maps/", "default", "/floor.xpm")
-		|| !wx_path_new3(&p[we_sky],
-			"data/maps/", "default", "/sky.xpm")
+		|| !wx_path_new3(&p[we_sky_north],
+			"data/maps/", "default", "/sky_north.xpm")
+		|| !wx_path_new3(&p[we_sky_east],
+			"data/maps/", "default", "/sky_east.xpm")
+		|| !wx_path_new3(&p[we_sky_south],
+			"data/maps/", "default", "/sky_south.xpm")
+		|| !wx_path_new3(&p[we_sky_west],
+			"data/maps/", "default", "/sky_west.xpm")
 		|| !wx_path_new3(&p[we_door],
 			"data/maps/", "default", "/door.xpm"))
 	{

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 16:04:17 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 16:08:42 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 20:25:03 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 ** (x-axis on a left handed coordinate system)
 */
 
-void	we_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
+void	wx_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,
 	t_p2 player_position)
 {
 	ray->nb = 0;

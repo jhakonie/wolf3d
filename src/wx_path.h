@@ -21,8 +21,11 @@ enum e_file
 	we_wall_south = 3,
 	we_wall_west = 4,
 	we_floor = 5,
-	we_sky = 6,
-	we_door = 7
+	we_door = 6,
+	we_sky_north = 7,
+	we_sky_east = 8,
+	we_sky_south = 9,
+	we_sky_west = 10
 };
 typedef enum e_file		t_file;
 

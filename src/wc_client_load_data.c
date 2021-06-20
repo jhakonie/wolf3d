@@ -53,13 +53,20 @@ static t_bool	zz_texture(t_texture *t, char const *map_name,
 static t_bool	zz_textures(t_client *c, char const *map_name)
 {
 	if (!zz_texture(&c->map.textures.floor, map_name, "/floor.xpm")
-		|| !zz_texture(&c->map.textures.sky, map_name, "/sky.xpm")
+		// || !zz_texture(&c->map.textures.sky, map_name, "/sky.xpm")
 		|| !zz_texture(&c->map.textures.door, map_name, "/door.xpm")
 		|| !zz_texture(&c->map.textures.walls[we_north], map_name, "/north.xpm")
 		|| !zz_texture(&c->map.textures.walls[we_east], map_name, "/east.xpm")
 		|| !zz_texture(&c->map.textures.walls[we_west], map_name, "/west.xpm")
-		|| !zz_texture(&c->map.textures.walls[we_south],
-			map_name, "/south.xpm"))
+		|| !zz_texture(&c->map.textures.walls[we_south], map_name, "/south.xpm")
+		|| !zz_texture(&c->map.textures.skys[we_north], map_name,
+			"/sky_north.xpm")
+		|| !zz_texture(&c->map.textures.skys[we_east], map_name,
+			"/sky_east.xpm")
+		|| !zz_texture(&c->map.textures.skys[we_west], map_name,
+			"/sky_west.xpm")
+		|| !zz_texture(&c->map.textures.skys[we_south], map_name,
+			"/sky_south.xpm"))
 	{
 		return (wx_false);
 	}

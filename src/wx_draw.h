@@ -3,14 +3,14 @@
 
 # include "wx_types.h"
 # include "wx_math.h"
-# include "we_ray_cast.h"
+# include "wx_ray_cast.h"
 # include "wx_frame_buffer.h"
 /*
 ** REMEMBER to update WX_MAP_READ_BUFF_SIZE
 ** (2 * WX_MAP_TILES_WIDTH * WX_MAP_TILES_WIDTH)
 ** and WX_MAP_SIZE (WX_MAP_TILES_WIDTH * WX_MAP_TILES_WIDTH),
 ** used for reading map.
-** and WE_RAY_CAST_BUFF_SIZE_M in we_raycast.h, used for ray cast buffer.
+** and WX_RAY_CAST_BUFF_SIZE_M in wx_raycast.h, used for ray cast buffer.
 ** ----> sqrt(WX_MAP_SIZE + WX_MAP_SIZE);
 ** IF WX_MAP_TILES_WIDTH is altered!
 */
@@ -63,7 +63,7 @@ typedef struct s_map_textures
 {
 	t_texture	walls[4];
 	t_texture	floor;
-	t_texture	sky;
+	t_texture	skys[4];
 	t_texture	door;
 }	t_map_textures;
 
@@ -112,21 +112,21 @@ struct	s_map
 };
 typedef struct s_map		t_map;
 
-void		we_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color);
-void		we_draw_3d(t_frame_buffer *frame_buffer, t_player player,
+void		wx_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color);
+void		wx_draw_3d(t_frame_buffer *frame_buffer, t_player player,
 				t_map *m);
-void		we_draw_wall(t_ray ray, t_frame_buffer *fb,
+void		wx_draw_wall(t_ray ray, t_frame_buffer *fb,
 				t_map_textures *textures);
-void		we_draw_texture_wall(t_ray *ray, t_p2 draw, t_frame_buffer *fb,
+void		wx_draw_wall_texture(t_ray *ray, t_p2 draw, t_frame_buffer *fb,
 				t_texture *tex);
-void		we_draw_floor(t_ray ray, t_frame_buffer *fb,
+void		wx_draw_floor(t_ray ray, t_frame_buffer *fb,
 				t_texture *texture);
-t_p2		we_draw_floor_tile_end(t_ray *ray);
-void		we_draw_floor_player_position(t_frame_buffer *fb, t_ray *ray,
+t_p2		wx_draw_floor_tile_end(t_ray *ray);
+void		wx_draw_floor_player_position(t_frame_buffer *fb, t_ray *ray,
 				t_texture *t);
-void		we_draw_sky(t_frame_buffer *fb, t_ray ray, t_texture *sky);
-void		we_draw_door(t_ray ray, t_frame_buffer *fb,
+void		wx_draw_sky(t_frame_buffer *fb, t_ray ray, t_texture *skys);
+void		wx_draw_door(t_ray ray, t_frame_buffer *fb,
 				t_map_textures *textures);
-void		we_draw_door_distance(t_ray *ray);
+void		wx_draw_door_distance(t_ray *ray);
 
 #endif

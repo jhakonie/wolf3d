@@ -35,7 +35,7 @@ static void	zz_draw_row(t_texture_index *i, t_p2 *start, t_frame_buffer *fb,
 	{
 		wx_buffer_copy(&color, t->buffer + (i->index * 4),
 			sizeof(color));
-		we_draw_pixel(*start, fb, color);
+		wx_draw_pixel(*start, fb, color);
 	}
 	start->x++;
 	i->coord.x += i->increment.x;

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:16:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 17:19:51 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/20 16:09:40 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "unistd.h"
 # define WE_WIN_H (512)
 # define WE_WIN_W (512)
-# define WE_RESOURCES_COUNT (8)
+# define WE_RESOURCES_COUNT (11)
 
 struct				s_tool
 {

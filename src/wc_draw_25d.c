@@ -16,6 +16,6 @@ void	wc_draw_25d(t_client *c)
 	p.height = 0.5f;
 	p.position.x = c->player_position.x;
 	p.position.y = c->player_position.z;
-	we_draw_3d(&c->frame_buffer, p, &c->map);
+	wx_draw_3d(&c->frame_buffer, p, &c->map);
 	wc_draw_copy(c, &c->frame_buffer);
 }

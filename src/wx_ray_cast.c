@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_ray_cast.c                                      :+:      :+:    :+:   */
+/*   wx_ray_cast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 17:25:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 16:15:29 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/20 14:15:42 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static t_hit	zz_tile_values(t_ray *ray, t_u32 *tiles, t_side side)
 	}
 	ray->tile.side = side;
 	ray->tile.tiles_id = tiles[ray->tile.tiles_index];
-	ray->tile.compass = we_wall_compass_direction(ray->angle_d, side);
+	ray->tile.compass = wx_wall_compass_direction(ray->angle_d, side);
 	if (ray->tile_type_to_find == 2 && ray->tile.tiles_id == 2)
-		we_draw_door_distance(ray);
+		wx_draw_door_distance(ray);
 	delta.x = ray->tile.hit.x - ray->start.x;
 	delta.y = ray->tile.hit.y - ray->start.y;
 	ray->tile.distance = sqrtf(delta.x * delta.x + delta.y * delta.y);
@@ -150,7 +150,7 @@ static t_hit	zz_dist_vertical_wall(t_ray *ray, t_u32 *tiles)
 ** walls. Choose the closer one to be drawn.
 */
 
-void	we_ray_cast(t_ray *ray, t_u32 *tiles)
+void	wx_ray_cast(t_ray *ray, t_u32 *tiles)
 {
 	t_hit	horizontal;
 	t_hit	vertical;

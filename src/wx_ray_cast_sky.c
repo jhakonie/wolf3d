@@ -49,13 +49,13 @@ static void	zz_raycast(t_ray *ray, t_f32 min_w, t_f32 max_w)
 	}
 }
 
-t_hit	we_ray_cast_sky(t_ray *ray)
+t_hit	wx_ray_cast_sky(t_ray *ray)
 {
 	t_f32	min_w;
 	t_f32	max_w;
 
 	min_w = -ray->world_end_w;
-	max_w = ray->world_end_w * 2 - (2 * WX_TILE_WIDTH);
+	max_w = ray->world_end_w * 2 - WX_TILE_WIDTH;
 	zz_ray_compass_direction(ray);
 	zz_raycast(ray, min_w, max_w);
 	return (ray->tile);

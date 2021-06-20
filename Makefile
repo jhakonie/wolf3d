@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/06/19 16:09:43 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/06/19 20:43:02 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -158,22 +158,22 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_to_radians.c \
 	wx_time_s.c \
 	wx_xpm_del.c \
-	we_draw_3d.c \
-	we_ray_cast.c \
-	we_ray_cast_sky.c \
-	we_ray_init.c \
-	we_ray_calculate.c \
-	we_draw_floor.c \
-	we_draw_floor_tile_end.c \
-	we_draw_floor_player_position.c \
-	we_draw_sky.c \
-	we_draw_door.c \
-	we_draw_door_distance.c \
-	we_draw_wall.c \
-	we_draw_texture_wall.c \
-	we_shade_pixel.c \
-	we_draw_pixel.c \
-	we_wall_compass_direction.c \
+	wx_draw_3d.c \
+	wx_ray_cast.c \
+	wx_ray_cast_sky.c \
+	wx_ray_init.c \
+	wx_ray_calculate.c \
+	wx_draw_floor.c \
+	wx_draw_floor_tile_end.c \
+	wx_draw_floor_player_position.c \
+	wx_draw_sky.c \
+	wx_draw_door.c \
+	wx_draw_door_distance.c \
+	wx_draw_wall.c \
+	wx_draw_wall_texture.c \
+	wx_shade_pixel.c \
+	wx_draw_pixel.c \
+	wx_wall_compass_direction.c \
 	wx_to_degrees.c \
 )
 client_obj_files = $(subst $(src_dir), $(build_dir), $(client_src_files:.c=.o))
@@ -210,17 +210,17 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_key_event.c \
 	we_player_move.c \
 	we_player_rotate.c \
-	we_ray_cast.c \
-	we_ray_cast_sky.c \
-	we_ray_init.c \
-	we_ray_calculate.c \
-	we_wall_compass_direction.c \
+	wx_ray_cast.c \
+	wx_ray_cast_sky.c \
+	wx_ray_init.c \
+	wx_ray_calculate.c \
+	wx_wall_compass_direction.c \
 	we_init_triangle.c \
 	we_init_line.c \
 	we_draw.c \
 	we_draw_to_window.c \
-	we_draw_3d.c \
-	we_draw_pixel.c \
+	wx_draw_3d.c \
+	wx_draw_pixel.c \
 	we_draw_line.c \
 	we_draw_clip.c \
 	we_draw_rec_full.c \
@@ -232,15 +232,15 @@ editor_src_files = $(addprefix $(src_dir), \
 	we_draw_toolbar.c \
 	we_draw_button.c \
 	we_draw_player.c \
-	we_draw_floor.c \
-	we_draw_floor_tile_end.c \
-	we_draw_floor_player_position.c \
-	we_draw_sky.c \
-	we_draw_door.c \
-	we_draw_door_distance.c \
-	we_draw_wall.c \
-	we_draw_texture_wall.c \
-	we_shade_pixel.c \
+	wx_draw_floor.c \
+	wx_draw_floor_tile_end.c \
+	wx_draw_floor_player_position.c \
+	wx_draw_sky.c \
+	wx_draw_door.c \
+	wx_draw_door_distance.c \
+	wx_draw_wall.c \
+	wx_draw_wall_texture.c \
+	wx_shade_pixel.c \
 	wx_buffer_copy.c \
 	wx_buffer_set.c \
 	wx_c8s_new_from_file.c \

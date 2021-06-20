@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 15:53:52 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 17:17:04 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 20:37:19 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	we_save_map_to_file(t_editor *e)
 {
 	t_u32	i;
 	t_s32	fd;
-	t_u8	block;
+	t_u8	tile;
 
 	i = 0;
 	fd = zz_open(e->level.paths[we_map].buffer, e->level.name);
@@ -79,10 +79,10 @@ void	we_save_map_to_file(t_editor *e)
 	while (i < e->map_view.tile_count)
 	{
 		if (e->level.map.tiles[i] > 0)
-			block = e->level.map.tiles[i] + '0';
+			tile = e->level.map.tiles[i] + '0';
 		else
-			block = '.';
-		write(fd, &block, 1);
+			tile = '.';
+		write(fd, &tile, 1);
 		if ((int)(i % e->level.map.width) != WX_MAP_TILES_WIDTH - 1)
 			write(fd, " ", 1);
 		else if ((int)(i % e->level.map.width) == WX_MAP_TILES_WIDTH - 1)

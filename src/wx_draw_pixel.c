@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_wall_compass_direction.c                        :+:      :+:    :+:   */
+/*   we_draw_pixel.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 23:56:28 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/18 22:41:26 by jhakonie         ###   ########.fr       */
+/*   Created: 2021/02/03 21:25:21 by jhakonie          #+#    #+#             */
+/*   Updated: 2021/06/19 20:12:06 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wx_draw.h"
+#include "we_editor.h"
 
-t_compass	we_wall_compass_direction(t_f32 angle_ray_d, t_u32 side)
+void	wx_draw_pixel(t_p2 point, t_frame_buffer *fb, t_u32 color)
 {
-	t_compass	direction;
+	t_u64	i;
 
-	if (side == we_horisontal)
-	{
-		direction = we_north;
-		if (angle_ray_d > 180)
-			direction = we_south;
-		return (direction);
-	}
-	direction = we_east;
-	if (angle_ray_d > 90 && angle_ray_d < 270)
-		direction = we_west;
-	return (direction);
+	i = 4 * ((t_u32)point.y * fb->width + (t_u32)point.x);
+	fb->data[i + 0] = (color >> 24) & 0xff;
+	fb->data[i + 3] = (color >> 16) & 0xff;
+	fb->data[i + 2] = (color >> 8) & 0xff;
+	fb->data[i + 1] = (color >> 0) & 0xff;
 }

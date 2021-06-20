@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:29:31 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/18 23:56:12 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 20:25:35 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	zz_clip(t_p2 *draw, t_u32 fb_height, t_u32 *max_y_fb)
 		draw->y = 0;
 }
 
-void	we_draw_texture_wall(t_ray *ray, t_p2 draw,
+void	wx_draw_wall_texture(t_ray *ray, t_p2 draw,
 			t_frame_buffer *fb, t_texture *texture)
 {
 	t_texture_index		tex_index;
@@ -69,8 +69,8 @@ void	we_draw_texture_wall(t_ray *ray, t_p2 draw,
 		{
 			wx_buffer_copy(&color, texture->buffer + (tex_index.index * 4),
 				sizeof(color));
-			we_shade_pixel(&color, ray->tile.distance);
-			we_draw_pixel(draw, fb, color);
+			wx_shade_pixel(&color, ray->tile.distance);
+			wx_draw_pixel(draw, fb, color);
 		}
 		draw.y++;
 		tex_index.coord.y += tex_index.increment_y;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_draw_rectangle.c                                :+:      :+:    :+:   */
+/*   we_draw_rec_full.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 12:44:05 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/07 18:28:51 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/19 20:12:06 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	we_draw_rec_full(t_p2 start, t_p2 end, t_frame_buffer *fb, t_u32 c)
 		start.x = temp_x;
 		while (start.x <= end.x)
 		{
-			we_draw_pixel(start, fb, c);
+			wx_draw_pixel(start, fb, c);
 			start.x++;
 		}
 		start.y++;
