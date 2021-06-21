@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "math.h"
-
 #include "wc_draw.h"
 
 /*
@@ -51,18 +49,18 @@ static t_bool	zz_interpolate(t_draw_face_context *dfc)
 	{
 		return (wx_false);
 	}
-	dfc->p_inv_view_z = dfc->screen_a0 * dfc->screen_p0->z + dfc->screen_a1
-		* dfc->screen_p1->z + dfc->screen_a2 * dfc->screen_p2->z;
-	if (dfc->p_inv_view_z < wc_depth_buffer_get(dfc->db, dfc->p.x, dfc->p.y))
-	{
-		return (wx_false);
-	}
 	dfc->inv_a = 1.0f / ((dfc->view_z1 * dfc->view_z2 * dfc->screen_a0)
 			+ (dfc->view_z2 * dfc->view_z0 * dfc->screen_a1) + (dfc->view_z0
 				* dfc->view_z1 * dfc->screen_a2));
 	dfc->view_b0 = (dfc->view_z1 * dfc->view_z2 * dfc->screen_a0) * dfc->inv_a;
 	dfc->view_b1 = (dfc->view_z2 * dfc->view_z0 * dfc->screen_a1) * dfc->inv_a;
 	dfc->view_b2 = (dfc->view_z0 * dfc->view_z1 * dfc->screen_a2) * dfc->inv_a;
+	dfc->p_inv_view_z = dfc->view_b0 * dfc->screen_p0->z + dfc->view_b1
+		* dfc->screen_p1->z + dfc->view_b2 * dfc->screen_p2->z;
+	if (dfc->p_inv_view_z < wc_depth_buffer_get(dfc->db, dfc->p.x, dfc->p.y))
+	{
+		return (wx_false);
+	}
 	dfc->texture_u = dfc->view_b0 * dfc->uv0->x + dfc->view_b1 * dfc->uv1->x
 		+ dfc->view_b2 * dfc->uv2->x;
 	dfc->texture_v = dfc->view_b0 * dfc->uv0->y + dfc->view_b1 * dfc->uv1->y
