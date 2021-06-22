@@ -17,4 +17,5 @@
 void	wc_texture_del(t_texture *t)
 {
 	free(t->buffer);
+	wx_buffer_set(t, sizeof(*t), 0);
 }

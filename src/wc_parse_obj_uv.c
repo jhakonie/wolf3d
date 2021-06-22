@@ -27,7 +27,7 @@ static t_bool	zz_on_error(t_parse_context *pc, t_c8 const *b)
 ** top-left is [0, 0] and bottom-right is [1, 1]. needs to agree with
 ** wc_texture_get(). right now it does not
 */
-t_bool	wc_parse_obj_uv(t_parse_context *pc, t_p2s *p2s)
+t_bool	wc_parse_obj_uv(t_parse_context *pc, t_p2s *p2s, t_bool inv_v)
 {
 	t_c8 const	*b;
 	t_u64		i;
@@ -43,6 +43,10 @@ t_bool	wc_parse_obj_uv(t_parse_context *pc, t_p2s *p2s)
 		if (!wx_parse_f32(pc, &p2.x + i))
 			return (zz_on_error(pc, b));
 		++i;
+	}
+	if (inv_v)
+	{
+		p2.y = 1.0 - p2.y;
 	}
 	if (!wc_p2s_add_back(p2s, &p2))
 		return (zz_on_error(pc, b));

@@ -17,4 +17,5 @@
 void	wc_vertices_del(t_vertices *c)
 {
 	free(c->buffer);
+	wx_buffer_set(c, sizeof(*c), 0);
 }

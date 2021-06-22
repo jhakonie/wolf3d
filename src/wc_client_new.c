@@ -62,8 +62,8 @@ t_bool	wc_client_new(t_client *c, t_u32 window_width, t_u32 window_height,
 		|| !wc_depth_buffer_new(&c->depth_buffer, window_width, window_height)
 		|| !wc_remote_server_new(&c->remote_server, "localhost",
 			WX_SERVER_DEFAULT_SOCKET)
-		|| !wc_mesh_new_from_file(&c->test_mesh, "data/unit_cube.obj")
-		|| !wc_texture_new_from_file(&c->test_texture, "data/unit_cube.xpm")
+		|| !wc_mesh_new_from_file(&c->suzanne_mesh, "data/suzanne.obj")
+		|| !wc_texture_new_from_file(&c->suzanne_texture, "data/suzanne.xpm")
 		|| !wc_pipeline_buffers_new(&c->pipeline_buffers)
 		|| !wc_client_load_data(c, map_name))
 	{

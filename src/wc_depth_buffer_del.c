@@ -17,4 +17,5 @@
 void	wc_depth_buffer_del(t_depth_buffer *db)
 {
 	free(db->data);
+	wx_buffer_set(db, sizeof(*db), 0);
 }

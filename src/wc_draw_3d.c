@@ -52,7 +52,7 @@ static void	zz_draw_others(t_client *c)
 	{
 		zz_draw_context_new(&dc, c, c->other_orientations + i,
 			c->other_positions + i);
-		wc_draw_mesh(&dc, &c->test_mesh, &c->test_texture);
+		wc_draw_mesh(&dc, &c->suzanne_mesh, &c->suzanne_texture);
 		++i;
 	}
 }

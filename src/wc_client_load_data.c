@@ -53,7 +53,6 @@ static t_bool	zz_texture(t_texture *t, char const *map_name,
 static t_bool	zz_textures(t_client *c, char const *map_name)
 {
 	if (!zz_texture(&c->map.textures.floor, map_name, "/floor.xpm")
-		// || !zz_texture(&c->map.textures.sky, map_name, "/sky.xpm")
 		|| !zz_texture(&c->map.textures.door, map_name, "/door.xpm")
 		|| !zz_texture(&c->map.textures.walls[we_north], map_name, "/north.xpm")
 		|| !zz_texture(&c->map.textures.walls[we_east], map_name, "/east.xpm")

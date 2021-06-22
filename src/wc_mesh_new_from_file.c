@@ -44,7 +44,7 @@ t_bool	wc_mesh_new_from_file(t_mesh *m, char const *filename)
 		return (zz_on_error(&fb, m, 2));
 	pc.p = (char const *)fb.buffer;
 	pc.e = (char const *)(fb.buffer + fb.size);
-	if (!wc_parse_obj(&pc, m))
+	if (!wc_parse_obj(&pc, m, wx_true))
 	{
 		return (zz_on_error(&fb, m, 3));
 	}

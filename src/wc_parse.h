@@ -102,14 +102,14 @@ typedef struct s_parse_obj_context	t_parse_obj_context;
 t_bool	wc_parse_obj_context_new(t_parse_obj_context *poc);
 void	wc_parse_obj_context_del(t_parse_obj_context *poc);
 
-t_bool	wc_parse_obj(t_parse_context *pc, t_mesh *m);
+t_bool	wc_parse_obj(t_parse_context *pc, t_mesh *m, t_bool inv_v);
 t_bool	wc_parse_obj_comment(t_parse_context *pc);
 t_bool	wc_parse_obj_face(t_parse_context *pc, t_obj_vertices *ofs);
 t_bool	wc_parse_obj_material_filename(t_parse_context *pc);
 t_bool	wc_parse_obj_material_name(t_parse_context *pc);
 t_bool	wc_parse_obj_normal(t_parse_context *pc, t_n3s *n3s);
 t_bool	wc_parse_obj_position(t_parse_context *pc, t_p3s *p3s);
-t_bool	wc_parse_obj_uv(t_parse_context *pc, t_p2s *p2s);
+t_bool	wc_parse_obj_uv(t_parse_context *pc, t_p2s *p2s, t_bool inv_v);
 t_bool	wc_parse_obj_object_name(t_parse_context *pc);
 t_bool	wc_parse_obj_smoothing(t_parse_context *pc);
 t_bool	wc_parse_u16(t_parse_context *pc, t_u16 *n);

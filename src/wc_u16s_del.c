@@ -17,4 +17,5 @@
 void	wc_u16s_del(t_u16s *c)
 {
 	free(c->buffer);
+	wx_buffer_set(c, sizeof(*c), 0);
 }
