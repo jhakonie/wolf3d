@@ -68,11 +68,6 @@ struct	s_client
 	t_depth_buffer		depth_buffer;
 	t_map_mesh			map_mesh;
 	t_map				map;
-	t_texture			floor_texture;
-	t_texture			north_texture;
-	t_texture			east_texture;
-	t_texture			west_texture;
-	t_texture			south_texture;
 	t_client_input		input;
 	t_s32				mouse_x;
 	t_s32				mouse_y;
