@@ -16,4 +16,5 @@ void	wc_mesh_del(t_mesh *m)
 {
 	wc_vertices_del(&m->vertices);
 	wc_u16s_del(&m->indices);
+	wx_buffer_set(m, sizeof(*m), 0);
 }
