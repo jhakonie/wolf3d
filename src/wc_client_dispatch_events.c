@@ -34,12 +34,19 @@ static void	zz_on_key(t_client *c, SDL_KeyboardEvent const *k, t_bool down)
 		c->input.move_backward = down;
 	else if (k->keysym.sym == SDLK_d)
 		c->input.move_right = down;
+	else if (k->keysym.sym == SDLK_m && down)
+	{
+		SDL_SetRelativeMouseMode(!SDL_GetRelativeMouseMode());
+		c->mouse_captured ^= wx_true;
+	}
 	else if (k->keysym.sym == SDLK_SPACE && down)
 		c->input.move_mode = (c->input.move_mode + 1) % 2;
 }
 
 static void	zz_on_mouse(t_client *c, SDL_MouseMotionEvent const *m)
 {
+	if (!c->mouse_captured)
+		return ;
 	if (c->move_mode == wx_client_move_mode_2d)
 	{
 		c->mouse_x = m->x;

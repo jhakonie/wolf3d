@@ -69,6 +69,7 @@ struct	s_client
 	t_map_mesh			map_mesh;
 	t_map				map;
 	t_client_input		input;
+	t_bool				mouse_captured;
 	t_s32				mouse_x;
 	t_s32				mouse_y;
 	t_s32				mouse_dx;

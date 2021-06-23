@@ -50,6 +50,7 @@ static t_bool	zz_sdl(t_client *c, t_u32 window_width, t_u32 window_height)
 	}
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_GetMouseState(&c->mouse_x, &c->mouse_y);
+	c->mouse_captured = wx_true;
 	return (wx_true);
 }
 
