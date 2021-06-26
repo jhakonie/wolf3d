@@ -16,7 +16,6 @@
 /*
 ** 2021-02-17 todo: remove?
 */
-
 static void	zz_on_expose(t_client *c)
 {
 	wc_draw_copy(c, &c->frame_buffer);
@@ -26,14 +25,18 @@ static void	zz_on_key(t_client *c, SDL_KeyboardEvent const *k, t_bool down)
 {
 	if (k->keysym.sym == SDLK_ESCAPE && down)
 		c->run = wx_false;
-	else if (k->keysym.sym == SDLK_w)
+	else if (k->keysym.sym == SDLK_w || k->keysym.sym == SDLK_UP)
 		c->input.move_forward = down;
 	else if (k->keysym.sym == SDLK_a)
 		c->input.move_left = down;
-	else if (k->keysym.sym == SDLK_s)
+	else if (k->keysym.sym == SDLK_s || k->keysym.sym == SDLK_DOWN)
 		c->input.move_backward = down;
 	else if (k->keysym.sym == SDLK_d)
 		c->input.move_right = down;
+	else if (k->keysym.sym == SDLK_LEFT && down)
+		c->mouse_dx -= 10;
+	else if (k->keysym.sym == SDLK_RIGHT && down)
+		c->mouse_dx += 10;
 	else if (k->keysym.sym == SDLK_m && down)
 	{
 		SDL_SetRelativeMouseMode(!SDL_GetRelativeMouseMode());
@@ -81,7 +84,6 @@ static void	zz_on_windowevent(t_client *c, SDL_WindowEvent *w)
 ** handful of events queued. in theory it could be possible to get the game
 ** stuck here by somehow generating infinitely many events
 */
-
 void	wc_client_dispatch_events(t_client *c)
 {
 	SDL_Event	e;
