@@ -29,7 +29,6 @@ client_src_files = $(addprefix $(src_dir), \
 	wc_draw_25d.c \
 	wc_draw_3d.c \
 	wc_draw_add_visible.c \
-	wc_draw_clear.c \
 	wc_draw_clip.c \
 	wc_draw_copy.c \
 	wc_draw_face.c \

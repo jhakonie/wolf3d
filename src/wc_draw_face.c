@@ -12,14 +12,6 @@
 
 #include "wc_draw.h"
 
-/*
-** 2021-04-10 todo: top-left filling rule
-**
-**
-** 2021-04-28 todo: think about what to store in the depth buffer. right now
-** it's the interpolated 1.0f/view.z for the pixel, so smaller values are
-** further away. maybe that's ok?
-*/
 static void	zz_draw(t_draw_face_context *dfc)
 {
 	t_u32	c;
@@ -29,17 +21,6 @@ static void	zz_draw(t_draw_face_context *dfc)
 	wc_depth_buffer_set(dfc->db, dfc->p.x, dfc->p.y, dfc->p_inv_view_z);
 }
 
-/* 2021-05-09 todo: this is the most basic straight line translation of the math
-** and does not take advantage of any affine properties. meaning that it ends up
-** calling wc_screen_xy_area() too many times and otherwise doing other
-** calculations when not strictly necessary
-**
-** look into implementing the same functionality by precomputing any constants
-** per face, which would then make per pixel cost lower hopefully
-**
-** 2021-06-01 todo: texture uv coordinates still go outside of [0.0f, 1.0f]. as
-** crap fix could just clamp them
-*/
 static t_bool	zz_interpolate(t_draw_face_context *dfc)
 {
 	dfc->screen_a0 = wc_screen_xy_area(dfc->screen_p1, dfc->screen_p2, &dfc->p);
@@ -68,16 +49,12 @@ static t_bool	zz_interpolate(t_draw_face_context *dfc)
 	return (wx_true);
 }
 
-/*
-** 2021-06-01 todo: ceilf() calls should be in somewhere else where they are
-** done only once per face
-*/
 void	wc_draw_face(t_draw_face_context *dfc)
 {
-	dfc->p.y = ceilf(dfc->aabb.p0.y - 0.5f);
+	dfc->p.y = dfc->aabb.p0.y;
 	while (dfc->p.y < dfc->aabb.p1.y)
 	{
-		dfc->p.x = ceilf(dfc->aabb.p0.x - 0.5f);
+		dfc->p.x = dfc->aabb.p0.x;
 		while (dfc->p.x < dfc->aabb.p1.x)
 		{
 			if (zz_interpolate(dfc))

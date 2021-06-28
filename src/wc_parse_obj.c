@@ -102,8 +102,6 @@ static t_bool	zz_mesh(t_mesh *m, t_parse_obj_context *poc)
 /*
 ** 2021-04-02 todo: sanity check the amount of normals, positions, uvs and
 ** vertices contains
-**
-** 2021-06-22 note: blender .obj export has uv at lower-left corner
 */
 t_bool	wc_parse_obj(t_parse_context *pc, t_mesh *m, t_bool inv_v)
 {

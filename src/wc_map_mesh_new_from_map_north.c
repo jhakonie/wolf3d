@@ -1,8 +1,5 @@
 #include "wc_draw.h"
 
-/*
-** 2021-05-21 todo: deduplicate and create wc_xxx() function?
-*/
 static void	zz_indices(t_u16s *is, t_u16 base_index)
 {
 	is->buffer[is->size + 0] = base_index + 0;

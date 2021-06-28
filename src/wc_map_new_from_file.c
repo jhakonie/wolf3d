@@ -81,8 +81,8 @@ t_bool	wc_map_new_from_file(t_map *m, char const *filename)
 	}
 	pc.p = (t_c8 const *)fb.buffer;
 	pc.e = (t_c8 const *)(fb.buffer + fb.size);
-	m->width = WC_MAP_WIDTH;
-	m->height = WC_MAP_WIDTH;
+	m->width = WX_MAP_TILES_WIDTH;
+	m->height = WX_MAP_TILES_WIDTH;
 	if (!zz_parse_map(&pc, m))
 	{
 		wx_c8s_del(&fb);

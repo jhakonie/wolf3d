@@ -24,9 +24,6 @@
 ** happens on different wm? happens on macos?
 */
 
-/*
-** 2021-06-15 todo: rethink this or rename at least?
-*/
 static void	zz_client_move_mode(t_client *c)
 {
 	if (c->move_mode == wx_client_move_mode_2d)

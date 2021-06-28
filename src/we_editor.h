@@ -135,7 +135,6 @@ void				we_draw_map(t_editor *e);
 void				we_draw_player(t_editor *e);
 void				we_draw_rays(t_ray *ray, t_map_view map,
 						t_frame_buffer *fb);
-t_f32				we_to_rad(t_f32 deg);
 void				we_player_move(t_u32 key, t_editor *e);
 void				we_player_rotate(t_editor *e, t_u32 x, t_u32 y);
 

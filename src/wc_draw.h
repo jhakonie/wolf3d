@@ -69,19 +69,6 @@ struct	s_face
 typedef struct s_face				t_face;
 
 /*
-** 2021-05-15 todo: see if editor has map-related things already that we could
-** use by moving shared bits to wx_
-*/
-/*
-** 2021-05-15 note: make sure WC_MAP_TILES_SIZE == WC_MAP_WIDTH * WC_MAP_WIDTH
-** unfortuntaly norm currently prevents doing this sensibly
-*/
-# define WC_MAP_WIDTH (57)
-# define WC_MAP_TILES_SIZE (3249)
-
-t_bool				wc_map_new_from_file(t_map *m, char const *filename);
-
-/*
 ** 2021-03-26 note: sizes are in number of t_u16-sized elements. not in bytes
 */
 struct	s_u16s
@@ -169,23 +156,6 @@ t_bool				wc_map_mesh_new_from_map_west(t_map_mesh *mm,
 void				wc_map_mesh_del(t_map_mesh *mm);
 
 /*
-** 2021-04-30 todo: merge with t_texture from editor
-*/
-// struct	s_texture
-// {
-// 	t_u8	*buffer;
-// 	t_u64	buffer_size;
-// 	t_u32	width;
-// 	t_u32	height;
-// };
-// typedef struct s_texture			t_texture;
-
-t_bool				wc_texture_new_from_file(t_texture *t,
-						char const *filename);
-void				wc_texture_del(t_texture *t);
-t_u32				wc_texture_get(t_texture const *t, t_f32 u, t_f32 v);
-
-/*
 ** 2021-04-20 todo: decide whether to keep screen_positions as t_p3 or make a
 ** new specific type for them, with less confusing names for the members. right
 ** now screen_position.z stores 1.0f/view_position.z confusingly enough
@@ -271,7 +241,6 @@ void				wc_draw_25d(t_client *c);
 void				wc_draw_3d(t_client *c);
 void				wc_draw_add_visible(t_draw_context *dc,
 						t_clip_context const *cc);
-void				wc_draw_clear(t_draw_context *dc);
 void				wc_draw_clip(t_draw_context *dc, t_face const *f,
 						t_plane const *p);
 void				wc_draw_copy(t_client *c, t_frame_buffer const *fb);
@@ -283,6 +252,8 @@ void				wc_draw_rectangle_outline(t_frame_buffer *fb, t_p3 p,
 void				wc_draw_rectangle_solid(t_frame_buffer *fb, t_p3 p,
 						t_f32 width, t_u32 abgr);
 
+t_bool				wc_map_new_from_file(t_map *m, char const *filename);
+
 t_p2				wc_p2_lerp(t_p2 const *p0, t_p2 const *p1, t_f32 t);
 
 t_p3				wc_p3_lerp(t_p3 const *p0, t_p3 const *p1, t_f32 t);
@@ -291,5 +262,10 @@ t_rectangle			wc_screen_xy_aabb(t_p3 const *p0, t_p3 const *p1,
 						t_p3 const *p2, t_frame_buffer const *fb);
 t_f32				wc_screen_xy_area(t_p3 const *p0, t_p3 const *p1,
 						t_p3 const *p2);
+
+t_bool				wc_texture_new_from_file(t_texture *t,
+						char const *filename);
+void				wc_texture_del(t_texture *t);
+t_u32				wc_texture_get(t_texture const *t, t_f32 u, t_f32 v);
 
 #endif
