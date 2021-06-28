@@ -317,7 +317,7 @@ int main(void)
 	t_parse_context	pc;
 	t_c8s			txt;
 
-	if (!wx_c8s_new_from_file(&txt, 1024, "data/test_letter.xpm"))
+	if (!wx_c8s_new_from_file(&txt, 1024, "data/maps/test/floor.xpm"))
 		return (wx_false);
 	pc.p = (char const *)txt.buffer;
 	pc.e = (char const *)(txt.buffer + txt.size);
@@ -343,7 +343,7 @@ int main(void)
 		}
 		zz_free_txt(&txt);
 	// if (!wx_c8s_new_from_file(&txt, 1024, "data/test_comments.xpm"))
-	if (!wx_c8s_new_from_file(&txt, 1024, "data/test_letter.xpm"))
+	if (!wx_c8s_new_from_file(&txt, 1024, "data/maps/test/floor.xpm"))
 		return (wx_false);
 	pc.p = (char const *)txt.buffer;
 	pc.e = (char const *)(txt.buffer + txt.size);

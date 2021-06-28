@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 22:38:37 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/20 14:24:36 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/29 00:55:45 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 # include "wx_frame_buffer.h"
 
 # define WX_RAY_CAST_BUFF_SIZE_M (81)
-# define WE_WALL (1)
-# define WE_DOOR (2)
+# define WX_WALL (1)
+# define WX_DOOR (2)
+# define WX_ENEMY (7)
 
 enum						e_side
 {

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:17:11 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/06/18 21:51:56 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/29 01:41:23 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 #include "wc_draw.h"
 #include "wx_net.h"
 #include "wx_time.h"
+
+static void	zz_player(t_client *c)
+{
+	c->player_orientation = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
+	c->player_position = (t_p3){0.0f, 1.0f, 0.0f};
+	c->player_view_height = 0.5f;
+}
 
 static void	zz_camera(t_client *c, t_f32 width, t_f32 height)
 {
@@ -77,9 +84,8 @@ t_bool	wc_client_new(t_client *c, t_u32 window_width, t_u32 window_height,
 	c->net_time_step_s = 1.0 / 30.0;
 	c->sim_time_s = wx_time_s();
 	c->sim_time_step_s = 1.0 / 30.0;
+	zz_player(c);
 	c->run = wx_true;
-	c->player_orientation = (t_q4){0.0f, 0.0f, 0.0f, 1.0f};
-	c->player_position = (t_p3){0.0f, 1.0f, 0.0f};
 	zz_camera(c, window_width, window_height);
 	return (wx_true);
 }

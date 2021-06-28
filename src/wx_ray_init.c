@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   we_ray_init.c                                      :+:      :+:    :+:   */
+/*   wx_ray_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 16:04:17 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 20:25:03 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/29 01:30:05 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wx_draw.h"
 
 /*
-** ray->nb = ray number startting from the start of screen.
+** ray->nb = ray number starting from the start of screen.
 **
 ** ray->k and ray->b from "y = kx + b".
 **
-** ray->angle_d = angle of ray measured counter clock-wise from positive
+** ray->angle_d = angle of ray measured counter-clock-wise from positive
+** x-axis on a left handed coordinate system.
 **
 ** ray->angle_to_player_d = angle between player and ray.
-**
-** (x-axis on a left handed coordinate system)
 */
 
 void	wx_ray_init(t_ray *ray, t_f32 player_fov_d, t_f32 screen_width,

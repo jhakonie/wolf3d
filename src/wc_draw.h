@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 23:38:47 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/06/19 00:36:13 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/28 23:59:55 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,8 @@ void				wc_draw_face_context_reset(t_draw_face_context *dfc,
 						t_u16 i0, t_u16 i1, t_u16 i2);
 
 void				wc_draw_25d(t_client *c);
+void				wc_draw_25d_enemy(t_frame_buffer *fb, t_ray *ray,
+						t_texture *texture);
 void				wc_draw_3d(t_client *c);
 void				wc_draw_add_visible(t_draw_context *dc,
 						t_clip_context const *cc);

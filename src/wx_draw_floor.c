@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 15:40:30 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/20 16:42:46 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/29 01:38:19 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	zz_draw_floor(t_draw_floor draw, t_frame_buffer *fb, t_ray *ray,
 		draw.end_fb.y = 0;
 	while (draw.start_fb.y > draw.end_fb.y)
 	{
-		texture_index = (float)ray->tile.tiles_index / WX_MAP_TILES_SIZE
+		texture_index = (float)ray->tile.tiles_index / WX_MAP_SIZE
 			* texture->height * texture->width;
 		wx_buffer_copy(&color, texture->buffer + (texture_index * 4),
 			sizeof(color));
@@ -61,35 +61,6 @@ static void	zz_draw_floor(t_draw_floor draw, t_frame_buffer *fb, t_ray *ray,
 		wx_shade_pixel(&color, pixel_distance);
 		wx_draw_pixel(draw.start_fb, fb, color);
 		draw.start_fb.y--;
-	}
-}
-
-/*
-** Drawing one ceiling tile.
-*/
-
-//todo: remove draw ceiling
-
-void	zz_draw_ceiling(t_draw_floor draw, t_frame_buffer *fb, t_ray *ray,
-				t_texture *texture)
-{
-	t_u32			color;
-	t_f32			pixel_distance;
-
-	if (draw.start_fb.y < 0)
-		draw.start_fb.y = 0;
-	if (draw.end_fb.y < fb->height - 1)
-		draw.end_fb.y = fb->height - 1;
-	draw.end_fb = zz_floor_w_to_fb(ray, fb->height,
-			draw.end_distance_w, wx_false);
-	while (draw.start_fb.y < draw.end_fb.y)
-	{
-		color = texture->buffer[0];
-		pixel_distance = (ray->tile.distance * draw.start_fb.y / draw.end_fb.y
-				+ draw.end_distance_w * (1 - draw.start_fb.y / draw.end_fb.y));
-		wx_shade_pixel(&color, pixel_distance);
-		wx_draw_pixel(draw.start_fb, fb, color);
-		draw.start_fb.y++;
 	}
 }
 

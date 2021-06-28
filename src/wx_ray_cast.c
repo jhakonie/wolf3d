@@ -6,15 +6,15 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 17:25:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/20 14:15:42 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/29 02:46:55 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wx_draw.h"
 
 /*
-** Calculate distance to wall and wall projected height.
-** Define side and wall compass direction.
+** Calculate distance from palyer to wall and wall's projected height.
+** Define side that was hit and wall's compass direction.
 */
 
 static t_hit	zz_tile_values(t_ray *ray, t_u32 *tiles, t_side side)
@@ -40,15 +40,15 @@ static t_hit	zz_tile_values(t_ray *ray, t_u32 *tiles, t_side side)
 	return (ray->tile);
 }
 
-/* 
-** Check if the ray and vertical or horisontal map-line intersection point
-** is next to a wall.
+/*
+** Check if the previously found ray-map-line-intersection point
+** is inside a wall.
 ** Update tile values: side that was hit, compass direction
 ** of hit tile, distance of hit tile from player, projected height of tile
 ** on screen/projection plane.
-** If the tile hit was a wall and we were looking for a wall or if we were
-** looking for a door and it was either a door or a wall, return true and
-** as a result end raycasting.
+** If the tile, that is hit, is a wall or an enemy or if
+** tile_type_to_find is door
+** and the tile hit is a door, return true and end raycast.
 */
 
 static t_bool	zz_is_wall(t_u32 *tiles, t_ray *ray, t_p2 intersection_w,
@@ -73,9 +73,9 @@ static t_bool	zz_is_wall(t_u32 *tiles, t_ray *ray, t_p2 intersection_w,
 	{
 		ray->tile.tiles_index = index;
 		ray->tile = zz_tile_values(ray, tiles, line);
-		if ((ray->tile_type_to_find == WE_WALL && tiles[index] == WE_WALL)
-			|| (ray->tile_type_to_find == WE_DOOR
-				&& (tiles[index] == WE_WALL || tiles[index] == WE_DOOR)))
+		if (tiles[index] == ray->tile_type_to_find)
+			return (wx_true);
+		else if (ray->tile_type_to_find == WX_DOOR && tiles[index] == WX_WALL)
 			return (wx_true);
 	}
 	return (wx_false);
@@ -147,7 +147,9 @@ static t_hit	zz_dist_vertical_wall(t_ray *ray, t_u32 *tiles)
 
 /*
 ** Find the closest intersection point with horisontal and vertical
-** walls. Choose the closer one to be drawn.
+** walls by calculating the intersection point of the ray and the
+** horizontal/vertical map-grid-lines.
+** Choose the closer wall of the found ones to be drawn.
 */
 
 void	wx_ray_cast(t_ray *ray, t_u32 *tiles)

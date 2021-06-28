@@ -6,14 +6,14 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 17:18:30 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 20:25:03 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/28 23:39:28 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wx_draw.h"
 
 /*
-** ang_ray_start_d = angle between ray and ray-cast start angle.
+** ang_ray_start_d = angle between ray and ray-cast's first ray.
 **
 ** ray->angle_d = angle of ray measured counter clock-wise from positive
 ** x-axis on a left handed coordinate system.

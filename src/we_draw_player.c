@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 13:46:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 20:25:03 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/21 21:38:47 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,6 @@ static void	zz_draw_rays(t_frame_buffer *fb, t_editor *e, t_p2 start)
 	}
 }
 
-static t_bool	zz_inside_map(t_triangle *t,
-					t_map_view *m)
-{
-	if (t->a.x < m->grid.start.x || t->b.x < m->grid.start.x
-		|| t->c.x < m->grid.start.x || t->a.y < m->grid.start.y
-		|| t->b.y < m->grid.start.y || t->c.y < m->grid.start.y)
-		return (wx_false);
-	if (t->a.x >= m->grid.end.x || t->b.x >= m->grid.end.x
-		|| t->c.x >= m->grid.end.x || t->a.y >= m->grid.end.y
-		|| t->b.y >= m->grid.end.y || t->c.y >= m->grid.end.y)
-		return (wx_false);
-	return (wx_true);
-}
-
 /*
 ** Set triangle tips around player.
 */
@@ -86,8 +72,7 @@ static void	zz_draw_triangle(t_editor *e, t_p2 base, t_p2 tip)
 	base_b.x = base.x + delta.x;
 	base_b.y = base.y + delta.y;
 	we_init_triangle(base_a, base_b, tip, &t);
-	if (zz_inside_map(&t, &e->map_view))
-		we_draw_triangle(0xFF00D0, &t, &e->frame_buffer);
+	we_draw_triangle(0xFF00D0, &t, &e->frame_buffer);
 }
 
 /*

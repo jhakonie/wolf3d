@@ -23,8 +23,6 @@
 */
 # define WX_MAP_READ_BUFF_SIZE (6498)
 # define WX_MAP_SIZE (3249)
-
-# define WX_MAP_TILES_SIZE (3249)
 # define WX_TILE_WIDTH (2)
 
 # define WX_MAP_TILE_TYPE_FLOOR (0)
@@ -103,7 +101,7 @@ typedef struct s_player		t_player;
 
 struct	s_map
 {
-	t_u32			tiles[WX_MAP_TILES_SIZE];
+	t_u32			tiles[WX_MAP_SIZE];
 	t_u64			width;
 	t_u64			height;
 	t_f32			tile_width;

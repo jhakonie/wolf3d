@@ -6,7 +6,7 @@
 #    By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 13:22:26 by jhakonie          #+#    #+#              #
-#    Updated: 2021/06/19 20:43:02 by jhakonie         ###   ########.fr        #
+#    Updated: 2021/06/29 02:08:54 by jhakonie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -174,6 +174,7 @@ client_src_files = $(addprefix $(src_dir), \
 	wx_draw_pixel.c \
 	wx_wall_compass_direction.c \
 	wx_to_degrees.c \
+	wc_draw_25d_enemy.c \
 )
 client_obj_files = $(subst $(src_dir), $(build_dir), $(client_src_files:.c=.o))
 client_exe = wolf3d
@@ -317,9 +318,9 @@ dependency_files = \
 dependency_flags = -MT $(@) -MMD -MP -MF $(build_dir)$(*).dep
 
 LD = gcc
-LDFLAGS = $(libsdl2_ldflags) -fsanitize=address#,leak,undefined
+LDFLAGS = $(libsdl2_ldflags) #-fsanitize=address#,leak,undefined
 CC = gcc
-CFLAGS = -g -c -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) -fsanitize=address#,leak,undefined
+CFLAGS = -g -c -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) #-fsanitize=address#,leak,undefined
 CPPFLAGS = -D_REENTRANT
 
 all: $(client_exe) $(editor_exe) $(server_exe) $(compile_commands_json)

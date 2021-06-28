@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:53:50 by ***REMOVED***          #+#    #+#             */
-/*   Updated: 2021/06/18 19:46:20 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/20 17:49:45 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,10 @@ static void	zz_on_mouse(t_client *c, SDL_MouseMotionEvent const *m)
 {
 	if (!c->mouse_captured)
 		return ;
-	if (c->move_mode == wx_client_move_mode_2d)
-	{
-		c->mouse_x = m->x;
-		c->mouse_y = 0;
-		c->mouse_dx += m->xrel;
-		c->mouse_dy += 0;
-	}
-	else
-	{
-		c->mouse_x = m->x;
-		c->mouse_y = m->y;
-		c->mouse_dx += m->xrel;
-		c->mouse_dy += m->yrel;
-	}
+	c->mouse_x = m->x;
+	c->mouse_y = m->y;
+	c->mouse_dx += m->xrel;
+	c->mouse_dy += m->yrel;
 }
 
 static void	zz_on_windowevent(t_client *c, SDL_WindowEvent *w)

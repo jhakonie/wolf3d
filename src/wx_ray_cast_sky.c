@@ -54,8 +54,8 @@ t_hit	wx_ray_cast_sky(t_ray *ray)
 	t_f32	min_w;
 	t_f32	max_w;
 
-	min_w = -ray->world_end_w;
-	max_w = ray->world_end_w * 2 - WX_TILE_WIDTH;
+	min_w = -2 * ray->world_end_w;
+	max_w = ray->world_end_w * 3 - WX_TILE_WIDTH;
 	zz_ray_compass_direction(ray);
 	zz_raycast(ray, min_w, max_w);
 	return (ray->tile);

@@ -6,11 +6,11 @@ static t_texture_index	zz_texture_coordinates(t_ray *ray, t_p2 draw,
 	t_texture_index	tex_index;
 
 	if (ray->tile.side == we_horisontal)
-		tex_index.coord.x = (fabsf(-ray->world_end_w - ray->tile.hit.x)
-				/ (3 * ray->world_end_w - WX_TILE_WIDTH)) * texture->width;
+		tex_index.coord.x = (fabsf(-ray->world_end_w * 2 - ray->tile.hit.x)
+				/ (5 * ray->world_end_w - WX_TILE_WIDTH)) * texture->width;
 	else
-		tex_index.coord.x = (fabsf(-ray->world_end_w - ray->tile.hit.y)
-				/ (3 * ray->world_end_w - WX_TILE_WIDTH)) * texture->height;
+		tex_index.coord.x = (fabsf(-ray->world_end_w * 2 - ray->tile.hit.y)
+				/ (5 * ray->world_end_w - WX_TILE_WIDTH)) * texture->height;
 	tex_index.coord.y = 0;
 	tex_index.increment_y = texture->height / ray->tile.projected_height;
 	if (draw.y < 0)
