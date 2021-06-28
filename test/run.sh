@@ -162,11 +162,21 @@ test_3d_pipeline_transform() {
 
 
 test_3d_screen_area() {
-    echo "${test_name}"
     local test_name=${FUNCNAME}
     rm -f test/build/${test_name}
     gcc -g -Wall -Wextra -l m -o test/build/${test_name} \
 	-x c test/${test_name}.c.test
+    ./test/build/${test_name}
+}
+
+
+test_sdl_leaks() {
+    set -x
+    local test_name=${FUNCNAME}
+    rm -f test/build/${test_name}
+    gcc -g -Wall -Wextra -l m -I build/libsdl2/include/ \
+	-fsanitize=address,leak,undefined -o test/build/${test_name} \
+	-x c test/${test_name}.c.test `build/libsdl2/bin/sdl2-config --cflags --libs`
     ./test/build/${test_name}
 }
 
@@ -227,9 +237,10 @@ tests[2]="test_3d_frustum_aabb"
 tests[3]="test_3d_mesh_read"
 tests[4]="test_3d_clip_face_plane"
 tests[5]="test_3d_pipeline_transform"
-tests[6]="test_wc_map_new_from_file"
-tests[7]="test_wx_types_h"
-tests[8]="test_xpm_reader"
+tests[6]="test_sdl_leaks"
+tests[7]="test_wc_map_new_from_file"
+tests[8]="test_wx_types_h"
+tests[9]="test_xpm_reader"
 
 
 main() {
