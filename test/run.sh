@@ -177,7 +177,6 @@ test_sdl_leaks() {
     if [[ "${gcc_version}" =~ ^gcc.* ]]; then
        sanitize_flags+=",leak,undefined"
     fi
-    echo ${sanitize_flags}
     rm -f test/build/${test_name}
     gcc -g -Wall -Wextra -l m -I build/libsdl2/include/ \
 	-fsanitize=${sanitize_flags} -o test/build/${test_name} \
