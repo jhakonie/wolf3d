@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eu
 
 
 if [ ! -d "test/build" ]; then
@@ -171,13 +171,20 @@ test_3d_screen_area() {
 
 
 test_sdl_leaks() {
-    set -x
     local test_name=${FUNCNAME}
+    local sanitize_flags="address"
+    local gcc_version=$(gcc --version)
+    if [[ "${gcc_version}" =~ ^gcc.* ]]; then
+       sanitize_flags+=",leak,undefined"
+    fi
+    echo ${sanitize_flags}
     rm -f test/build/${test_name}
     gcc -g -Wall -Wextra -l m -I build/libsdl2/include/ \
-	-fsanitize=address,leak,undefined -o test/build/${test_name} \
+	-fsanitize=${sanitize_flags} -o test/build/${test_name} \
 	-x c test/${test_name}.c.test `build/libsdl2/bin/sdl2-config --cflags --libs`
+    set +e
     ./test/build/${test_name}
+    set -e
 }
 
 
