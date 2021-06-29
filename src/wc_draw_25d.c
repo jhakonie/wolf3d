@@ -12,7 +12,7 @@ static void	zz_draw_enemy(t_p3 enemy_w, t_u32 i,
 
 	map_index = (int)(enemy_w.x / WX_TILE_WIDTH)
 		+ WX_MAP_TILES_WIDTH * (int)(enemy_w.z / WX_TILE_WIDTH);
-	if (map_index >= WX_MAP_SIZE || map_index < 0)
+	if (map_index >= WX_MAP_SIZE)
 		return ;
 	old_id = c->map.tiles[map_index];
 	c->map.tiles[map_index] = WX_ENEMY;

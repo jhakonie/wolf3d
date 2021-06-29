@@ -318,9 +318,9 @@ dependency_files = \
 dependency_flags = -MT $(@) -MMD -MP -MF $(build_dir)$(*).dep
 
 LD = gcc
-LDFLAGS = $(libsdl2_ldflags) #-fsanitize=address#,leak,undefined
+LDFLAGS = -flto $(libsdl2_ldflags) #-fsanitize=address#,leak,undefined
 CC = gcc
-CFLAGS = -g -c -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) #-fsanitize=address#,leak,undefined
+CFLAGS = -O2 -flto -c -Wall -Werror -Wextra $(addprefix -I, $(include_dirs)) $(libsdl2_cflags) #-fsanitize=address#,leak,undefined
 CPPFLAGS = -D_REENTRANT
 
 all: $(client_exe) $(editor_exe) $(server_exe) $(compile_commands_json)
