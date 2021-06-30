@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 00:56:28 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/14 16:34:48 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/30 02:53:10 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 /*
 ** Save hex to a string and parse that to uint.
-** Colors' array is freed upon failure.
 */
 
 static t_bool	zz_parse_hex(t_parse_context *pc, t_u32 *hex)
@@ -54,9 +53,7 @@ static t_u64	zz_find_table_index(t_parse_context *pc, t_xpm *xpm)
 ** Parse possible comment. If line doesn't start with ", free colors' array.
 ** Parse color keys and corresponding colors and save them. Parse comment.
 */
-/*
-** 2021-05-03 todo: think about all the spots where to use wx_parse_whitespace()
-*/
+
 t_bool	wx_parse_xpm_colors(t_parse_context *pc, t_xpm *xpm)
 {
 	t_u32	i;
@@ -76,7 +73,8 @@ t_bool	wx_parse_xpm_colors(t_parse_context *pc, t_xpm *xpm)
 			|| !wx_parse_whitespace(pc) || !wx_parse_keyword(pc, "#")
 			|| !zz_parse_hex(pc, &xpm->table[table_index].value)
 			|| !wx_parse_keyword(pc, "\",\n"))
-			return (wx_false);
+			return (wx_parse_xpm_error(xpm, WX_XPM_FREE_TABLE,
+					"xpm-error: parse colors\n", 25));
 		i++;
 	}
 	wx_parse_xpm_comment(pc);

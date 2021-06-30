@@ -1,7 +1,6 @@
 #include "wc_draw.h"
 #include "wc_client.h"
 #include "wx_draw.h"
-#include "we_draw.h"
 
 /*
 ** Calculating frame buffer draw end point for floor or ceiling.

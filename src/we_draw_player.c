@@ -6,19 +6,24 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 13:46:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/21 21:38:47 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/30 03:40:51 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "we_editor.h"
 
-static void	zz_raycast_door(t_ray *ray, t_map *m, t_p2 *end, t_map_view *mv)
+static void	zz_end_to_2d_map_coordinates(t_ray *ray, t_p2 *end, t_map_view *mv)
 {
-	ray->tile_type_to_find = 2;
-	wx_ray_cast(ray, m->tiles);
 	(*end).x = (ray->tile.hit.x / WX_TILE_WIDTH) * mv->grid.part.x
 		+ mv->grid.start.x;
 	(*end).y = ray->tile.hit.y / WX_TILE_WIDTH * mv->grid.part.y;
+}
+
+static void	zz_raycast_door(t_ray *ray, t_map *m, t_p2 *end, t_map_view *mv)
+{
+	ray->tile_type_to_find = WX_DOOR;
+	wx_ray_cast(ray, m->tiles);
+	zz_end_to_2d_map_coordinates(ray, end, mv);
 }
 
 /*
@@ -34,18 +39,19 @@ static void	zz_draw_rays(t_frame_buffer *fb, t_editor *e, t_p2 start)
 	angle_d = 0;
 	wx_buffer_set(&ray, sizeof(t_ray), 0);
 	wx_ray_init(&ray, e->player.fov_d, fb->width - 1, e->player.position);
+	we_draw_clip(&start, fb);
 	while (ray.nb < fb->width - 1)
 	{
-		ray.tile_type_to_find = 1;
+		ray.tile_type_to_find = WX_WALL;
 		wx_ray_calculate(&ray, angle_d, e->player.direction_d);
 		wx_ray_cast(&ray, e->level.map.tiles);
-		end.x = (ray.tile.hit.x / WX_TILE_WIDTH) * e->map_view.grid.part.x
-			+ e->tools.end.x;
-		end.y = ray.tile.hit.y / WX_TILE_WIDTH * e->map_view.grid.part.y;
+		zz_end_to_2d_map_coordinates(&ray, &end, &e->map_view);
+		we_draw_clip(&end, fb);
 		if (ray.tile.side != we_no_wall)
 			we_draw_line(start, end, fb, 0x00FF00);
 		zz_raycast_door(&ray, &e->level.map, &end, &e->map_view);
-		if (ray.tile.side != we_no_wall && ray.tile.tiles_id == 2)
+		we_draw_clip(&end, fb);
+		if (ray.tile.side != we_no_wall && ray.tile.tiles_id == WX_DOOR)
 			we_draw_line(start, end, fb, 0xaa00ff);
 		angle_d += ray.angle_increment_d;
 		ray.nb++;
