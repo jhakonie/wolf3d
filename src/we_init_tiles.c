@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 22:38:50 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 15:10:14 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/30 13:52:17 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-
-/*
-** todo: update zz buf to tiles on line 40 allowed numbers/chars
-*/
 
 static void	zz_add_char(t_map *m, char *buf, t_u32 i, t_u32 j)
 {

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 21:24:00 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 17:20:30 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/30 13:52:37 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,6 @@ void	zz_player_pos(t_map_view *m, t_map *map, t_player *p)
 	if (i == p->w_tile_count)
 		zz_player_pos_set(m, map, p, WX_MAP_SIZE * 0.5f);
 }
-
-/*
-*todo: check step
-*/
 
 void	we_init_player(t_player *p, t_map *map, t_map_view *m)
 {

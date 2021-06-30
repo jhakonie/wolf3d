@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 17:21:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 20:21:17 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/30 14:03:27 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 # define WE_DRAW_H
 
 # include "math.h"
-# include "wx_math.h"
-# include "wx_types.h"
-# include "wx_frame_buffer.h"
-# include "we_texture.h"
-# include "wx_ray_cast.h"
+# include "wx_draw.h"
 # include "wx_parse_xpm.h"
 # include "stdlib.h"
 # include "unistd.h"

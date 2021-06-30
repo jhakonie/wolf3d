@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 00:24:00 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/19 15:11:01 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/30 13:52:24 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@ static t_bool	zz_player_position(t_p2 win, t_editor *e)
 	e->draw = wx_true;
 	return (wx_false);
 }
-
-/*
-** todo: add "nothing can be placed on player location"
-*/
 
 void	we_mouse_pos_grid_on_click(t_editor *e, t_u32 x, t_u32 y)
 {

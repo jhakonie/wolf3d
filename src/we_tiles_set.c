@@ -1,7 +1,7 @@
 #include "we_editor.h"
 
 /*
-** Initializes map_tile types and sets their coordinates.
+** Initializes map_tile types.
 */
 void	we_tiles_set(t_map *m)
 {
