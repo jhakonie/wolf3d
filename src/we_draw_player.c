@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 13:46:35 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/30 03:40:51 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/30 13:21:43 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	zz_end_to_2d_map_coordinates(t_ray *ray, t_p2 *end, t_map_view *mv)
 
 static void	zz_raycast_door(t_ray *ray, t_map *m, t_p2 *end, t_map_view *mv)
 {
-	ray->tile_type_to_find = WX_DOOR;
+	ray->target_tile = WX_DOOR;
 	wx_ray_cast(ray, m->tiles);
 	zz_end_to_2d_map_coordinates(ray, end, mv);
 }
@@ -42,7 +42,7 @@ static void	zz_draw_rays(t_frame_buffer *fb, t_editor *e, t_p2 start)
 	we_draw_clip(&start, fb);
 	while (ray.nb < fb->width - 1)
 	{
-		ray.tile_type_to_find = WX_WALL;
+		ray.target_tile = WX_WALL;
 		wx_ray_calculate(&ray, angle_d, e->player.direction_d);
 		wx_ray_cast(&ray, e->level.map.tiles);
 		zz_end_to_2d_map_coordinates(&ray, &end, &e->map_view);

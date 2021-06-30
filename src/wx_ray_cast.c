@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 17:25:44 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/29 02:46:55 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/30 13:21:49 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_hit	zz_tile_values(t_ray *ray, t_u32 *tiles, t_side side)
 	ray->tile.side = side;
 	ray->tile.tiles_id = tiles[ray->tile.tiles_index];
 	ray->tile.compass = wx_wall_compass_direction(ray->angle_d, side);
-	if (ray->tile_type_to_find == 2 && ray->tile.tiles_id == 2)
+	if (ray->target_tile == 2 && ray->tile.tiles_id == 2)
 		wx_draw_door_distance(ray);
 	delta.x = ray->tile.hit.x - ray->start.x;
 	delta.y = ray->tile.hit.y - ray->start.y;
@@ -47,7 +47,7 @@ static t_hit	zz_tile_values(t_ray *ray, t_u32 *tiles, t_side side)
 ** of hit tile, distance of hit tile from player, projected height of tile
 ** on screen/projection plane.
 ** If the tile, that is hit, is a wall or an enemy or if
-** tile_type_to_find is door
+** target_tile is door
 ** and the tile hit is a door, return true and end raycast.
 */
 
@@ -73,9 +73,9 @@ static t_bool	zz_is_wall(t_u32 *tiles, t_ray *ray, t_p2 intersection_w,
 	{
 		ray->tile.tiles_index = index;
 		ray->tile = zz_tile_values(ray, tiles, line);
-		if (tiles[index] == ray->tile_type_to_find)
-			return (wx_true);
-		else if (ray->tile_type_to_find == WX_DOOR && tiles[index] == WX_WALL)
+		if (((tiles[index] == 1 || tiles[index] == 2) && ray->target_tile == 7)
+			|| (ray->target_tile == 2 && tiles[index] == 1)
+			|| tiles[index] == ray->target_tile)
 			return (wx_true);
 	}
 	return (wx_false);

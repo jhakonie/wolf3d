@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 22:38:37 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/29 00:55:45 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/30 13:21:43 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ struct			s_ray
 	t_f32		dist_to_screen_w;
 	t_f32		world_end_w;
 	t_p2		start;
-	t_u32		tile_type_to_find;
+	t_u32		target_tile;
 	t_hit		tile;
 	t_hit		tiles_h[WX_RAY_CAST_BUFF_SIZE_M];
 	t_u32		tiles_h_size;

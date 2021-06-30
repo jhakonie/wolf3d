@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 01:08:09 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/05/14 15:57:55 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/30 12:42:32 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ static t_bool	zz_parse_end_of_line(t_parse_context *pc, t_parse_xpm_index i,
 			return (wx_parse_xpm_error(xpm, WX_XPM_FREE_PIXELS,
 					"xpm-error: pixels, end of line: |};| missing.\n", 47));
 		wx_parse_whitespace(pc);
+		if (pc->p != pc->e)
+			return (wx_parse_xpm_error(xpm, WX_XPM_FREE_PIXELS,
+					"xpm-parse error: end of file.\n", 31));
 	}
 	return (wx_true);
 }

@@ -6,7 +6,7 @@
 /*   By: jhakonie <jhakonie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 14:56:08 by jhakonie          #+#    #+#             */
-/*   Updated: 2021/06/14 19:09:32 by jhakonie         ###   ########.fr       */
+/*   Updated: 2021/06/30 13:06:21 by jhakonie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static t_bool	zz_free_txt(t_c8s *txt)
 ** Parse declaration and possible comments.
 */
 
-static t_bool	zz_parse_declaration(t_parse_context *pc, t_c8s *txt)
+static t_bool	zz_parse_declaration(t_parse_context *pc)
 {
 	if (wx_parse_keyword(pc, "static")
 		&& wx_parse_whitespace(pc)
@@ -88,7 +88,6 @@ static t_bool	zz_parse_declaration(t_parse_context *pc, t_c8s *txt)
 		wx_parse_xpm_comment(pc);
 		return (wx_true);
 	}
-	zz_free_txt(txt);
 	return (wx_false);
 }
 
@@ -109,15 +108,15 @@ t_bool	wx_parse_xpm(t_c8 const *filename, t_xpm *xpm)
 	pc.e = (t_c8 const *)(txt.buffer + txt.size);
 	if ((wx_parse_keyword(&pc, "/* XPM */\n")))
 	{
-		if (!zz_parse_declaration(&pc, &txt))
+		if (!zz_parse_declaration(&pc))
+		{
+			zz_free_txt(&txt);
 			return (wx_parse_xpm_error(xpm, 0,
 					"xpm-parse error: declaration.\n", 31));
+		}
 		if (!zz_parse_info(&pc, xpm) || !wx_parse_xpm_colors(&pc, xpm)
 			|| !wx_parse_xpm_pixels(&pc, xpm))
 			return (zz_free_txt(&txt));
-		if (pc.p != pc.e)
-			return (wx_parse_xpm_error(xpm, WX_XPM_FREE_PIXELS,
-					"xpm-parse error: end of file.\n", 31));
 		zz_free_txt(&txt);
 		return (wx_true);
 	}

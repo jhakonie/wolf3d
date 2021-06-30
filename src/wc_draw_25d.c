@@ -21,7 +21,7 @@ static void	zz_draw_enemy(t_p3 enemy_w, t_u32 i,
 	ray.view_height = p->height;
 	while (ray.nb < c->frame_buffer.width)
 	{
-		ray.tile_type_to_find = WX_ENEMY;
+		ray.target_tile = WX_ENEMY;
 		wx_ray_calculate(&ray, angle_d, p->direction_d);
 		wx_ray_cast(&ray, c->map.tiles);
 		if (ray.tile.tiles_id == WX_ENEMY)
