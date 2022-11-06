@@ -1,6 +1,10 @@
 ## wolf3d
 
+
+
+
 A Hive graphics project, where you create a program that allows the user to move inside a maze similar to the 1992 game Wolfenstein 3D.
+
 - A project with a team of 2 students.
 - The project has to be done in C and respecting the 42 school norm (formatting rules).
 - The basic functionalities of a graphics library such as SDL2 may be used (to open a window, copy a frame_buffer to window, etc.).
@@ -12,6 +16,7 @@ A Hive graphics project, where you create a program that allows the user to move
 ## Deployment
 
 To deploy this project run:
+
 
 ```bash
   git clone git@github.com:jhakonie/wolf3d.git wolf3d
@@ -83,6 +88,11 @@ green ones hit the walls, purple ones indicate doors.
 <p align="left">
   <img src="https://github.com/jhakonie/wolf3d/blob/main/screenshots/wolf3d_client_4_players.png" width="60%" height="60%">
 </p>
+
+
+
+
+https://user-images.githubusercontent.com/68073557/200137723-5a271561-83aa-4d5f-b0fb-54800ad45b15.mp4
 
 
 
