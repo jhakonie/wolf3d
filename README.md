@@ -1,17 +1,15 @@
-## wolf3d
-
-
-
+# wolf3d - raycaster
 
 A Hive graphics project, where you create a program that allows the user to move inside a maze similar to the 1992 game Wolfenstein 3D.
 
 - A project with a team of 2 students.
 - The project has to be done in C and respecting the 42 school norm (formatting rules).
 - The basic functionalities of a graphics library such as SDL2 may be used (to open a window, copy a frame_buffer to window, etc.).
-- Allowed C functions are: write, read, open, close, malloc, free, exit, strerror, perror.
+- Allowed C functions: write, read, open, close, malloc, free, exit, strerror, perror.
 <p align="left">
   <img src="https://github.com/jhakonie/wolf3d/blob/main/screenshots/wolf3d_editor_sky.png" width="49%" height="45%">
 </p>
+
 
 ## Deployment
 
@@ -25,6 +23,10 @@ To deploy this project run:
 ```
 SDL2 is included as sources in the root of the repository in a directory called libsdl2.
 The Makefile will install it in the root of the repository. SDL2 can be deleted with 'make fclean'.
+
+<p align="left">
+  <img src="https://github.com/jhakonie/wolf3d/blob/main/screenshots/wolf3d_client_4_players.png" width="60%" height="60%">
+</p>
 
 ## Usage
 
@@ -48,7 +50,11 @@ To run clients in a specific level:
    
 The server must be up for clients to be able to move.
 ```
+
 ## Features
+
+![demo](screenshots/wolf3d_editor.webp)
+
 - The textures and the map are loaded from the directory named, when running the program.
    If the directory doesn't exist, it is created and populated with an empty map, textures are then loaded from the 'default' directory.
 - In the editor the player is drawn as a pink triangle pointing where the player is facing and can be moved with wasd
@@ -58,24 +64,17 @@ or by moving the player spawn block, which can be selected from the toolbar on t
 - Rays can be shown by pressing R:
 green ones hit the walls, purple ones indicate doors.
 
-<p align="left">
-  <img src="https://github.com/jhakonie/wolf3d/blob/main/screenshots/wolf3d_editor.png" width="30%" height="30%">
-  <img src="https://github.com/jhakonie/wolf3d/blob/main/screenshots/wolf3d_editor_2.5d_view.png" width="30%" height="30%">
-  <img src="https://github.com/jhakonie/wolf3d/blob/main/screenshots/wolf3d_editor_showing_rays.png" width="30%" height="30%">
-</p>
+![demo](screenshots/wolf3d_clip.webp)
 
 - Map format is a simple text file: 1 = wall, . = floor, 2 = door.
 - Wall collision can be turned off with C.
-- There are doors, that slide open when you move near them.
+- Doors slide open when you move near them.
 - It's possible to look sideways, up and down by moving the mouse when in 2.5d mode and arrow keys in 2d mode.
-- There's a skybox.
+- Skybox.
 - Light is shaded based on distance.
 
-<p align="left">
-  <img src="https://github.com/jhakonie/wolf3d/blob/main/screenshots/wolf3d_editor_looking_up.png" width="30%" height="30%">
-  <img src="https://github.com/jhakonie/wolf3d/blob/main/screenshots/wolf3d_editor_door_open_2.5d.png" width="30%" height="30%">
-  <img src="https://github.com/jhakonie/wolf3d/blob/main/screenshots/wolf3d_lookdown.png" width="30%" height="30%">
-</p>
+
+![demo](screenshots/wolf3d_multiplayer.webp)
 
 - It's possible to have up to 4 players that are controlled by an authoritative server.
 - Raycasting mode shows other players as a black box, with one of the skybox textures on the sides (chosen based on order of entrance).
@@ -85,23 +84,13 @@ green ones hit the walls, purple ones indicate doors.
   <img src="https://github.com/jhakonie/wolf3d/blob/main/screenshots/wolf3d_client_2_players_2.5d.png" width="45%" height="40%">
   <img src="https://github.com/jhakonie/wolf3d/blob/main/screenshots/wolf3d_client_2_players_3d.png" width="45%" height="40%">
 </p>
-<p align="left">
-  <img src="https://github.com/jhakonie/wolf3d/blob/main/screenshots/wolf3d_client_4_players.png" width="60%" height="60%">
-</p>
-
-
-
-
-https://user-images.githubusercontent.com/68073557/200137723-5a271561-83aa-4d5f-b0fb-54800ad45b15.mp4
-
-
 
 ## Authors
 
 I worked on this project with another student, who prefers not to be named.
 We divided the project into the mandatory part and bonuses.
-I completed the mandatory raycaster, an xpm-reader and a map editor.
-My team member created a 3d engine and our client/server programs.
+I completed the mandatory raycaster (used in the editor and client), an xpm-reader and a map editor.
+My team member created the 3d engine and our client/server programs.
 
 ## Research for raycasting and SDL2
 
